@@ -2,7 +2,14 @@
 
 ## State
 
-For verified parent `<p>` use:
+`<root>` is the absolute path
+`<repository>/.agents/workflows/codex-thread-orchestrator`, where `<repository>`
+is the selected repository root. `<p>` is the parent thread ID verified from the
+runtime; `<child-id>` is a verified child thread ID. IDs must start with an ASCII
+letter or digit and contain only ASCII letters, digits, `.`, `_`, or `-`; do not
+rewrite an incompatible ID to fit the layout.
+
+Use this exact layout so the recovery script can find the task:
 
 ```text
 <root>/<p>/parent
@@ -11,8 +18,11 @@ For verified parent `<p>` use:
 <root>/<p>/children/<child-id>.md
 ```
 
-`parent` is permanent; `active` holds only the current objective. Extend the
-`$durable-workflow-control` cursor in `control.md` with this routing index:
+Create the permanent `parent` marker file before dispatch. `active` holds only
+the current objective. The parent's directory survives objective changes.
+Use `control.md` for routing; when `$durable-workflow-control` is needed, add its
+cursor fields to this same file rather than creating another control. The
+routing index is:
 
 ```text
 parent: <id> @ <host>
@@ -21,37 +31,50 @@ phase: implementation
 delivery: d4
 expected: <child-id> / c4
 events: review_ready|research_needed|blocked|decision_required
-review: pending | <review-thread-id> | rules:<AGENTS-and-skill-paths>
+review: not_required | pending | <review-thread-id> | rules:<AGENTS-and-skill-paths>
 next: route review or dependency
-children: <id> implementation active requested_model:gpt-5.6-sol requested_reasoning:medium attestation:requested
+children: <id> implementation active requested_model:<argument-or-omitted> requested_reasoning:<argument-or-omitted> settings_attestation:requested
 accepted: c3
 outbox: send:d4 -> <child-id> committed
 last: o1 done - <one-line summary>
 ```
-Allow only events for the current role and phase. After approval, a finalize
-delivery expects only `completed` or `blocked`. Each child owns its file. The
-runtime-generated `<codex_delegation>.source_thread_id` identifies the callback
-sender; sender identity never comes from the child payload. Persist review
-scope, acceptance, `AGENTS.md`, and skill paths once; reference child evidence
-instead of copying it.
+Keep one unindented `children:` line per child, with its ID as a separate
+whitespace-delimited token; the recovery script uses these declarations to detect
+missing child files. Each child owns its file. Allow only events for the current
+role and phase. After approval, a finalize delivery expects only `completed` or
+`blocked`. Sender identity must come from trusted runtime metadata, such as
+`<codex_delegation>.source_thread_id` when exposed by the runtime, never from the
+child payload. Persist review scope, acceptance, `AGENTS.md`, and skill paths
+once; reference child evidence instead of copying it.
 
 ## Dispatch
 
-Only an explicit user request for visible delegation authorizes creation.
-The model lanes and saved-project `local` environment are the user's explicit
-creation policy for this skill.
-Persist the creation token as `committed`, call `list_projects`, and require one
-saved project matching working directory plus parent host ID; block on zero or
-multiple matches. Call `create_thread(prompt=<payload>, model=<requested-model>,
-thinking=<requested-reasoning>, target={type:"project",
-projectId:<matched-project-id>, environment:{type:"local"}})`. Never use a
-worktree, `fork_thread`, polling, or handshake.
+Only an explicit request for visible delegation authorizes creation. The API
+names below describe the supported visible-thread interface; confirm live
+schemas, trusted sender metadata, and the needed create, inspect, and message
+operations before relying on them. Missing capabilities block dependent steps,
+not unrelated authorized work. Native subagents are not substitutes for visible
+threads when that distinction is part of the request.
+
+Use `list_projects` to identify one saved project matching the selected
+repository and parent host. Resolve zero or multiple matches before creation.
+Choose the environment and any model/reasoning arguments from the user's current
+choices and supported runtime settings. Use documented inheritance when
+appropriate; record omitted arguments as omitted, not as verified inheritance.
+This protocol requires the parent and children to share the repository checkout
+and the same absolute state paths. Verify that the selected environment provides
+that access before creation; an isolated checkout or remote host is not sufficient
+without verified shared storage. If access cannot be established, block that
+dispatch rather than giving a child an inaccessible state path.
+
+Persist the creation token and exact launch arguments as `committed` before
+calling `create_thread(prompt=<payload>, ...)` with that project's verified
+target. Do not create a worktree or fork merely to satisfy this protocol.
 
 ```text
 role: implementation|research|review
-lane: locator|scout|worker|cross-layer|smart|review
-requested_model: <exact create_thread model argument>
-requested_reasoning: <exact create_thread thinking argument>
+requested_model: <exact model argument or omitted>
+requested_reasoning: <exact thinking argument or omitted>
 settings_attestation: requested
 creation: <persisted-creation-token>
 parent: <parent-thread-id> @ <parent-host-id>
@@ -67,30 +90,31 @@ artifact: <exact detailed-report path or none>
 finish: <allowed event>; persist event/result/brief refs/outbox; send parent once {event,delivery,callback,summary,evidence:"child-state",next[,kind]}; blocked kind=recoverable|external; record sent|rejected|ambiguous; final=summary+state; create no tasks
 ```
 
-Before creation, persist the lane plus the exact `model` and `thinking` arguments,
-then pass the same values to `create_thread` and the task payload. The child
-retains them in its state and resolves its ID from runtime metadata or one
-`list_threads(query=<creation-token>)` snapshot with exactly one matching task;
-zero or multiple matches block. It then creates its file and starts. Record
-returned child and host IDs beside those launch arguments, mark creation sent,
-make one immediate `wait_threads(targets=[{threadId:<id>,hostId:<host>}],
-timeoutMs=0)` snapshot, emit
-`::created-thread{threadId="<id>"}`, and end without waiting for completion.
+The child retains those settings and resolves its ID from runtime metadata or
+one `list_threads(query=<creation-token>)` snapshot with exactly one matching
+task; zero or multiple matches block its dependent work. It creates its file
+before starting. Record returned child and host IDs beside the launch arguments
+and mark creation sent. Use supported runtime status or wait operations when
+needed to coordinate; avoid repeated snapshots without a new reason. End the
+turn with work pending only for a requested asynchronous mode with verified
+parent reactivation. A message API alone does not prove reactivation.
+
 Include the creation token verbatim in the initial prompt and invoke
 `create_thread` at most once for that token. An error, timeout, or missing or
 malformed receipt is `ambiguous`, never proof that no task was created. Persist
-that state. On this and each later external activation, take one read-only
-`list_threads(query=<creation-token>)` snapshot and `read_thread` its matches;
-adopt exactly one. Zero matches remain ambiguous and multiple matches block.
-Never retry creation or mint a replacement token for the same assignment.
+that state. Reconcile with one read-only `list_threads(query=<creation-token>)`
+snapshot and `read_thread` its matches; adopt exactly one. If unresolved, repeat
+reconciliation only on a later activation or changed evidence. Zero matches
+remain ambiguous and multiple matches block that assignment. Never retry
+creation or mint a replacement token for the same assignment.
 
-Use `lane` to select the requested model and reasoning below, but never treat the
-lane, UI, or a default as proof of effective runtime settings. The persisted
-values prove only what the parent requested.
-Change `settings_attestation` to `runtime-verified` only when a runtime receipt
-or inspection explicitly reports both fields and persist that evidence;
-otherwise keep `requested` and never claim the effective configuration.
-Follow-ups contain only:
+Persisted settings prove only what was requested. Change `settings_attestation`
+to `runtime-verified` only when a runtime receipt or inspection explicitly
+reports model and reasoning, and retain that evidence. Otherwise keep
+`requested` and do not claim an effective configuration.
+
+Reuse the child for follow-ups within its assignment, preserving its settings.
+Send only the changed contract fields:
 
 ```text
 delivery: d2 supersedes d1
@@ -100,24 +124,6 @@ change: <new instruction>
 
 The child abandons `d1`, persists `d2`, and continues. A superseded callback is
 stale and causes no acceptance, transition, or redispatch.
-
-## Model Lanes
-
-Set every created visible task explicitly; follow-ups keep its persisted model
-and reasoning as well as its lane:
-
-- Locator, mechanical and read-only: `gpt-5.6-luna` / `medium`.
-- Scout, technical and read-only: `gpt-5.6-sol` / `low`.
-- Worker, fixed contract and known pattern: `gpt-5.6-sol` / `medium`.
-- Cross-layer Worker with resolved contract: `gpt-5.6-sol` / `medium`.
-- Smart worker, durable research, independent review, or high-risk implementation:
-  `gpt-5.6-sol` / `high`.
-- Critical review or hard bounded retry after verified Sol high failure:
-  `gpt-5.6-sol` / `xhigh`; rescope first.
-
-Use Luna only for mechanical read-only or deterministic disposable work; any
-interpretation routes to Sol. Max requires explicit user choice. Never compensate
-for oversized scope with model effort; split first.
 
 ## Callback
 
@@ -140,13 +146,15 @@ the child file/artifacts. Local final is only a summary plus state path.
 
 Persist every outbox row as `committed`; after the single attempt mark it
 `sent`, `rejected:<error>`, or `ambiguous`. On error, reconcile once with
-`read_thread`; never retry. On the parent's next external activation, it may
-record `accepted_from_state` only when the expected task's final points to its
-exact state file and that file matches the expected delivery, callback, allowed
-event, and a rejected or ambiguous outbox. Otherwise block; never invent a
-wrapper callback or ask the child to resend.
+`read_thread`; never retry. After reconciliation, the parent may record
+`accepted_from_state` only when a runtime-verified read of the expected task's
+final points to its exact state file and that file matches the expected
+delivery, callback, allowed event, and a rejected or ambiguous outbox. Otherwise
+block that transition; never invent a wrapper callback or ask the child to resend.
 
 ## Routing And Review
+
+When independent review is required, use:
 
 ```text
 implementation -> review_ready -> visible reviewer
@@ -154,32 +162,51 @@ implementation -> review_ready -> visible reviewer
                     approved -> implementation finalizes -> completed
 ```
 
-Create an independent, read-only, project-local reviewer only for `review_ready`,
-explicit requests, or risky/ambiguous results. Accept routine
-`research_completed`, inventories, trackers, and deterministic evidence without review.
-Reference durable state, not chat. The reviewer sends one minimal callback.
-Return changes to and finalize through the same tasks; accept `completed` only
-after approval.
+Decide whether review is required from the request and unresolved risk. A
+`review_ready` delivery routes to an independent, read-only, project-local
+reviewer. Accept routine research, inventories, and deterministic evidence
+without adding a reviewer when the evidence meets acceptance. When review is
+not required, allow completion after the agreed verification.
+
+Reference durable state. The reviewer sends one minimal callback. Return changes
+to and finalize through the same tasks; when review is required, accept
+`completed` only after approval.
 
 Route `research_needed` only for bounded questions. Stop when evidence answers
 the decision; exhaustive audits require explicit scope; research never implements.
 
 ## Visible Task Ownership
 
-Children return `research_needed` and the parent routes the reusable visible
-researcher. Assign non-overlapping ownership, applicable `AGENTS.md`, and skill
-paths. Use `$crabbox` when configured and usable unless the user opts out; the
-implementing child owns its runs.
+The parent creates and reuses visible children; children return bounded
+`research_needed` requests instead of creating more tasks. The parent may
+investigate directly or route a researcher. Assign non-overlapping ownership,
+applicable instructions, and only the domain skills needed for the work. The
+parent may inspect code and run verification while respecting those assignments.
 
 ## Closure And Recovery
 
-After accepted result and planned reuse end, persist the outbox entry, call
+After acceptance and planned reuse end, archive the child when the runtime
+supports it: persist the outbox entry, call
 `set_thread_archived(archived=true, threadId=<child-id>, hostId=<host-id>)`, and
-record its receipt. At objective closure, remove only `active`, set the cursor
-idle, and retain one summary.
+record its receipt. Report unavailable cleanup separately from the work result.
+At objective closure, remove only `active`, set the cursor idle, and retain one
+summary. Keep the `parent` marker and child state needed for recovery.
 
-`SessionStart(compact)` immediately injects one path before resumed work:
-parent -> `<p>/control.md`; every visible child, including review -> its child
-file. Thus the parent recovers the review recipe and reviewer identity. Missing
-state for a declared or marked task, or duplicate mappings, injects a blocker;
-unrelated tasks stay silent. Reread first.
+[hooks/user-hooks.json](../hooks/user-hooks.json) is an optional registration
+example for [the recovery script](../scripts/compact_rehydration.py), not proof
+of an installed hook. Its command assumes this skill is installed under
+`$HOME/.agents/skills/codex-thread-orchestrator`; verify the actual script path
+and the runtime's supported hook registration before using it.
+
+The script expects JSON with `hook_event_name:"SessionStart"`, `source:"compact"`,
+`session_id`, and `cwd`. It returns `hookSpecificOutput.additionalContext` for a
+compatible runtime to inject. Verify that the runtime emits this payload and
+consumes that output before relying on automatic recovery; local tests only
+establish the script's behavior.
+
+From `cwd` and every ancestor, the script searches the exact root layout above.
+It selects one mapping for the session: parent -> `<root>/<p>/control.md`; child
+-> `<root>/<p>/children/<child-id>.md`. Missing declared state or multiple
+mappings, including across roots, produce a blocker for work dependent on that
+state. Unrelated sessions stay silent. Reread the mapped file before resuming;
+without a verified hook, recover from the recorded state path explicitly.

@@ -6,11 +6,11 @@ from pathlib import Path
 SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 
 
-def find_root(cwd):
+def find_roots(cwd):
     for directory in (cwd, *cwd.parents):
         root = directory / ".agents/workflows/codex-thread-orchestrator"
         if root.is_dir():
-            return root
+            yield root
 
 
 def mappings(root, thread_id):
@@ -35,14 +35,15 @@ def mappings(root, thread_id):
     return sorted(set(mapped))
 
 
-def recovery_context(root, thread_id):
-    mapped = mappings(root, thread_id)
+def recovery_context(roots, thread_id):
+    mapped = sorted({path for root in roots for path in mappings(root, thread_id)})
     if len(mapped) == 1 and mapped[0].is_file():
         return (f"Compaction recovery: re-read {mapped[0]} before reasoning or tools; "
                 "it is the durable source of truth, not chat history.")
     if mapped:
         reason = "multiple mappings" if len(mapped) > 1 else "mapped state is missing"
-        return f"Compaction recovery blocker for {thread_id}: {reason}. Stop and report it."
+        return (f"Compaction recovery blocker for {thread_id}: {reason}. "
+                "Stop work dependent on this state and report it.")
 
 
 def main():
@@ -53,8 +54,8 @@ def main():
         thread_id, cwd = payload.get("session_id"), payload.get("cwd")
         if not isinstance(thread_id, str) or not isinstance(cwd, str):
             return 0
-        root = find_root(Path(cwd).resolve())
-        context = recovery_context(root, thread_id) if root else None
+        roots = find_roots(Path(cwd).resolve())
+        context = recovery_context(roots, thread_id)
         if context:
             json.dump({"hookSpecificOutput": {"hookEventName": "SessionStart",
                       "additionalContext": context}}, sys.stdout, separators=(",", ":"))

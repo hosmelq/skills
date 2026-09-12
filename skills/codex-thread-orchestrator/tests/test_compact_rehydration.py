@@ -13,8 +13,9 @@ class RecoveryTest(unittest.TestCase):
 
     def tearDown(self): self.temp.cleanup()
 
-    def workflow(self, parent="parent", active=True, marked=True):
-        path = self.root / parent
+    def workflow(self, parent="parent", active=True, marked=True, cwd=None):
+        root = cwd / ".agents/workflows/codex-thread-orchestrator" if cwd else self.root
+        path = root / parent
         path.mkdir(parents=True)
         (path / "control.md").write_text("parent index\n")
         if marked: (path / "parent").touch()
@@ -31,7 +32,7 @@ class RecoveryTest(unittest.TestCase):
         payload = {"session_id": thread, "cwd": str(cwd or self.cwd),
                    "hook_event_name": event, "source": source}
         return subprocess.run(["python3", str(SCRIPT)], input=json.dumps(payload),
-                              text=True, capture_output=True, check=False).stdout
+                              text=True, capture_output=True, check=True).stdout
 
     def context(self, output):
         return json.loads(output)["hookSpecificOutput"]["additionalContext"]
@@ -74,6 +75,20 @@ class RecoveryTest(unittest.TestCase):
         self.assertEqual([{"type": "command", "command":
                           'python3 "$HOME/.agents/skills/codex-thread-orchestrator/'
                           'scripts/compact_rehydration.py"'}], entry["hooks"])
+
+    def test_unrelated_nested_root_does_not_hide_ancestor_state(self):
+        ancestor = self.workflow()
+        child = self.child(ancestor)
+        nested = self.cwd / "nested"
+        self.workflow("unrelated", cwd=nested)
+        for thread, path in (("parent", ancestor / "control.md"), ("child", child)):
+            self.assertIn(str(path), self.context(self.invoke(thread, cwd=nested)))
+
+    def test_mappings_in_different_roots_are_ambiguous(self):
+        self.child(self.workflow(), "shared")
+        nested = self.cwd / "nested"
+        self.child(self.workflow("nested-parent", cwd=nested), "shared")
+        self.assertIn("multiple mappings", self.context(self.invoke("shared", cwd=nested)))
 
 if __name__ == "__main__":
     unittest.main()

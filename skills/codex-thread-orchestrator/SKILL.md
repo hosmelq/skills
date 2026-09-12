@@ -1,53 +1,49 @@
 ---
 name: codex-thread-orchestrator
 description: >-
-  Route work from a user-started parent Codex task to visible child tasks using
-  compact durable state, proactive callbacks, independent review, reuse, and
-  compaction recovery.
+  Coordinate explicitly requested visible Codex threads with durable identity,
+  callbacks, and recovery when compatible thread APIs are available. Ordinary
+  native subagent coordination does not use this skill.
 ---
 
 # Codex Thread Orchestrator
 
-Activate `$durable-workflow-control` first; it owns generic goals, evidence,
-budgets, blockers, verification, and closure. This extension adds visible-task
-identity, routing, reuse, compact messages, and recovery.
+Use this adapter for visible threads the user has requested. Confirm the live
+runtime supports the required operations and trusted thread identity before
+dispatch. A missing capability blocks its dependent step; continue other
+authorized work without claiming that native subagents are visible threads.
 
-Read [references/protocol.md](references/protocol.md) before creating a child.
-Discover applicable `AGENTS.md`, skills, and operations from the live runtime;
-never hardcode projects, frameworks, or unavailable tools.
+## Coordination
 
-## Restrict The Parent
+- The parent owns routing and root state; each child owns its compact state file
+  and assigned work. The parent may inspect, investigate, and verify results.
+  Keep writes and delegated responsibilities non-overlapping.
+- Record acceptance, applicable instructions, and evidence references once.
+  Follow-ups identify the new delivery, callback, superseded delivery, and change.
+- Preserve trusted sender validation, allowed transitions, and persist-before-send
+  delivery. Reconcile ambiguous creation results without creating duplicates.
+- Select models and reasoning from the current session's choices and supported
+  runtime settings. Record requested settings separately from verified settings.
+- Continue coordinating after dispatch. End the turn with work pending only when
+  the requested asynchronous mode has a verified reactivation mechanism.
+- Use independent review when requested or warranted by unresolved risk. Reuse
+  the implementer and reviewer while their assignment remains relevant.
 
-The parent only maintains coordination state, operates visible tasks, validates
-callbacks, routes transitions and review, and answers from durable state.
+## State And Recovery
 
-It never reads project code, investigates, implements, runs project commands or
-tests, edits deliverables, or polls.
+Keep the [protocol layout](references/protocol.md#state) for visible-task
+identity and recovery. Use `$durable-workflow-control` when the objective also
+needs queue, evidence, budget, or resume management; extend this same control
+file rather than creating a parallel cursor.
 
-## Keep State And Messages Small
+The bundled hook is an optional integration example. Its presence does not
+install it or prove that the runtime emits compatible compaction events. Verify
+the installation, script path, and runtime contract before relying on it.
+Recovery uses the permanent `parent` marker, never `active`.
 
-Use the protocol layout. The parent owns root files; each child owns its compact
-file. Persist stable facts and the review recipe once. Keep decisions and brief
-evidence references in state; open detailed task artifacts only when needed.
-Keep follow-ups to delivery, callback, supersession, and the change.
+## Read As Needed
 
-## Route Visible Tasks
-
-Create project-local visible tasks only on explicit request and follow the
-protocol's project selection and model lanes. Route by responsibility and risk,
-not project or framework; split oversized work before raising effort. Every
-Locator, Scout, Worker, Smart worker, researcher, implementer, and reviewer is a
-parent-created visible task. Never use subagents; children cannot create tasks.
-
-After dispatch, end without waiting. Children attempt one minimal callback and
-leave a short final pointing to their state file.
-
-Review implementation with the same implementer/reviewer until approval.
-Accept routine research, inventories, trackers, and deterministic evidence
-without review unless requested or risky/ambiguous.
-
-## Recover After Compaction
-
-The installed `SessionStart(compact)` hook immediately injects the exact parent
-control or visible-child state path before resumed reasoning/tools. Parent
-recovery uses the permanent `parent` marker, never `active`.
+- Before creating or reusing a child, read [dispatch](references/protocol.md#dispatch).
+- To send or accept a result, read [callback validation](references/protocol.md#callback).
+- When review is needed, read [routing and review](references/protocol.md#routing-and-review).
+- For completion, compaction, or hook setup, read [closure and recovery](references/protocol.md#closure-and-recovery).
