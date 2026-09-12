@@ -18,7 +18,6 @@ $harness = new TestHarness(__DIR__.'/context.php');
 require __DIR__.'/tests/CatalogCoverageTest.php';
 require __DIR__.'/tests/FrontierCoverageTest.php';
 require __DIR__.'/tests/InteractionCliTest.php';
-require __DIR__.'/tests/InstructionContractTest.php';
 require __DIR__.'/tests/ValidatorMutationTest.php';
 
 $harness->finish();

@@ -2,36 +2,24 @@
 
 ## When To Use
 
-Use this leaf after implementation and focused tests, before reporting a
-Laravel project change complete.
+Use relevant items from this leaf when checking an implemented Laravel change.
+The affected behavior and current project conventions determine applicability.
 
 ## Pattern
 
 - New migration matches the local style and avoids unsupported rollback/FK patterns.
-- New or changed model has typed relationships, casts, docblock properties, and the expected route-key/public-id behavior.
+- New or changed models preserve the project's relationship, cast, type, and route-key/public-ID contracts.
 - Factory can create a valid row with realistic defaults and coherent relationship ownership.
 - Project tooling changes preserve the documented build graph, generated-code ordering, staged hooks, and local process definitions.
-- `resources/js` changes preserve typed Inertia/Wayfinder contracts, accessible server-error mapping, dependent reload/reset behavior, and pending-state cleanup.
-- `resources/views` shell changes preserve Inertia head/app slots, Vite entrypoints, font directives, locale/html metadata, and production/authenticated third-party scripts.
-- `resources/react-email` changes keep source templates under `resources/react-email/mail`, use Nub commands, and treat exported Blade views/assets as generated output.
-- Tests are placed in the correct suite and cover every touched surface: unit-level configuration/pure logic, integration-level persisted behavior/resources/support, feature-level HTTP/console/middleware behavior, and browser coverage when real browser UX is touched.
+- Frontend changes preserve the active stack's typed request/response contracts, accessible server-error mapping, dependent selection resets, and pending-state cleanup. Apply Inertia/Wayfinder examples only where those tools are used.
+- View-shell changes preserve existing application slots, build entrypoints, metadata, fonts, and required production/authenticated scripts.
+- Where React Email exports Blade views/assets, changes preserve the source/generated boundary and use the project's configured paths and commands.
+- Verification covers affected behavior in the owning suites. Add browser tests when an existing browser suite and the changed interaction, focus, keyboard, or visual behavior require them. Report any material runtime behavior that remains unverified.
 - Related model/resource/controller tests are updated when system behavior or serialized contracts change; do not add paired model relationship tests just to prove Laravel relationship wiring.
-- Equivalent test scenarios use the same complete domain nouns, grammatical name template, fixture/action/assertion order, and assertion style as equivalent live siblings with the same precondition, operation, ownership boundary, and outcome.
-- Database assertions prove ordinary persisted state once. `expect()` is reserved for separate identity, collection, or Eloquent behavior contracts, and no test introduces an avoidable `refresh()` by preloading a relation before the action.
-- Controller coverage was checked against live nested siblings, not only action templates. If a nested child stores redundant `Workspace`/ancestor ownership, the controller tests include a same-parent mismatched-ownership `404` case and list actions exclude those records.
-- Run the smallest relevant tests, for example:
-
-```bash
-php artisan test --compact tests/Unit/Models/<Model>Test.php tests/Integration/Models/<Model>Test.php
-php artisan test --compact tests/Integration/Http/Resources/<Resource>Test.php
-php artisan test --compact tests/Feature/Http/Controllers/<Controller>Test.php
-```
-
-- If PHP files changed, run:
-
-```bash
-vendor/bin/pint --dirty --format agent
-```
+- Test names, fixtures, and assertions follow the current project's conventions for comparable scenarios.
+- Persistence assertions prove changed durable state without duplicating the same contract. Refresh an existing model instance only when assertions must observe a later database change through it.
+- Controller coverage preserves the current binding and ownership contracts. Where those contracts reject inconsistent `Workspace`/ancestor ownership on nested children, retain the same-parent mismatched-ownership `404` case and the corresponding list exclusion.
+- Run the project's required checks and smallest relevant tests using its configured runtime, suite paths, and options. Use its configured formatter for changed PHP files.
 
 ## Related References
 

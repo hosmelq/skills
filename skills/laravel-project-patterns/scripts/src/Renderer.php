@@ -50,7 +50,7 @@ final class Renderer
         }
 
         $lines[] = '';
-        $lines[] = '## Read In Order';
+        $lines[] = '## Selected References';
         $lines[] = '';
 
         foreach ($context['references'] as $index => $reference) {
@@ -65,7 +65,7 @@ final class Renderer
         }
 
         $lines[] = '';
-        $lines[] = '## Mandatory Gates';
+        $lines[] = '## Required Applicable Gates';
         $lines[] = '';
 
         foreach ($context['gates'] as $gate) {
@@ -81,18 +81,18 @@ final class Renderer
         } else {
             foreach ($context['frontiers'] as $frontier) {
                 $lines[] = sprintf(
-                    '- `%s`: %d choices; rerun this preflight adding `%s`.',
+                    '- `%s`: %d choices; rerun the command adding `%s`.',
                     $frontier['parent'],
                     $frontier['options_total'],
                     $frontier['expand_argument'],
                 );
 
                 foreach ($frontier['options'] as $option) {
-                    $lines[] = sprintf('  - `%s`: %s; rerun this preflight adding `%s`.', $option['path'], $option['title'], $option['select_argument']);
+                    $lines[] = sprintf('  - `%s`: %s; rerun the command adding `%s`.', $option['path'], $option['title'], $option['select_argument']);
                 }
 
                 if (is_string($frontier['next_page_arguments'])) {
-                    $lines[] = '  - More choices: rerun this preflight with `'.$frontier['next_page_arguments'].'`.';
+                    $lines[] = '  - More choices: rerun the command with `'.$frontier['next_page_arguments'].'`.';
                 }
             }
         }

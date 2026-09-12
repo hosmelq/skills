@@ -14,7 +14,7 @@
     "gates": {
         "live-evidence": {
             "reference": "SKILL.md",
-            "anchor": "required-workflow",
+            "anchor": "applying-the-catalog",
             "load": false
         },
         "completion": {

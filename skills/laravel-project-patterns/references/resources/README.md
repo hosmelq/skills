@@ -21,8 +21,9 @@ Use this router for files under `resources/js/**`, `resources/views/**`, or
 
 ## Coverage Expectations
 
-Select only the branch matching the changed path and preserve its generated
-versus hand-authored boundary.
+Select the branch matching the active stack and changed behavior, then preserve
+its generated versus hand-authored boundary. Directory names alone do not
+establish use of Inertia, Wayfinder, or React Email.
 
 ## Do Not
 

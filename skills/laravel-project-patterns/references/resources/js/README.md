@@ -9,9 +9,10 @@ shared contracts, and CSS entrypoints.
 
 ## When To Use
 
-Use it before changing `resources/js`. Read the live page, its controller,
-resource types, generated Wayfinder route/action imports, and pages with the
-same state and interaction contract first.
+Use this reference when the active frontend uses Inertia React and the task
+matches a listed pattern. Confirm the stack and active route from live code;
+inspect the page, backend contracts, and comparable interactions. Select
+Wayfinder or other library-specific examples only when those tools are present.
 
 Generated action/route/enum modules are consumers of the project generation
 step. Do not hand-edit or copy generated output into authored examples.
@@ -38,7 +39,8 @@ Backend feature tests cover component names, props, redirects, and flash/toast
 contracts. Add browser tests only when a real browser suite exists and the
 change requires interaction, focus, keyboard, or visual-runtime proof.
 
-Run generated-type commands before TypeScript checks and the frontend build.
+When the build consumes generated types, use its configured generation commands
+before TypeScript checks and the frontend build.
 
 ## Do Not
 

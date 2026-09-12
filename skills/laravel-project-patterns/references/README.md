@@ -35,7 +35,7 @@ Do not repeat generic coverage or prohibition text in every leaf.
 
 Preserve all technical pattern coverage, datasets, and snippets. When an example uses a real module/entity name, convert it to a complete synthetic example instead of deleting it.
 
-References must stay grounded in live repository evidence. When updating a reference, read the exact files in the matching path plus equivalent live siblings with the same precondition, operation, ownership boundary, and outcome before editing the prose. Directory proximity alone does not make a sibling authoritative. If the pattern only appears in one area, say that it is a current local pattern instead of turning it into a broad rule.
+Ground changes to technical recommendations in current code or authoritative documentation for the relevant contract. Compare siblings by precondition, operation, ownership boundary, and outcome; directory proximity alone is insufficient. State when a convention applies only to a particular architecture or library. Routing and editorial changes can use the catalog and references as evidence without inspecting an original project. If technical evidence is unavailable, preserve the existing example's semantics and record the limitation instead of inventing a broader rule.
 
 When a reference touches model integration coverage, link to `references/tests/Integration/Models/README.md` instead of duplicating its full policy text.
 
@@ -45,7 +45,7 @@ This file defines documentation structure expectations only. Router references
 define coverage expectations for the project code they map to; focused leaves
 preserve the selected pattern or example.
 
-For controller references, coverage expectations must include both action order and nested binding boundaries because those are part of the project contract, not optional examples.
+For controller references, preserve action-order conventions and nested binding coverage where the destination project owns those contracts. Describe their applicability so examples do not impose route structure or test style on other projects.
 
 ## Do Not
 

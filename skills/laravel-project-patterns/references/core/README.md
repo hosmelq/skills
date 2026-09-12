@@ -28,9 +28,9 @@ source for complete examples.
 
 ## Coverage Expectations
 
-These leaves preserve the global contracts. Load the matching domain router for
-the full implementation or test examples and apply a rule only when the live
-surface makes it relevant.
+These leaves describe shared contracts and conditional conventions. Consult
+the matching domain router when implementation or test examples would help;
+apply a rule only when current project guidance or code supports it.
 
 ## Do Not
 
