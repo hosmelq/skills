@@ -1,101 +1,100 @@
-# Executable Context Router
+# Bounded Hybrid Search
 
 ## When To Use
 
-Use this required entrypoint before reading or discovering pattern references.
-Inspect the affected live project code to identify paths, operations, and
-concerns. Markdown remains the source of truth; `catalog.json` contains routing
-metadata only.
-
-The router bounds catalog access. Do not replace it with searches, directory
-listings, the map, guessed reference paths, or unrestricted link following.
-Live project code can be searched independently. Catalog-maintenance tasks may
-inspect the files they need to change; that exception does not apply to ordinary
-application work.
+Use `scripts/search.py` before reading catalog patterns. It combines SQLite FTS5
+BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
+the source of truth; there is no generative helper or external inference API.
 
 ## Pattern
 
-Pass the paths relevant to the query together so the resolver can deduplicate
-shared contracts and references:
+### Local Setup
 
-```shell
-php /path/to/laravel-project-patterns/scripts/context.php \
-  --path=app/Actions/UpdateRecord.php \
-  --path=tests/Integration/Actions/UpdateRecordTest.php
+Requires macOS or Linux, `uv`, and a C/C++ compiler for the first dependency
+build. The first `search` automatically downloads the 639 MB
+[Qwen3-Embedding 0.6B Q8_0 GGUF](https://registry.ollama.ai/v2/library/qwen3-embedding/blobs/sha256:06507c7b42688469c4e7298b0a1e16deff06caf291cf0a5b278c308249c3e439),
+verifies its size and SHA-256, and builds the local index before searching:
+
+```text
+06507c7b42688469c4e7298b0a1e16deff06caf291cf0a5b278c308249c3e439
 ```
 
-The resolver infers an operation only when every recognizable filename agrees.
-Pass it explicitly when the operation is known, and add only concerns that are
-owned by the matched surfaces:
+To prepare the model and index ahead of a task, optionally run:
 
 ```shell
-php /path/to/laravel-project-patterns/scripts/context.php \
-  --path=tests/Feature/Http/Controllers/UpdateRecordControllerTest.php \
-  --operation=update \
-  --concern=delegated-action
+uv run <skill-directory>/scripts/search.py index
 ```
 
-Use `--list` to discover supported operations, concerns, aliases, owners, and
-path rules. The default output contains selected reference paths, required
-applicable gates, word counts, hashes, and one compact frontier summary per loaded parent.
-One branch can never consume or hide another branch's frontier.
+`uv` installs the pinned Python dependencies on first use, including
+`llama-cpp-python`, which runs the downloaded model inside Python. The model,
+configuration and derived index live in `<skill-directory>/.cache`, excluded from Git. Put
+`--cache-dir=/another/writable/directory` before the subcommand when the skill
+installation is read-only; use that same directory for subsequent commands.
 
-Expand only the parent you need to reveal its immediate children. Use
-`--max-options` and `--offset` to page a large branch without loading unrelated
-branches:
+Subsequent runs reuse the model without downloading it again. For an existing
+verified GGUF, `index --model=/path/to/model.gguf` skips the download. A failed
+or interrupted download never installs a partial model; rerun the command to
+retry. Network access is needed for initial dependencies and model download.
+
+Each command loads the model directly through the Python binding and releases
+it afterward. Inference uses six CPU threads and one 4,096-token context;
+commands sharing a cache run serially to limit concurrent model memory.
+There is no service, port, HTTP inference request or model-manager installation.
+On another computer, the first search performs the same setup automatically.
+Model weights and the database are never shipped in Git.
+
+### Query The Actual Contract
+
+Write a task JSON file outside tracked project content. Keep inspected code and
+facts relevant to the requested behavior; do not send a repository dump.
+
+```json
+{
+  "request": "Cover the resource's optional nested relationship without triggering lazy loading.",
+  "paths": ["src/Shipping/Http/Resources/ParcelResource.php", "tests-new/Integration/Http/Resources/ParcelResourceTest.php"],
+  "code_context": {
+    "resource": "class ParcelResource extends JsonResource { public function toArray(Request $request): array { return ['recipient' => $this->whenLoaded('recipient', fn () => RecipientResource::make($this->recipient))]; } }",
+    "test_setup": "The active PHPUnit configuration selects tests-new; preserve its configured command and existing test naming."
+  }
+}
+```
 
 ```shell
-php /path/to/laravel-project-patterns/scripts/context.php \
-  --path=tests/Feature/Http/Controllers/RecordControllerTest.php \
-  --expand=references/tests/Feature/Http/Controllers/README.md \
-  --max-options=10
+uv run <skill-directory>/scripts/search.py search --task-file=/path/to/task.json
 ```
 
-Follow the tree one step at a time. Rerun with `--select` for an immediate child
-printed by an expanded frontier; repeat earlier selections when walking deeper.
-A jump to a non-child fails closed. Multiple `--expand` and interleaved
-`--select` values keep every active task surface independently navigable.
+`--task-file=-` accepts JSON on stdin. `paths` records actual task locations; it
+does not map them onto catalog directories or filter by a filename guess. Ranking
+uses `request` plus `code_context`, so include the evidenced framework, behavior
+owner and relevant module-specific conditions there. Only the supplied facts and
+catalog text reach the in-process model; project code is not indexed or
+stored in the catalog database.
+
+The JSON response contains complete candidate sources, their cumulative token
+count and the number that did not fit. The default source budget is 4,000
+`o200k_base` tokens; `--budget` may lower it. Metadata and the caller's existing
+context are additional. A source too large for the remaining budget is skipped
+whole, never silently truncated. Returned links do not load their targets.
+
+Every query checks current Markdown hashes and updates added, changed or deleted
+documents atomically. Unchanged embeddings are reused; a changed model/runtime
+fingerprint invalidates them. A failed update returns an error instead of stale
+guidance. To recreate a damaged cache, move that installation's `.cache` to Trash
+and rerun the command; automatic setup recreates it.
+
+### Maintain The Skill
 
 ```shell
-php /path/to/laravel-project-patterns/scripts/context.php \
-  --path=tests/Feature/Http/Controllers/RecordControllerTest.php \
-  --select=references/tests/Feature/Http/Controllers/actions/README.md \
-  --select=references/tests/Feature/Http/Controllers/actions/update.md
+python3 <skill-directory>/scripts/validate.py
+uv run --no-project --with numpy==2.5.3 --with tiktoken==0.14.0 \
+  python -B -m unittest discover -s <skill-directory>/scripts/tests -p 'test_*.py'
 ```
 
-After the selection is stable, obtain pattern text through `--include-content`;
-it emits the exact selected Markdown within the content budget. Do not read
-selected pattern files directly. The metadata-only response includes word
-counts, not permission to bypass that budget with file reads. Applicable
-gate sections returned separately may be read when their checks are needed;
-they are not an alternative route to the linked catalog.
-
-Keep the default limits: 12 selected references, 2,400 words of included content,
-and 20 options per expanded frontier. Metadata-only results do not enforce the
-content word limit. If a selection is too large, narrow its paths, concerns, or
-selections and page large frontiers with `--offset`. Do not automatically raise
-limits, truncate references, concatenate files, or read the same oversized pack
-directly. A different budget requires an explicit task constraint; it is not an
-error-recovery shortcut. Use `--format=json` for structured consumers.
-
-Unknown paths, unsupported owner/operation combinations, equal-priority path
-matches, traversal segments, missing targets, invalid anchors, and malformed
-catalog data return a non-zero exit code with a specific error.
-An unsupported project path indicates a catalog limitation. Report the exact
-path and error and stop catalog access for that surface. Do not invent a path,
-change the project's structure, or browse references manually to make it fit.
-Continue independent work only when it does not require the missing guidance.
-
-Run `php scripts/validate.php` after changing routing metadata, links, or
-references, and `php scripts/test.php` after changing resolver behavior. They
-use no Composer dependency.
-
-Results describe only the supplied paths. Update the query before consulting
-references for newly affected paths. Retain applicable guidance already read
-instead of reloading it merely because the query changed.
+Keep catalog text out of automatic preload paths. Maintenance may inspect source
+files directly; application work retrieves them through the bounded search.
 
 ## Related References
 
-- [`SKILL.md`](../SKILL.md)
-- [`references/MAP.md`](MAP.md)
-- [`references/README.md`](README.md)
+- [Skill entrypoint](../SKILL.md)
+- [Reference structure](README.md)
+- [Benchmark note](../docs/benchmark.md)
