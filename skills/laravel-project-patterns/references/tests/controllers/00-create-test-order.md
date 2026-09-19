@@ -1,59 +1,31 @@
 # Controller Tests: Ordered Create Block
 
-Use for a Laravel Pest controller test of a GET form route grouped in
-`describe('create')`. Persistence and submitted-field validation belong to the
-appropriate write action. Keep the current controller test file and configured
-suite, including `tests-new` or module/DDD layouts.
-
-All examples describe a fictional workshop application. Models, routes, props,
-factory states, the team-aware `signIn()` helper and `public_id` identifiers are
-illustrative contracts, not framework defaults. Adapt them to inspected project
-code; do not introduce fields, helpers or dependencies just to copy an example.
+Ordered Laravel Pest tests for GET create forms: authentication redirects, tenant authorization, scoped parents, lifecycle restrictions, positive page contracts, dependent selects, option exclusions and read-only states. Includes the base block and canonical names.
 
 ## Test Order
 
-Use this sequence when assembling the block. Keep only applicable cases and
-preserve the relative order; do not alphabetize the tests or group unrelated
-failures into a dataset. For each additional route level, repeat the binding
-checks before moving to the next level.
+Keep applicable cases in this order; do not alphabetize or combine unrelated failures in a dataset. Repeat binding checks for each additional route level. Persistence and submitted-field validation belong to the write action.
 
 1. `requires authentication` — valid route fixtures, no sign-in; redirect to login.
 2. `prevents viewing from an unrelated tenant` — authenticated outsider; 403.
-3. `returns not found when the parent belongs to another tenant` — sign in
-   to the team in the URL; bind an unrelated parent; 404.
+3. `returns not found when the parent belongs to another tenant` — authorize the URL tenant; unrelated parent; 404.
 4. `returns not found when the parent is soft deleted` — 404.
-5. `returns not found when the nested parent belongs to another parent in the same tenant`
-   — two distinct parents within one team; 404.
+5. `returns not found when the nested parent belongs to another parent in the same tenant` — two distinct parents within one tenant; 404.
 6. `returns not found when the nested parent belongs to another tenant` — 404.
 7. `returns not found when the nested parent is soft deleted` — 404.
-8. `prevents viewing when the parent is inactive` — 403 where the policy
-   denies opening the form.
-9. `shows the create page` — 200, exact component, public IDs, enums,
-   required options (including eligibility/order when promised) and any initial
-   empty dependent list. Keep this name even when the page has richer props.
-10. `loads dependent options for the selected value` —
-    selected country and partial reload of the dependent province select.
-11. `shows the create page without options with unavailable relations`
-    — dataset of unavailable related records.
-12. `shows the create page without options from another tenant` —
-    option ownership independent of a valid related parent.
-13. `shows the create page without unavailable options` —
-    inactive, deleted or otherwise ineligible options.
-14. `marks the page read only for final parent states` — each supported final state returns 200
-    with `canMutate = false`.
+8. `prevents viewing when the parent is inactive` — policy forbids opening the form; 403.
+9. `shows the create page` — 200, component, public IDs, enums, required options and any initially empty dependent list.
+10. `loads dependent options for the selected value` — selected value and complete partial-reload options.
+11. `shows the create page without options with unavailable relations` — unavailable related-record dataset.
+12. `shows the create page without options from another tenant` — option ownership independent of a valid related parent.
+13. `shows the create page without unavailable options` — inactive, deleted or otherwise ineligible options.
+14. `marks the page read only for final parent states` — 200 and `canMutate = false` for each supported final state.
 
-Use identical names for identical behavior across controllers. The test file and
-`describe('create')` already identify the entity and action: use
-`shows the create page`, not `shows the create <entity> page`. Add a condition
-only when it distinguishes another case in the block. Use parent/nested parent
-roles; qualify the field or level only to distinguish cases in one block. Avoid
-`prevents creating` for a GET authorization test. Preserve 403, scoped-binding 404 and read-only distinctions.
+Reuse these names across controllers; the file identifies the entity. Qualify a parent level or field pair only to distinguish cases in one block. GET authorization uses `prevents viewing`.
 
 ## Base Example
 
-Here `signIn()` without arguments authenticates a member of another team;
-`signIn(team: ...)` authorizes the supplied team. For nested routes, create
-valid parents and pass all bound parameters even in the first two tests.
+Here `signIn()` authenticates an outsider; `signIn(team: ...)` authorizes that team. For nested routes, provide valid parents and all route parameters even in authentication and authorization tests.
 
 ```php
 <?php
@@ -106,17 +78,18 @@ describe('create', function (): void {
 });
 ```
 
-
 ## Related References
 
-File numbers follow the applicable case order; they do not require reading all
-files. Search only the current requirement.
+Numbers follow case order; load only applicable examples.
 
 1. [Route binding and soft-deleted parents](01-create-route-bindings.md)
 2. [Inactive parent access restriction](02-create-inactive-parent.md)
 3. [Positive page contract and enum props](03-create-page-contract.md)
-4. [Positive eligible and ordered select options](04-create-select-options.md)
-5. [Positive nested option IDs and metadata](05-create-nested-option-props.md)
-6. [Dependent selects and partial reload](06-create-dependent-selects.md)
-7. [Option exclusions: relations, ownership, own state](07-create-option-filters.md)
-8. [Read-only final parent states](08-create-read-only.md)
+4. [Ordered eligible options](04-create-ordered-options.md)
+5. [Category options and parent payload](05-create-category-options.md)
+6. [Nested option IDs and metadata](06-create-nested-option-props.md)
+7. [Dependent selects and partial reload](07-create-dependent-selects.md)
+8. [Unavailable related records](08-create-related-option-filters.md)
+9. [Independent option ownership](09-create-option-ownership.md)
+10. [Unavailable options](10-create-unavailable-options.md)
+11. [Read-only final parent states](11-create-read-only.md)

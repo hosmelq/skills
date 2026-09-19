@@ -3,7 +3,7 @@
 # requires-python = ">=3.12"
 # dependencies = ["llama-cpp-python==0.3.35", "numpy==2.5.3", "tiktoken==0.14.0"]
 # ///
-"""Retrieve bounded Markdown evidence using BM25 and local embeddings."""
+"""Find reference descriptions with hybrid search; read only selected examples."""
 
 import argparse
 from contextlib import closing
@@ -36,19 +36,41 @@ def main(argv=None):
     commands = parser.add_subparsers(dest="command", required=True)
     index = commands.add_parser("index", help="Prepare the local model and index changed Markdown")
     index.add_argument("--model", help="Use an existing pinned GGUF instead of the automatic download")
-    search = commands.add_parser("search", help="Refresh the index and emit complete candidate references")
+    search = commands.add_parser("search", help="Refresh the index and return brief candidate descriptions")
     search.add_argument("--task-file", required=True, help="JSON request/paths/code_context file, or - for stdin")
-    search.add_argument("--budget", type=int, default=4000, help="Cumulative source tokens, at most 4000")
+    search.add_argument("--session", type=Path, required=True, help="Receipt file outside the skill; one per consumer context")
+    search.add_argument("--limit", type=int, default=5, help="Candidate descriptions, from 1 to 10 (default: 5)")
+    read = commands.add_parser("read", help="Read selected whole references without loading the embedding model")
+    read.add_argument("--session", type=Path, required=True)
+    read.add_argument("--ids", nargs="+", required=True, help="IDs returned by search in this session")
+    read.add_argument("--budget", type=int, default=4000, help="Source tokens in this response, from 1 to 4000")
+    read.add_argument("--repeat", action="store_true", help="Explicitly reread selected sources after losing their context")
     args = parser.parse_args(argv)
-    if args.command == "search" and not 0 < args.budget <= 4000:
-        parser.error("--budget must be between 1 and 4000; narrow the task instead of enlarging catalog context")
+    if args.command == "read" and not 0 < args.budget <= 4000:
+        parser.error("--budget must be between 1 and 4000")
+    if args.command == "search" and not 1 <= args.limit <= 10:
+        parser.error("--limit must be between 1 and 10")
     root = Path(__file__).resolve().parent.parent
     cache = (args.cache_dir or root / ".cache").expanduser().resolve()
     os.environ["TIKTOKEN_CACHE_DIR"] = str(cache / "tokenizer")
-    from embedding_runtime import EmbeddingRuntime, configuration
-    from search_index import SearchIndex
     task = task_input(args.task_file) if args.command == "search" else None
     cache.mkdir(parents=True, exist_ok=True)
+    if args.command == "index":
+        output = indexed_command(root, cache, args)
+    else:
+        from reference_session import ReferenceSession
+        with ReferenceSession(root, args.session).locked() as session:
+            if args.command == "read":
+                output = session.read(args.ids, budget=args.budget, repeat=args.repeat)
+            else:
+                output = indexed_command(root, cache, args, task, session)
+            session.save()
+    print(json.dumps(output, ensure_ascii=False, separators=(",", ":")))
+
+
+def indexed_command(root, cache, args, task=None, session=None):
+    from embedding_runtime import EmbeddingRuntime, configuration
+    from search_index import SearchIndex
     # Serialize commands before loading a model so concurrent agents share the resource budget.
     with (cache / "command.lock").open("a+b") as command_lock:
         fcntl.flock(command_lock, fcntl.LOCK_EX)
@@ -61,19 +83,15 @@ def main(argv=None):
                 else:
                     code = task["code_context"]
                     query = task["request"] + "\n" + (code if isinstance(code, str) else json.dumps(code, ensure_ascii=False, separators=(",", ":")))
-                    result = store.pack(store.search(query), budget=args.budget)
-                    output = {
-                        "status": "candidates" if result["references"] else "no_sources_within_budget",
-                        "source_budget": args.budget, **result,
-                        "instruction": "Check these candidate rules against the supplied live contract. Ranking does not establish applicability or complete coverage. Reference paths belong to the catalog; retain the project's actual paths and test configuration.",
-                    }
+                    ranking = store.search(query)
+                    output = session.shortlist(store.documents, ranking, limit=args.limit)
             output["embedding_input_tokens"] = embedding.input_tokens
         # Configuration is persisted only after a successful synchronization/search.
         import tempfile
         with tempfile.NamedTemporaryFile(mode="w", dir=cache, prefix="runtime-", suffix=".json", delete=False) as temporary:
             json.dump(config, temporary)
         Path(temporary.name).replace(cache / "runtime.json")
-    print(json.dumps(output, ensure_ascii=False, separators=(",", ":")))
+    return output
 
 
 if __name__ == "__main__":

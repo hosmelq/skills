@@ -1,29 +1,12 @@
 # Create Tests: Dependent Select Options And Partial Reload
 
-Use when changing one select changes the options in another: **country → province**,
-`country_code` query input → `countryCode` and `provinces` Inertia props.
-Also: cascading dropdowns, select dependiente, país → provincia.
+Complete HTTP/Inertia create-page contract for dependent selects: component, public IDs, enum options, null selected value and empty child list, followed by selected-value echo and ordered partial-reload options. Includes standalone and nested-parent forms.
 
-## Case Order
-
-1. Initial page: `countryCode = null`, complete country options, empty `provinces`.
-2. Selected country: verify the selected value, then partially reload `provinces`;
-   compare the complete expected options array to verify membership, count, every
-   label/value pair and ordering together.
-
-Put these page cases after authentication, authorization, binding and access
-restrictions. Use `loads dependent options for the selected value` consistently;
-add the field pair only when multiple dependent selects in the same controller
-need distinct test names. This tests the HTTP/Inertia response,
-not the browser change handler, clearing a selection or submission validation.
+Use `shows the create page`, then `loads dependent options for the selected value`. Qualify the field pair only when multiple dependent selects need distinct names. These cases do not test browser change handlers, selection clearing or submission validation.
 
 ## Facility Form
 
-This fictional example assumes the test bootstrap seeds regions for the selected
-country, with multiple regions to make ordering meaningful. Use the project's
-seeded catalog or deterministic fixtures; do not invent a region factory.
-Models, enum options, `signIn(team: ...)`, `public_id`, named routes and
-`reloadOnly()` must match the application's setup and installed Inertia testing API.
+Use the project's seeded catalog or deterministic fixtures with multiple regions for the selected country; do not invent a region factory. Match `reloadOnly()` to the installed Inertia testing API.
 
 ```php
 <?php
@@ -104,8 +87,3 @@ Reuse the same two test names and assertions; only adapt the parent contract:
    `team.id` against their public IDs; omit the facility-only `facilityTypes` prop.
 4. Keep null country / empty provinces initially and the complete partial-reload
    options assertion unchanged. The parent must be valid in both cases.
-
-## Related References
-
-1. [Ordered create block](00-create-test-order.md)
-2. [Parent scope and binding](01-create-route-bindings.md)

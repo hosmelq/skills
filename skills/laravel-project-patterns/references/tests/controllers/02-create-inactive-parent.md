@@ -1,12 +1,8 @@
 # Create Tests: Access Denied For An Inactive Parent
 
-Use after authentication, tenant authorization and route-binding checks, before
-the successful page case. A live but inactive route parent returns HTTP 403 when the
-policy denies opening the form; a soft-deleted parent has a separate HTTP 404 case.
+Access restriction for a create form whose live parent is inactive: HTTP 403 before the positive page case. Distinct from a soft-deleted parent returning 404 and a viewable final parent returning 200.
 
-The fictional example binds a service plan and its rule. For a form directly under
-the plan, use the same test name and assertion with only that parent parameter.
-Factories, routes and `signIn(team: ...)` are illustrative project contracts.
+Place after authentication, authorization and binding checks. For a form directly under the plan, keep the same name and assertion with only that parent parameter.
 
 ```php
 <?php
@@ -36,9 +32,3 @@ describe('create', function (): void {
     });
 });
 ```
-
-## Related References
-
-- [Ordered create block](00-create-test-order.md)
-- [Route binding and soft deletes](01-create-route-bindings.md)
-- [A final parent that remains viewable](08-create-read-only.md)

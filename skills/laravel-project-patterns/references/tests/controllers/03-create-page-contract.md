@@ -1,18 +1,10 @@
 # Create Page Tests: Enum Props And Nested Parent IDs
 
-Use for the positive page test after authentication, authorization, binding and
-access restrictions in `describe('create')`. Assert 200, the exact Inertia
-component, public identifiers and form props consumed by the page. A
-component-only assertion misses a broken select or parent identifier.
+Positive create-page contracts: HTTP 200, exact Inertia component, public tenant and parent IDs, and complete enum options. Includes a flat form, one bound parent with enums, and two bound parents.
 
-These are separate controller examples in a fictional workshop application.
-Routes, models, enum `options()`, `signIn(team: ...)` and `public_id` must be
-adapted to the current project. Keep its configured test directory.
+Keep `shows the create page` for each controller. Assert values consumed by the form, not merely prop existence.
 
 ## Enum Options
-
-Keep the name `shows the create page`. Assert complete enum options,
-not only that the prop exists. Equivalent page shapes can share this pattern:
 
 | Page | Component | Props beyond the team public ID |
 | --- | --- | --- |
@@ -97,7 +89,7 @@ describe('create', function (): void {
 
 ## Two Bound Parents
 
-Assert both parent IDs, not only the team ID.
+Assert both parent IDs.
 
 ```php
 <?php
@@ -131,10 +123,3 @@ describe('create', function (): void {
     });
 });
 ```
-
-## Related References
-
-1. [Ordered create block and base example](00-create-test-order.md)
-2. [Initial empty province list and dependent selects](06-create-dependent-selects.md)
-3. [Active categories and hidden internal parent keys](04-create-select-options.md)
-4. [Multi-option page with nested metadata](05-create-nested-option-props.md)

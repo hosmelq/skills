@@ -2,7 +2,7 @@
 
 ## When To Use
 
-Use `scripts/search.py` before reading catalog patterns. It combines SQLite FTS5
+Use `scripts/search.py` to select descriptions before reading catalog patterns. It combines SQLite FTS5
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
@@ -39,8 +39,8 @@ verified GGUF, `index --model=/path/to/model.gguf` skips the download. A failed
 or interrupted download never installs a partial model; rerun the command to
 retry. Network access is needed for initial dependencies and model download.
 
-Each command loads the model directly through the Python binding and releases
-it afterward. Inference uses six CPU threads and one 4,096-token context;
+Indexing and search load the model through the Python binding and release
+it afterward; selected reads do not load it. Inference uses six CPU threads and one 4,096-token context;
 commands sharing a cache run serially to limit concurrent model memory.
 There is no service, port, HTTP inference request or model-manager installation.
 On another computer, the first search performs the same setup automatically.
@@ -63,27 +63,48 @@ facts relevant to the requested behavior; do not send a repository dump.
 ```
 
 ```shell
-uv run <skill-directory>/scripts/search.py search --budget=3200 --task-file=/path/to/task.json
+uv run <skill-directory>/scripts/search.py search --task-file=/path/to/task.json --session=/path/to/task-session.json
+uv run <skill-directory>/scripts/search.py read --session=/path/to/task-session.json --ids <selected-id> <another-id>
 ```
 
-`--task-file=-` accepts JSON on stdin. `paths` records actual task locations; it
-does not map them onto catalog directories or filter by a filename guess. Ranking
-uses `request` plus `code_context`, so include the evidenced framework, behavior
-owner and relevant module-specific conditions there. Only the supplied facts and
-catalog text reach the in-process model; project code is not indexed or
-stored in the catalog database.
+`--task-file=-` accepts JSON on stdin. Paths identify the current project's files;
+they never route by directory names. Ranking uses `request` plus `code_context`
+against the complete reference text, combining BM25 and embeddings as before.
+Only supplied facts and catalog text reach the local model; task text and project
+code are not stored in the index or session.
 
-The JSON response contains complete candidate sources, their cumulative token
-count and the number that did not fit. The command above requests 3,200
-`o200k_base` tokens per search for the current create references. This does not
-limit a whole task: measure complete responses and repeated references across
-follow-up queries. Recheck coverage and cumulative cost as the catalog changes.
-The CLI default and ceiling remain 4,000; `--budget` may lower it.
-Metadata and the caller's existing
-context are additional. A source too large for the remaining budget is skipped
-whole, never silently truncated. Returned links do not load their targets.
+Search returns five descriptions by default (`--limit=1..10`): ID, title,
+applicability summary, source-token cost and whether this context already read it.
+Descriptions are the first paragraph after each reference's H1, limited to 80
+`o200k_base` tokens. Keep conditions discriminating; do not replace them with a
+keyword list. Selection uses the live contract, not just the rank. Missing
+requirements need focused follow-up searches with the same session.
 
-Every query checks current Markdown hashes and updates added, changed or deleted
+Read accepts several selected IDs and emits only their complete sources. It
+loads no embedding model and does not follow links. Source content plus its
+serialized ID/path must fit `--budget` (default and ceiling: 4,000 tokens per
+response). A source that does not fit appears in `blocked` with its cost; it is
+not truncated, marked read or replaced by a lower-ranked source. Read blocked
+IDs in another batch. A single source larger than 4,000 needs a maintainer to
+split it into self-contained examples before it can be retrieved.
+
+Session files store catalog identity, candidate paths/hashes, read receipts and
+cumulative source-token cost, never query text or source bodies. Use a distinct
+temporary file per task and consuming agent, outside the skill. An unchanged
+source is returned once; later reads report its ID in `already_read`. `--repeat`
+explicitly rereads selected IDs when their content is no longer in context.
+After compaction, do not assume receipts mean the content is still available.
+A new session also resets receipts. Changed/deleted source IDs fail instead of
+serving stale text; search again to obtain current IDs. Adding another document
+does not renumber existing IDs.
+
+`source_tokens` counts serialized source objects in this response;
+`session_source_tokens` accumulates those objects, including explicit rereads.
+Neither is a whole-task limit or billing measure. Candidate descriptions, JSON
+wrappers, commands, task input and existing context cost extra. Measure complete
+responses across all searches and reads when comparing context consumption.
+
+Every search checks current Markdown hashes and updates added, changed or deleted
 documents atomically. Unchanged embeddings are reused; a changed model/runtime
 fingerprint invalidates them. A failed update returns an error instead of stale
 guidance. To recreate a damaged cache, move that installation's `.cache` to Trash

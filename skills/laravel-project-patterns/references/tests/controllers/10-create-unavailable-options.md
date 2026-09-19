@@ -1,12 +1,8 @@
-# Create Tests: Excluding Options By Related State And Ownership
+# Create Tests: Unavailable Options
 
-Use for GET create option lists whose availability depends on record state, parent relations or team ownership. These are separate conditions: excluding an unavailable enrollment does not prove exclusion of an otherwise active enrollment whose member or service plan is unavailable. The workshop domain and its data are fictional. Factories, routes, `signIn(team: ...)` and `public_id` illustrate a project contract; they are not Laravel defaults. Adapt them to the current project and keep its actual test root.
+GET create-page exclusions for each option's own inactive, deleted or noninitial state. Includes complete multi-list assertions and a nested-form variant with no available options; keep this after relation-state and ownership exclusions.
 
-Keep these tests in this order:
-
-1. Exclude an enrollment when its member or service plan is unavailable, using the three dataset cases.
-2. Exclude a plan rule owned by another team even when its service plan is local.
-3. Exclude each listed record by its own unavailable state. A foreign fixture without an exclusion assertion is not coverage.
+A foreign or unavailable fixture without an exclusion assertion is not coverage. Keep the same canonical name for equivalent availability cases across controllers.
 
 ```php
 <?php
@@ -19,64 +15,13 @@ use App\Enums\WorkOrderBaseStatus;
 use App\Models\Enrollment;
 use App\Models\Facility;
 use App\Models\Member;
-use App\Models\PlanRule;
 use App\Models\ServicePlan;
 use App\Models\Team;
 use App\Models\WorkOrderStatus;
-use Database\Factories\MemberFactory;
-use Database\Factories\ServicePlanFactory;
 use Illuminate\Support\Collection;
 use Inertia\Testing\AssertableInertia;
 
 describe('create', function (): void {
-    it('shows the create page without options with unavailable relations', function (string $state): void {
-        $team = Team::factory()->createOne();
-        $member = Member::factory()
-            ->when($state === 'deleted member', fn (MemberFactory $factory): MemberFactory => $factory->trashed())
-            ->for($team)
-            ->createOne();
-        $servicePlan = ServicePlan::factory()
-            ->when($state === 'deactivated service plan', fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->deactivated())
-            ->when($state === 'deleted service plan', fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->trashed())
-            ->for($team)
-            ->createOne();
-        Enrollment::factory()
-            ->for($member)
-            ->for($team)
-            ->for($servicePlan)
-            ->createOne();
-
-        signIn(team: $team);
-
-        $response = get(route('teams.work-orders.create', $team));
-
-        $response->assertOk()
-            ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
-                ->component('work-orders/Create')
-                ->has('enrollments', 0));
-    })->with([
-        'deactivated service plan',
-        'deleted member',
-        'deleted service plan',
-    ]);
-
-    it('shows the create page without options from another tenant', function (): void {
-        $team = Team::factory()->createOne();
-        PlanRule::factory()
-            ->for(Team::factory())
-            ->for(ServicePlan::factory()->for($team))
-            ->createOne();
-
-        signIn(team: $team);
-
-        $response = get(route('teams.work-orders.create', $team));
-
-        $response->assertOk()
-            ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
-                ->component('work-orders/Create')
-                ->has('planRules', 0));
-    });
-
     it('shows the create page without unavailable options', function (): void {
         $team = Team::factory()->createOne();
 
@@ -156,12 +101,9 @@ describe('create', function (): void {
 });
 ```
 
-
 ## Same Availability Case On A Nested Form
 
-For a form under a member, test the empty options result when the only service
-plans are inactive or soft deleted. This is another controller's test file; use
-the same case name. Place it after that controller's positive option-list case.
+A separate controller uses the same case name when its only options are inactive or soft deleted. Place after its positive option-list case.
 
 ```php
 <?php
@@ -202,7 +144,3 @@ describe('create', function (): void {
     });
 });
 ```
-
-## Related References
-
-- [Create block](00-create-test-order.md)

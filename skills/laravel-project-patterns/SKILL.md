@@ -1,64 +1,62 @@
 ---
 name: laravel-project-patterns
-description: "Apply adopted Laravel code and test conventions through bounded hybrid search. Use when project guidance or the task calls for this catalog's patterns."
+description: "Apply the catalog's Laravel controller create-test conventions through selective local retrieval when project guidance or the task calls for these patterns."
 ---
 
 # Laravel Project Patterns
 
-Use this catalog to support the current project's conventions. Apply an example
-only when the live code supports its architecture, library, preconditions and
-behavior ownership. Keep synthetic examples and reference-project identities
-confidential.
+Current coverage: HTTP controller GET `create` tests in Pest/Inertia. For other
+blocks or resource/request tests, report that the catalog does not cover them yet
+and continue from the project's conventions without searching this catalog.
 
-The catalog is being rebuilt incrementally. It currently covers the
-[ordered controller `create` test block](references/tests/controllers/00-create-test-order.md).
-Examples use a fictional domain; preserve the current project's names and setup.
+Examples are fictional. Adapt models, helpers, factories, enums, routes, props and
+identifiers to inspected code; do not introduce contracts to match an example.
+Keep reference-project identities confidential.
 
-## Find Applicable Guidance
+## Retrieve Only What The Task Needs
 
-Use `scripts/search.py` as the required catalog entrypoint. The command below is
-enough for normal use; consult the [search guide](docs/search.md) for setup,
-cache configuration or errors. Before loading pattern references:
-
-1. Inspect project guidance, the affected code and the closest comparable test.
-   Use Composer autoloading and the active test configuration to locate code;
-   preserve actual namespaces, module boundaries, suite roots and test commands.
-2. Supply the literal task, actual paths and concise inspected code or contract
-   facts in a JSON file with `request`, `paths` and `code_context`.
-3. Run the search and read its returned source content:
+1. Inspect project guidance, affected code and the closest comparable test. Locate
+   the active suite through Composer and test configuration; preserve actual
+   module boundaries, namespaces and paths, including `tests-new` or DDD layouts.
+2. Write a temporary JSON file with `request` (requested behaviors), `paths`
+   (actual project paths) and `code_context` (concise inspected code/facts).
+3. Use the required catalog entrypoint to find descriptions, then read only IDs
+   whose conditions match the live contract:
 
    ```shell
-   uv run <skill-directory>/scripts/search.py search --budget=3200 --task-file=/path/to/task.json
+   uv run <skill-directory>/scripts/search.py search --task-file=<task.json> --session=<session.json>
+   uv run <skill-directory>/scripts/search.py read --session=<session.json> --ids <id> <id>
    ```
 
-The first search downloads and verifies the embedding model and builds the local
-index automatically; later searches reuse it. For a read-only installation,
-configure a writable `--cache-dir` as described
-in the search guide and use that same option for subsequent commands.
+Search returns up to five short descriptions and source sizes, never PHP bodies.
+Select the smallest set that covers the requirements; rank is not applicability.
+A specialized page example already covers its listed component, IDs and props;
+load another positive-page example only for a missing contract.
+For a block with several behaviors, use `search --limit=10`. Include the
+[ordered case checklist and base example](references/tests/controllers/00-create-test-order.md)
+in that selection. For a focused edit, retrieve only the missing behavior.
+If a requirement is absent from the descriptions, search that requirement with
+its relevant facts using the same session. A broad shortlist is not proof of
+complete coverage. Do not read every candidate or bypass selection with catalog
+globs or linked-file reads. Search live project code independently as needed.
 
-Search reads and ranks the Markdown outside model context. Use the 3,200-token
-budget above for the current create references; the CLI ceiling is 4,000.
-It returns complete candidate references. Paths such as `tests-new/**`
-and `src/<Domain>/**` do not require aliases. Catalog reference paths never
-prescribe where the current project's files belong.
+`read` returns only selected, complete sources, up to 4,000 source tokens per
+response. It lists IDs that did not fit in `blocked`; request those separately.
+It never substitutes other sources. `read: true` means that source was already
+returned in this session; reuse it. Repeated reads omit unchanged content.
+Use a unique session file outside the skill for each task/agent context. If
+compaction loses a needed example, reread its ID with `--repeat` or use a fresh
+session; another agent's receipts do not supply your context.
 
-Check each candidate's conditions against the live contract. A high rank or a
-nonempty result does not establish applicability or complete coverage. If a
-specific requirement remains uncovered, search that requirement with its relevant
-code facts; reuse evidence already read. Do not repeatedly load the same packet,
-raise the budget, browse the catalog with globs, or follow unread reference links
-to bypass retrieval. Search live project code independently as needed.
+Assemble applicable cases in their documented order, retaining canonical test
+names such as `shows the create page`. Authentication and authorization precede
+binding and access restrictions; positive cases precede dependent-select,
+filtering and read-only variants. Preserve fixture/setup, assertions and datasets.
 
-When assembling a controller `create` block, preserve this test order:
-authentication, authorization, scoped/soft-deleted parents, lifecycle restrictions,
-positive page/options, then dependent-select, filtering and read-only variants.
-Use the same test names for equivalent behavior, including `shows the create page`;
-the controller file supplies the entity context.
-
-On a search error, report the cause and fix the search setup or narrow an
-oversized input. Continue independent work that does not require the missing
-guidance. Do not silently substitute manual catalog browsing or lexical search.
-
-Complete the task using the project's required checks. When maintaining this
-skill itself, inspect the necessary files directly and use the Python validator. The
-[benchmark note](docs/benchmark.md) records why this retrieval method was chosen.
+The first search installs dependencies, downloads the verified embedding model
+and builds the local index automatically. Later searches refresh changed Markdown;
+`read` does not load the model. A search failure must be reported and resolved,
+not silently replaced with another retrieval method. The
+[search guide](docs/search.md) is only needed for setup, recovery or maintenance;
+normal use requires no additional guide. The [benchmark note](docs/benchmark.md)
+records the evidence and limits. Maintainers may inspect catalog files directly.

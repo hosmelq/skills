@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import re
 import sys
 import tempfile
@@ -11,7 +10,6 @@ import unittest
 from pathlib import Path
 
 import numpy as np
-import tiktoken
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -63,7 +61,6 @@ class SearchIndexTests(unittest.TestCase):
         self.skill.mkdir()
         self.cache = self.root / "cache"
         self.embedder = FakeEmbedder()
-        self.encoding = tiktoken.get_encoding("o200k_base")
 
     def write(self, path: str, content: str) -> Path:
         target = self.skill / path
@@ -97,7 +94,7 @@ class SearchIndexTests(unittest.TestCase):
         self.assertIn("Enum validation", document["title"])
         self.assertIn("categoría", document["searchable"])
 
-    def test_cold_index_and_search_deliver_full_sources_within_budget(self):
+    def test_cold_index_keeps_full_sources_and_ranks_without_delivering_bodies(self):
         large = "# Validation details\n" + "validation " * 500
         small = "# Enum validation\nReturn early when primitive validation fails.\n"
         self.write("references/http/large.md", large)
@@ -108,15 +105,9 @@ class SearchIndexTests(unittest.TestCase):
         ranking = index.search("enum validation")
         self.assertEqual(set(ranking), {item["id"] for item in index.documents})
         ids = self.by_path(index)
-        packet = index.pack(
-            [ids["references/http/large.md"]["id"], ids["references/http/small.md"]["id"]],
-            budget=80,
-        )
-        self.assertEqual([item["content"] for item in packet["references"]], [small])
-        serialized = json.dumps(packet["references"][0], ensure_ascii=False, separators=(",", ":"))
-        self.assertEqual(packet["read_tokens"], len(self.encoding.encode(serialized)))
-        self.assertLessEqual(packet["read_tokens"], 80)
-        self.assertEqual(packet["refused_count"], 1)
+        self.assertEqual(ids["references/http/large.md"]["raw"], large)
+        self.assertEqual(ids["references/http/small.md"]["raw"], small)
+        self.assertTrue(all(isinstance(item, int) for item in ranking))
 
     def test_reopening_an_unchanged_index_reuses_document_embeddings(self):
         self.write("references/first.md", "# First\nAn unchanged source.\n")
@@ -151,9 +142,9 @@ class SearchIndexTests(unittest.TestCase):
             self.embedder.inputs,
             [documents["references/middle.md"]["searchable"], documents["references/zeta.md"]["searchable"]],
         )
-        packet = index.pack(index.search("Updated behavior"), budget=4000)
-        self.assertNotIn("references/alpha.md", [item["path"] for item in packet["references"]])
-        self.assertIn("Updated behavior.", "\n".join(item["content"] for item in packet["references"]))
+        ranked = [index.documents[item] for item in index.search("Updated behavior")]
+        self.assertNotIn("references/alpha.md", [item["path"] for item in ranked])
+        self.assertIn("Updated behavior.", "\n".join(item["raw"] for item in ranked))
 
     def test_failed_synchronization_keeps_previous_snapshot_and_retries_changes(self):
         self.write("references/stable.md", "# Stable\nUnchanged contract.\n")
@@ -187,10 +178,8 @@ class SearchIndexTests(unittest.TestCase):
         self.write("references/http.md", "# HTTP\nOriginal contract.\n")
         index = self.index()
         index.synchronize()
-        ranking = index.search("HTTP contract")
+        index.search("HTTP contract")
         self.write("references/http.md", "# HTTP\nChanged after search.\n")
-        with self.assertRaises(SearchIndexError):
-            index.pack(ranking)
         with self.assertRaises(SearchIndexError):
             index.search("HTTP contract")
 
@@ -198,10 +187,10 @@ class SearchIndexTests(unittest.TestCase):
         self.write("references/http.md", "# HTTP\nOriginal contract.\n")
         index = self.index()
         index.synchronize()
-        ranking = index.search("HTTP contract")
+        index.search("HTTP contract")
         (self.skill / "references/http.md").unlink()
         with self.assertRaises(SearchIndexError):
-            index.pack(ranking)
+            index.search("HTTP contract")
 
     def test_model_fingerprint_change_reembeds_every_document(self):
         self.write("references/one.md", "# One\nFirst contract.\n")
@@ -236,26 +225,6 @@ class SearchIndexTests(unittest.TestCase):
         self.embedder.invalid = "nan"
         with self.assertRaises(SearchIndexError):
             index.search("source contract")
-
-    def test_links_are_not_implicitly_loaded_into_the_packet(self):
-        source = "# Guide\nRead [another guide](other.md) when applicable.\n"
-        self.write("references/guide.md", source)
-        self.write("references/other.md", "# Other\nUNREQUESTED_LINK_TARGET\n")
-        index = self.index()
-        index.synchronize()
-        packet = index.pack([self.by_path(index)["references/guide.md"]["id"]])
-        self.assertEqual([item["content"] for item in packet["references"]], [source])
-        self.assertNotIn("UNREQUESTED_LINK_TARGET", str(packet))
-
-    def test_repeated_ranking_ids_do_not_duplicate_context_or_token_charges(self):
-        source = "# Guide\nA complete contract.\n"
-        self.write("references/guide.md", source)
-        index = self.index()
-        index.synchronize()
-        identifier = index.documents[0]["id"]
-        packet = index.pack([identifier, identifier])
-        self.assertEqual(len(packet["references"]), 1)
-        self.assertEqual(packet["read_tokens"], index.pack([identifier])["read_tokens"])
 
     def test_hybrid_retains_complementary_lexical_and_vector_results(self):
         self.write("references/lexical.md", "# Xylophone\nXylophone exact identifier.\n")

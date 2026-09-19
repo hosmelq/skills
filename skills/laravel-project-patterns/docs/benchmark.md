@@ -1,45 +1,59 @@
 # Retrieval benchmark
 
-2026-09-12 · catalog snapshot `612b7e0` · 455 searchable Markdown documents.
+## Selective reads · 2026-09-19
 
-**Decision:** BM25 + Qwen3-Embedding 0.6B Q8_0, fused with RRF, without a
-generative helper. Keep complete references within a 4,000-token read budget.
+**Decision:** keep BM25 + Qwen3-Embedding 0.6B Q8_0 in Python. Search returns
+short applicability descriptions; the caller selects complete examples to read.
+Per-context receipts suppress unchanged repeats. No server or generative helper.
 
-Eight variants ran on the same 12 synthetic tasks: nine positive cases and
-three initially labeled negatives. Primary results had blinded semantic review.
+Compared the nine-reference baseline at `1369269`, a compact nine-file layout,
+and twelve behavior-focused references. All 22 test bodies and 14 canonical
+names survive; the source audit still covers 55 declarations / 59 variants.
 
-| Variant | Positive cases with complete evidence |
-| --- | --- |
-| BM25 | 8/9 |
-| Embeddings | 7/9 |
-| Hybrid | 9/9 |
-| Hybrid + Qwen3.5 4B helper | 8/9 |
+| Measured text context | Before | Final layout |
+| --- | ---: | ---: |
+| 14 focused tasks: mean complete search/read responses | 3,030.5 | 1,225.6 |
+| Independent dependent-select task: skill + all catalog responses/diagnostics | 6,901 | 3,544 |
 
-Hybrid used a median 4,278 caller-context tokens and returned seven documents;
-the helper increased combined context to 9,818 tokens. At a 2,000-token read
-budget, hybrid covered 8/9 cases; 8,000 did not improve on 4,000.
+The focused replay used expected-behavior selection and preserved 14/14 coverage;
+it does not measure an autonomous agent's choices. Six additional supported
+contracts recovered all 15 expected behaviors, one through a focused follow-up.
+Their mean complete responses cost 2,601.8 tokens versus 3,043.8 for the
+intermediate nine-description index; the follow-up is included.
 
-The original HTTP runtime measured about 0.45 seconds for warm-model search
-after clearing query caches, using six CPU threads; indexing took 428 seconds.
-Its separate probes peaked at 2.63 GiB for a query and 3.53 GiB for indexing.
-These timings and memory figures do not describe the Python binding.
+The independent task produced all four required cases using two references.
+A second fresh agent covered a
+composite contract with seven cases, two three-variant datasets and six distinct
+references; it used 6,351 input-text tokens and correctly skipped a browser-only
+request. An independent reviewer found no supplied-contract omissions. PHP syntax
+passed; these synthetic tasks have no application suite to execute.
 
-These results evaluate retrieval, not application changes. Two negative labels
-were ambiguous, rankings varied with cache state, and the sample is small.
-The integration now loads the model directly inside Python and frees it after
-each command. Its replay preserved all 36 requirements across the nine positive
-cases; median complete-command latency was 1.49 seconds on the same machine.
-Retrieved rules must still respect the live project's contracts.
+An entire nine-entry description index cost more on focused tasks than five
+candidates (1,719 versus 1,419 response tokens before the final split). Broad
+requests need more descriptions or focused follow-ups. Rank/score thresholds and
+fixed top-one selection lost required examples or admitted unrelated queries.
+Neither a nonempty shortlist nor its size proves coverage. The CLI does not
+classify unsupported tasks; the skill and consuming agent must enforce scope.
 
-## Create reference layout
+Counts use `o200k_base`, not billing: full responses and repeated reads count;
+provider envelopes, hidden reasoning and application discovery are excluded.
+The benchmark has 14 earlier focused contracts, six new supported contracts,
+four unsupported queries and two prior task replays. It does not establish
+semantic accuracy for a future 300-reference catalog. Recheck whole-task coverage
+and context as new reference families are added.
 
-2026-09-19 · snapshot `9c0f3d4` · 14 focused tasks and two unsupported queries.
-An alternative shortened prose and split eight references into twelve while
-preserving complete test examples. Markdown shrank from 8,279 to 7,679 tokens,
-but mean full search-response size grew from 2,889 to 3,076 tokens at the same
-3,200-token source budget; returned references grew from 2.29 to 4.14 per query.
-Both layouts supplied the needed behavior for all 14 focused tasks, including
-an adequate alternative enum example, and returned candidates for both unsupported
-queries. Compacting alone did not reduce delivered context: selection still fills
-the budget. Measure relevance and repeated content across queries before claiming
-a context saving; shorter files alone are insufficient evidence.
+## Earlier model/layout comparison
+
+The original `612b7e0` corpus had 455 searchable documents. On nine positive
+synthetic tasks, BM25 covered 8/9, embeddings 7/9, hybrid 9/9 and hybrid plus a
+Qwen3.5 4B helper 8/9. Median caller context grew from 4,278 with hybrid to 9,818
+with the helper. The subsequent Python replay retained all 36 required behaviors;
+its median complete command took 1.49 seconds on the test machine.
+
+Compacting/splitting the earlier eight-file create layout alone reduced Markdown
+by 7.2% but increased delivered response context by 6.5%: greedy packing filled
+the freed space. Selection and cumulative measurement were necessary.
+
+Design references: [OpenAI on skills and prompts](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra)
+and [Laravel on an index over Markdown](https://laravel.com/blog/semantic-memory-or-just-markdown).
+Published advice informed the alternatives; the local trials determined this change.

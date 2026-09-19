@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter
-from collections.abc import Callable, Mapping, Sequence
+from collections.abc import Callable, Mapping
 from contextlib import closing, contextmanager
 import fcntl
 import hashlib
@@ -14,7 +14,6 @@ import sqlite3
 from typing import Any
 
 import numpy as np
-import tiktoken
 
 
 SCHEMA_VERSION = 1
@@ -181,7 +180,6 @@ class SearchIndex:
         self.documents: list[dict[str, Any]] = []
         self._vectors: np.ndarray | None = None
         self._lexical: sqlite3.Connection | None = None
-        self._encoding = None
 
     @property
     def database_path(self) -> Path:
@@ -327,34 +325,6 @@ class SearchIndex:
             for rank, index in enumerate(ranking[:100]):
                 fused[index] += 1 / (60 + rank + 1)
         return sorted(fused, key=lambda index: (-fused[index], self.documents[index]["path"]))
-
-    def pack(self, ranking: Sequence[int], budget: int = 4000) -> dict[str, Any]:
-        """Return whole source documents within a cumulative o200k JSON token budget."""
-        if self._lexical is None:
-            raise SearchIndexError("Call synchronize() before packing references")
-        if not isinstance(budget, int) or isinstance(budget, bool) or budget <= 0:
-            raise SearchIndexError("Read budget must be a positive integer")
-        self._assert_current()
-        if self._encoding is None:
-            self._encoding = tiktoken.get_encoding("o200k_base")
-        references = []
-        used = refused = 0
-        seen = set()
-        for index in ranking:
-            if not isinstance(index, int) or isinstance(index, bool) or not 0 <= index < len(self.documents):
-                raise SearchIndexError(f"Invalid document ID: {index}")
-            if index in seen:
-                continue
-            seen.add(index)
-            doc = self.documents[index]
-            piece = {"id": index, "path": doc["path"], "content": doc["raw"]}
-            tokens = len(self._encoding.encode(compact_json(piece)))
-            if used + tokens > budget:
-                refused += 1
-                continue
-            references.append(piece)
-            used += tokens
-        return {"references": references, "read_tokens": used, "refused_count": refused}
 
     def close(self) -> None:
         if self._lexical is not None:
