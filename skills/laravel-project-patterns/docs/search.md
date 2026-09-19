@@ -73,18 +73,22 @@ against the complete reference text, combining BM25 and embeddings as before.
 Only supplied facts and catalog text reach the local model; task text and project
 code are not stored in the index or session.
 
-Search returns five descriptions by default (`--limit=1..10`): ID, title,
-applicability summary, source-token cost and whether this context already read it.
+Search returns five ranked candidates by default (`--limit=1..10`). New IDs include
+title, applicability summary, source-token cost and `read`. Previously described
+IDs emit only `id` and the current `read` status, preserving rank without repeating
+metadata. Reuse descriptions and examples already in context before searching.
 Descriptions are the first paragraph after each reference's H1, limited to 80
 `o200k_base` tokens. Keep conditions discriminating; do not replace them with a
 keyword list. Selection uses the live contract, not just the rank. Missing
 requirements need focused follow-up searches with the same session.
 
-Read accepts several selected IDs and emits only their complete sources. It
-loads no embedding model and does not follow links. Source content plus its
-serialized ID/path must fit `--budget` (default and ceiling: 4,000 tokens per
-response). A source that does not fit appears in `blocked` with its cost; it is
-not truncated, marked read or replaced by a lower-ranked source. Read blocked
+Read accepts selected IDs and emits their complete Markdown literally, each
+preceded by `=== <id> <path> ===`, followed by a final `Receipt: {...}` line.
+It loads no embedding model and does not follow links. The sum of source sections,
+including ID/path headings and separators, must fit `--budget` (default and
+ceiling: 4,000 tokens per response). A source that does not fit appears in
+`blocked` with its cost; it is not truncated, marked read or replaced by a
+lower-ranked source. Read blocked
 IDs in another batch. A single source larger than 4,000 needs a maintainer to
 split it into self-contained examples before it can be retrieved.
 
@@ -93,15 +97,16 @@ cumulative source-token cost, never query text or source bodies. Use a distinct
 temporary file per task and consuming agent, outside the skill. An unchanged
 source is returned once; later reads report its ID in `already_read`. `--repeat`
 explicitly rereads selected IDs when their content is no longer in context.
-After compaction, do not assume receipts mean the content is still available.
-A new session also resets receipts. Changed/deleted source IDs fail instead of
-serving stale text; search again to obtain current IDs. Adding another document
+After compaction, receipts do not mean the content is still available. Start a
+new session to receive descriptions again; `read --repeat` requires a known ID.
+Session format version 2 rejects earlier sessions: use a new temporary file.
+Changed/deleted source IDs fail instead of serving stale text; search again to obtain current IDs. Adding another document
 does not renumber existing IDs.
 
-`source_tokens` counts serialized source objects in this response;
-`session_source_tokens` accumulates those objects, including explicit rereads.
-Neither is a whole-task limit or billing measure. Candidate descriptions, JSON
-wrappers, commands, task input and existing context cost extra. Measure complete
+`source_tokens` sums the token counts of emitted Markdown source sections;
+`session_source_tokens` accumulates those sections, including explicit rereads.
+Neither is a whole-task limit or billing measure. Candidate metadata, receipts,
+commands, task input and existing context cost extra. Measure complete
 responses across all searches and reads when comparing context consumption.
 
 Every search checks current Markdown hashes and updates added, changed or deleted
@@ -120,6 +125,20 @@ uv run --no-project --with numpy==2.5.3 --with tiktoken==0.14.0 \
 
 Keep catalog text out of automatic preload paths. Maintenance may inspect source
 files directly; application work retrieves them through the bounded search.
+
+### Catalog Navigation For Maintenance
+
+1. [Route binding and soft-deleted parents](../references/tests/controllers/01-create-route-bindings.md)
+2. [Inactive parent access restriction](../references/tests/controllers/02-create-inactive-parent.md)
+3. [Positive page contract and enum props](../references/tests/controllers/03-create-page-contract.md)
+4. [Ordered eligible options](../references/tests/controllers/04-create-ordered-options.md)
+5. [Category options and parent payload](../references/tests/controllers/05-create-category-options.md)
+6. [Nested option IDs and metadata](../references/tests/controllers/06-create-nested-option-props.md)
+7. [Dependent selects and partial reload](../references/tests/controllers/07-create-dependent-selects.md)
+8. [Unavailable related records](../references/tests/controllers/08-create-related-option-filters.md)
+9. [Independent option ownership](../references/tests/controllers/09-create-option-ownership.md)
+10. [Unavailable options](../references/tests/controllers/10-create-unavailable-options.md)
+11. [Read-only final parent states](../references/tests/controllers/11-create-read-only.md)
 
 ## Related References
 

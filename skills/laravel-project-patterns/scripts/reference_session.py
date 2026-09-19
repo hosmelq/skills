@@ -29,7 +29,16 @@ def source(document):
 
 
 def token_count(value):
-    return len(encoding().encode(compact_json(value)))
+    return len(encoding().encode(value))
+
+
+def source_text(reference):
+    return f"=== {reference['id']} {reference['path']} ===\n\n{reference['content']}\n\n"
+
+
+def render_read(result):
+    receipt = {key: value for key, value in result.items() if key != "references"}
+    return "".join(source_text(item) for item in result["references"]) + "Receipt: " + compact_json(receipt) + "\n"
 
 
 def description(document):
@@ -53,7 +62,7 @@ class ReferenceSession:
         if self.path.is_symlink() or self.path.resolve().is_relative_to(self.root):
             raise ValueError("Use a regular session file outside the skill directory")
         self.state = {
-            "version": 1, "catalog": str(self.root), "candidates": {},
+            "version": 2, "catalog": str(self.root), "candidates": {},
             "seen": {}, "source_tokens": 0,
         }
 
@@ -71,7 +80,7 @@ class ReferenceSession:
         value = self.state
         if (not isinstance(value, dict) or set(value) != {
             "version", "catalog", "candidates", "seen", "source_tokens"
-        } or type(value["version"]) is not int or value["version"] != 1
+        } or type(value["version"]) is not int or value["version"] != 2
                 or value["catalog"] != str(self.root)):
             raise ValueError("Session belongs to another catalog or has an invalid format; use a new session")
         if (not isinstance(value["source_tokens"], int) or isinstance(value["source_tokens"], bool)
@@ -109,11 +118,14 @@ class ReferenceSession:
         for index in list(dict.fromkeys(ranking))[:limit]:
             doc = documents[index]
             identifier = reference_id(doc)
-            cards.append({
-                "id": identifier, "title": doc["title"], "summary": description(doc),
-                "tokens": token_count(source(doc)),
+            card = {
+                "id": identifier,
                 "read": self.state["seen"].get(doc["path"]) == doc["sha256"],
-            })
+            }
+            if identifier not in self.state["candidates"]:
+                card.update(title=doc["title"], summary=description(doc),
+                            tokens=token_count(source_text(source(doc))))
+            cards.append(card)
             self.state["candidates"][identifier] = {
                 "path": doc["path"], "sha256": doc["sha256"],
             }
@@ -152,7 +164,7 @@ class ReferenceSession:
             if not repeat and self.state["seen"].get(doc["path"]) == doc["sha256"]:
                 already_read.append(piece["id"])
                 continue
-            tokens = token_count(piece)
+            tokens = token_count(source_text(piece))
             if used + tokens > budget:
                 blocked.append({"id": piece["id"], "tokens": tokens})
                 continue

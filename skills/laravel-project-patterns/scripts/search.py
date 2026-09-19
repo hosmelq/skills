@@ -65,7 +65,11 @@ def main(argv=None):
             else:
                 output = indexed_command(root, cache, args, task, session)
             session.save()
-    print(json.dumps(output, ensure_ascii=False, separators=(",", ":")))
+    if args.command == "read":
+        from reference_session import render_read
+        print(render_read(output), end="")
+    else:
+        print(json.dumps(output, ensure_ascii=False, separators=(",", ":")))
 
 
 def indexed_command(root, cache, args, task=None, session=None):

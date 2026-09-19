@@ -77,19 +77,3 @@ describe('create', function (): void {
     });
 });
 ```
-
-## Related References
-
-Numbers follow case order; load only applicable examples.
-
-1. [Route binding and soft-deleted parents](01-create-route-bindings.md)
-2. [Inactive parent access restriction](02-create-inactive-parent.md)
-3. [Positive page contract and enum props](03-create-page-contract.md)
-4. [Ordered eligible options](04-create-ordered-options.md)
-5. [Category options and parent payload](05-create-category-options.md)
-6. [Nested option IDs and metadata](06-create-nested-option-props.md)
-7. [Dependent selects and partial reload](07-create-dependent-selects.md)
-8. [Unavailable related records](08-create-related-option-filters.md)
-9. [Independent option ownership](09-create-option-ownership.md)
-10. [Unavailable options](10-create-unavailable-options.md)
-11. [Read-only final parent states](11-create-read-only.md)

@@ -30,6 +30,7 @@ class ReferenceSessionTests(unittest.TestCase):
         (self.skill / "references").mkdir(parents=True)
         self.receipt = self.work / "consumer.json"
         self.encoding = tiktoken.get_encoding("o200k_base")
+        self.known_cards = {}
         self.alpha = self.write("alpha.md", "Authentication", "ALPHA_BODY")
         self.beta = self.write("beta.md", "Dependent options", "BETA_BODY")
 
@@ -60,13 +61,16 @@ class ReferenceSessionTests(unittest.TestCase):
             session.save()
         return result
 
-    @staticmethod
-    def cards_by_title(result):
-        return {card["title"]: card for card in result["candidates"]}
+    def cards_by_title(self, result):
+        cards = []
+        for card in result["candidates"]:
+            self.known_cards.setdefault(card["id"], {}).update(card)
+            cards.append(self.known_cards[card["id"]])
+        return {card["title"]: card for card in cards}
 
     def cost(self, reference):
-        serialized = json.dumps(reference, ensure_ascii=False, separators=(",", ":"))
-        return len(self.encoding.encode(serialized))
+        rendered = f"=== {reference['id']} {reference['path']} ===\n\n{reference['content']}\n\n"
+        return len(self.encoding.encode(rendered))
 
     def test_shortlist_emits_descriptions_without_source_bodies(self):
         result = self.shortlist([1, 1, 0])
@@ -95,6 +99,33 @@ class ReferenceSessionTests(unittest.TestCase):
         self.assertNotIn("BETA_BODY", json.dumps(result))
         self.assertEqual(result["source_tokens"], self.cost(reference))
         self.assertEqual(result["source_tokens"], cards["Authentication"]["tokens"])
+
+    def test_followup_search_preserves_ranking_but_emits_only_new_descriptions(self):
+        first = self.shortlist([0, 1])
+        alpha_id, beta_id = [card["id"] for card in first["candidates"]]
+        self.read([alpha_id])
+        second = self.shortlist([1, 0])
+        self.assertEqual(second["candidates"], [
+            {"id": beta_id, "read": False}, {"id": alpha_id, "read": True},
+        ])
+        self.assertLess(len(json.dumps(second)), len(json.dumps(first)))
+
+        self.alpha.write_text(self.alpha.read_text() + "\nA new condition.\n")
+        changed = self.shortlist([0, 1])
+        self.assertEqual(changed["candidates"][0]["title"], "Authentication")
+        self.assertNotEqual(changed["candidates"][0]["id"], alpha_id)
+        self.assertFalse(changed["candidates"][0]["read"])
+        self.assertEqual(changed["candidates"][1], {"id": beta_id, "read": False})
+
+    def test_a_fresh_context_receives_descriptions_and_sources_again(self):
+        first = self.shortlist()
+        identifiers = [card["id"] for card in first["candidates"]]
+        self.read(identifiers)
+        self.receipt = self.work / "fresh-context.json"
+        self.assertEqual(self.shortlist(), first)
+        result = self.read(identifiers)
+        self.assertEqual(len(result["references"]), 2)
+        self.assertEqual(result["already_read"], [])
 
     def test_an_invalid_unselected_reference_does_not_block_a_selected_read(self):
         cards = self.cards_by_title(self.shortlist())
@@ -257,6 +288,7 @@ class ReferenceSessionTests(unittest.TestCase):
             {"catalog": str(self.work / "another-skill")},
             {"version": True},
             {"version": 1.0},
+            {"version": 1},
             {"source_tokens": True},
             {"source_tokens": -1},
             {"seen": {"references/../outside.md": "a" * 64}},
@@ -308,8 +340,12 @@ class ReferenceSessionTests(unittest.TestCase):
                 "--session", str(self.receipt), "--ids", cards["Authentication"]["id"],
             ])
         indexed.assert_not_called()
-        result = json.loads(output.getvalue())
-        self.assertEqual(result["references"][0]["content"], self.alpha.read_text())
+        body, receipt = output.getvalue().rsplit("Receipt: ", 1)
+        self.assertIn(self.alpha.read_text(), body)
+        self.assertNotIn("BETA_BODY", body)
+        self.assertNotIn('"content":', body)
+        self.assertEqual(len(self.encoding.encode(body)), cards["Authentication"]["tokens"])
+        result = json.loads(receipt)
         self.assertEqual(result["session_source_tokens"], result["source_tokens"])
 
 
