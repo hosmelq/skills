@@ -10,9 +10,9 @@ only when the live code supports its architecture, library, preconditions and
 behavior ownership. Keep synthetic examples and reference-project identities
 confidential.
 
-The reference catalog is currently empty while it is rebuilt incrementally.
-The search workflow below applies once new references exist; until then use the
-project's own code and instructions.
+The catalog is being rebuilt incrementally. It currently covers the
+[ordered controller `create` test block](references/tests/controllers/create.md).
+Examples use a fictional domain; preserve the current project's names and setup.
 
 ## Find Applicable Guidance
 
@@ -27,7 +27,7 @@ entrypoint. Before loading pattern references:
 3. Run the search and read its returned source content:
 
    ```shell
-   uv run <skill-directory>/scripts/search.py search --task-file=/path/to/task.json
+   uv run <skill-directory>/scripts/search.py search --budget=3200 --task-file=/path/to/task.json
    ```
 
 The first search downloads and verifies the embedding model and builds the local
@@ -35,8 +35,9 @@ index automatically; later searches reuse it. For a read-only installation,
 configure a writable `--cache-dir` as described
 in the search guide and use that same option for subsequent commands.
 
-Search reads and ranks the Markdown outside model context, then returns complete
-candidate references within 4,000 source tokens. Paths such as `tests-new/**`
+Search reads and ranks the Markdown outside model context. Use the 3,200-token
+budget above for the current create references; the CLI ceiling is 4,000.
+It returns complete candidate references. Paths such as `tests-new/**`
 and `src/<Domain>/**` do not require aliases. Catalog reference paths never
 prescribe where the current project's files belong.
 
@@ -46,6 +47,12 @@ specific requirement remains uncovered, search that requirement with its relevan
 code facts; reuse evidence already read. Do not repeatedly load the same packet,
 raise the budget, browse the catalog with globs, or follow unread reference links
 to bypass retrieval. Search live project code independently as needed.
+
+When assembling a controller `create` block, preserve this test order:
+authentication, authorization, scoped/soft-deleted parents, lifecycle restrictions,
+positive page/options, then dependent-select, filtering and read-only variants.
+Use the same test names for equivalent behavior, including `shows the create page`;
+the controller file supplies the entity context.
 
 On a search error, report the cause and fix the search setup or narrow an
 oversized input. Continue independent work that does not require the missing

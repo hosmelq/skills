@@ -6,8 +6,8 @@ Use `scripts/search.py` before reading catalog patterns. It combines SQLite FTS5
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
-The reference catalog is currently empty. Run this workflow after new Markdown
-references have been added under `references/`.
+The current references cover controller `create` tests. Other areas will be added
+incrementally; a returned reference is not evidence that an unrelated area is covered.
 
 ## Pattern
 
@@ -53,17 +53,17 @@ facts relevant to the requested behavior; do not send a repository dump.
 
 ```json
 {
-  "request": "Cover the resource's optional nested relationship without triggering lazy loading.",
-  "paths": ["src/Shipping/Http/Resources/ParcelResource.php", "tests-new/Integration/Http/Resources/ParcelResourceTest.php"],
+  "request": "Test the create form's dependent country and province selects.",
+  "paths": ["src/Facilities/Http/Controllers/FacilityController.php", "tests-new/Feature/Facilities/FacilityControllerTest.php"],
   "code_context": {
-    "resource": "class ParcelResource extends JsonResource { public function toArray(Request $request): array { return ['recipient' => $this->whenLoaded('recipient', fn () => RecipientResource::make($this->recipient))]; } }",
+    "controller": "The Inertia create page accepts country_code, exposes countryCode and returns that country's provinces as label/value options through a partial reload.",
     "test_setup": "The active PHPUnit configuration selects tests-new; preserve its configured command and existing test naming."
   }
 }
 ```
 
 ```shell
-uv run <skill-directory>/scripts/search.py search --task-file=/path/to/task.json
+uv run <skill-directory>/scripts/search.py search --budget=3200 --task-file=/path/to/task.json
 ```
 
 `--task-file=-` accepts JSON on stdin. `paths` records actual task locations; it
@@ -74,8 +74,11 @@ catalog text reach the in-process model; project code is not indexed or
 stored in the catalog database.
 
 The JSON response contains complete candidate sources, their cumulative token
-count and the number that did not fit. The default source budget is 4,000
-`o200k_base` tokens; `--budget` may lower it. Metadata and the caller's existing
+count and the number that did not fit. The command above requests 3,200
+`o200k_base` tokens for the current create references. In eight targeted retrieval
+checks, this retained every expected reference; 2,000 missed two. Recheck this
+choice as the catalog grows. The CLI default and ceiling remain 4,000;
+`--budget` may lower it. Metadata and the caller's existing
 context are additional. A source too large for the remaining budget is skipped
 whole, never silently truncated. Returned links do not load their targets.
 
