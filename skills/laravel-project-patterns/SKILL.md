@@ -10,9 +10,13 @@ only when the live code supports its architecture, library, preconditions and
 behavior ownership. Keep synthetic examples and reference-project identities
 confidential.
 
+The reference catalog is currently empty while it is rebuilt incrementally.
+The search workflow below applies once new references exist; until then use the
+project's own code and instructions.
+
 ## Find Applicable Guidance
 
-The [hybrid search](references/context-resolver.md) is the required catalog
+The [hybrid search](docs/search.md) is the required catalog
 entrypoint. Before loading pattern references:
 
 1. Inspect project guidance, the affected code and the closest comparable test.
@@ -48,6 +52,5 @@ oversized input. Continue independent work that does not require the missing
 guidance. Do not silently substitute manual catalog browsing or lexical search.
 
 Complete the task using the project's required checks. When maintaining this
-skill itself, inspect the necessary files directly and use the
-[reference structure](references/README.md) and Python validator. The
+skill itself, inspect the necessary files directly and use the Python validator. The
 [benchmark note](docs/benchmark.md) records why this retrieval method was chosen.

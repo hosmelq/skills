@@ -6,6 +6,9 @@ Use `scripts/search.py` before reading catalog patterns. It combines SQLite FTS5
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
+The reference catalog is currently empty. Run this workflow after new Markdown
+references have been added under `references/`.
+
 ## Pattern
 
 ### Local Setup
@@ -96,5 +99,4 @@ files directly; application work retrieves them through the bounded search.
 ## Related References
 
 - [Skill entrypoint](../SKILL.md)
-- [Reference structure](README.md)
-- [Benchmark note](../docs/benchmark.md)
+- [Benchmark note](benchmark.md)
