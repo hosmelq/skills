@@ -6,7 +6,7 @@ Use `scripts/search.py` to select descriptions before reading catalog patterns. 
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
-The current references cover controller `create` tests. Other areas will be added
+The current references cover controller `create` and `destroy` tests. Other areas will be added
 incrementally; a returned reference is not evidence that an unrelated area is covered.
 
 ## Pattern
@@ -128,6 +128,8 @@ files directly; application work retrieves them through the bounded search.
 
 ### Catalog Navigation For Maintenance
 
+#### Create
+
 1. [Route binding and soft-deleted parents](../references/tests/controllers/01-create-route-bindings.md)
 2. [Inactive parent access restriction](../references/tests/controllers/02-create-inactive-parent.md)
 3. [Positive page contract and enum props](../references/tests/controllers/03-create-page-contract.md)
@@ -139,6 +141,19 @@ files directly; application work retrieves them through the bounded search.
 9. [Independent option ownership](../references/tests/controllers/09-create-option-ownership.md)
 10. [Unavailable options](../references/tests/controllers/10-create-unavailable-options.md)
 11. [Read-only final parent states](../references/tests/controllers/11-create-read-only.md)
+
+#### Destroy
+
+- [Controller Tests: Ordered Destroy Block](../references/tests/controllers/12-destroy-test-order.md)
+- [Direct Deletion And Controller Response](../references/tests/controllers/13-destroy-delete-response.md)
+- [Scoped Parent And Ancestor Binding](../references/tests/controllers/14-destroy-parent-bindings.md)
+- [Target Binding And Independent Tenant Integrity](../references/tests/controllers/15-destroy-record-bindings.md)
+- [Policy Access Restrictions](../references/tests/controllers/16-destroy-access-rules.md)
+- [History Assignment And Required Initial Errors](../references/tests/controllers/17-destroy-domain-errors.md)
+- [Live And Soft Deleted Dependencies](../references/tests/controllers/18-destroy-dependency-errors.md)
+- [Action Lifecycle Errors](../references/tests/controllers/19-destroy-lifecycle-errors.md)
+- [Nested Success Redirects And Default Record](../references/tests/controllers/20-destroy-nested-delete-response.md)
+- [Reactivating A Deactivated Record](../references/tests/controllers/21-destroy-reactivation.md)
 
 ## Related References
 

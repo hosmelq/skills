@@ -38,6 +38,25 @@ context is counted when emitted, not again on every model turn. One paired run
 per task and twelve references do not establish statistical reliability or
 accuracy for a future 300-reference catalog. Repeat whole-task trials as it grows.
 
+## Destroy Expansion
+
+The catalog now has 22 references. An exhaustive controller audit mapped 125
+destroy declarations to 34 distinct cases, represented by 48 complete examples
+and explicit adaptations in ten new references. Independent review found no
+missing cases or actionable defects in the unchanged create references.
+
+Three fixed create probes retained their required candidates. Five destroy
+probes found the needed families; one needed a focused follow-up for the ordered
+checklist. Shortlists can still mix actions: callers must select by applicability.
+
+One fresh agent completed a synthetic create/reactivate task across three phases:
+two searches, two reads and five references; the final phase reused context.
+The frozen trial emitted **5,821 tokens**, including the skill; query JSON and CLI
+arguments bring that to **6,487**. Counts use the exclusions above. Review found
+the supplied contracts preserved, and both PHP files pass syntax checks; no
+application runtime was available. These focused checks do not establish
+large-catalog accuracy.
+
 ## Earlier Selection Evidence
 
 The original `612b7e0` corpus contained 455 documents. On nine positive tasks,
