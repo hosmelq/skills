@@ -134,7 +134,7 @@ describe('create', function (): void {
 
 ## Related References
 
-1. [Ordered create block and base example](create.md)
-2. [Initial empty province list and dependent selects](create-dependent-select.md)
-3. [Active categories and hidden internal parent keys](create-option-lists.md)
-4. [Multi-option page with nested metadata](create-intake-page.md)
+1. [Ordered create block and base example](00-create-test-order.md)
+2. [Initial empty province list and dependent selects](06-create-dependent-selects.md)
+3. [Active categories and hidden internal parent keys](04-create-select-options.md)
+4. [Multi-option page with nested metadata](05-create-nested-option-props.md)

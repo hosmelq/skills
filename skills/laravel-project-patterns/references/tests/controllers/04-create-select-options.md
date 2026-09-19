@@ -4,7 +4,7 @@ Use for a GET create page that supplies related records as form options. Keep al
 
 ## 1. Ordered service plans
 
-In the enrollment controller, place the valid ordered-list test before the unavailable-options test. The first establishes the exact two allowed options and their order, excluding an option owned by another team. The second proves exclusion of deactivated and soft-deleted plans.
+The positive page case establishes the exact two allowed options and their name order, excluding a foreign-tenant option. Create Zulu before Alpha so the result must prove sorting. Own-state exclusion variants belong after the positive cases, in the option-filter reference.
 
 ```php
 <?php
@@ -49,32 +49,6 @@ describe('create', function (): void {
                     ->where('servicePlans.0.name', 'Alpha Plan')
                     ->where('servicePlans.1.id', $secondServicePlan->public_id)
                     ->where('servicePlans.1.name', 'Zulu Plan');
-            });
-    });
-
-    it('shows the create page without unavailable service plans', function (): void {
-        $member = Member::factory()->createOne();
-
-        ServicePlan::factory()
-            ->deactivated()
-            ->for($member->team)
-            ->createOne();
-        ServicePlan::factory()
-            ->trashed()
-            ->for($member->team)
-            ->createOne();
-
-        signIn(team: $member->team);
-
-        $response = get(route('teams.members.enrollments.create', [
-            'team' => $member->team,
-            'member' => $member,
-        ]));
-
-        $response->assertOk()
-            ->assertInertia(function (AssertableInertia $page): void {
-                $page->component('members/enrollments/Create')
-                    ->has('servicePlans', 0);
             });
     });
 });
@@ -154,4 +128,5 @@ describe('create', function (): void {
 
 ## Related References
 
-- [Create block](create.md)
+- [Create block](00-create-test-order.md)
+- [Own-state exclusions after the positive cases](07-create-option-filters.md)

@@ -1,4 +1,4 @@
-# Create: intake page contract
+# Create Tests: Nested Option IDs And Metadata
 
 Use when an intake form needs several related option lists with nested ownership identifiers, unit metadata and an initial status. This positive case checks the supplied values; it does not establish exclusion or ordering for every list. The workshop domain and its data are fictional. Factories, routes, `signIn(team: ...)` and `public_id` illustrate a project contract; they are not Laravel defaults. Adapt them to the current project and keep its actual test root.
 
@@ -76,4 +76,4 @@ describe('create', function (): void {
 
 ## Related References
 
-- [Create block](create.md)
+- [Create block](00-create-test-order.md)

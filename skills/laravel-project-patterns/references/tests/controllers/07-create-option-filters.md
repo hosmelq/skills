@@ -29,7 +29,7 @@ use Illuminate\Support\Collection;
 use Inertia\Testing\AssertableInertia;
 
 describe('create', function (): void {
-    it('shows the create page without enrollments with unavailable relations', function (string $state): void {
+    it('shows the create page without options with unavailable relations', function (string $state): void {
         $team = Team::factory()->createOne();
         $member = Member::factory()
             ->when($state === 'deleted member', fn (MemberFactory $factory): MemberFactory => $factory->trashed())
@@ -60,7 +60,7 @@ describe('create', function (): void {
         'deleted service plan',
     ]);
 
-    it('shows the create page without plan rules from another team', function (): void {
+    it('shows the create page without options from another tenant', function (): void {
         $team = Team::factory()->createOne();
         PlanRule::factory()
             ->for(Team::factory())
@@ -77,7 +77,7 @@ describe('create', function (): void {
                 ->has('planRules', 0));
     });
 
-    it('shows the create page without unavailable intake options', function (): void {
+    it('shows the create page without unavailable options', function (): void {
         $team = Team::factory()->createOne();
 
         $deletedMember = Member::factory()->trashed()->for($team)->createOne();
@@ -156,6 +156,53 @@ describe('create', function (): void {
 });
 ```
 
+
+## Same Availability Case On A Nested Form
+
+For a form under a member, test the empty options result when the only service
+plans are inactive or soft deleted. This is another controller's test file; use
+the same case name. Place it after that controller's positive option-list case.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use function Pest\Laravel\get;
+
+use App\Models\Member;
+use App\Models\ServicePlan;
+use Inertia\Testing\AssertableInertia;
+
+describe('create', function (): void {
+    it('shows the create page without unavailable options', function (): void {
+        $member = Member::factory()->createOne();
+
+        ServicePlan::factory()
+            ->deactivated()
+            ->for($member->team)
+            ->createOne();
+        ServicePlan::factory()
+            ->trashed()
+            ->for($member->team)
+            ->createOne();
+
+        signIn(team: $member->team);
+
+        $response = get(route('teams.members.enrollments.create', [
+            'team' => $member->team,
+            'member' => $member,
+        ]));
+
+        $response->assertOk()
+            ->assertInertia(function (AssertableInertia $page): void {
+                $page->component('members/enrollments/Create')
+                    ->has('servicePlans', 0);
+            });
+    });
+});
+```
+
 ## Related References
 
-- [Create block](create.md)
+- [Create block](00-create-test-order.md)

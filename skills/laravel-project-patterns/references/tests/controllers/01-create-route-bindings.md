@@ -19,8 +19,8 @@ route level in each soft-delete test.
 
 The fictional route below is service plan → plan rule → new rate. For member →
 new address/enrollment or work order → new item routes, apply the corresponding
-outer-parent checks when the live binding contract matches, and substitute the
-parent in the test name. Extra nesting adds checks, not a new naming convention.
+outer-parent checks when the live binding contract matches. Keep the role-based
+names; qualify an additional bound level only to distinguish cases within one block.
 
 ## Complete Nested Binding Examples
 
@@ -40,7 +40,7 @@ use App\Models\ServicePlan;
 use App\Models\Team;
 
 describe('create', function (): void {
-    it('returns not found when service plan belongs to a different team', function (): void {
+    it('returns not found when the parent belongs to another tenant', function (): void {
         $team = Team::factory()->createOne();
         $planRule = PlanRule::factory()->createOne();
 
@@ -55,7 +55,7 @@ describe('create', function (): void {
         $response->assertNotFound();
     });
 
-    it('returns not found when service plan is soft deleted', function (): void {
+    it('returns not found when the parent is soft deleted', function (): void {
         $servicePlan = ServicePlan::factory()->trashed()->createOne();
         $planRule = PlanRule::factory()
             ->for($servicePlan)
@@ -72,7 +72,7 @@ describe('create', function (): void {
         $response->assertNotFound();
     });
 
-    it('returns not found when plan rule belongs to a different service plan in the same team', function (): void {
+    it('returns not found when the nested parent belongs to another parent in the same tenant', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
         $planRule = PlanRule::factory()
             ->recycle($servicePlan->team)
@@ -89,7 +89,7 @@ describe('create', function (): void {
         $response->assertNotFound();
     });
 
-    it('returns not found when plan rule belongs to a different team', function (): void {
+    it('returns not found when the nested parent belongs to another tenant', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
         $unrelatedPlanRule = PlanRule::factory()->createOne();
 
@@ -104,7 +104,7 @@ describe('create', function (): void {
         $response->assertNotFound();
     });
 
-    it('returns not found when plan rule is soft deleted', function (): void {
+    it('returns not found when the nested parent is soft deleted', function (): void {
         $planRule = PlanRule::factory()->trashed()->createOne();
 
         signIn(team: $planRule->servicePlan->team);
@@ -122,5 +122,6 @@ describe('create', function (): void {
 
 ## Related References
 
-1. [Ordered create block: redirect and unauthorized team 403](create.md)
-2. [Deactivated parent and final parent states](create-parent-state.md)
+1. [Ordered create block: redirect and unauthorized team 403](00-create-test-order.md)
+2. [Inactive parent access restriction](02-create-inactive-parent.md)
+3. [Read-only final parent states](08-create-read-only.md)

@@ -1,4 +1,4 @@
-# Create Form Tests: Dependent Country And Province Selects
+# Create Tests: Dependent Select Options And Partial Reload
 
 Use when changing one select changes the options in another: **country → province**,
 `country_code` query input → `countryCode` and `provinces` Inertia props.
@@ -12,9 +12,9 @@ Also: cascading dropdowns, select dependiente, país → provincia.
    label/value pair and ordering together.
 
 Put these page cases after authentication, authorization, binding and access
-restrictions. Use `loads provinces for the selected country` consistently;
-substitute option names only when the target contract uses different terms or
-multiple select pairs need distinct tests. This tests the HTTP/Inertia response,
+restrictions. Use `loads dependent options for the selected value` consistently;
+add the field pair only when multiple dependent selects in the same controller
+need distinct test names. This tests the HTTP/Inertia response,
 not the browser change handler, clearing a selection or submission validation.
 
 ## Facility Form
@@ -59,7 +59,7 @@ describe('create', function (): void {
             });
     });
 
-    it('loads provinces for the selected country', function (): void {
+    it('loads dependent options for the selected value', function (): void {
         $team = Team::factory()->createOne();
         $regions = Region::query()
             ->where('country_code', CountryCode::Canada)
@@ -107,5 +107,5 @@ Reuse the same two test names and assertions; only adapt the parent contract:
 
 ## Related References
 
-1. [Ordered create block](create.md)
-2. [Parent scope and binding](create-parent-scope.md)
+1. [Ordered create block](00-create-test-order.md)
+2. [Parent scope and binding](01-create-route-bindings.md)

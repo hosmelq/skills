@@ -75,10 +75,11 @@ stored in the catalog database.
 
 The JSON response contains complete candidate sources, their cumulative token
 count and the number that did not fit. The command above requests 3,200
-`o200k_base` tokens for the current create references. In eight targeted retrieval
-checks, this retained every expected reference; 2,000 missed two. Recheck this
-choice as the catalog grows. The CLI default and ceiling remain 4,000;
-`--budget` may lower it. Metadata and the caller's existing
+`o200k_base` tokens per search for the current create references. This does not
+limit a whole task: measure complete responses and repeated references across
+follow-up queries. Recheck coverage and cumulative cost as the catalog changes.
+The CLI default and ceiling remain 4,000; `--budget` may lower it.
+Metadata and the caller's existing
 context are additional. A source too large for the remaining budget is skipped
 whole, never silently truncated. Returned links do not load their targets.
 

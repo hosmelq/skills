@@ -11,13 +11,14 @@ behavior ownership. Keep synthetic examples and reference-project identities
 confidential.
 
 The catalog is being rebuilt incrementally. It currently covers the
-[ordered controller `create` test block](references/tests/controllers/create.md).
+[ordered controller `create` test block](references/tests/controllers/00-create-test-order.md).
 Examples use a fictional domain; preserve the current project's names and setup.
 
 ## Find Applicable Guidance
 
-The [hybrid search](docs/search.md) is the required catalog
-entrypoint. Before loading pattern references:
+Use `scripts/search.py` as the required catalog entrypoint. The command below is
+enough for normal use; consult the [search guide](docs/search.md) for setup,
+cache configuration or errors. Before loading pattern references:
 
 1. Inspect project guidance, the affected code and the closest comparable test.
    Use Composer autoloading and the active test configuration to locate code;
