@@ -40,7 +40,7 @@ accuracy for a future 300-reference catalog. Repeat whole-task trials as it grow
 
 ## Destroy Expansion
 
-The catalog now has 22 references. An exhaustive controller audit mapped 125
+The destroy expansion brought the catalog to 22 references. An exhaustive controller audit mapped 125
 destroy declarations to 34 distinct cases, represented by 48 complete examples
 and explicit adaptations in ten new references. Independent review found no
 missing cases or actionable defects in the unchanged create references.
@@ -56,6 +56,21 @@ arguments bring that to **6,487**. Counts use the exclusions above. Review found
 the supplied contracts preserved, and both PHP files pass syntax checks; no
 application runtime was available. These focused checks do not establish
 large-catalog accuracy.
+
+## Edit Expansion
+
+2026-09-20: 34 references. The edit audit mapped 88 declarations / 90 variants to
+29 behavior families, represented by 46 complete examples in twelve files.
+Independent review confirmed coverage. Six focused edit probes found the needed
+sources; one of six unchanged create/destroy probes needed a focused follow-up.
+
+A frozen synthetic trial covered two controllers across three phases: three
+searches, three reads, six references; the last two phases reused context.
+Skill plus catalog responses totaled **7,531 tokens**, or **8,909** with queries
+and CLI arguments (**9,775** including supplied contracts). The generated tests
+preserved those contracts and passed syntax checks; no application runtime was
+available. These counts use the exclusions above and do not establish large-catalog
+accuracy. An editorial checklist reorder after the trial changed no PHP examples.
 
 ## Earlier Selection Evidence
 

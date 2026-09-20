@@ -6,7 +6,7 @@ Use `scripts/search.py` to select descriptions before reading catalog patterns. 
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
-The current references cover controller `create` and `destroy` tests. Other areas will be added
+The current references cover controller `create`, `destroy` and `edit` tests. Other areas will be added
 incrementally; a returned reference is not evidence that an unrelated area is covered.
 
 ## Pattern
@@ -154,6 +154,21 @@ files directly; application work retrieves them through the bounded search.
 - [Action Lifecycle Errors](../references/tests/controllers/19-destroy-lifecycle-errors.md)
 - [Nested Success Redirects And Default Record](../references/tests/controllers/20-destroy-nested-delete-response.md)
 - [Reactivating A Deactivated Record](../references/tests/controllers/21-destroy-reactivation.md)
+
+#### Edit
+
+- [Ordered edit block](../references/tests/controllers/22-edit-test-order.md)
+- [Direct page and authentication](../references/tests/controllers/23-edit-page-response.md)
+- [Scoped parent and ancestor binding](../references/tests/controllers/24-edit-parent-bindings.md)
+- [Target binding and tenant integrity](../references/tests/controllers/25-edit-record-bindings.md)
+- [Inactive record, parent and ancestor](../references/tests/controllers/26-edit-access-rules.md)
+- [Full enum options and parent IDs](../references/tests/controllers/27-edit-enums-and-parent-ids.md)
+- [Stored dependent options and partial reload](../references/tests/controllers/28-edit-dependent-selects.md)
+- [Current live, deleted and inactive relation](../references/tests/controllers/29-edit-selected-relation.md)
+- [Current inactive option alongside active choices](../references/tests/controllers/30-edit-selected-option.md)
+- [Historical selections and available options](../references/tests/controllers/31-edit-historical-relations.md)
+- [Absent and present related rate flags](../references/tests/controllers/32-edit-related-record-flags.md)
+- [Final record flag and read-only parent states](../references/tests/controllers/33-edit-final-states.md)
 
 ## Related References
 
