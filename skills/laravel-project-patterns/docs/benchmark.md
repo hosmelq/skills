@@ -72,6 +72,22 @@ preserved those contracts and passed syntax checks; no application runtime was
 available. These counts use the exclusions above and do not establish large-catalog
 accuracy. An editorial checklist reorder after the trial changed no PHP examples.
 
+## Remaining Controller Blocks
+
+2026-09-21. Independent source audits and reference reviews preserve complete
+examples and datasets. Each frozen consumer trial uses one fresh agent across
+three phases, then syntax checks and contract review; no application runtime.
+
+| Block | Audited declarations / variants | Catalog files | Skill + responses | With queries + commands |
+| --- | ---: | ---: | ---: | ---: |
+| Index | 68 / 68 | 47 | 3,756 | 4,946 |
+
+Index adds 39 complete examples in 13 files. Seven focused probes found the
+needed families in five candidates. Four existing probes retained their targets;
+one pre-existing create miss still needed a focused follow-up. The consumer used
+three searches, three reads and four references; its final phase reused context.
+Counts and limitations above apply; these trials do not establish large-catalog accuracy.
+
 ## Earlier Selection Evidence
 
 The original `612b7e0` corpus contained 455 documents. On nine positive tasks,

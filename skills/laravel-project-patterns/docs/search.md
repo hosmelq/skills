@@ -6,7 +6,7 @@ Use `scripts/search.py` to select descriptions before reading catalog patterns. 
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
-The current references cover controller `create`, `destroy` and `edit` tests. Other areas will be added
+The current references cover controller `create`, `destroy`, `edit` and `index` tests. Other areas will be added
 incrementally; a returned reference is not evidence that an unrelated area is covered.
 
 ## Pattern
@@ -169,6 +169,22 @@ files directly; application work retrieves them through the bounded search.
 - [Historical selections and available options](../references/tests/controllers/31-edit-historical-relations.md)
 - [Absent and present related rate flags](../references/tests/controllers/32-edit-related-record-flags.md)
 - [Final record flag and read-only parent states](../references/tests/controllers/33-edit-final-states.md)
+
+#### Index
+
+- [Ordered index block](../references/tests/controllers/34-index-test-order.md)
+- [Authentication and tenant access](../references/tests/controllers/35-index-authentication.md)
+- [Scoped parent bindings](../references/tests/controllers/36-index-parent-bindings.md)
+- [Page and collection props](../references/tests/controllers/37-index-page-contract.md)
+- [Configured collection order](../references/tests/controllers/38-index-configured-order.md)
+- [Live record pagination](../references/tests/controllers/39-index-pagination.md)
+- [Historical related records](../references/tests/controllers/40-index-historical-relations.md)
+- [Pending records in request order](../references/tests/controllers/41-index-pending-records.md)
+- [Inactive records and ancestors](../references/tests/controllers/42-index-inactive-records.md)
+- [Tenant collection filters](../references/tests/controllers/43-index-tenant-filters.md)
+- [Parent collection filters](../references/tests/controllers/44-index-parent-filters.md)
+- [Conflicting ownership](../references/tests/controllers/45-index-ownership-integrity.md)
+- [Nested ancestor and deletion filters](../references/tests/controllers/46-index-deep-filters.md)
 
 ## Related References
 
