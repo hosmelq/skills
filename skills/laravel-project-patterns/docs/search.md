@@ -6,7 +6,7 @@ Use `scripts/search.py` to select descriptions before reading catalog patterns. 
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
-The current references cover controller `create`, `destroy`, `edit` and `index` tests. Other areas will be added
+The current references cover controller `create`, `destroy`, `edit`, `index` and `show` tests. Other areas will be added
 incrementally; a returned reference is not evidence that an unrelated area is covered.
 
 ## Pattern
@@ -185,6 +185,29 @@ files directly; application work retrieves them through the bounded search.
 - [Parent collection filters](../references/tests/controllers/44-index-parent-filters.md)
 - [Conflicting ownership](../references/tests/controllers/45-index-ownership-integrity.md)
 - [Nested ancestor and deletion filters](../references/tests/controllers/46-index-deep-filters.md)
+
+#### Show
+
+- [Ordered show block](../references/tests/controllers/47-show-test-order.md)
+- [Settings authentication](../references/tests/controllers/48-show-01-settings-authentication.md)
+- [Direct record authentication](../references/tests/controllers/48-show-02-direct-authentication.md)
+- [One-parent authentication](../references/tests/controllers/48-show-03-parent-authentication.md)
+- [Two-parent authentication](../references/tests/controllers/48-show-04-ancestor-authentication.md)
+- [Flat JSON and JSON API responses](../references/tests/controllers/49-show-json-responses.md)
+- [Scoped parent bindings](../references/tests/controllers/50-show-parent-bindings.md)
+- [Direct record binding](../references/tests/controllers/51-show-01-direct-record-bindings.md)
+- [Record binding under one parent](../references/tests/controllers/51-show-02-parent-record-bindings.md)
+- [Conflicting record ownership](../references/tests/controllers/51-show-03-ownership-integrity.md)
+- [Record binding under two parents](../references/tests/controllers/51-show-04-deep-record-bindings.md)
+- [Page and route identifiers](../references/tests/controllers/52-show-page-contract.md)
+- [Default and selected relations](../references/tests/controllers/53-show-selected-relations.md)
+- [Deleted and inactive selected relations](../references/tests/controllers/54-show-historical-relation.md)
+- [Tenant settings](../references/tests/controllers/55-show-settings.md)
+- [Public fields and hidden foreign keys](../references/tests/controllers/56-show-public-fields.md)
+- [All selected historical relations](../references/tests/controllers/57-show-historical-relations.md)
+- [Ordered live child collection](../references/tests/controllers/58-show-child-collection.md)
+- [Inactive records and ancestors](../references/tests/controllers/59-show-inactive-records.md)
+- [Parent finality and mutation flags](../references/tests/controllers/60-show-mutation-flags.md)
 
 ## Related References
 

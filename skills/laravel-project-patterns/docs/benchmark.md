@@ -81,12 +81,20 @@ three phases, then syntax checks and contract review; no application runtime.
 | Block | Audited declarations / variants | Catalog files | Skill + responses | With queries + commands |
 | --- | ---: | ---: | ---: | ---: |
 | Index | 68 / 68 | 47 | 3,756 | 4,946 |
+| Show | 92 / 94 | 67 | 5,627 | 7,637 |
 
 Index adds 39 complete examples in 13 files. Seven focused probes found the
 needed families in five candidates. Four existing probes retained their targets;
 one pre-existing create miss still needed a focused follow-up. The consumer used
 three searches, three reads and four references; its final phase reused context.
 Counts and limitations above apply; these trials do not establish large-catalog accuracy.
+
+Show preserves 54 examples in 20 files. Splitting authentication and binding by
+route depth reduced the same supplied task from 7,097 to 5,627 tokens; including
+queries and commands, 8,437 to 7,637. Both fresh consumers preserved the contracts.
+Six focused probes found the needed families, two with follow-up searches;
+three unchanged create/destroy/edit probes retained their targets. One run per
+version measures this task only, including each consumer's retrieval choices.
 
 ## Earlier Selection Evidence
 
