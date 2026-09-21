@@ -1,11 +1,11 @@
 ---
 name: laravel-project-patterns
-description: "Apply the catalog's Laravel controller tests for create, destroy, edit, index, show and store through selective local retrieval when project guidance or the task calls for these patterns."
+description: "Apply the catalog's Laravel controller tests for create, destroy, edit, index, show, store and update through selective local retrieval when project guidance or the task calls for these patterns."
 ---
 
 # Laravel Project Patterns
 
-Covers Pest HTTP GET `create`/`edit`/`index`/`show`, POST `store` and DELETE `destroy`
+Covers Pest HTTP GET `create`/`edit`/`index`/`show`, POST `store`, PATCH `update` and DELETE `destroy`
 tests, including deactivation and reactivation subresources. For other behavior, report the
 coverage gap and follow project conventions without searching this catalog.
 Examples are fictional: adapt to inspected contracts and keep reference-project
@@ -28,9 +28,9 @@ uv run <skill-directory>/scripts/search.py read --session=<session.json> --ids <
 Search returns five ranked candidates; new IDs include applicability and token
 cost, known IDs only `id` and `read`. Select the smallest applicable set. For a
 complete block select its ordered checklist: [create](references/tests/controllers/00-create-test-order.md),
-[destroy](references/tests/controllers/12-destroy-test-order.md), [edit](references/tests/controllers/22-edit-test-order.md)
-[index](references/tests/controllers/34-index-test-order.md), [show](references/tests/controllers/47-show-test-order.md)
-or [store](references/tests/controllers/61-store-00-test-order.md).
+[destroy](references/tests/controllers/12-destroy-test-order.md), [edit](references/tests/controllers/22-edit-test-order.md),
+[index](references/tests/controllers/34-index-test-order.md), [show](references/tests/controllers/47-show-test-order.md),
+[store](references/tests/controllers/61-store-00-test-order.md) or [update](references/tests/controllers/62-update-00-test-order.md).
 A specialized example covers its stated assertions; retrieve another only for
 missing contracts. Search uncovered requirements with relevant
 facts; `--limit=10` can broaden a shortlist. Rank and shortlist size do not prove

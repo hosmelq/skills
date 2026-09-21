@@ -83,6 +83,7 @@ three phases, then syntax checks and contract review; no application runtime.
 | Index | 68 / 68 | 47 | 3,756 | 4,946 |
 | Show | 92 / 94 | 67 | 5,627 | 7,637 |
 | Store | 172 / 281 | 122 | 6,085 | 7,586 |
+| Update | 186 / 295 | 186 | 6,626 | 8,608 |
 
 Index adds 39 complete examples in 13 files. Seven focused probes found the
 needed families in five candidates. Four existing probes retained their targets;
@@ -101,6 +102,13 @@ Store preserves 145 examples and 13 complete datasets in 55 files. Its consumer
 preserved nested validation, optional/null mapping and API contracts. Eight
 focused probes found their needed families, one with a follow-up; three existing
 create/destroy/edit probes retained their targets. The final phase reused context.
+
+Update preserves 168 examples and 15 complete datasets in 64 files. Its consumer
+preserved geographic normalization and decision dispatch/error contracts, then
+reused context; counts include one rejected query and its correction. Ten focused
+probes found their needed families: one broad ancestry probe required two focused
+queries and a retry with ten candidates. Six prior-action probes retained their
+targets. These results confirm those queries, not guaranteed top-five coverage.
 
 ## Earlier Selection Evidence
 

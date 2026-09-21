@@ -6,7 +6,7 @@ Use `scripts/search.py` to select descriptions before reading catalog patterns. 
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
-The current references cover controller `create`, `destroy`, `edit`, `index`, `show` and `store` tests. Other areas will be added
+The current references cover controller `create`, `destroy`, `edit`, `index`, `show`, `store` and `update` tests. Other areas will be added
 incrementally; a returned reference is not evidence that an unrelated area is covered.
 
 ## Pattern
@@ -266,6 +266,73 @@ files directly; application work retrieves them through the bounded search.
 - [Mapping Decimal And Rounding](../references/tests/controllers/61-store-52-mapping-decimal-and-rounding.md)
 - [Mapping Optional Bound](../references/tests/controllers/61-store-53-mapping-optional-bound.md)
 - [Responses Deactivation](../references/tests/controllers/61-store-54-responses-deactivation.md)
+
+## Update References
+
+- [Controller Tests: Ordered Update Block](../references/tests/controllers/62-update-00-test-order.md)
+- [Update Tests: Access Guest Root](../references/tests/controllers/62-update-01-access-guest-root.md)
+- [Update Tests: Access Guest Nested](../references/tests/controllers/62-update-02-access-guest-nested.md)
+- [Update Tests: Access Unrelated Root](../references/tests/controllers/62-update-03-access-unrelated-root.md)
+- [Update Tests: Access Unrelated Nested](../references/tests/controllers/62-update-04-access-unrelated-nested.md)
+- [Update Tests: Bindings Foreign Record](../references/tests/controllers/62-update-05-bindings-foreign-record.md)
+- [Update Tests: Bindings Deleted Record](../references/tests/controllers/62-update-06-bindings-deleted-record.md)
+- [Update Tests: Bindings Foreign Parent](../references/tests/controllers/62-update-07-bindings-foreign-parent.md)
+- [Update Tests: Bindings Deleted Parent](../references/tests/controllers/62-update-08-bindings-deleted-parent.md)
+- [Update Tests: Bindings Wrong Parent](../references/tests/controllers/62-update-09-bindings-wrong-parent.md)
+- [Update Tests: Bindings Nested Record](../references/tests/controllers/62-update-10-bindings-nested-record.md)
+- [Update Tests: Bindings Conflicting Owner](../references/tests/controllers/62-update-11-bindings-conflicting-owner.md)
+- [Update Tests: Bindings Ancestor Chain](../references/tests/controllers/62-update-12-bindings-ancestor-chain.md)
+- [Update Tests: Bindings Deep Record](../references/tests/controllers/62-update-13-bindings-deep-record.md)
+- [Update Tests: Access Inactive State](../references/tests/controllers/62-update-14-access-inactive-state.md)
+- [Update Tests: Review Access](../references/tests/controllers/62-update-15-review-access.md)
+- [Update Tests: Review Status Validation](../references/tests/controllers/62-update-16-review-status-validation.md)
+- [Update Tests: Validation Contact Fields](../references/tests/controllers/62-update-17-validation-contact-fields.md)
+- [Update Tests: Validation Address Fields](../references/tests/controllers/62-update-18-validation-address-fields.md)
+- [Update Tests: Validation Facility Fields](../references/tests/controllers/62-update-19-validation-facility-fields.md)
+- [Update Tests: Validation Cabinet Fields](../references/tests/controllers/62-update-20-validation-cabinet-fields.md)
+- [Update Tests: Validation Settings Fields](../references/tests/controllers/62-update-21-validation-settings-fields.md)
+- [Update Tests: Validation Record Measures](../references/tests/controllers/62-update-22-validation-record-measures.md)
+- [Update Tests: Validation Line Measures](../references/tests/controllers/62-update-23-validation-line-measures.md)
+- [Update Tests: Validation Editable Label Fields](../references/tests/controllers/62-update-24-validation-editable-label-fields.md)
+- [Update Tests: Validation State Fields](../references/tests/controllers/62-update-25-validation-state-fields.md)
+- [Update Tests: Validation Transit Fields](../references/tests/controllers/62-update-26-validation-transit-fields.md)
+- [Update Tests: Validation Rounding Fields](../references/tests/controllers/62-update-27-validation-rounding-fields.md)
+- [Update Tests: Validation Interval Rate Fields](../references/tests/controllers/62-update-28-validation-interval-rate-fields.md)
+- [Update Tests: Uniqueness Email](../references/tests/controllers/62-update-29-uniqueness-email.md)
+- [Update Tests: Uniqueness Phone](../references/tests/controllers/62-update-30-uniqueness-phone.md)
+- [Update Tests: Uniqueness Editable Label](../references/tests/controllers/62-update-31-uniqueness-editable-label.md)
+- [Update Tests: Uniqueness State Name](../references/tests/controllers/62-update-32-uniqueness-state-name.md)
+- [Update Tests: Uniqueness Plan Name](../references/tests/controllers/62-update-33-uniqueness-plan-name.md)
+- [Update Tests: Uniqueness Rule Country](../references/tests/controllers/62-update-34-uniqueness-rule-country.md)
+- [Update Tests: Relations New Record Selections](../references/tests/controllers/62-update-35-relations-new-record-selections.md)
+- [Update Tests: Relations Other Historical Owner](../references/tests/controllers/62-update-36-relations-other-historical-owner.md)
+- [Update Tests: Relations Foreign Rule](../references/tests/controllers/62-update-37-relations-foreign-rule.md)
+- [Update Tests: Relations Line Group](../references/tests/controllers/62-update-38-relations-line-group.md)
+- [Update Tests: Relations Current History](../references/tests/controllers/62-update-39-relations-current-history.md)
+- [Update Tests: Relations Clearing Plan And Rule](../references/tests/controllers/62-update-40-relations-clearing-plan-and-rule.md)
+- [Update Tests: Errors Measurements](../references/tests/controllers/62-update-41-errors-measurements.md)
+- [Update Tests: Errors Final Record](../references/tests/controllers/62-update-42-errors-final-record.md)
+- [Update Tests: Errors Reference And Date](../references/tests/controllers/62-update-43-errors-reference-and-date.md)
+- [Update Tests: Errors Relational Dependencies](../references/tests/controllers/62-update-44-errors-relational-dependencies.md)
+- [Update Tests: Errors Unavailable Selections](../references/tests/controllers/62-update-45-errors-unavailable-selections.md)
+- [Update Tests: Errors Unavailable Group](../references/tests/controllers/62-update-46-errors-unavailable-group.md)
+- [Update Tests: Errors Inactive Plan](../references/tests/controllers/62-update-47-errors-inactive-plan.md)
+- [Update Tests: Errors Dependent Rates](../references/tests/controllers/62-update-48-errors-dependent-rates.md)
+- [Update Tests: Errors Interval Conflicts](../references/tests/controllers/62-update-49-errors-interval-conflicts.md)
+- [Update Tests: Review Conflicting Decisions](../references/tests/controllers/62-update-50-review-conflicting-decisions.md)
+- [Update Tests: Mapping Contact Input](../references/tests/controllers/62-update-51-mapping-contact-input.md)
+- [Update Tests: Mapping Address Geography](../references/tests/controllers/62-update-52-mapping-address-geography.md)
+- [Update Tests: Mapping Facility Geography](../references/tests/controllers/62-update-53-mapping-facility-geography.md)
+- [Update Tests: Mapping Cabinet Input](../references/tests/controllers/62-update-54-mapping-cabinet-input.md)
+- [Update Tests: Mapping Settings](../references/tests/controllers/62-update-55-mapping-settings.md)
+- [Update Tests: Mapping Record Partial Input](../references/tests/controllers/62-update-56-mapping-record-partial-input.md)
+- [Update Tests: Mapping Line Partial Measures](../references/tests/controllers/62-update-57-mapping-line-partial-measures.md)
+- [Update Tests: Mapping State Input](../references/tests/controllers/62-update-58-mapping-state-input.md)
+- [Update Tests: Mapping Plan Transit Bounds](../references/tests/controllers/62-update-59-mapping-plan-transit-bounds.md)
+- [Update Tests: Mapping Rule Rounding](../references/tests/controllers/62-update-60-mapping-rule-rounding.md)
+- [Update Tests: Mapping Rate Full And Partial](../references/tests/controllers/62-update-61-mapping-rate-full-and-partial.md)
+- [Update Tests: Mapping Rate Stored Bounds](../references/tests/controllers/62-update-62-mapping-rate-stored-bounds.md)
+- [Update Tests: Review Decisions](../references/tests/controllers/62-update-63-review-decisions.md)
 
 ## Related References
 

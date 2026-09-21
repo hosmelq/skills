@@ -1,0 +1,54 @@
+# Update Tests: Relations Foreign Rule
+
+Pest PATCH update: A complete two-row dataset rejects a foreign-tenant rule whose parent belongs either to the current tenant or to another tenant. Preserve both ownership graphs and the exact field error.
+
+## Rejects a related rule from another tenant
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use function Pest\Laravel\mock;
+use function Pest\Laravel\patch;
+
+use App\Actions\WorkOrders\UpdateWorkOrder;
+use App\Models\PlanRule;
+use App\Models\ServicePlan;
+use App\Models\Team;
+use App\Models\WorkOrder;
+use Database\Factories\ServicePlanFactory;
+
+describe('update', function (): void {
+    it('rejects a related rule from another tenant', function (bool $sameParentTeam): void {
+        $workOrder = WorkOrder::factory()->createOne();
+        $servicePlan = ServicePlan::factory()
+            ->when($sameParentTeam, fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->for($workOrder->team))
+            ->createOne();
+        $planRule = PlanRule::factory()
+            ->for(Team::factory())
+            ->for($servicePlan)
+            ->createOne();
+
+        signIn(team: $workOrder->team);
+
+        mock(UpdateWorkOrder::class)
+            ->shouldNotReceive('handle');
+
+        $response = patch(route('teams.work-orders.update', [
+            'team' => $workOrder->team,
+            'work_order' => $workOrder,
+        ]), [
+            'plan_rule_id' => $planRule->public_id,
+        ]);
+
+        $response->assertRedirectBackWithErrors([
+            'plan_rule_id' =>
+                'The selected plan rule id is invalid.',
+        ]);
+    })->with([
+        'different parent team' => false,
+        'same parent team' => true,
+    ]);
+});
+```
