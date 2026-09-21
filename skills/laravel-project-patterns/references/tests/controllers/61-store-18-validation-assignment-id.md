@@ -1,0 +1,95 @@
+# Store Tests: Validation Assignment Id
+
+Pest POST store: Complete related-ID/label dataset plus foreign-tenant and soft-deleted relation rejection.
+
+## Complete block
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use function Pest\Laravel\post;
+
+use App\Models\Member;
+use App\Models\ServicePlan;
+use App\Support\PublicId;
+use Illuminate\Support\Str;
+
+describe('store', function (): void {
+    it('validates fields', function (array $data, array $expected): void {
+        $member = Member::factory()->createOne();
+
+        signIn(team: $member->team);
+
+        $response = post(route('teams.members.cabinets.store', [
+            'team' => $member->team,
+            'member' => $member,
+        ]), $data);
+
+        $response->assertRedirectBackWithErrors($expected);
+    })->with([
+        'exists' => [
+            'data' => fn (): array => [
+                'service_plan_id' => resolve(PublicId::class)->encode(PHP_INT_MAX),
+            ],
+            'expected' => [
+                'service_plan_id' => 'The selected service plan id is invalid.',
+            ],
+        ],
+        'max:255 (string)' => [
+            'data' => [
+                'label' => Str::repeat('a', 256),
+            ],
+            'expected' => [
+                'label' => 'The label field must not be greater than 255 characters.',
+            ],
+        ],
+        'required' => [
+            'data' => [],
+            'expected' => [
+                'service_plan_id' => 'The service plan id field is required.',
+            ],
+        ],
+    ]);
+
+    it('rejects a service plan from another tenant', function (): void {
+        $member = Member::factory()->createOne();
+        $servicePlan = ServicePlan::factory()->createOne();
+
+        signIn(team: $member->team);
+
+        $response = post(route('teams.members.cabinets.store', [
+            'team' => $member->team,
+            'member' => $member,
+        ]), [
+            'service_plan_id' => $servicePlan->public_id,
+        ]);
+
+        $response->assertRedirectBackWithErrors([
+            'service_plan_id' => 'The selected service plan id is invalid.',
+        ]);
+    });
+
+    it('rejects a soft deleted service plan', function (): void {
+        $member = Member::factory()->createOne();
+        $servicePlan = ServicePlan::factory()
+            ->trashed()
+            ->for($member->team)
+            ->createOne();
+
+        signIn(team: $member->team);
+
+        $response = post(route('teams.members.cabinets.store', [
+            'team' => $member->team,
+            'member' => $member,
+        ]), [
+            'service_plan_id' => $servicePlan->public_id,
+        ]);
+
+        $response->assertRedirectBackWithErrors([
+            'service_plan_id' => 'The selected service plan id is invalid.',
+        ]);
+    });
+});
+```

@@ -82,6 +82,7 @@ three phases, then syntax checks and contract review; no application runtime.
 | --- | ---: | ---: | ---: | ---: |
 | Index | 68 / 68 | 47 | 3,756 | 4,946 |
 | Show | 92 / 94 | 67 | 5,627 | 7,637 |
+| Store | 172 / 281 | 122 | 6,085 | 7,586 |
 
 Index adds 39 complete examples in 13 files. Seven focused probes found the
 needed families in five candidates. Four existing probes retained their targets;
@@ -95,6 +96,11 @@ queries and commands, 8,437 to 7,637. Both fresh consumers preserved the contrac
 Six focused probes found the needed families, two with follow-up searches;
 three unchanged create/destroy/edit probes retained their targets. One run per
 version measures this task only, including each consumer's retrieval choices.
+
+Store preserves 145 examples and 13 complete datasets in 55 files. Its consumer
+preserved nested validation, optional/null mapping and API contracts. Eight
+focused probes found their needed families, one with a follow-up; three existing
+create/destroy/edit probes retained their targets. The final phase reused context.
 
 ## Earlier Selection Evidence
 

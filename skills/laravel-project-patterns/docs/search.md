@@ -6,7 +6,7 @@ Use `scripts/search.py` to select descriptions before reading catalog patterns. 
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
-The current references cover controller `create`, `destroy`, `edit`, `index` and `show` tests. Other areas will be added
+The current references cover controller `create`, `destroy`, `edit`, `index`, `show` and `store` tests. Other areas will be added
 incrementally; a returned reference is not evidence that an unrelated area is covered.
 
 ## Pattern
@@ -208,6 +208,64 @@ files directly; application work retrieves them through the bounded search.
 - [Ordered live child collection](../references/tests/controllers/58-show-child-collection.md)
 - [Inactive records and ancestors](../references/tests/controllers/59-show-inactive-records.md)
 - [Parent finality and mutation flags](../references/tests/controllers/60-show-mutation-flags.md)
+
+#### Store
+
+- [Ordered store block](../references/tests/controllers/61-store-00-test-order.md)
+- [Access Guest Root](../references/tests/controllers/61-store-01-access-guest-root.md)
+- [Access Guest Nested](../references/tests/controllers/61-store-02-access-guest-nested.md)
+- [Access Existing Record](../references/tests/controllers/61-store-03-access-existing-record.md)
+- [Access Unrelated Root](../references/tests/controllers/61-store-04-access-unrelated-root.md)
+- [Access Unrelated Nested](../references/tests/controllers/61-store-05-access-unrelated-nested.md)
+- [Api Json Resource](../references/tests/controllers/61-store-06-api-json-resource.md)
+- [Bindings Existing Record](../references/tests/controllers/61-store-07-bindings-existing-record.md)
+- [Bindings Create Parent](../references/tests/controllers/61-store-08-bindings-create-parent.md)
+- [Bindings Create Ancestor Chain](../references/tests/controllers/61-store-09-bindings-create-ancestor-chain.md)
+- [Bindings Nested Existing Record](../references/tests/controllers/61-store-10-bindings-nested-existing-record.md)
+- [Access Inactive State](../references/tests/controllers/61-store-11-access-inactive-state.md)
+- [Validation Contact Fields](../references/tests/controllers/61-store-12-validation-contact-fields.md)
+- [Validation Address Fields](../references/tests/controllers/61-store-13-validation-address-fields.md)
+- [Validation Geographic Fields](../references/tests/controllers/61-store-14-validation-geographic-fields.md)
+- [Validation Profile Settings](../references/tests/controllers/61-store-15-validation-profile-settings.md)
+- [Validation Reference And Measures](../references/tests/controllers/61-store-16-validation-reference-and-measures.md)
+- [Validation Line Value And Measures](../references/tests/controllers/61-store-17-validation-line-value-and-measures.md)
+- [Validation Assignment Id](../references/tests/controllers/61-store-18-validation-assignment-id.md)
+- [Validation Editable Label Fields](../references/tests/controllers/61-store-19-validation-editable-label-fields.md)
+- [Validation State Fields](../references/tests/controllers/61-store-20-validation-state-fields.md)
+- [Validation Transit Bounds](../references/tests/controllers/61-store-21-validation-transit-bounds.md)
+- [Validation Rounding Rule](../references/tests/controllers/61-store-22-validation-rounding-rule.md)
+- [Validation Interval Rate](../references/tests/controllers/61-store-23-validation-interval-rate.md)
+- [Relations Owner And Assignment](../references/tests/controllers/61-store-24-relations-owner-and-assignment.md)
+- [Relations Service And Rule](../references/tests/controllers/61-store-25-relations-service-and-rule.md)
+- [Relations Facility Roles](../references/tests/controllers/61-store-26-relations-facility-roles.md)
+- [Relations Status Selection](../references/tests/controllers/61-store-27-relations-status-selection.md)
+- [Relations Item Group](../references/tests/controllers/61-store-28-relations-item-group.md)
+- [Uniqueness Email](../references/tests/controllers/61-store-29-uniqueness-email.md)
+- [Uniqueness Phone](../references/tests/controllers/61-store-30-uniqueness-phone.md)
+- [Uniqueness Name With Minimal Success](../references/tests/controllers/61-store-31-uniqueness-name-with-minimal-success.md)
+- [Uniqueness Name With Mapped Success](../references/tests/controllers/61-store-32-uniqueness-name-with-mapped-success.md)
+- [Uniqueness Name With Required Fields](../references/tests/controllers/61-store-33-uniqueness-name-with-required-fields.md)
+- [Uniqueness Parent Scoped Code](../references/tests/controllers/61-store-34-uniqueness-parent-scoped-code.md)
+- [Failures Assignment](../references/tests/controllers/61-store-35-failures-assignment.md)
+- [Failures Inactive Parent](../references/tests/controllers/61-store-36-failures-inactive-parent.md)
+- [Failures Range Collision](../references/tests/controllers/61-store-37-failures-range-collision.md)
+- [Failures Final Parent And Group](../references/tests/controllers/61-store-38-failures-final-parent-and-group.md)
+- [Failures State And Reference](../references/tests/controllers/61-store-39-failures-state-and-reference.md)
+- [Failures Related Prerequisites](../references/tests/controllers/61-store-40-failures-related-prerequisites.md)
+- [Failures Facility Availability](../references/tests/controllers/61-store-41-failures-facility-availability.md)
+- [Failures Related Availability](../references/tests/controllers/61-store-42-failures-related-availability.md)
+- [Failures Deactivation Guards](../references/tests/controllers/61-store-43-failures-deactivation-guards.md)
+- [Mapping Current Actor](../references/tests/controllers/61-store-44-mapping-current-actor.md)
+- [Mapping Scalar Input](../references/tests/controllers/61-store-45-mapping-scalar-input.md)
+- [Mapping Editable Fields](../references/tests/controllers/61-store-46-mapping-editable-fields.md)
+- [Mapping Enums And Boolean](../references/tests/controllers/61-store-47-mapping-enums-and-boolean.md)
+- [Mapping Seeded Province](../references/tests/controllers/61-store-48-mapping-seeded-province.md)
+- [Mapping Nested Related Id](../references/tests/controllers/61-store-49-mapping-nested-related-id.md)
+- [Mapping Root Related Id](../references/tests/controllers/61-store-50-mapping-root-related-id.md)
+- [Mapping Nullable Input](../references/tests/controllers/61-store-51-mapping-nullable-input.md)
+- [Mapping Decimal And Rounding](../references/tests/controllers/61-store-52-mapping-decimal-and-rounding.md)
+- [Mapping Optional Bound](../references/tests/controllers/61-store-53-mapping-optional-bound.md)
+- [Responses Deactivation](../references/tests/controllers/61-store-54-responses-deactivation.md)
 
 ## Related References
 
