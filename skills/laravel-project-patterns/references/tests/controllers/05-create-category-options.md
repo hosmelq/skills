@@ -23,7 +23,10 @@ describe('create', function (): void {
     it('shows the create page', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
         $group = ItemGroup::factory()->recycle($workOrder->team)->createOne();
-        $inactiveGroup = ItemGroup::factory()->deactivated()->recycle($workOrder->team)->createOne();
+        $inactiveGroup = ItemGroup::factory()
+            ->deactivated()
+            ->recycle($workOrder->team)
+            ->createOne();
         $deletedGroup = ItemGroup::factory()->trashed()->recycle($workOrder->team)->createOne();
         $otherGroup = ItemGroup::factory()->createOne();
 

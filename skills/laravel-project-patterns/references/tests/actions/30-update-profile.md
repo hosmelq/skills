@@ -22,7 +22,10 @@ it('validates fields', function (array $data, array $expected): void {
 
     expect(fn () => resolve(UpdateUserProfileInformation::class)->update($user, $data))
         ->toThrow(function (ValidationException $exception) use ($expected): void {
-            $messages = Arr::only($exception->validator->errors()->messages(), array_keys($expected));
+            $messages = Arr::only(
+                $exception->validator->errors()->messages(),
+                array_keys($expected),
+            );
 
             expect($exception->errorBag)
                 ->toBe('updateProfileInformation')

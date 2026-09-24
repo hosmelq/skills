@@ -19,7 +19,10 @@ use Inertia\Testing\AssertableInertia;
 describe('create', function (): void {
     it('marks the page read only for final parent states', function (WorkOrderBaseStatus $baseStatus): void {
         $status = WorkOrderStatus::factory()->withBaseStatus($baseStatus)->createOne();
-        $workOrder = WorkOrder::factory()->recycle($status->team)->for($status, 'workOrderStatus')->createOne();
+        $workOrder = WorkOrder::factory()
+            ->recycle($status->team)
+            ->for($status, 'workOrderStatus')
+            ->createOne();
 
         login(team: $workOrder->team);
 

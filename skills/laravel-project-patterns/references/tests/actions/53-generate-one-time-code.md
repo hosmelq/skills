@@ -96,5 +96,8 @@ it('throws when unable to generate a unique code after max attempts', function (
     });
 
     resolve(GenerateOneTimePasswordCode::class)->handle('alex@example.com');
-})->throws(CannotGenerateOneTimePasswordCode::class, 'Unable to generate one-time password after 20 attempts.');
+})->throws(
+    CannotGenerateOneTimePasswordCode::class,
+    'Unable to generate one-time password after 20 attempts.',
+);
 ```

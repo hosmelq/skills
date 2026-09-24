@@ -36,7 +36,8 @@ it('creates the initial status for a tenant', function (): void {
 it('is idempotent when an initial status already exists', function (): void {
     $workOrderStatus = WorkOrderStatus::factory()->initial()->createOne();
 
-    $resolvedWorkOrderStatus = resolve(EnsureInitialWorkOrderStatus::class)->handle($workOrderStatus->team);
+    $resolvedWorkOrderStatus = resolve(EnsureInitialWorkOrderStatus::class)
+        ->handle($workOrderStatus->team);
 
     $workOrderStatusCount = $workOrderStatus->team->workOrderStatuses()->count();
 
@@ -51,7 +52,8 @@ it('promotes an existing active open status instead of creating a duplicate', fu
         ->recycle($workOrderStatus->team)
         ->createOne();
 
-    $resolvedWorkOrderStatus = resolve(EnsureInitialWorkOrderStatus::class)->handle($workOrderStatus->team);
+    $resolvedWorkOrderStatus = resolve(EnsureInitialWorkOrderStatus::class)
+        ->handle($workOrderStatus->team);
 
     assertDatabaseHas(WorkOrderStatus::class, [
         'id' => $workOrderStatus->id,
@@ -78,7 +80,8 @@ it('ignores deactivated initial statuses', function (): void {
         ->recycle($deactivatedInitialWorkOrderStatus->team)
         ->createOne();
 
-    $resolvedWorkOrderStatus = resolve(EnsureInitialWorkOrderStatus::class)->handle($workOrderStatus->team);
+    $resolvedWorkOrderStatus = resolve(EnsureInitialWorkOrderStatus::class)
+        ->handle($workOrderStatus->team);
 
     assertDatabaseHas(WorkOrderStatus::class, [
         'id' => $workOrderStatus->id,
@@ -105,7 +108,8 @@ it('ignores soft deleted initial statuses', function (): void {
         ->recycle($softDeletedInitialWorkOrderStatus->team)
         ->createOne();
 
-    $resolvedWorkOrderStatus = resolve(EnsureInitialWorkOrderStatus::class)->handle($workOrderStatus->team);
+    $resolvedWorkOrderStatus = resolve(EnsureInitialWorkOrderStatus::class)
+        ->handle($workOrderStatus->team);
 
     assertDatabaseHas(WorkOrderStatus::class, [
         'id' => $workOrderStatus->id,

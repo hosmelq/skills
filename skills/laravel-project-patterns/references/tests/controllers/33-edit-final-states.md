@@ -23,7 +23,10 @@ describe('edit', function (): void {
         $status = WorkOrderStatus::factory()
             ->withBaseStatus(WorkOrderBaseStatus::Completed)
             ->createOne();
-        $workOrder = WorkOrder::factory()->recycle($status->team)->for($status, 'workOrderStatus')->createOne();
+        $workOrder = WorkOrder::factory()
+            ->recycle($status->team)
+            ->for($status, 'workOrderStatus')
+            ->createOne();
 
         login(team: $workOrder->team);
 
@@ -58,7 +61,10 @@ use Inertia\Testing\AssertableInertia;
 describe('edit', function (): void {
     it('marks the page read only for final parent states', function (WorkOrderBaseStatus $baseStatus): void {
         $status = WorkOrderStatus::factory()->withBaseStatus($baseStatus)->createOne();
-        $workOrder = WorkOrder::factory()->recycle($status->team)->for($status, 'workOrderStatus')->createOne();
+        $workOrder = WorkOrder::factory()
+            ->recycle($status->team)
+            ->for($status, 'workOrderStatus')
+            ->createOne();
         $line = WorkOrderLine::factory()->recycle($workOrder)->createOne();
 
         login(team: $workOrder->team);

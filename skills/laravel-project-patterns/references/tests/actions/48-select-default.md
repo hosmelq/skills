@@ -58,8 +58,14 @@ it('only clears default addresses for the same owner', function (): void {
     $firstMember = Member::factory()->createOne();
     $secondMember = Member::factory()->createOne();
 
-    $firstMemberDefaultAddress = MemberAddress::factory()->recycle($firstMember)->default()->createOne();
-    $secondMemberDefaultAddress = MemberAddress::factory()->recycle($secondMember)->default()->createOne();
+    $firstMemberDefaultAddress = MemberAddress::factory()
+        ->recycle($firstMember)
+        ->default()
+        ->createOne();
+    $secondMemberDefaultAddress = MemberAddress::factory()
+        ->recycle($secondMember)
+        ->default()
+        ->createOne();
     $newDefaultAddress = MemberAddress::factory()->recycle($firstMember)->createOne();
 
     resolve(SetDefaultMemberAddress::class)->handle($newDefaultAddress);

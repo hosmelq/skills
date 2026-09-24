@@ -55,7 +55,8 @@ it('sets an active open status as the only initial status', function (): void {
         ->recycle($initialWorkOrderStatus->team)
         ->createOne();
 
-    $resolvedWorkOrderStatus = resolve(SetInitialWorkOrderStatus::class)->handle($newInitialWorkOrderStatus);
+    $resolvedWorkOrderStatus = resolve(SetInitialWorkOrderStatus::class)
+        ->handle($newInitialWorkOrderStatus);
 
     assertDatabaseHas(WorkOrderStatus::class, [
         'id' => $initialWorkOrderStatus->id,
@@ -85,7 +86,8 @@ it('clears deactivated and soft deleted initial statuses when setting a new init
         ->recycle($deactivatedInitialWorkOrderStatus->team)
         ->createOne();
 
-    $resolvedWorkOrderStatus = resolve(SetInitialWorkOrderStatus::class)->handle($newInitialWorkOrderStatus);
+    $resolvedWorkOrderStatus = resolve(SetInitialWorkOrderStatus::class)
+        ->handle($newInitialWorkOrderStatus);
 
     assertDatabaseHas(WorkOrderStatus::class, [
         'id' => $deactivatedInitialWorkOrderStatus->id,

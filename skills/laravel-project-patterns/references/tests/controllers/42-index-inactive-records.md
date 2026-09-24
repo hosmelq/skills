@@ -28,7 +28,10 @@ describe('index', function (): void {
             ->assertInertia(function (AssertableInertia $page) use ($facility): void {
                 $page->component('facilities/Index')
                     ->where('facilities.data.0.id', $facility->sqid)
-                    ->where('facilities.data.0.deactivated_at', $facility->deactivated_at->toJSON());
+                    ->where(
+                        'facilities.data.0.deactivated_at',
+                        $facility->deactivated_at->toJSON(),
+                    );
             });
     });
 });
@@ -95,7 +98,10 @@ describe('index', function (): void {
             ->assertInertia(function (AssertableInertia $page) use ($planRule): void {
                 $page->component('service-plans/plan-rules/Index')
                     ->where('planRules.data.0.id', $planRule->sqid)
-                    ->where('servicePlan.deactivated_at', $planRule->servicePlan->deactivated_at->toJSON());
+                    ->where(
+                        'servicePlan.deactivated_at',
+                        $planRule->servicePlan->deactivated_at->toJSON(),
+                    );
             });
     });
 });
@@ -132,7 +138,10 @@ describe('index', function (): void {
             ->assertInertia(function (AssertableInertia $page) use ($rate): void {
                 $page->component('service-plans/rates/Index')
                     ->where('rates.data.0.id', $rate->sqid)
-                    ->where('servicePlan.deactivated_at', $rate->planRule->servicePlan->deactivated_at->toJSON());
+                    ->where(
+                        'servicePlan.deactivated_at',
+                        $rate->planRule->servicePlan->deactivated_at->toJSON(),
+                    );
             });
     });
 });
