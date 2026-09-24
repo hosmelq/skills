@@ -1,6 +1,6 @@
 # Model Tests: Trait Composition
 
-Unit tests for recursive model trait composition: deactivation, computed public identifiers, soft deletion and sorting. These checks do not prove trait behavior.
+Unit tests for recursive model trait composition: deactivation, Sqids, soft deletion and sorting. These checks do not prove trait behavior.
 
 Use only the traits present in the inspected model, in the order shown; test their behavior separately.
 
@@ -10,7 +10,7 @@ Use only the traits present in the inspected model, in the order shown; test the
 declare(strict_types=1);
 
 use App\Models\Concerns\HasDeactivation;
-use App\Models\Concerns\HasPublicId;
+use App\Models\Concerns\HasSqid;
 use App\Models\ItemGroup;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\EloquentSortable\SortableTrait;
@@ -21,10 +21,10 @@ it('uses the deactivation trait', function (): void {
     expect($traits)->toContain(HasDeactivation::class);
 });
 
-it('uses the public identifier trait', function (): void {
+it('uses the sqid trait', function (): void {
     $traits = class_uses_recursive(ItemGroup::class);
 
-    expect($traits)->toContain(HasPublicId::class);
+    expect($traits)->toContain(HasSqid::class);
 });
 
 it('uses the soft deletion trait', function (): void {

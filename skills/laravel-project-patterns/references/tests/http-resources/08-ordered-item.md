@@ -1,4 +1,4 @@
-# Model Tests: Ordered Item Resource
+# HTTP Resource Tests: Ordered Item Resource
 
 Exact resource JSON for an ordered item with color, description and nullable deactivation; a separate case checks a present deactivation timestamp.
 
@@ -23,7 +23,7 @@ it('formats resource correctly', function (): void {
         'created_at' => $itemGroup->created_at->toJSON(),
         'deactivated_at' => null,
         'description' => 'Consumer electronics and accessories.',
-        'id' => $itemGroup->public_id,
+        'id' => $itemGroup->sqid,
         'name' => 'Electronics',
         'sort_order' => $itemGroup->sort_order,
         'updated_at' => $itemGroup->updated_at->toJSON(),

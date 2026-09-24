@@ -1,8 +1,8 @@
-# Model Tests: Media Event Effects
+# Listener Tests: Media Dimensions
 
 Integration tests for a model media-attachment event: unsupported GIF leaves dimension properties null; supported JPEG exposes its width and height.
 
-Use a migrated support model implementing the inspected media-library contract, its registered listener and an isolated media disk. These assertions inspect the returned media object; they do not independently verify a refreshed database row.
+Use a migrated support model implementing the inspected media-library contract, its registered listener and the suite’s configured media disk. These assertions inspect the returned media object; they do not independently verify a refreshed database row.
 
 ```php
 <?php

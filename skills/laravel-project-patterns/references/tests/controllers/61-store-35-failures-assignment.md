@@ -42,7 +42,7 @@ describe('store', function (): void {
             'team' => $member->team,
             'member' => $member,
         ]), [
-            'service_plan_id' => $servicePlan->public_id,
+            'service_plan_id' => $servicePlan->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -70,7 +70,7 @@ describe('store', function (): void {
             'team' => $member->team,
             'member' => $member,
         ]), [
-            'service_plan_id' => $servicePlan->public_id,
+            'service_plan_id' => $servicePlan->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([

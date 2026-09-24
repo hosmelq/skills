@@ -13,7 +13,7 @@ use function Pest\Laravel\post;
 
 use App\Models\Member;
 use App\Models\ServicePlan;
-use App\Support\PublicId;
+use App\Support\Sqid;
 use Illuminate\Support\Str;
 
 describe('store', function (): void {
@@ -31,7 +31,7 @@ describe('store', function (): void {
     })->with([
         'exists' => [
             'data' => fn (): array => [
-                'service_plan_id' => resolve(PublicId::class)->encode(PHP_INT_MAX),
+                'service_plan_id' => resolve(Sqid::class)->encode(PHP_INT_MAX),
             ],
             'expected' => [
                 'service_plan_id' => 'The selected service plan id is invalid.',
@@ -63,7 +63,7 @@ describe('store', function (): void {
             'team' => $member->team,
             'member' => $member,
         ]), [
-            'service_plan_id' => $servicePlan->public_id,
+            'service_plan_id' => $servicePlan->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -81,7 +81,7 @@ describe('store', function (): void {
             'team' => $member->team,
             'member' => $member,
         ]), [
-            'service_plan_id' => $servicePlan->public_id,
+            'service_plan_id' => $servicePlan->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([

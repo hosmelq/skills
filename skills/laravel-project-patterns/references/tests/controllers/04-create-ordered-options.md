@@ -40,12 +40,12 @@ describe('create', function (): void {
                 $secondServicePlan,
             ): void {
                 $page->component('members/enrollments/Create')
-                    ->where('member.id', $member->public_id)
-                    ->where('team.id', $member->team->public_id)
+                    ->where('member.id', $member->sqid)
+                    ->where('team.id', $member->team->sqid)
                     ->has('servicePlans', 2)
-                    ->where('servicePlans.0.id', $firstServicePlan->public_id)
+                    ->where('servicePlans.0.id', $firstServicePlan->sqid)
                     ->where('servicePlans.0.name', 'Alpha Plan')
-                    ->where('servicePlans.1.id', $secondServicePlan->public_id)
+                    ->where('servicePlans.1.id', $secondServicePlan->sqid)
                     ->where('servicePlans.1.name', 'Zulu Plan');
             });
     });

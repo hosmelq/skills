@@ -39,11 +39,11 @@ describe('update', function (): void {
             'attributes' => [],
             'data' => [
                 'currency_code' => CurrencyCode::USD->value,
-                'declared_unit_value' => '1.001',
+                'unit_value' => '1.001',
             ],
             'expected' => [
-                'declared_unit_value' =>
-                    'The declared unit value field must have 0-2 decimal places.',
+                'unit_value' =>
+                    'The unit value field must have 0-2 decimal places.',
             ],
         ],
         'decimal:0,4' => [
@@ -91,10 +91,10 @@ describe('update', function (): void {
         ],
         'gte:0' => [
             'attributes' => [],
-            'data' => ['declared_unit_value' => '-0.01'],
+            'data' => ['unit_value' => '-0.01'],
             'expected' => [
-                'declared_unit_value' =>
-                    'The declared unit value field must be greater than or equal to 0.',
+                'unit_value' =>
+                    'The unit value field must be greater than or equal to 0.',
             ],
         ],
         'integer' => [
@@ -134,10 +134,10 @@ describe('update', function (): void {
         ],
         'max:999999.99' => [
             'attributes' => [],
-            'data' => ['declared_unit_value' => '1000000'],
+            'data' => ['unit_value' => '1000000'],
             'expected' => [
-                'declared_unit_value' =>
-                    'The declared unit value field must not be greater than 999999.99.',
+                'unit_value' =>
+                    'The unit value field must not be greater than 999999.99.',
             ],
         ],
         'min:1' => [
@@ -159,23 +159,23 @@ describe('update', function (): void {
         'required_with:currency_code' => [
             'attributes' => [
                 'currency_code' => CurrencyCode::USD,
-                'declared_unit_value' => '10.00',
+                'unit_value' => '10.00',
             ],
-            'data' => ['declared_unit_value' => null],
+            'data' => ['unit_value' => null],
             'expected' => [
-                'declared_unit_value' =>
-                    'The declared unit value field is required when currency code is present.',
+                'unit_value' =>
+                    'The unit value field is required when currency code is present.',
             ],
         ],
-        'required_with:declared_unit_value' => [
+        'required_with:unit_value' => [
             'attributes' => [
                 'currency_code' => CurrencyCode::USD,
-                'declared_unit_value' => '10.00',
+                'unit_value' => '10.00',
             ],
             'data' => ['currency_code' => null],
             'expected' => [
                 'currency_code' =>
-                    'The currency code field is required when declared unit value is present.',
+                    'The currency code field is required when unit value is present.',
             ],
         ],
         'required_with:dimension_unit,height,length' => [

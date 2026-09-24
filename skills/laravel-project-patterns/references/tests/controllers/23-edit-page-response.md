@@ -82,8 +82,8 @@ describe('edit', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($member): void {
                 $page->component('members/Edit')
-                    ->where('member.id', $member->public_id)
-                    ->where('team.id', $member->team->public_id);
+                    ->where('member.id', $member->sqid)
+                    ->where('team.id', $member->team->sqid);
             });
     });
 });

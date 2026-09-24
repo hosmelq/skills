@@ -4,6 +4,8 @@ Pest POST store: Complete postal/contact/geographic dataset: both coordinate ext
 
 ## Validates fields
 
+The country-restricted phone row uses a valid number from outside the allowed `CountryCode` values; preserve that exclusion when adapting the fixture.
+
 ```php
 <?php
 
@@ -69,7 +71,7 @@ describe('store', function (): void {
         ],
         'exists' => [
             'data' => [
-                'country_code' => 'NI',
+                'country_code' => 'US',
                 'province_code' => 'XX',
             ],
             'expected' => [
@@ -110,7 +112,7 @@ describe('store', function (): void {
         ],
         'phone' => [
             'data' => [
-                'country_code' => 'NI',
+                'country_code' => 'US',
                 'phone_number' => '8888',
             ],
             'expected' => [
@@ -119,8 +121,8 @@ describe('store', function (): void {
         ],
         'phone (country_code)' => [
             'data' => [
-                'country_code' => 'NI',
-                'phone_number' => '+503 8888 8888',
+                'country_code' => 'US',
+                'phone_number' => '+44 20 7946 0958',
             ],
             'expected' => [
                 'phone_number' => 'The phone number field must be a valid number.',

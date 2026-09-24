@@ -39,9 +39,9 @@ describe('index', function (): void {
                 AssertableInertia $page
             ) use ($first, $team, $second): void {
                 $page->component('item-groups/Index')
-                    ->where('team.id', $team->public_id)
-                    ->where('itemGroups.0.id', $first->public_id)
-                    ->where('itemGroups.1.id', $second->public_id);
+                    ->where('team.id', $team->sqid)
+                    ->where('itemGroups.0.id', $first->sqid)
+                    ->where('itemGroups.1.id', $second->sqid);
             });
     });
 });
@@ -83,9 +83,9 @@ describe('index', function (): void {
             ->assertInertia(function (AssertableInertia $page) use ($first, $team, $second): void {
                 $page->component('work-order-statuses/Index')
                     ->where('baseStatuses', WorkOrderBaseStatus::options())
-                    ->where('team.id', $team->public_id)
-                    ->where('workOrderStatuses.0.id', $first->public_id)
-                    ->where('workOrderStatuses.1.id', $second->public_id);
+                    ->where('team.id', $team->sqid)
+                    ->where('workOrderStatuses.0.id', $first->sqid)
+                    ->where('workOrderStatuses.1.id', $second->sqid);
             });
     });
 });
@@ -120,7 +120,7 @@ describe('index', function (): void {
             ->assertInertia(function (AssertableInertia $page) use ($itemGroup): void {
                 $page->component('item-groups/Index')
                     ->has('itemGroups', 1)
-                    ->where('itemGroups.0.id', $itemGroup->public_id);
+                    ->where('itemGroups.0.id', $itemGroup->sqid);
             });
     });
 });

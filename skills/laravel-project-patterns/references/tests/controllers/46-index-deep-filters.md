@@ -42,8 +42,8 @@ describe('index', function (): void {
                 $page->component('service-plans/rates/Index')
                     ->has('rates.data', 1, function (AssertableJson $json) use ($rate, $unrelatedRate): void {
                         $json
-                            ->where('id', $rate->public_id)
-                            ->whereNot('id', $unrelatedRate->public_id)
+                            ->where('id', $rate->sqid)
+                            ->whereNot('id', $unrelatedRate->sqid)
                             ->etc();
                     });
             });
@@ -82,8 +82,8 @@ describe('index', function (): void {
                 $page->component('service-plans/rates/Index')
                     ->has('rates.data', 1, function (AssertableJson $json) use ($rate, $unrelatedRate): void {
                         $json
-                            ->where('id', $rate->public_id)
-                            ->whereNot('id', $unrelatedRate->public_id)
+                            ->where('id', $rate->sqid)
+                            ->whereNot('id', $unrelatedRate->sqid)
                             ->etc();
                     });
             });
@@ -128,8 +128,8 @@ describe('index', function (): void {
                 $page->component('service-plans/rates/Index')
                     ->has('rates.data', 1, function (AssertableJson $json) use ($rate, $deletedRate): void {
                         $json
-                            ->where('id', $rate->public_id)
-                            ->whereNot('id', $deletedRate->public_id)
+                            ->where('id', $rate->sqid)
+                            ->whereNot('id', $deletedRate->sqid)
                             ->etc();
                     });
             });

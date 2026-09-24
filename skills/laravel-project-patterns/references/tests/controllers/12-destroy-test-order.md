@@ -26,10 +26,10 @@ Route roles are tenant / ancestor / parent / record; omit absent levels. Apply o
 18. `maps an existing history rejection to validation`
 19. `maps a required active initial record rejection to validation`
 20. `maps an assigned record rejection to validation`
-21. `rejects deleting when child records exist`
-22. `rejects deleting when soft deleted child records exist`
-23. `rejects deleting when related records exist`
-24. `rejects deleting when soft deleted related records exist`
+21. `maps a child dependency rejection to validation`
+22. `maps a soft deleted child dependency rejection to validation`
+23. `maps a related dependency rejection to validation`
+24. `maps a soft deleted related dependency rejection to validation`
 25. `maps a final record rejection to validation`
 26. `maps a final parent rejection to validation`
 27. `maps an inactive parent rejection to validation`

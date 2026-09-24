@@ -21,51 +21,47 @@ use Propaganistas\LaravelPhone\PhoneNumber;
 
 it('correctly casts attributes', function (): void {
     $team = new Team([
-        'contact_phone_number' => '+1 415 555 0110',
-        'country_code' => 'US',
-        'currency_code' => 'USD',
-        'created_at' => '2026-01-15 02:53:10',
-        'code_format_alphabet_type' => 'alphanumeric',
-        'code_format_length' => 4,
         'assignment_mode' => 'instant',
         'cabinets_enabled' => 1,
-        'work_orders_enabled' => 1,
+        'code_format_alphabet_type' => 'alphanumeric',
+        'code_format_length' => 4,
+        'contact_phone_number' => '+1 415 555 0110',
+        'country_code' => 'US',
+        'created_at' => '2026-01-15 02:53:10',
+        'currency_code' => 'USD',
         'unit_system' => 'imperial',
         'updated_at' => '2026-01-15 02:53:10',
         'weight_unit' => 'pounds',
+        'work_orders_enabled' => 1,
     ]);
 
     expect($team)
-        ->contact_phone_number->toBeInstanceOf(PhoneNumber::class)
-        ->country_code->toBe(CountryCode::UnitedStates)
-        ->currency_code->toBe(CurrencyCode::USD)
-        ->created_at->toBeInstanceOf(CarbonImmutable::class)
-        ->code_format_alphabet_type->toBeInstanceOf(
-            CodeAlphabet::class,
-        )
-        ->code_format_length->toBeInt()
         ->assignment_mode->toBeInstanceOf(AssignmentMode::class)
         ->cabinets_enabled->toBeBool()
-        ->work_orders_enabled->toBeBool()
+        ->code_format_alphabet_type->toBeInstanceOf(CodeAlphabet::class)
+        ->code_format_length->toBeInt()
+        ->contact_phone_number->toBeInstanceOf(PhoneNumber::class)
+        ->country_code->toBe(CountryCode::UnitedStates)
+        ->created_at->toBeInstanceOf(CarbonImmutable::class)
+        ->currency_code->toBe(CurrencyCode::USD)
         ->unit_system->toBeInstanceOf(UnitSystem::class)
         ->updated_at->toBeInstanceOf(CarbonImmutable::class)
-        ->weight_unit->toBeInstanceOf(WeightUnit::class);
+        ->weight_unit->toBeInstanceOf(WeightUnit::class)
+        ->work_orders_enabled->toBeBool();
 });
 
 it('sets model defaults', function (): void {
     $team = new Team();
 
     expect($team)
-        ->currency_code->toBe(CurrencyCode::USD)
-        ->code_format_alphabet_type->toBe(
-            CodeAlphabet::Alphanumeric
-        )
-        ->code_format_length->toBe(Team::DEFAULT_CODE_LENGTH)
         ->assignment_mode->toBe(AssignmentMode::RequiresApproval)
         ->cabinets_enabled->toBeFalse()
-        ->work_orders_enabled->toBeFalse()
+        ->code_format_alphabet_type->toBe(CodeAlphabet::Alphanumeric)
+        ->code_format_length->toBe(Team::DEFAULT_CODE_LENGTH)
+        ->currency_code->toBe(CurrencyCode::USD)
         ->unit_system->toBe(UnitSystem::Imperial)
-        ->weight_unit->toBe(WeightUnit::Pounds);
+        ->weight_unit->toBe(WeightUnit::Pounds)
+        ->work_orders_enabled->toBeFalse();
 });
 ```
 

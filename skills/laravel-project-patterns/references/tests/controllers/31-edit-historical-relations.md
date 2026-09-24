@@ -57,21 +57,21 @@ describe('edit', function (): void {
                 $status,
             ): void {
                 $page->component('work-orders/Edit')
-                    ->where('team.id', $team->public_id)
-                    ->where('workOrder.id', $workOrder->public_id)
-                    ->where('workOrder.current_facility.id', $workOrder->currentFacility->public_id)
-                    ->where('workOrder.member.id', $workOrder->member->public_id)
-                    ->where('workOrder.cabinet.id', $workOrder->cabinet->public_id)
-                    ->where('workOrder.status.id', $status->public_id)
+                    ->where('team.id', $team->sqid)
+                    ->where('workOrder.id', $workOrder->sqid)
+                    ->where('workOrder.current_facility.id', $workOrder->currentFacility->sqid)
+                    ->where('workOrder.member.id', $workOrder->member->sqid)
+                    ->where('workOrder.cabinet.id', $workOrder->cabinet->sqid)
+                    ->where('workOrder.status.id', $status->sqid)
                     ->where('workOrder.status.is_final', false)
-                    ->where('workOrder.pickup_facility.id', $workOrder->pickupFacility->public_id)
-                    ->where('workOrder.received_facility.id', $workOrder->receivedFacility->public_id)
-                    ->where('workOrder.service_plan.id', $workOrder->servicePlan->public_id)
+                    ->where('workOrder.pickup_facility.id', $workOrder->pickupFacility->sqid)
+                    ->where('workOrder.received_facility.id', $workOrder->receivedFacility->sqid)
+                    ->where('workOrder.service_plan.id', $workOrder->servicePlan->sqid)
                     ->where(
                         'workOrder.plan_rule.id',
-                        $workOrder->planRule->public_id,
+                        $workOrder->planRule->sqid,
                     )
-                    ->where('members.0.id', $activeMember->public_id)
+                    ->where('members.0.id', $activeMember->sqid)
                     ->where('members.0.display_name', $activeMember->display_name)
                     ->has('facilities')
                     ->has('cabinets')

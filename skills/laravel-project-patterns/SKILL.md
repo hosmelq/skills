@@ -1,6 +1,6 @@
 ---
 name: laravel-project-patterns
-description: "Apply the catalog's Laravel controller and model test patterns through selective local retrieval, including CRUD, authentication, casts, lifecycle, database constraints, relationships and resource serialization."
+description: "Apply the catalog's Laravel controller, model, HTTP Resource and media listener test patterns through selective local retrieval, including CRUD, authentication, casts, lifecycle, database constraints, relationships and resource serialization."
 ---
 
 # Laravel Project Patterns
@@ -8,11 +8,12 @@ description: "Apply the catalog's Laravel controller and model test patterns thr
 Covers Pest HTTP GET `create`/`edit`/`index`/`show`, POST `store`, PATCH `update` and DELETE `destroy`
 tests, including deactivation/reactivation, email-code and provider authentication,
 verification prompts, reordering and initial/default selection. Model references cover
-traits, casts, defaults, predicates, lifecycle, constraints, relationships, route binding,
-resource serialization and media event effects across the configured test suites.
+traits, casts, defaults, predicates, lifecycle, constraints, relationships and Sqid route binding.
+HTTP Resource serialization and media listener examples have separate categories.
 For other behavior, report the coverage gap and follow project conventions without searching this catalog.
 Examples are fictional: adapt to inspected contracts and keep reference-project
-identities confidential.
+identities confidential. Preserve real technical APIs such as `sqid` and `HasSqid`;
+synthetic domain names do not authorize inventing replacement APIs.
 
 Inspect affected code, nearby tests and Composer/test configuration. Preserve
 actual namespaces and suite paths, including `tests-new` and DDD modules.
@@ -37,7 +38,9 @@ complete block select its ordered checklist: [create](references/tests/controlle
 [authentication](references/tests/controllers/63-auth-00-test-order.md) or [move](references/tests/controllers/64-move-00-test-order.md).
 [Initial](references/tests/controllers/65-initial-record.md) and [default](references/tests/controllers/66-default-record.md)
 selection include their ordered cases. For model work use the
-[ordered contract checklist](references/tests/models/00-model-test-order.md).
+[model checklist](references/tests/models/00-model-test-order.md); for HTTP Resources use the
+[resource checklist](references/tests/http-resources/00-resource-test-order.md).
+[Media dimensions](references/tests/listeners/01-media-dimensions.md) belong to Listener tests.
 Keep standalone tests at file scope when the suite uses no `describe`.
 A specialized example covers its stated assertions; retrieve another only for
 missing contracts. Search uncovered requirements with relevant

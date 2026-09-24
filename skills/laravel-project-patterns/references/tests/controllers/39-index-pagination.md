@@ -33,12 +33,12 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($newest, $team): void {
                 $page->component('work-orders/Index')
-                    ->where('team.id', $team->public_id)
+                    ->where('team.id', $team->sqid)
                     ->where('workOrders.meta.from', 1)
                     ->where('workOrders.meta.to', 15)
                     ->where('workOrders.meta.total', 16)
                     ->has('workOrders.data', 15)
-                    ->where('workOrders.data.0.id', $newest->public_id)
+                    ->where('workOrders.data.0.id', $newest->sqid)
                     ->where('workOrders.data.0.status.is_final', false)
                     ->missing('workOrders.data.0.team_id');
             });

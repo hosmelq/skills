@@ -38,11 +38,11 @@ describe('update', function (): void {
             'team' => $workOrder->team,
             'work_order' => $workOrder,
         ]), [
-            'member_id' => $member->public_id,
-            'cabinet_id' => $cabinet->public_id,
-            'pickup_facility_id' => $facility->public_id,
-            'received_facility_id' => $facility->public_id,
-            'service_plan_id' => $servicePlan->public_id,
+            'member_id' => $member->sqid,
+            'cabinet_id' => $cabinet->sqid,
+            'pickup_facility_id' => $facility->sqid,
+            'received_facility_id' => $facility->sqid,
+            'service_plan_id' => $servicePlan->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -70,10 +70,10 @@ describe('update', function (): void {
             'team' => $team,
             'work_order' => $workOrder,
         ]), [
-            'cabinet_id' => $cabinet->public_id,
-            'pickup_facility_id' => $facility->public_id,
-            'received_facility_id' => $facility->public_id,
-            'service_plan_id' => $servicePlan->public_id,
+            'cabinet_id' => $cabinet->sqid,
+            'pickup_facility_id' => $facility->sqid,
+            'received_facility_id' => $facility->sqid,
+            'service_plan_id' => $servicePlan->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -102,12 +102,12 @@ describe('update', function (): void {
             'team' => $team,
             'work_order' => $workOrder,
         ]), [
-            'member_id' => $member->public_id,
-            'cabinet_id' => $cabinet->public_id,
-            'pickup_facility_id' => $facility->public_id,
-            'received_facility_id' => $facility->public_id,
-            'service_plan_id' => $servicePlan->public_id,
-            'plan_rule_id' => $planRule->public_id,
+            'member_id' => $member->sqid,
+            'cabinet_id' => $cabinet->sqid,
+            'pickup_facility_id' => $facility->sqid,
+            'received_facility_id' => $facility->sqid,
+            'service_plan_id' => $servicePlan->sqid,
+            'plan_rule_id' => $planRule->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([

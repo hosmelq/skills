@@ -81,15 +81,15 @@ describe('update', function (): void {
             'line' => $line,
         ])->assertToast('Work order line updated');
     })->with([
-        'declared value' => [
+        'unit value' => [
             'attributes' => [
                 'currency_code' => CurrencyCode::USD,
-                'declared_unit_value' => '10.00',
+                'unit_value' => '10.00',
             ],
-            'data' => ['declared_unit_value' => '25.50'],
+            'data' => ['unit_value' => '25.50'],
             'expected' => [
                 'currency_code' => CurrencyCode::USD->value,
-                'declared_unit_value' => '25.50',
+                'unit_value' => '25.50',
             ],
         ],
         'dimensions' => [

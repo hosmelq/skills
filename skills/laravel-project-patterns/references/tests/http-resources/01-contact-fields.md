@@ -1,6 +1,6 @@
-# Model Tests: Contact Resource Fields
+# HTTP Resource Tests: Contact Resource Fields
 
-Exact model resource JSON for names, display value, optional email/note/phone, public ID and immutable timestamps.
+Exact resource JSON for names, display value, optional email/note/phone, Sqid and immutable timestamps.
 
 ```php
 <?php
@@ -19,7 +19,7 @@ it('formats resource correctly', function (): void {
         'display_name' => $member->display_name,
         'email' => $member->email,
         'first_name' => $member->first_name,
-        'id' => $member->public_id,
+        'id' => $member->sqid,
         'last_name' => $member->last_name,
         'note' => $member->note,
         'phone_number' => $member->phone_number?->formatE164(),

@@ -37,7 +37,7 @@ describe('create', function (): void {
                     ->whereNull('countryCode')
                     ->where('countryCodes', CountryCode::options())
                     ->where('facilityTypes', FacilityType::options())
-                    ->where('team.id', $team->public_id)
+                    ->where('team.id', $team->sqid)
                     ->has('provinces', 0);
             });
     });

@@ -72,7 +72,7 @@ describe('create', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($team): void {
                 $page->component('members/Create')
-                    ->where('team.id', $team->public_id);
+                    ->where('team.id', $team->sqid);
             });
     });
 });

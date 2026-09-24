@@ -40,15 +40,15 @@ describe('edit', function (): void {
         $response->assertOk()
             ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
                 ->component('work-orders/lines/Edit')
-                ->where('line.id', $line->public_id)
-                ->where('line.group.id', $currentGroup->public_id)
-                ->where('itemGroups.0.id', $currentGroup->public_id)
+                ->where('line.id', $line->sqid)
+                ->where('line.group.id', $currentGroup->sqid)
+                ->where('itemGroups.0.id', $currentGroup->sqid)
                 ->where('itemGroups.0.name', $currentGroup->name)
                 ->where(
                     'itemGroups.0.deactivated_at',
                     fn (mixed $value): bool => $value !== null,
                 )
-                ->where('itemGroups.1.id', $activeGroup->public_id)
+                ->where('itemGroups.1.id', $activeGroup->sqid)
                 ->where('itemGroups.1.name', $activeGroup->name));
     });
 });

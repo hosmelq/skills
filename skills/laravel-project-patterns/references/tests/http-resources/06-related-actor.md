@@ -1,6 +1,6 @@
-# Model Tests: Related Actor Resource
+# HTTP Resource Tests: Related Actor Resource
 
-Exact resource JSON with a related member and a role-specific requesting actor, request timestamp, enum status, public ID and standard timestamps.
+Exact resource JSON with a related member and a role-specific requesting actor, request timestamp, enum status, Sqid and standard timestamps.
 
 The requesting user is an explicit relation role; retain `for($user, 'requestedByUser')`. Resolve both expected nested resources independently.
 
@@ -28,8 +28,8 @@ it('formats resource correctly', function (): void {
 
     expect($resource)->toEqual([
         'created_at' => $enrollment->created_at->toJSON(),
+        'id' => $enrollment->sqid,
         'member' => $memberResource,
-        'id' => $enrollment->public_id,
         'requested_at' => $enrollment->requested_at->toJSON(),
         'requested_by_user' => $requestedByUserResource,
         'status' => $enrollment->status->value,

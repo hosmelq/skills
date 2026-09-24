@@ -28,39 +28,39 @@ it('enforces one active assignment per parent pair at the database level', funct
         'code' => 'DEMO-100001',
         'member_id' => $firstMember->id,
         'normalized_code' => 'DEMO100001',
-        'team_id' => $team->id,
         'service_plan_id' => $firstServicePlan->id,
+        'team_id' => $team->id,
     ]);
     $sameMemberCabinet = Cabinet::factory()->createOne([
         'member_id' => $firstMember->id,
-        'team_id' => $team->id,
         'service_plan_id' => $secondServicePlan->id,
+        'team_id' => $team->id,
     ]);
     $sameServicePlanCabinet = Cabinet::factory()->createOne([
         'member_id' => $secondMember->id,
-        'team_id' => $team->id,
         'service_plan_id' => $firstServicePlan->id,
+        'team_id' => $team->id,
     ]);
 
     assertDatabaseHas(Cabinet::class, [
-        'member_id' => $firstMember->id,
         'id' => $sameMemberCabinet->id,
-        'team_id' => $team->id,
+        'member_id' => $firstMember->id,
         'service_plan_id' => $secondServicePlan->id,
+        'team_id' => $team->id,
     ]);
     assertDatabaseHas(Cabinet::class, [
-        'member_id' => $secondMember->id,
         'id' => $sameServicePlanCabinet->id,
-        'team_id' => $team->id,
+        'member_id' => $secondMember->id,
         'service_plan_id' => $firstServicePlan->id,
+        'team_id' => $team->id,
     ]);
 
     expect(fn () => Cabinet::factory()->createOne([
         'code' => 'DEMO-100002',
         'member_id' => $firstMember->id,
         'normalized_code' => 'DEMO100002',
-        'team_id' => $team->id,
         'service_plan_id' => $firstServicePlan->id,
+        'team_id' => $team->id,
     ]))->toThrow(function (UniqueConstraintViolationException $exception): void {
         expect($exception->index)->toBe('cabinets_active_member_service_plan_unique');
     });
@@ -78,8 +78,8 @@ it('enforces normalized code uniqueness per tenant at the database level', funct
         'code' => 'DEMO 100003',
         'member_id' => $member->id,
         'normalized_code' => 'DEMO100003',
-        'team_id' => $cabinet->team_id,
         'service_plan_id' => $servicePlan->id,
+        'team_id' => $cabinet->team_id,
     ]))->toThrow(function (UniqueConstraintViolationException $exception): void {
         expect($exception->index)->toBe('cabinets_active_normalized_code_unique');
     });
@@ -90,8 +90,8 @@ it('keeps deactivated assignments reserved at the database level', function (): 
 
     expect(fn () => Cabinet::factory()->createOne([
         'member_id' => $cabinet->member_id,
-        'team_id' => $cabinet->team_id,
         'service_plan_id' => $cabinet->service_plan_id,
+        'team_id' => $cabinet->team_id,
     ]))->toThrow(function (UniqueConstraintViolationException $exception): void {
         expect($exception->index)->toBe('cabinets_active_member_service_plan_unique');
     });
@@ -102,16 +102,16 @@ it('allows reusing assignments after soft deletion', function (): void {
 
     $replacement = Cabinet::factory()->createOne([
         'member_id' => $cabinet->member_id,
-        'team_id' => $cabinet->team_id,
         'service_plan_id' => $cabinet->service_plan_id,
+        'team_id' => $cabinet->team_id,
     ]);
 
     assertDatabaseHas(Cabinet::class, [
-        'member_id' => $cabinet->member_id,
         'deleted_at' => null,
         'id' => $replacement->id,
-        'team_id' => $cabinet->team_id,
+        'member_id' => $cabinet->member_id,
         'service_plan_id' => $cabinet->service_plan_id,
+        'team_id' => $cabinet->team_id,
     ]);
 });
 ```

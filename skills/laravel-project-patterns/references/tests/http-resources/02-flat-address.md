@@ -1,6 +1,6 @@
-# Model Tests: Flat Address Resource
+# HTTP Resource Tests: Flat Address Resource
 
-Exact flat resource JSON for an address: region labels and codes, normalized phone, float coordinates, names, company, default flag, public ID and timestamps.
+Exact flat resource JSON for an address: region labels and codes, normalized phone, float coordinates, names, company, default flag, Sqid and timestamps.
 
 The fictional geography provider resolves US/CA to United States/California. Adapt codes and expected labels together.
 
@@ -41,7 +41,7 @@ it('formats resource correctly', function (): void {
         'country_code' => 'US',
         'created_at' => $address->created_at->toJSON(),
         'first_name' => 'Jane',
-        'id' => $address->public_id,
+        'id' => $address->sqid,
         'is_default' => true,
         'label' => 'Office',
         'last_name' => 'Doe',

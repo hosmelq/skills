@@ -31,8 +31,8 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($workOrder): void {
                 $page->component('work-orders/Show')
-                    ->where('team.id', $workOrder->team->public_id)
-                    ->where('workOrder.id', $workOrder->public_id)
+                    ->where('team.id', $workOrder->team->sqid)
+                    ->where('workOrder.id', $workOrder->sqid)
                     ->where('workOrder.reference', 'REF-100')
                     ->where(
                         'workOrder.status.base_status',

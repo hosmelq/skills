@@ -47,9 +47,9 @@ describe('index', function (): void {
             ) use ($member, $olderEnrollment, $recentEnrollment): void {
                 $page->component('enrollments/Index')
                     ->has('enrollments.data', 2)
-                    ->where('enrollments.data.0.id', $recentEnrollment->public_id)
-                    ->where('enrollments.data.1.id', $olderEnrollment->public_id)
-                    ->where('team.id', $member->team->public_id);
+                    ->where('enrollments.data.0.id', $recentEnrollment->sqid)
+                    ->where('enrollments.data.1.id', $olderEnrollment->sqid)
+                    ->where('team.id', $member->team->sqid);
             });
     });
 });

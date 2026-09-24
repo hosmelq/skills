@@ -24,7 +24,7 @@ describe('store', function (): void {
     it('requires authentication', function (): void {
         $team = Team::factory()->createOne();
 
-        $response = postJson(route('api.teams.enrollments.store', $team->public_id));
+        $response = postJson(route('api.teams.enrollments.store', $team->sqid));
 
         $response->assertUnauthorized();
     });
@@ -35,7 +35,7 @@ describe('store', function (): void {
 
         login($user);
 
-        $response = postJson(route('api.teams.enrollments.store', $team->public_id));
+        $response = postJson(route('api.teams.enrollments.store', $team->sqid));
 
         $response->assertForbidden();
     });
@@ -65,7 +65,7 @@ describe('store', function (): void {
 
         login($user);
 
-        $response = postJson(route('api.teams.enrollments.store', $team->public_id));
+        $response = postJson(route('api.teams.enrollments.store', $team->sqid));
 
         $response->assertUnprocessable()
             ->assertJsonValidationErrors([
@@ -73,7 +73,7 @@ describe('store', function (): void {
             ]);
     });
 
-    it('stores the record', function (): void {
+    it('returns the requested resource', function (): void {
         $team = Team::factory()->createOne();
         $user = User::factory()->createOne();
         $enrollment = Enrollment::factory()->createOne();
@@ -89,11 +89,11 @@ describe('store', function (): void {
 
         login($user);
 
-        $response = postJson(route('api.teams.enrollments.store', $team->public_id));
+        $response = postJson(route('api.teams.enrollments.store', $team->sqid));
 
         $response->assertCreated()
             ->assertHeader('Content-Type', 'application/vnd.api+json')
-            ->assertJsonPath('data.id', $enrollment->public_id)
+            ->assertJsonPath('data.id', $enrollment->sqid)
             ->assertJsonPath('data.type', 'enrollments')
             ->assertJsonPath('data.attributes.status', 'pending');
     });

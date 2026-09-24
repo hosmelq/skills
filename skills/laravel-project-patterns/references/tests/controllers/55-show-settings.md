@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\CabinetProvisioningMode;
+use App\Enums\AssignmentMode;
 use App\Models\Team;
 use Inertia\Testing\AssertableInertia;
 
@@ -28,8 +28,8 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($team): void {
                 $page->component('team/Settings')
-                    ->where('cabinetProvisioningModes', CabinetProvisioningMode::options())
-                    ->where('team.id', $team->public_id);
+                    ->where('assignmentModes', AssignmentMode::options())
+                    ->where('team.id', $team->sqid);
             });
     });
 });

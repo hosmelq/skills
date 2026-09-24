@@ -39,7 +39,7 @@ describe('update', function (): void {
             'team' => $workOrder->team,
             'work_order' => $workOrder,
         ]), [
-            'plan_rule_id' => $planRule->public_id,
+            'plan_rule_id' => $planRule->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([

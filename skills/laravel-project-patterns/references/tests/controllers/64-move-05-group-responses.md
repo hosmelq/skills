@@ -36,7 +36,7 @@ it('moves the record after another record in the same group', function (): void 
         'team' => $team,
         'work_order_status' => $firstReceived,
     ]), [
-        'move_after_id' => $secondReceived->public_id,
+        'move_after_id' => $secondReceived->sqid,
     ]);
 
     $response->assertRedirect()

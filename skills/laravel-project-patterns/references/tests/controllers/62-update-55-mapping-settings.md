@@ -14,7 +14,7 @@ use function Pest\Laravel\patch;
 
 use App\Actions\Teams\Inputs\UpdateTeamInput;
 use App\Actions\Teams\UpdateTeam;
-use App\Enums\CabinetProvisioningMode;
+use App\Enums\AssignmentMode;
 use App\Models\Team;
 
 describe('update', function (): void {
@@ -29,7 +29,7 @@ describe('update', function (): void {
             ->withArgs(
                 fn (Team $actualTeam, UpdateTeamInput $input): bool =>
                     $actualTeam->is($team)
-                    && $input->cabinetProvisioningMode === CabinetProvisioningMode::Instant
+                    && $input->assignmentMode === AssignmentMode::Instant
                     && $input->cabinetsEnabled === true
                     && $input->name === 'Updated Team',
             );
@@ -39,7 +39,7 @@ describe('update', function (): void {
         $response = patch(route('teams.update', [
             'team' => $team,
         ]), [
-            'cabinet_provisioning_mode' => CabinetProvisioningMode::Instant(),
+            'assignment_mode' => AssignmentMode::Instant(),
             'cabinets_enabled' => true,
             'name' => 'Updated Team',
         ]);
@@ -74,7 +74,7 @@ describe('update', function (): void {
             ->assertToast('Settings updated');
     })->with([
         'cabinets enabled' => ['cabinets_enabled', 'cabinetsEnabled'],
-        'shipments enabled' => ['shipments_enabled', 'shipmentsEnabled'],
+        'work orders enabled' => ['work_orders_enabled', 'workOrdersEnabled'],
     ]);
 });
 ```

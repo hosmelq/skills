@@ -40,9 +40,9 @@ describe('edit', function (): void {
                 $page->component('facilities/Edit')
                     ->whereNull('countryCode')
                     ->where('countryCodes', CountryCode::options())
-                    ->where('facility.id', $facility->public_id)
+                    ->where('facility.id', $facility->sqid)
                     ->where('facilityTypes', FacilityType::options())
-                    ->where('team.id', $facility->team->public_id)
+                    ->where('team.id', $facility->team->sqid)
                     ->where('provinces.0.label', $state->name)
                     ->where('provinces.0.value', $state->iso2);
             });
@@ -110,11 +110,11 @@ describe('edit', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($address, $state): void {
                 $page->component('members/addresses/Edit')
-                    ->where('address.id', $address->public_id)
+                    ->where('address.id', $address->sqid)
                     ->whereNull('countryCode')
                     ->where('countryCodes', CountryCode::options())
-                    ->where('member.id', $address->member->public_id)
-                    ->where('team.id', $address->member->team->public_id)
+                    ->where('member.id', $address->member->sqid)
+                    ->where('team.id', $address->member->team->sqid)
                     ->where('provinces.0.label', $state->name)
                     ->where('provinces.0.value', $state->iso2);
             });

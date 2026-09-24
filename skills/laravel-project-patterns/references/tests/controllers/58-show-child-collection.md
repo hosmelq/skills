@@ -40,10 +40,10 @@ describe('show', function (): void {
                 ->component('work-orders/Show')
                 ->where('lineCount', 2)
                 ->has('lines', 2)
-                ->where('lines.0.id', $firstLine->public_id)
-                ->where('lines.0.group.id', $firstLine->itemGroup->public_id)
+                ->where('lines.0.id', $firstLine->sqid)
+                ->where('lines.0.group.id', $firstLine->itemGroup->sqid)
                 ->where('lines.0.group.name', $firstLine->itemGroup->name)
-                ->where('lines.1.id', $secondLine->public_id)
+                ->where('lines.1.id', $secondLine->sqid)
                 ->where('lines.1.group', null)
                 ->missing('lines.0.work_order_id')
                 ->missing('lines.0.item_group_id'));

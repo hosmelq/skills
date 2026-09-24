@@ -73,15 +73,15 @@ describe('store', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (Team $teamArgument, CreateFacilityInput $input): bool => $teamArgument->is($team)
-                && $input->name === 'Main Warehouse')
+                && $input->name === 'Main Studio')
             ->andReturn($facility);
 
         $response = post(route('teams.facilities.store', [
             'team' => $team,
         ]), [
-            'country_code' => 'NI',
-            'name' => 'Main Warehouse',
-            'type' => FacilityType::Warehouse(),
+            'country_code' => 'US',
+            'name' => 'Main Studio',
+            'type' => FacilityType::Studio(),
         ]);
 
         $response->assertRedirectToRoute('teams.facilities.show', [

@@ -14,7 +14,7 @@ use function Pest\Laravel\post;
 
 use App\Actions\Teams\CreateTeam;
 use App\Actions\Teams\Inputs\CreateTeamInput;
-use App\Enums\CabinetProvisioningMode;
+use App\Enums\AssignmentMode;
 use App\Enums\CountryCode;
 use App\Models\Team;
 use App\Models\User;
@@ -30,18 +30,18 @@ describe('store', function (): void {
             ->withArgs(
                 fn (User $actualUser, CreateTeamInput $input): bool =>
                     $actualUser->is($user)
-                    && $input->cabinetProvisioningMode === CabinetProvisioningMode::Instant
+                    && $input->assignmentMode === AssignmentMode::Instant
                     && $input->cabinetsEnabled === true
                     && $input->name === 'My Team',
             )
             ->andReturn($team);
 
         $response = post(route('teams.store'), [
-            'country_code' => CountryCode::Nicaragua(),
-            'cabinet_provisioning_mode' => CabinetProvisioningMode::Instant(),
+            'assignment_mode' => AssignmentMode::Instant(),
             'cabinets_enabled' => true,
+            'country_code' => CountryCode::UnitedStates(),
             'name' => 'My Team',
-            'timezone' => 'America/Managua',
+            'timezone' => 'America/Los_Angeles',
         ]);
 
         $response->assertRedirectToRoute('teams.settings.general', [

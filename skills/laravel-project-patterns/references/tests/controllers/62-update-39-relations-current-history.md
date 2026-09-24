@@ -23,7 +23,7 @@ use App\Models\Team;
 use App\Models\WorkOrder;
 
 describe('update', function (): void {
-    it('accepts current inactive and deleted relations', function (): void {
+    it('accepts current historical relations', function (): void {
         $team = Team::factory()->createOne();
         $workOrder = WorkOrder::factory()
             ->withPickupFacility(Facility::factory()->deactivated())
@@ -51,10 +51,10 @@ describe('update', function (): void {
             'team' => $team,
             'work_order' => $workOrder,
         ]), [
-            'cabinet_id' => $workOrder->cabinet->public_id,
-            'pickup_facility_id' => $workOrder->pickupFacility->public_id,
-            'received_facility_id' => $workOrder->receivedFacility->public_id,
-            'service_plan_id' => $workOrder->servicePlan->public_id,
+            'cabinet_id' => $workOrder->cabinet->sqid,
+            'pickup_facility_id' => $workOrder->pickupFacility->sqid,
+            'received_facility_id' => $workOrder->receivedFacility->sqid,
+            'service_plan_id' => $workOrder->servicePlan->sqid,
         ]);
 
         $response->assertRedirectToRoute('teams.work-orders.show', [
@@ -63,7 +63,7 @@ describe('update', function (): void {
         ])->assertToast('Work order updated');
     });
 
-    it('accepts a current deleted relation', function (): void {
+    it('accepts a current historical relation', function (): void {
         $team = Team::factory()->createOne();
         $workOrder = WorkOrder::factory()
             ->withMember(Member::factory()->trashed())
@@ -84,7 +84,7 @@ describe('update', function (): void {
         $response = patch(route('teams.work-orders.update', [
             'team' => $workOrder->team,
             'work_order' => $workOrder,
-        ]), ['member_id' => $workOrder->member->public_id]);
+        ]), ['member_id' => $workOrder->member->sqid]);
 
         $response->assertRedirectToRoute('teams.work-orders.show', [
             'team' => $workOrder->team,
@@ -92,7 +92,7 @@ describe('update', function (): void {
         ])->assertToast('Work order updated');
     });
 
-    it('accepts a current deleted dependent relation', function (): void {
+    it('accepts a current historical dependent relation', function (): void {
         $team = Team::factory()->createOne();
         $workOrder = WorkOrder::factory()
             ->withServicePlan(ServicePlan::factory()->trashed())
@@ -116,7 +116,7 @@ describe('update', function (): void {
             'team' => $team,
             'work_order' => $workOrder,
         ]), [
-            'plan_rule_id' => $workOrder->planRule->public_id,
+            'plan_rule_id' => $workOrder->planRule->sqid,
         ]);
 
         $response->assertRedirectToRoute('teams.work-orders.show', [

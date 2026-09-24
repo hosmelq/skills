@@ -32,8 +32,8 @@ describe('edit', function (): void {
             ->assertInertia(function (AssertableInertia $page) use ($workOrderStatus): void {
                 $page->component('work-order-statuses/Edit')
                     ->where('baseStatuses', WorkOrderBaseStatus::options())
-                    ->where('team.id', $workOrderStatus->team->public_id)
-                    ->where('workOrderStatus.id', $workOrderStatus->public_id);
+                    ->where('team.id', $workOrderStatus->team->sqid)
+                    ->where('workOrderStatus.id', $workOrderStatus->sqid);
             });
     });
 });
@@ -67,10 +67,10 @@ describe('edit', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($rate): void {
                 $page->component('service-plans/rates/Edit')
-                    ->where('team.id', $rate->planRule->servicePlan->team->public_id)
-                    ->where('planRule.id', $rate->planRule->public_id)
-                    ->where('rate.id', $rate->public_id)
-                    ->where('servicePlan.id', $rate->planRule->servicePlan->public_id);
+                    ->where('team.id', $rate->planRule->servicePlan->team->sqid)
+                    ->where('planRule.id', $rate->planRule->sqid)
+                    ->where('rate.id', $rate->sqid)
+                    ->where('servicePlan.id', $rate->planRule->servicePlan->sqid);
             });
     });
 });

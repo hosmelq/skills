@@ -30,7 +30,7 @@ describe('update', function (): void {
             'work_order' => $line->workOrder,
             'line' => $line,
         ]), [
-            'item_group_id' => $group->public_id,
+            'item_group_id' => $group->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -49,7 +49,7 @@ describe('update', function (): void {
             'work_order' => $line->workOrder,
             'line' => $line,
         ]), [
-            'item_group_id' => $group->public_id,
+            'item_group_id' => $group->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -68,7 +68,7 @@ describe('update', function (): void {
             'work_order' => $line->workOrder,
             'line' => $line,
         ]), [
-            'item_group_id' => $group->public_id,
+            'item_group_id' => $group->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -100,7 +100,7 @@ describe('update', function (): void {
             'work_order' => $workOrder,
             'line' => $line,
         ]), [
-            'item_group_id' => $group->public_id,
+            'item_group_id' => $group->sqid,
         ]);
 
         $response->assertRedirectToRoute('teams.work-orders.lines.show', [

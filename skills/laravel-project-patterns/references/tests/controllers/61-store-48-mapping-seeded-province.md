@@ -25,7 +25,7 @@ describe('store', function (): void {
         $member = Member::factory()->createOne();
 
         $state = State::query()
-            ->where('country_code', CountryCode::Nicaragua)
+            ->where('country_code', CountryCode::UnitedStates)
             ->orderBy('name')
             ->firstOrFail();
 
@@ -41,7 +41,7 @@ describe('store', function (): void {
             'team' => $member->team,
             'member' => $member,
         ]), [
-            'country_code' => CountryCode::Nicaragua->value,
+            'country_code' => CountryCode::UnitedStates->value,
             'province_code' => $state->iso2,
         ]);
 

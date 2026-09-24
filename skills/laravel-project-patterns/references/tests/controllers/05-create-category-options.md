@@ -44,20 +44,20 @@ describe('create', function (): void {
             ): void {
                 $page->component('work-orders/lines/Create')
                     ->where('canMutate', true)
-                    ->where('team.id', $workOrder->team->public_id)
-                    ->where('workOrder.id', $workOrder->public_id)
+                    ->where('team.id', $workOrder->team->sqid)
+                    ->where('workOrder.id', $workOrder->sqid)
                     ->where('currencies', CurrencyCode::options())
                     ->where('lengthUnits', LengthUnit::options())
                     ->where('weightUnits', WeightUnit::options())
-                    ->where('itemGroups.0.id', $group->public_id)
+                    ->where('itemGroups.0.id', $group->sqid)
                     ->where('itemGroups.0.name', $group->name)
                     ->where(
                         'itemGroups',
                         fn (Collection $options): bool => ! $options->pluck('id')
                             ->intersect([
-                                $deletedGroup->public_id,
-                                $inactiveGroup->public_id,
-                                $otherGroup->public_id,
+                                $deletedGroup->sqid,
+                                $inactiveGroup->sqid,
+                                $otherGroup->sqid,
                             ])->isNotEmpty(),
                     )
                     ->missing('workOrder.team_id');

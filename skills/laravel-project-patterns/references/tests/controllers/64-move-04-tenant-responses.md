@@ -36,7 +36,7 @@ it('moves the record after another record in the same tenant', function (): void
         'team' => $team,
         'item_group' => $first,
     ]), [
-        'move_after_id' => $second->public_id,
+        'move_after_id' => $second->sqid,
     ]);
 
     $response->assertRedirect()

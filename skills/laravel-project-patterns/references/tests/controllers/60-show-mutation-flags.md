@@ -31,10 +31,10 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
                 ->component('work-orders/lines/Show')
-                ->where('team.id', $line->workOrder->team->public_id)
-                ->where('workOrder.id', $line->workOrder->public_id)
-                ->where('line.id', $line->public_id)
-                ->where('line.group.id', $line->itemGroup->public_id)
+                ->where('team.id', $line->workOrder->team->sqid)
+                ->where('workOrder.id', $line->workOrder->sqid)
+                ->where('line.id', $line->sqid)
+                ->where('line.group.id', $line->itemGroup->sqid)
                 ->where('line.group.name', $line->itemGroup->name)
                 ->where('canMutate', true)
                 ->missing('canDelete')
@@ -129,7 +129,7 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
                 ->component('work-orders/lines/Show')
-                ->where('line.id', $line->public_id)
+                ->where('line.id', $line->sqid)
                 ->where('canMutate', false));
     });
 });

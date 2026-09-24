@@ -40,7 +40,7 @@ describe('create', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($team): void {
                 $page->component('service-plans/Create')
-                    ->where('team.id', $team->public_id)
+                    ->where('team.id', $team->sqid)
                     ->where('transitTimeUnits', TransitTimeUnit::options())
                     ->where('weightUnits', WeightUnit::options());
             });
@@ -57,9 +57,9 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\BillableWeightRoundingMode;
 use App\Enums\CountryCode;
 use App\Enums\CurrencyCode;
+use App\Enums\RoundingMode;
 use App\Models\ServicePlan;
 use Inertia\Testing\AssertableInertia;
 
@@ -79,9 +79,9 @@ describe('create', function (): void {
                 $page->component('service-plans/plan-rules/Create')
                     ->where('countryCodes', CountryCode::options())
                     ->where('currencyCodes', CurrencyCode::options())
-                    ->where('team.id', $servicePlan->team->public_id)
-                    ->where('roundingModes', BillableWeightRoundingMode::options())
-                    ->where('servicePlan.id', $servicePlan->public_id);
+                    ->where('team.id', $servicePlan->team->sqid)
+                    ->where('roundingModes', RoundingMode::options())
+                    ->where('servicePlan.id', $servicePlan->sqid);
             });
     });
 });
@@ -116,9 +116,9 @@ describe('create', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($planRule): void {
                 $page->component('service-plans/rates/Create')
-                    ->where('team.id', $planRule->servicePlan->team->public_id)
-                    ->where('planRule.id', $planRule->public_id)
-                    ->where('servicePlan.id', $planRule->servicePlan->public_id);
+                    ->where('team.id', $planRule->servicePlan->team->sqid)
+                    ->where('planRule.id', $planRule->sqid)
+                    ->where('servicePlan.id', $planRule->servicePlan->sqid);
             });
     });
 });

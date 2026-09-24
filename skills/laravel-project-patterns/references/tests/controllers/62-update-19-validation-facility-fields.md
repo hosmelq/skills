@@ -4,6 +4,8 @@ Pest PATCH update: Whole geographic-record update dataset, retaining string/enum
 
 ## Validates fields
 
+The country-restricted phone row uses a valid number from outside the allowed `CountryCode` values; preserve that exclusion when adapting the fixture.
+
 ```php
 <?php
 
@@ -71,7 +73,7 @@ describe('update', function (): void {
         ],
         'exists' => [
             'data' => [
-                'country_code' => 'NI',
+                'country_code' => 'US',
                 'province_code' => 'XX',
             ],
             'expected' => [
@@ -134,7 +136,7 @@ describe('update', function (): void {
         ],
         'phone (country_code)' => [
             'data' => [
-                'phone_number' => '+503 8888 8888',
+                'phone_number' => '+44 20 7946 0958',
             ],
             'expected' => [
                 'phone_number' => 'The phone number field must be a valid number.',

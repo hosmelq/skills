@@ -59,7 +59,7 @@ Ordered Pest POST store cases for record creation, API requests and deactivation
 53. `maps an inactive ancestor rejection to validation`
 54. `maps an overlapping range rejection to validation`
 55. `maps a second open-ended range rejection to validation`
-56. `stores the record`
+56. `stores the record` or `returns the requested resource`
 57. `clears the rounding increment when rounding is disabled`
 58. `maps a boolean field into the input`
 59. `stores the record with omitted optional fields`

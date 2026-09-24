@@ -6,7 +6,7 @@ Use `scripts/search.py` to select descriptions before reading catalog patterns. 
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
-The current references cover controller `create`, `destroy`, `edit`, `index`, `show`, `store`, `update`, authentication, reordering and initial/default selection tests, plus model traits, casts, defaults, predicates, lifecycle, database constraints, relationships, binding, resource serialization and media event effects. Other areas will be added
+The current references cover controller `create`, `destroy`, `edit`, `index`, `show`, `store`, `update`, authentication, reordering and initial/default selection tests, plus model traits, casts, defaults, predicates, lifecycle, database constraints, relationships and Sqid binding. HTTP Resource serialization and media listener effects are separate test categories. Other areas will be added
 incrementally; a returned reference is not evidence that an unrelated area is covered.
 
 ## Pattern
@@ -133,14 +133,25 @@ files directly; application work retrieves them through the bounded search.
 - [Ordered model contract checklist and focused examples](../references/tests/models/00-model-test-order.md)
 
 Query the execution boundary and inspected behavior, such as an in-memory decimal
-cast, a database uniqueness constraint, or a loaded-null resource relation. Suite
+cast, or a database uniqueness constraint. Suite
 paths provide context; they do not determine the reference or database requirement.
+
+#### HTTP Resources
+
+- [Ordered resource checklist and complete JSON examples](../references/tests/http-resources/00-resource-test-order.md)
+
+Query the actual resource payload and serialization behavior. Using a model as a fixture does not make a resource test a model test.
+
+#### Listeners
+
+- [Media dimension event effects](../references/tests/listeners/01-media-dimensions.md)
 
 #### Create
 
 - [Route binding and soft-deleted parents](../references/tests/controllers/01-create-route-bindings.md)
 - [Inactive parent access restriction](../references/tests/controllers/02-create-inactive-parent.md)
 - [Positive page contract and enum props](../references/tests/controllers/03-create-page-contract.md)
+- [Exact label/value select options](../references/tests/controllers/04-create-option-shape.md)
 - [Ordered eligible options](../references/tests/controllers/04-create-ordered-options.md)
 - [Group options and parent payload](../references/tests/controllers/05-create-category-options.md)
 - [Nested option IDs and metadata](../references/tests/controllers/06-create-nested-option-props.md)

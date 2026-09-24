@@ -30,11 +30,11 @@ describe('index', function (): void {
                 $page->component('members/Index')
                     ->has('members.data', 1, function (AssertableInertia $json) use ($member, $unrelatedMember): void {
                         $json
-                            ->where('id', $member->public_id)
-                            ->whereNot('id', $unrelatedMember->public_id)
+                            ->where('id', $member->sqid)
+                            ->whereNot('id', $unrelatedMember->sqid)
                             ->etc();
                     })
-                    ->where('team.id', $member->team->public_id);
+                    ->where('team.id', $member->team->sqid);
             });
     });
 });
@@ -69,8 +69,8 @@ describe('index', function (): void {
                 $page->component('members/addresses/Index')
                     ->has('addresses.data', 1, function (AssertableInertia $json) use ($address, $unrelatedAddress): void {
                         $json
-                            ->where('id', $address->public_id)
-                            ->whereNot('id', $unrelatedAddress->public_id)
+                            ->where('id', $address->sqid)
+                            ->whereNot('id', $unrelatedAddress->sqid)
                             ->etc();
                     });
             });
@@ -109,8 +109,8 @@ describe('index', function (): void {
                 $page->component('service-plans/rates/Index')
                     ->has('rates.data', 1, function (AssertableJson $json) use ($rate, $unrelatedRate): void {
                         $json
-                            ->where('id', $rate->public_id)
-                            ->whereNot('id', $unrelatedRate->public_id)
+                            ->where('id', $rate->sqid)
+                            ->whereNot('id', $unrelatedRate->sqid)
                             ->etc();
                     });
             });

@@ -1,4 +1,4 @@
-# Model Tests: Resource Deletion Timestamp
+# HTTP Resource Tests: Resource Deletion Timestamp
 
 Exact resource JSON with numeric duration bounds, unit enums and null lifecycle timestamps; a soft-deleted model formats its deletion timestamp.
 
@@ -29,7 +29,7 @@ it('formats resource correctly', function (): void {
         'deleted_at' => null,
         'description' => 'Standard service option',
         'estimated_transit_time_unit' => 'days',
-        'id' => $servicePlan->public_id,
+        'id' => $servicePlan->sqid,
         'maximum_estimated_transit_time' => 4,
         'minimum_estimated_transit_time' => 2,
         'name' => 'Priority Service',

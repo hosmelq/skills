@@ -24,7 +24,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'service_plan_id' => $servicePlan->public_id,
+            'service_plan_id' => $servicePlan->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -45,7 +45,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'plan_rule_id' => $planRule->public_id,
+            'plan_rule_id' => $planRule->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -64,7 +64,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'service_plan_id' => $servicePlan->public_id,
+            'service_plan_id' => $servicePlan->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -79,7 +79,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'service_plan_id' => $servicePlan->public_id,
+            'service_plan_id' => $servicePlan->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -94,7 +94,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'plan_rule_id' => $planRule->public_id,
+            'plan_rule_id' => $planRule->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -111,7 +111,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'plan_rule_id' => $planRule->public_id,
+            'plan_rule_id' => $planRule->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -128,7 +128,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'plan_rule_id' => $planRule->public_id,
+            'plan_rule_id' => $planRule->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([

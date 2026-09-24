@@ -23,7 +23,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'work_order_status_id' => $status->public_id,
+            'work_order_status_id' => $status->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -38,7 +38,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'work_order_status_id' => $status->public_id,
+            'work_order_status_id' => $status->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -53,7 +53,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'work_order_status_id' => $status->public_id,
+            'work_order_status_id' => $status->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -70,7 +70,7 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'work_order_status_id' => $status->public_id,
+            'work_order_status_id' => $status->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([

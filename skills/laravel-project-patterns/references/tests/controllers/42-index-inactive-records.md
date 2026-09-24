@@ -27,7 +27,7 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($facility): void {
                 $page->component('facilities/Index')
-                    ->where('facilities.data.0.id', $facility->public_id)
+                    ->where('facilities.data.0.id', $facility->sqid)
                     ->where('facilities.data.0.deactivated_at', $facility->deactivated_at->toJSON());
             });
     });
@@ -60,7 +60,7 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($cabinet): void {
                 $page->component('members/cabinets/Index')
-                    ->where('cabinets.data.0.id', $cabinet->public_id)
+                    ->where('cabinets.data.0.id', $cabinet->sqid)
                     ->where('cabinets.data.0.deactivated_at', $cabinet->deactivated_at->toJSON());
             });
     });
@@ -94,7 +94,7 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($planRule): void {
                 $page->component('service-plans/plan-rules/Index')
-                    ->where('planRules.data.0.id', $planRule->public_id)
+                    ->where('planRules.data.0.id', $planRule->sqid)
                     ->where('servicePlan.deactivated_at', $planRule->servicePlan->deactivated_at->toJSON());
             });
     });
@@ -131,7 +131,7 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($rate): void {
                 $page->component('service-plans/rates/Index')
-                    ->where('rates.data.0.id', $rate->public_id)
+                    ->where('rates.data.0.id', $rate->sqid)
                     ->where('servicePlan.deactivated_at', $rate->planRule->servicePlan->deactivated_at->toJSON());
             });
     });

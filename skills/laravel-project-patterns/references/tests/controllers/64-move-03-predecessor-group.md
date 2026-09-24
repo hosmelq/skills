@@ -28,7 +28,7 @@ it('returns not found when the predecessor belongs to another group', function (
         'team' => $team,
         'work_order_status' => $workOrderStatus,
     ]), [
-        'move_after_id' => $moveAfterWorkOrderStatus->public_id,
+        'move_after_id' => $moveAfterWorkOrderStatus->sqid,
     ]);
 
     $response->assertNotFound();

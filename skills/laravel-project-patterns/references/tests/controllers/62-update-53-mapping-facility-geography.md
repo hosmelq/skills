@@ -40,14 +40,14 @@ describe('update', function (): void {
 
         $response->assertRedirectToRoute('teams.facilities.show', [
             'team' => $facility->team,
-            'facility' => $facility->public_id,
+            'facility' => $facility->sqid,
         ])
             ->assertToast('Facility updated');
     });
 
     it('maps the province using the current country when country is empty', function (): void {
         $facility = Facility::factory()->createOne([
-            'country_code' => CountryCode::Nicaragua,
+            'country_code' => CountryCode::UnitedStates,
         ]);
 
         login(team: $facility->team);
@@ -56,27 +56,27 @@ describe('update', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (Facility $facilityArgument, UpdateFacilityInput $input): bool => $facilityArgument->is($facility)
-                && $input->provinceCode === 'MN');
+                && $input->provinceCode === 'WA');
 
         $response = patch(route('teams.facilities.update', [
             'team' => $facility->team,
             'facility' => $facility,
         ]), [
             'country_code' => '',
-            'province_code' => 'MN',
+            'province_code' => 'WA',
         ]);
 
         $response->assertRedirectToRoute('teams.facilities.show', [
             'team' => $facility->team,
-            'facility' => $facility->public_id,
+            'facility' => $facility->sqid,
         ])
             ->assertToast('Facility updated');
     });
 
     it('clears the province when changing country without a province', function (): void {
         $facility = Facility::factory()->createOne([
-            'country_code' => CountryCode::Nicaragua,
-            'province_code' => 'MN',
+            'country_code' => CountryCode::UnitedStates,
+            'province_code' => 'WA',
         ]);
 
         login(team: $facility->team);
@@ -85,19 +85,19 @@ describe('update', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (Facility $facilityArgument, UpdateFacilityInput $input): bool => $facilityArgument->is($facility)
-                && $input->countryCode === CountryCode::CostaRica
+                && $input->countryCode === CountryCode::Canada
                 && $input->provinceCode === null);
 
         $response = patch(route('teams.facilities.update', [
             'team' => $facility->team,
             'facility' => $facility,
         ]), [
-            'country_code' => CountryCode::CostaRica->value,
+            'country_code' => CountryCode::Canada->value,
         ]);
 
         $response->assertRedirectToRoute('teams.facilities.show', [
             'team' => $facility->team,
-            'facility' => $facility->public_id,
+            'facility' => $facility->sqid,
         ])
             ->assertToast('Facility updated');
     });

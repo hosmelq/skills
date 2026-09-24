@@ -19,10 +19,10 @@ use App\Models\Member;
 describe('update', function (): void {
     it('rejects a duplicate phone number in the same scope', function (): void {
         $member1 = Member::factory()->createOne([
-            'phone_number' => '+50588888888',
+            'phone_number' => '+14155550110',
         ]);
         $member2 = Member::factory()->recycle($member1->team)->createOne([
-            'phone_number' => '+50588889999',
+            'phone_number' => '+14155550111',
         ]);
 
         login(team: $member1->team);
@@ -31,7 +31,7 @@ describe('update', function (): void {
             'team' => $member1->team,
             'member' => $member2,
         ]), [
-            'phone_number' => '+505 8888 8888',
+            'phone_number' => '+1 415 555 0110',
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -41,11 +41,11 @@ describe('update', function (): void {
 
     it('allows a phone number used in a different scope', function (): void {
         Member::factory()->createOne([
-            'phone_number' => '+50588888888',
+            'phone_number' => '+14155550110',
         ]);
 
         $member = Member::factory()->createOne([
-            'phone_number' => '+50588889999',
+            'phone_number' => '+14155550111',
         ]);
 
         login(team: $member->team);
@@ -54,25 +54,25 @@ describe('update', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (Member $memberArgument, UpdateMemberInput $input): bool => $memberArgument->is($member)
-                && $input->phoneNumber === '+50588888888');
+                && $input->phoneNumber === '+14155550110');
 
         $response = patch(route('teams.members.update', [
             'team' => $member->team,
             'member' => $member,
         ]), [
-            'phone_number' => '+505 8888 8888',
+            'phone_number' => '+1 415 555 0110',
         ]);
 
         $response->assertRedirectToRoute('teams.members.show', [
             'team' => $member->team,
-            'member' => $member->public_id,
+            'member' => $member->sqid,
         ])
             ->assertToast('Member updated');
     });
 
     it('allows the current phone number', function (): void {
         $member = Member::factory()->createOne([
-            'phone_number' => '+50588888888',
+            'phone_number' => '+14155550110',
         ]);
 
         login(team: $member->team);
@@ -81,18 +81,18 @@ describe('update', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (Member $memberArgument, UpdateMemberInput $input): bool => $memberArgument->is($member)
-                && $input->phoneNumber === '+50588888888');
+                && $input->phoneNumber === '+14155550110');
 
         $response = patch(route('teams.members.update', [
             'team' => $member->team,
             'member' => $member,
         ]), [
-            'phone_number' => '+505 8888 8888',
+            'phone_number' => '+1 415 555 0110',
         ]);
 
         $response->assertRedirectToRoute('teams.members.show', [
             'team' => $member->team,
-            'member' => $member->public_id,
+            'member' => $member->sqid,
         ])
             ->assertToast('Member updated');
     });
@@ -101,10 +101,10 @@ describe('update', function (): void {
         $deletedMember = Member::factory()
             ->trashed()
             ->createOne([
-                'phone_number' => '+50588888888',
+                'phone_number' => '+14155550110',
             ]);
         $member = Member::factory()->recycle($deletedMember->team)->createOne([
-            'phone_number' => '+50588889999',
+            'phone_number' => '+14155550111',
         ]);
 
         login(team: $deletedMember->team);
@@ -113,18 +113,18 @@ describe('update', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (Member $memberArgument, UpdateMemberInput $input): bool => $memberArgument->is($member)
-                && $input->phoneNumber === '+50588888888');
+                && $input->phoneNumber === '+14155550110');
 
         $response = patch(route('teams.members.update', [
             'team' => $member->team,
             'member' => $member,
         ]), [
-            'phone_number' => '+505 8888 8888',
+            'phone_number' => '+1 415 555 0110',
         ]);
 
         $response->assertRedirectToRoute('teams.members.show', [
             'team' => $member->team,
-            'member' => $member->public_id,
+            'member' => $member->sqid,
         ])
             ->assertToast('Member updated');
     });

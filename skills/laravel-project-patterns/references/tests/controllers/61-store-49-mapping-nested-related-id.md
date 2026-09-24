@@ -43,7 +43,7 @@ describe('store', function (): void {
             'team' => $member->team,
             'member' => $member,
         ]), [
-            'service_plan_id' => $servicePlan->public_id,
+            'service_plan_id' => $servicePlan->sqid,
         ]);
 
         $response->assertRedirectToRoute('teams.members.cabinets.show', [
@@ -103,13 +103,13 @@ describe('store', function (): void {
             'work_order' => $workOrder,
         ]), [
             'currency_code' => CurrencyCode::USD->value,
-            'declared_unit_value' => '125.50',
             'description' => 'Laptop computer',
             'dimension_unit' => LengthUnit::Inches->value,
             'height' => '2.0000',
+            'item_group_id' => $group->sqid,
             'length' => '14.0000',
-            'item_group_id' => $group->public_id,
             'quantity' => 2,
+            'unit_value' => '125.50',
             'weight' => '4.5000',
             'weight_unit' => WeightUnit::Pounds->value,
             'width' => '10.0000',

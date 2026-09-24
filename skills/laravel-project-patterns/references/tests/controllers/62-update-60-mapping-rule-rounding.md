@@ -14,8 +14,8 @@ use function Pest\Laravel\patch;
 
 use App\Actions\ServicePlans\Inputs\UpdatePlanRuleInput;
 use App\Actions\ServicePlans\UpdatePlanRule;
-use App\Enums\BillableWeightRoundingMode;
 use App\Enums\CurrencyCode;
+use App\Enums\RoundingMode;
 use App\Models\PlanRule;
 
 describe('update', function (): void {
@@ -55,15 +55,15 @@ describe('update', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (PlanRule $planRuleArgument, UpdatePlanRuleInput $input): bool => $planRuleArgument->is($planRule)
-                && $input->billableWeightRoundingIncrement === null
-                && $input->billableWeightRoundingMode === BillableWeightRoundingMode::None);
+                && $input->roundingIncrement === null
+                && $input->roundingMode === RoundingMode::None);
 
         $response = patch(route('teams.service-plans.plan-rules.update', [
             'team' => $planRule->servicePlan->team,
             'service_plan' => $planRule->servicePlan,
             'plan_rule' => $planRule,
         ]), [
-            'billable_weight_rounding_mode' => BillableWeightRoundingMode::None->value,
+            'rounding_mode' => RoundingMode::None->value,
         ]);
 
         $response->assertRedirectToRoute('teams.service-plans.plan-rules.show', [
@@ -83,15 +83,15 @@ describe('update', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (PlanRule $planRuleArgument, UpdatePlanRuleInput $input): bool => $planRuleArgument->is($planRule)
-                && $input->billableWeightRoundingIncrement === '1.0000'
-                && $input->minimumBillableWeight === '2');
+                && $input->roundingIncrement === '1.0000'
+                && $input->minimumChargeableWeight === '2');
 
         $response = patch(route('teams.service-plans.plan-rules.update', [
             'team' => $planRule->servicePlan->team,
             'service_plan' => $planRule->servicePlan,
             'plan_rule' => $planRule,
         ]), [
-            'minimum_billable_weight' => 2,
+            'minimum_chargeable_weight' => 2,
         ]);
 
         $response->assertRedirectToRoute('teams.service-plans.plan-rules.show', [

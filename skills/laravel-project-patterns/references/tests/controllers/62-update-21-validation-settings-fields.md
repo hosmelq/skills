@@ -6,6 +6,8 @@ The minimum-length row supplies a nonnumeric value; its error assertion does not
 
 ## Validates fields
 
+The country-restricted phone row uses a valid number from outside the allowed `CountryCode` values; preserve that exclusion when adapting the fixture.
+
 ```php
 <?php
 
@@ -31,11 +33,11 @@ describe('update', function (): void {
         'boolean' => [
             'data' => [
                 'cabinets_enabled' => 'invalid',
-                'shipments_enabled' => 'invalid',
+                'work_orders_enabled' => 'invalid',
             ],
             'expected' => [
                 'cabinets_enabled' => 'The cabinets enabled field must be true or false.',
-                'shipments_enabled' => 'The shipments enabled field must be true or false.',
+                'work_orders_enabled' => 'The work orders enabled field must be true or false.',
             ],
         ],
         'email' => [
@@ -64,16 +66,16 @@ describe('update', function (): void {
         ],
         'enum' => [
             'data' => [
+                'assignment_mode' => 'invalid',
+                'code_format_alphabet_type' => 'invalid',
                 'country_code' => 'invalid',
-                'cabinet_code_format_alphabet_type' => 'invalid',
-                'cabinet_provisioning_mode' => 'invalid',
                 'unit_system' => 'invalid',
                 'weight_unit' => 'invalid',
             ],
             'expected' => [
+                'assignment_mode' => 'The selected assignment mode is invalid.',
+                'code_format_alphabet_type' => 'The selected code format alphabet type is invalid.',
                 'country_code' => 'The selected country code is invalid.',
-                'cabinet_code_format_alphabet_type' => 'The selected cabinet code format alphabet type is invalid.',
-                'cabinet_provisioning_mode' => 'The selected cabinet provisioning mode is invalid.',
                 'unit_system' => 'The selected unit system is invalid.',
                 'weight_unit' => 'The selected weight unit is invalid.',
             ],
@@ -88,12 +90,12 @@ describe('update', function (): void {
         ],
         'max:20 (string)' => [
             'data' => [
-                'cabinet_code_format_length' => 21,
-                'cabinet_code_format_prefix' => Str::repeat('a', 21),
+                'code_format_length' => 21,
+                'code_format_prefix' => Str::repeat('a', 21),
             ],
             'expected' => [
-                'cabinet_code_format_length' => 'The cabinet code format length field must not be greater than 20.',
-                'cabinet_code_format_prefix' => 'The cabinet code format prefix field must not be greater than 20 characters.',
+                'code_format_length' => 'The code format length field must not be greater than 20.',
+                'code_format_prefix' => 'The code format prefix field must not be greater than 20 characters.',
             ],
         ],
         'max:255 (string)' => [
@@ -110,23 +112,23 @@ describe('update', function (): void {
         ],
         'min:4 (string)' => [
             'data' => [
-                'cabinet_code_format_length' => 'a',
+                'code_format_length' => 'a',
             ],
             'expected' => [
-                'cabinet_code_format_length' => 'The cabinet code format length field must be at least 4.',
+                'code_format_length' => 'The code format length field must be at least 4.',
             ],
         ],
         'numeric' => [
             'data' => [
-                'cabinet_code_format_length' => 'invalid',
+                'code_format_length' => 'invalid',
             ],
             'expected' => [
-                'cabinet_code_format_length' => 'The cabinet code format length field must be a number.',
+                'code_format_length' => 'The code format length field must be a number.',
             ],
         ],
         'phone' => [
             'data' => [
-                'contact_phone_number' => '+503 8888 8888',
+                'contact_phone_number' => '+44 20 7946 0958',
             ],
             'expected' => [
                 'contact_phone_number' => 'The contact phone number field must be a valid number.',
@@ -134,28 +136,28 @@ describe('update', function (): void {
         ],
         'sometimes (required)' => [
             'data' => [
-                'country_code' => '',
-                'cabinet_code_format_alphabet_type' => '',
-                'cabinet_code_format_length' => '',
-                'cabinet_provisioning_mode' => '',
+                'assignment_mode' => '',
                 'cabinets_enabled' => '',
+                'code_format_alphabet_type' => '',
+                'code_format_length' => '',
+                'country_code' => '',
                 'name' => '',
-                'shipments_enabled' => '',
                 'timezone' => '',
                 'unit_system' => '',
                 'weight_unit' => '',
+                'work_orders_enabled' => '',
             ],
             'expected' => [
-                'country_code' => 'The country code field is required.',
-                'cabinet_code_format_alphabet_type' => 'The cabinet code format alphabet type field is required.',
-                'cabinet_code_format_length' => 'The cabinet code format length field is required.',
-                'cabinet_provisioning_mode' => 'The cabinet provisioning mode field is required.',
+                'assignment_mode' => 'The assignment mode field is required.',
                 'cabinets_enabled' => 'The cabinets enabled field is required.',
+                'code_format_alphabet_type' => 'The code format alphabet type field is required.',
+                'code_format_length' => 'The code format length field is required.',
+                'country_code' => 'The country code field is required.',
                 'name' => 'The name field is required.',
-                'shipments_enabled' => 'The shipments enabled field is required.',
                 'timezone' => 'The timezone field is required.',
                 'unit_system' => 'The unit system field is required.',
                 'weight_unit' => 'The weight unit field is required.',
+                'work_orders_enabled' => 'The work orders enabled field is required.',
             ],
         ],
         'timezone' => [

@@ -16,9 +16,9 @@ use function Pest\Laravel\post;
 
 use App\Actions\ServicePlans\CreatePlanRule;
 use App\Actions\ServicePlans\Inputs\CreatePlanRuleInput;
-use App\Enums\BillableWeightRoundingMode;
 use App\Enums\CountryCode;
 use App\Enums\CurrencyCode;
+use App\Enums\RoundingMode;
 use App\Exceptions\CannotUseDeactivatedServicePlan;
 use App\Models\ServicePlan;
 
@@ -32,7 +32,7 @@ describe('store', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (ServicePlan $servicePlanArgument, CreatePlanRuleInput $input): bool => $servicePlanArgument->is($servicePlan)
-                && $input->countryCode === CountryCode::Nicaragua
+                && $input->countryCode === CountryCode::UnitedStates
                 && $input->currencyCode === CurrencyCode::USD)
             ->andThrow(CannotUseDeactivatedServicePlan::becauseItIsDeactivated());
 
@@ -40,11 +40,11 @@ describe('store', function (): void {
             'team' => $servicePlan->team,
             'service_plan' => $servicePlan,
         ]), [
-            'billable_weight_rounding_mode' => BillableWeightRoundingMode::None->value,
-            'country_code' => CountryCode::Nicaragua->value,
+            'country_code' => CountryCode::UnitedStates->value,
             'currency_code' => CurrencyCode::USD->value,
-            'minimum_billable_weight' => 1,
-            'name' => 'Nicaragua',
+            'minimum_chargeable_weight' => 1,
+            'name' => 'Default rule',
+            'rounding_mode' => RoundingMode::None->value,
         ]);
 
         $response->assertRedirectBackWithErrors([

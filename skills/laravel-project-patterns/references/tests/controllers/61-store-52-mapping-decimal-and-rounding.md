@@ -14,9 +14,9 @@ use function Pest\Laravel\post;
 
 use App\Actions\ServicePlans\CreatePlanRule;
 use App\Actions\ServicePlans\Inputs\CreatePlanRuleInput;
-use App\Enums\BillableWeightRoundingMode;
 use App\Enums\CountryCode;
 use App\Enums\CurrencyCode;
+use App\Enums\RoundingMode;
 use App\Models\PlanRule;
 use App\Models\ServicePlan;
 
@@ -25,7 +25,7 @@ describe('store', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
         $planRule = PlanRule::factory()
             ->recycle($servicePlan)
-            ->forCountry(CountryCode::Nicaragua)
+            ->forCountry(CountryCode::UnitedStates)
             ->createOne();
 
         login(team: $servicePlan->team);
@@ -36,18 +36,18 @@ describe('store', function (): void {
             ->withArgs(fn (ServicePlan $servicePlanArgument, CreatePlanRuleInput $input): bool => $servicePlanArgument->is($servicePlan)
                 && $input->countryCode === CountryCode::Japan
                 && $input->currencyCode === CurrencyCode::CNY
-                && $input->minimumBillableWeight === '0')
+                && $input->minimumChargeableWeight === '0')
             ->andReturn($planRule);
 
         $response = post(route('teams.service-plans.plan-rules.store', [
             'team' => $servicePlan->team,
             'service_plan' => $servicePlan,
         ]), [
-            'billable_weight_rounding_mode' => BillableWeightRoundingMode::None->value,
             'country_code' => CountryCode::Japan->value,
             'currency_code' => CurrencyCode::CNY->value,
-            'minimum_billable_weight' => 0,
-            'name' => 'Japan air cargo',
+            'minimum_chargeable_weight' => 0,
+            'name' => 'Example international rule',
+            'rounding_mode' => RoundingMode::None->value,
         ]);
 
         $response->assertRedirectToRoute('teams.service-plans.plan-rules.show', [
@@ -62,7 +62,7 @@ describe('store', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
         $planRule = PlanRule::factory()
             ->recycle($servicePlan)
-            ->forCountry(CountryCode::Nicaragua)
+            ->forCountry(CountryCode::UnitedStates)
             ->createOne();
 
         login(team: $servicePlan->team);
@@ -71,20 +71,20 @@ describe('store', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (ServicePlan $servicePlanArgument, CreatePlanRuleInput $input): bool => $servicePlanArgument->is($servicePlan)
-                && $input->billableWeightRoundingIncrement === null
-                && $input->billableWeightRoundingMode === BillableWeightRoundingMode::None)
+                && $input->roundingIncrement === null
+                && $input->roundingMode === RoundingMode::None)
             ->andReturn($planRule);
 
         $response = post(route('teams.service-plans.plan-rules.store', [
             'team' => $servicePlan->team,
             'service_plan' => $servicePlan,
         ]), [
-            'billable_weight_rounding_increment' => 1,
-            'billable_weight_rounding_mode' => BillableWeightRoundingMode::None->value,
             'country_code' => CountryCode::Canada->value,
             'currency_code' => CurrencyCode::USD->value,
-            'minimum_billable_weight' => 1,
-            'name' => 'Canada air cargo',
+            'minimum_chargeable_weight' => 1,
+            'name' => 'Example regional rule',
+            'rounding_increment' => 1,
+            'rounding_mode' => RoundingMode::None->value,
         ]);
 
         $response->assertRedirectToRoute('teams.service-plans.plan-rules.show', [

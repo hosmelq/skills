@@ -28,8 +28,8 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($itemGroup): void {
                 $page->component('item-groups/Show')
-                    ->where('team.id', $itemGroup->team->public_id)
-                    ->where('itemGroup.id', $itemGroup->public_id)
+                    ->where('team.id', $itemGroup->team->sqid)
+                    ->where('itemGroup.id', $itemGroup->sqid)
                     ->where(
                         'itemGroup.deactivated_at',
                         $itemGroup->deactivated_at->toJSON(),
@@ -67,7 +67,7 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($planRule): void {
                 $page->component('service-plans/plan-rules/Show')
-                    ->where('planRule.id', $planRule->public_id)
+                    ->where('planRule.id', $planRule->sqid)
                     ->where('servicePlan.deactivated_at', $planRule->servicePlan->deactivated_at->toJSON());
             });
     });
@@ -105,7 +105,7 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($rate): void {
                 $page->component('service-plans/rates/Show')
-                    ->where('rate.id', $rate->public_id)
+                    ->where('rate.id', $rate->sqid)
                     ->where('servicePlan.deactivated_at', $rate->planRule->servicePlan->deactivated_at->toJSON());
             });
     });

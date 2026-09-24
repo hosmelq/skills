@@ -38,8 +38,8 @@ describe('index', function (): void {
                 $page->component('members/cabinets/Index')
                     ->has('cabinets.data', 1, function (AssertableInertia $json) use ($cabinet, $unrelatedCabinet): void {
                         $json
-                            ->where('id', $cabinet->public_id)
-                            ->whereNot('id', $unrelatedCabinet->public_id)
+                            ->where('id', $cabinet->sqid)
+                            ->whereNot('id', $unrelatedCabinet->sqid)
                             ->etc();
                     });
             });
@@ -81,8 +81,8 @@ describe('index', function (): void {
                 $page->component('enrollments/Index')
                     ->has('enrollments.data', 1, function (AssertableInertia $json) use ($enrollment, $unrelatedEnrollment): void {
                         $json
-                            ->where('id', $enrollment->public_id)
-                            ->whereNot('id', $unrelatedEnrollment->public_id)
+                            ->where('id', $enrollment->sqid)
+                            ->whereNot('id', $unrelatedEnrollment->sqid)
                             ->etc();
                     });
             });

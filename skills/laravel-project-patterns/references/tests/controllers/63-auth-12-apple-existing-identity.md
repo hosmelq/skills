@@ -41,7 +41,7 @@ it('authenticates an existing identity', function (): void {
     $response->assertOk()
         ->assertJson(function (AssertableJson $json) use ($user): void {
             $json->whereType('access_token', 'string')
-                ->where('user.id', $user->public_id);
+                ->where('user.id', $user->sqid);
         });
 
     expect($user->tokens)->toHaveCount(1);
@@ -71,7 +71,7 @@ it('authenticates an existing identity without an email claim', function (): voi
     $response->assertOk()
         ->assertJson(function (AssertableJson $json) use ($user): void {
             $json->whereType('access_token', 'string')
-                ->where('user.id', $user->public_id);
+                ->where('user.id', $user->sqid);
         });
 
     assertDatabaseHas(User::class, [

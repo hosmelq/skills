@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\post;
 
-use App\Enums\BillableWeightRoundingMode;
+use App\Enums\RoundingMode;
 use App\Models\ServicePlan;
 use Illuminate\Support\Str;
 
@@ -30,42 +30,42 @@ describe('store', function (): void {
     })->with([
         'decimal:0,4' => [
             'data' => [
-                'billable_weight_rounding_mode' => BillableWeightRoundingMode::Up->value,
-                'billable_weight_rounding_increment' => '1.12345',
-                'minimum_billable_weight' => '12.12345',
+                'minimum_chargeable_weight' => '12.12345',
+                'rounding_increment' => '1.12345',
+                'rounding_mode' => RoundingMode::Up->value,
             ],
             'expected' => [
-                'minimum_billable_weight' => 'The minimum billable weight field must have 0-4 decimal places.',
-                'billable_weight_rounding_increment' => 'The billable weight rounding increment field must have 0-4 decimal places.',
+                'minimum_chargeable_weight' => 'The minimum chargeable weight field must have 0-4 decimal places.',
+                'rounding_increment' => 'The rounding increment field must have 0-4 decimal places.',
             ],
         ],
         'enum' => [
             'data' => [
                 'country_code' => 'invalid',
                 'currency_code' => 'invalid',
-                'billable_weight_rounding_mode' => 'invalid',
+                'rounding_mode' => 'invalid',
             ],
             'expected' => [
                 'country_code' => 'The selected country code is invalid.',
                 'currency_code' => 'The selected currency code is invalid.',
-                'billable_weight_rounding_mode' => 'The selected billable weight rounding mode is invalid.',
+                'rounding_mode' => 'The selected rounding mode is invalid.',
             ],
         ],
         'gt:0' => [
             'data' => [
-                'billable_weight_rounding_mode' => BillableWeightRoundingMode::Up->value,
-                'billable_weight_rounding_increment' => 0,
+                'rounding_increment' => 0,
+                'rounding_mode' => RoundingMode::Up->value,
             ],
             'expected' => [
-                'billable_weight_rounding_increment' => 'The billable weight rounding increment field must be greater than 0.',
+                'rounding_increment' => 'The rounding increment field must be greater than 0.',
             ],
         ],
         'gte:0' => [
             'data' => [
-                'minimum_billable_weight' => -1,
+                'minimum_chargeable_weight' => -1,
             ],
             'expected' => [
-                'minimum_billable_weight' => 'The minimum billable weight field must be greater than or equal to 0.',
+                'minimum_chargeable_weight' => 'The minimum chargeable weight field must be greater than or equal to 0.',
             ],
         ],
         'max:255 (string)' => [
@@ -81,17 +81,17 @@ describe('store', function (): void {
             'expected' => [
                 'country_code' => 'The country code field is required.',
                 'currency_code' => 'The currency code field is required.',
-                'minimum_billable_weight' => 'The minimum billable weight field is required.',
-                'billable_weight_rounding_mode' => 'The billable weight rounding mode field is required.',
+                'minimum_chargeable_weight' => 'The minimum chargeable weight field is required.',
                 'name' => 'The name field is required.',
+                'rounding_mode' => 'The rounding mode field is required.',
             ],
         ],
         'required_if' => [
             'data' => [
-                'billable_weight_rounding_mode' => BillableWeightRoundingMode::Up->value,
+                'rounding_mode' => RoundingMode::Up->value,
             ],
             'expected' => [
-                'billable_weight_rounding_increment' => 'The billable weight rounding increment field is required.',
+                'rounding_increment' => 'The rounding increment field is required.',
             ],
         ],
     ]);

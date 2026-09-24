@@ -22,9 +22,9 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'current_facility_id' => $facility->public_id,
-            'pickup_facility_id' => $facility->public_id,
-            'received_facility_id' => $facility->public_id,
+            'current_facility_id' => $facility->sqid,
+            'pickup_facility_id' => $facility->sqid,
+            'received_facility_id' => $facility->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -41,9 +41,9 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'current_facility_id' => $facility->public_id,
-            'pickup_facility_id' => $facility->public_id,
-            'received_facility_id' => $facility->public_id,
+            'current_facility_id' => $facility->sqid,
+            'pickup_facility_id' => $facility->sqid,
+            'received_facility_id' => $facility->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -60,9 +60,9 @@ describe('store', function (): void {
         login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'current_facility_id' => $facility->public_id,
-            'pickup_facility_id' => $facility->public_id,
-            'received_facility_id' => $facility->public_id,
+            'current_facility_id' => $facility->sqid,
+            'pickup_facility_id' => $facility->sqid,
+            'received_facility_id' => $facility->sqid,
         ]);
 
         $response->assertRedirectBackWithErrors([

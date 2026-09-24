@@ -29,8 +29,8 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($member): void {
                 $page->component('members/Index')
-                    ->where('members.data.0.id', $member->public_id)
-                    ->where('team.id', $member->team->public_id);
+                    ->where('members.data.0.id', $member->sqid)
+                    ->where('team.id', $member->team->sqid);
             });
     });
 });
@@ -62,9 +62,9 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($planRule): void {
                 $page->component('service-plans/plan-rules/Index')
-                    ->where('team.id', $planRule->servicePlan->team->public_id)
-                    ->where('planRules.data.0.id', $planRule->public_id)
-                    ->where('servicePlan.id', $planRule->servicePlan->public_id);
+                    ->where('team.id', $planRule->servicePlan->team->sqid)
+                    ->where('planRules.data.0.id', $planRule->sqid)
+                    ->where('servicePlan.id', $planRule->servicePlan->sqid);
             });
     });
 });
@@ -97,10 +97,10 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($rate): void {
                 $page->component('service-plans/rates/Index')
-                    ->where('team.id', $rate->planRule->servicePlan->team->public_id)
-                    ->where('planRule.id', $rate->planRule->public_id)
-                    ->where('rates.data.0.id', $rate->public_id)
-                    ->where('servicePlan.id', $rate->planRule->servicePlan->public_id);
+                    ->where('team.id', $rate->planRule->servicePlan->team->sqid)
+                    ->where('planRule.id', $rate->planRule->sqid)
+                    ->where('rates.data.0.id', $rate->sqid)
+                    ->where('servicePlan.id', $rate->planRule->servicePlan->sqid);
             });
     });
 });
@@ -135,8 +135,8 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($member): void {
                 $page->component('members/addresses/Index')
-                    ->where('member.id', $member->public_id)
-                    ->where('team.id', $member->team->public_id)
+                    ->where('member.id', $member->sqid)
+                    ->where('team.id', $member->team->sqid)
                     ->has('addresses.data', 2);
             });
     });
@@ -169,11 +169,11 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($cabinet): void {
                 $page->component('members/cabinets/Index')
-                    ->where('member.id', $cabinet->member->public_id)
-                    ->where('cabinets.data.0.id', $cabinet->public_id)
+                    ->where('member.id', $cabinet->member->sqid)
+                    ->where('cabinets.data.0.id', $cabinet->sqid)
                     ->where('cabinets.data.0.code', $cabinet->code)
                     ->where('cabinets.data.0.label', $cabinet->label)
-                    ->where('team.id', $cabinet->member->team->public_id);
+                    ->where('team.id', $cabinet->member->team->sqid);
             });
     });
 });
@@ -208,8 +208,8 @@ describe('index', function (): void {
                 $page->component('facilities/Index')
                     ->where('countryCodes', CountryCode::options())
                     ->where('facilityTypes', FacilityType::options())
-                    ->where('team.id', $facility->team->public_id)
-                    ->where('facilities.data.0.id', $facility->public_id);
+                    ->where('team.id', $facility->team->sqid)
+                    ->where('facilities.data.0.id', $facility->sqid);
             });
     });
 });

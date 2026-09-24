@@ -33,10 +33,10 @@ describe('store', function (): void {
         $response->assertRedirectBackWithErrors($expected);
     })->with([
         'decimal:0,2' => [
-            'data' => ['declared_unit_value' => '1.001'],
+            'data' => ['unit_value' => '1.001'],
             'expected' => [
-                'declared_unit_value' =>
-                    'The declared unit value field must have 0-2 decimal places.',
+                'unit_value' =>
+                    'The unit value field must have 0-2 decimal places.',
             ],
         ],
         'decimal:0,4' => [
@@ -80,10 +80,10 @@ describe('store', function (): void {
             ],
         ],
         'gte:0' => [
-            'data' => ['declared_unit_value' => '-0.01'],
+            'data' => ['unit_value' => '-0.01'],
             'expected' => [
-                'declared_unit_value' =>
-                    'The declared unit value field must be greater than or equal to 0.',
+                'unit_value' =>
+                    'The unit value field must be greater than or equal to 0.',
             ],
         ],
         'integer' => [
@@ -118,10 +118,10 @@ describe('store', function (): void {
             ],
         ],
         'max:999999.99' => [
-            'data' => ['declared_unit_value' => '1000000'],
+            'data' => ['unit_value' => '1000000'],
             'expected' => [
-                'declared_unit_value' =>
-                    'The declared unit value field must not be greater than 999999.99.',
+                'unit_value' =>
+                    'The unit value field must not be greater than 999999.99.',
             ],
         ],
         'min:1' => [
@@ -141,21 +141,21 @@ describe('store', function (): void {
         'required_with:currency_code' => [
             'data' => [
                 'currency_code' => CurrencyCode::USD->value,
-                'declared_unit_value' => null,
+                'unit_value' => null,
             ],
             'expected' => [
-                'declared_unit_value' =>
-                    'The declared unit value field is required when currency code is present.',
+                'unit_value' =>
+                    'The unit value field is required when currency code is present.',
             ],
         ],
-        'required_with:declared_unit_value' => [
+        'required_with:unit_value' => [
             'data' => [
                 'currency_code' => null,
-                'declared_unit_value' => '125.50',
+                'unit_value' => '125.50',
             ],
             'expected' => [
                 'currency_code' =>
-                    'The currency code field is required when declared unit value is present.',
+                    'The currency code field is required when unit value is present.',
             ],
         ],
         'required_with:dimension_unit,height,length' => [

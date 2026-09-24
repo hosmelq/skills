@@ -32,7 +32,7 @@ describe('update', function (): void {
         $response = patch(route('teams.work-orders.update', [
             'team' => $team,
             'work_order' => $workOrder,
-        ]), ['member_id' => $member->public_id]);
+        ]), ['member_id' => $member->sqid]);
 
         $response->assertRedirectBackWithErrors([
             'member_id' => 'The selected member id is invalid.',

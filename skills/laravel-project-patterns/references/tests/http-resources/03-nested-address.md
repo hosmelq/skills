@@ -1,4 +1,4 @@
-# Model Tests: Nested Address Resource
+# HTTP Resource Tests: Nested Address Resource
 
 Exact resource JSON with a nested address, normalized phone, region labels, coordinates, opening-hours arrays, type, nullable deactivation and timestamps.
 
@@ -48,7 +48,7 @@ it('formats resource correctly', function (): void {
         ],
         'created_at' => $facility->created_at->toJSON(),
         'deactivated_at' => $facility->deactivated_at,
-        'id' => $facility->public_id,
+        'id' => $facility->sqid,
         'name' => 'Demo Service Center',
         'opening_hours' => [
             'monday' => ['08:00-17:00'],

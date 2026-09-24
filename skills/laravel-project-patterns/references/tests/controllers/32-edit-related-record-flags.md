@@ -34,8 +34,8 @@ describe('edit', function (): void {
             ->assertInertia(function (AssertableInertia $page) use ($servicePlan): void {
                 $page->component('service-plans/Edit')
                     ->where('hasRates', false)
-                    ->where('team.id', $servicePlan->team->public_id)
-                    ->where('servicePlan.id', $servicePlan->public_id)
+                    ->where('team.id', $servicePlan->team->sqid)
+                    ->where('servicePlan.id', $servicePlan->sqid)
                     ->where('transitTimeUnits', TransitTimeUnit::options())
                     ->where('weightUnits', WeightUnit::options());
             });
@@ -69,9 +69,9 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\BillableWeightRoundingMode;
 use App\Enums\CountryCode;
 use App\Enums\CurrencyCode;
+use App\Enums\RoundingMode;
 use App\Models\PlanRate;
 use App\Models\PlanRule;
 use Inertia\Testing\AssertableInertia;
@@ -94,10 +94,10 @@ describe('edit', function (): void {
                     ->where('countryCodes', CountryCode::options())
                     ->where('currencyCodes', CurrencyCode::options())
                     ->where('hasRates', false)
-                    ->where('team.id', $planRule->servicePlan->team->public_id)
-                    ->where('planRule.id', $planRule->public_id)
-                    ->where('roundingModes', BillableWeightRoundingMode::options())
-                    ->where('servicePlan.id', $planRule->servicePlan->public_id);
+                    ->where('team.id', $planRule->servicePlan->team->sqid)
+                    ->where('planRule.id', $planRule->sqid)
+                    ->where('roundingModes', RoundingMode::options())
+                    ->where('servicePlan.id', $planRule->servicePlan->sqid);
             });
     });
 

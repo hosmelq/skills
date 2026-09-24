@@ -1,6 +1,6 @@
 # Destroy Tests: Live And Soft Deleted Dependencies
 
-DELETE destroy rejects live and soft-deleted child configuration and operational references. Preserve separate real dependency fixtures, identity-matched mocked action exceptions and exact redirect-back errors; the mock does not prove dependency detection inside the action.
+DELETE destroy translates mocked dependency rejections with live and soft-deleted child or related-record fixtures. Preserve separate real dependency fixtures, identity-matched mocked action exceptions and exact redirect-back errors; the mock does not prove dependency detection inside the action.
 
 Keep live and trashed variants separate. Related-record examples create a valid intermediary in the same tenant.
 
@@ -21,7 +21,7 @@ use App\Models\PlanRule;
 use App\Models\ServicePlan;
 
 describe('destroy', function (): void {
-    it('rejects deleting when child records exist', function (): void {
+    it('maps a child dependency rejection to validation', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
         login(team: $planRule->servicePlan->team);
@@ -42,7 +42,7 @@ describe('destroy', function (): void {
         ]);
     });
 
-    it('rejects deleting when soft deleted child records exist', function (): void {
+    it('maps a soft deleted child dependency rejection to validation', function (): void {
         $planRule = PlanRule::factory()->trashed()->createOne();
 
         login(team: $planRule->servicePlan->team);
@@ -63,7 +63,7 @@ describe('destroy', function (): void {
         ]);
     });
 
-    it('rejects deleting when related records exist', function (): void {
+    it('maps a related dependency rejection to validation', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
         Cabinet::factory()
             ->recycle($servicePlan->team)
@@ -88,7 +88,7 @@ describe('destroy', function (): void {
         ]);
     });
 
-    it('rejects deleting when soft deleted related records exist', function (): void {
+    it('maps a soft deleted related dependency rejection to validation', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
         Cabinet::factory()
             ->trashed()

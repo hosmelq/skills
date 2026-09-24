@@ -65,7 +65,7 @@ describe('update', function (): void {
 
         $response->assertRedirectToRoute('teams.members.show', [
             'team' => $member->team,
-            'member' => $member->public_id,
+            'member' => $member->sqid,
         ])
             ->assertToast('Member updated');
     });
@@ -92,7 +92,7 @@ describe('update', function (): void {
 
         $response->assertRedirectToRoute('teams.members.show', [
             'team' => $member->team,
-            'member' => $member->public_id,
+            'member' => $member->sqid,
         ])
             ->assertToast('Member updated');
     });
@@ -124,7 +124,7 @@ describe('update', function (): void {
 
         $response->assertRedirectToRoute('teams.members.show', [
             'team' => $member->team,
-            'member' => $member->public_id,
+            'member' => $member->sqid,
         ])
             ->assertToast('Member updated');
     });

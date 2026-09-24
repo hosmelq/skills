@@ -20,7 +20,7 @@ use App\Models\Team;
 describe('store', function (): void {
     it('rejects a duplicate phone number in the same scope', function (): void {
         $member = Member::factory()->createOne([
-            'phone_number' => '+50588888888',
+            'phone_number' => '+14155550110',
         ]);
 
         login(team: $member->team);
@@ -28,7 +28,7 @@ describe('store', function (): void {
         $response = post(route('teams.members.store', [
             'team' => $member->team,
         ]), [
-            'phone_number' => '+505 8888 8888',
+            'phone_number' => '+1 415 555 0110',
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -38,7 +38,7 @@ describe('store', function (): void {
 
     it('allows a phone number used in a different scope', function (): void {
         Member::factory()->createOne([
-            'phone_number' => '+50588888888',
+            'phone_number' => '+14155550110',
         ]);
 
         $team = Team::factory()->createOne();
@@ -50,13 +50,13 @@ describe('store', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (Team $teamArgument, CreateMemberInput $input): bool => $teamArgument->is($team)
-                && $input->phoneNumber === '+50588888888')
+                && $input->phoneNumber === '+14155550110')
             ->andReturn($member);
 
         $response = post(route('teams.members.store', [
             'team' => $team,
         ]), [
-            'phone_number' => '+505 8888 8888',
+            'phone_number' => '+1 415 555 0110',
         ]);
 
         $response->assertRedirectToRoute('teams.members.show', [
@@ -70,7 +70,7 @@ describe('store', function (): void {
         $deletedMember = Member::factory()
             ->trashed()
             ->createOne([
-                'phone_number' => '+50588888888',
+                'phone_number' => '+14155550110',
             ]);
         $member = Member::factory()->recycle($deletedMember->team)->createOne();
 
@@ -80,13 +80,13 @@ describe('store', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (Team $teamArgument, CreateMemberInput $input): bool => $teamArgument->is($deletedMember->team)
-                && $input->phoneNumber === '+50588888888')
+                && $input->phoneNumber === '+14155550110')
             ->andReturn($member);
 
         $response = post(route('teams.members.store', [
             'team' => $deletedMember->team,
         ]), [
-            'phone_number' => '+505 8888 8888',
+            'phone_number' => '+1 415 555 0110',
         ]);
 
         $response->assertRedirectToRoute('teams.members.show', [

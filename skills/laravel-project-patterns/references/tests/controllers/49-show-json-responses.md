@@ -30,7 +30,7 @@ describe('show', function (): void {
         $response = getJson(route('api.user.show'));
 
         $response->assertOk()
-            ->assertJsonPath('id', $user->public_id);
+            ->assertJsonPath('id', $user->sqid);
     });
 });
 ```
@@ -51,7 +51,7 @@ describe('show', function (): void {
     it('requires authentication', function (): void {
         $team = Team::factory()->createOne();
 
-        $response = getJson(route('api.teams.show', $team->public_id));
+        $response = getJson(route('api.teams.show', $team->sqid));
 
         $response->assertUnauthorized();
     });
@@ -62,7 +62,7 @@ describe('show', function (): void {
 
         login($user);
 
-        $response = getJson(route('api.teams.show', $team->public_id));
+        $response = getJson(route('api.teams.show', $team->sqid));
 
         $response->assertForbidden();
     });
@@ -82,11 +82,11 @@ describe('show', function (): void {
 
         login();
 
-        $response = getJson(route('api.teams.show', $team->public_id));
+        $response = getJson(route('api.teams.show', $team->sqid));
 
         $response->assertOk()
             ->assertHeader('Content-Type', 'application/vnd.api+json')
-            ->assertJsonPath('data.id', $team->public_id)
+            ->assertJsonPath('data.id', $team->sqid)
             ->assertJsonPath('data.type', 'teams');
     });
 });

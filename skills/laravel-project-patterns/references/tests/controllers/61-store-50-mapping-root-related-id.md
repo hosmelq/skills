@@ -38,7 +38,7 @@ describe('store', function (): void {
             ->andReturn($workOrder);
 
         $response = post(route('teams.work-orders.store', $team), [
-            'current_facility_id' => $facility->public_id,
+            'current_facility_id' => $facility->sqid,
             'reference' => 'REF-NEW',
         ]);
 

@@ -36,12 +36,12 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($member, $cabinet, $servicePlan): void {
                 $page->component('members/cabinets/Show')
-                    ->where('member.id', $member->public_id)
-                    ->where('cabinet.id', $cabinet->public_id)
+                    ->where('member.id', $member->sqid)
+                    ->where('cabinet.id', $cabinet->sqid)
                     ->where('cabinet.code', $cabinet->code)
-                    ->where('team.id', $member->team->public_id)
+                    ->where('team.id', $member->team->sqid)
                     ->where('servicePlan.deleted_at', $servicePlan->deleted_at->toJSON())
-                    ->where('servicePlan.id', $servicePlan->public_id)
+                    ->where('servicePlan.id', $servicePlan->sqid)
                     ->where('servicePlan.name', $servicePlan->name);
             });
     });
@@ -82,12 +82,12 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($member, $cabinet, $servicePlan): void {
                 $page->component('members/cabinets/Show')
-                    ->where('member.id', $member->public_id)
-                    ->where('cabinet.id', $cabinet->public_id)
+                    ->where('member.id', $member->sqid)
+                    ->where('cabinet.id', $cabinet->sqid)
                     ->where('cabinet.code', $cabinet->code)
-                    ->where('team.id', $member->team->public_id)
+                    ->where('team.id', $member->team->sqid)
                     ->where('servicePlan.deactivated_at', $servicePlan->deactivated_at->toJSON())
-                    ->where('servicePlan.id', $servicePlan->public_id)
+                    ->where('servicePlan.id', $servicePlan->sqid)
                     ->where('servicePlan.name', $servicePlan->name);
             });
     });

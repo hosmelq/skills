@@ -1,6 +1,8 @@
-# Model Tests: Account and Current Tenant Resource
+# HTTP Resource Tests: Account and Current Tenant Resource
 
 Exact account resource JSON with a normalized-email avatar hash and full current-tenant payload; a separate case asserts null when the user has no current tenant.
+
+The raw phone cast uses a fixed US default region here, independent of `country_code`. Match the consuming cast’s configured region.
 
 The fictional team factory defaults to US, USD, America/Los_Angeles, imperial units and pounds. Match the inspected factory defaults or set the corresponding attributes explicitly.
 
@@ -15,14 +17,14 @@ use App\Models\User;
 
 it('formats resource correctly', function (): void {
     $team = Team::factory()->createOne([
-        'contact_email' => 'support@example.test',
-        'contact_phone_number' => '415 555 0114',
-        'code_format_prefix' => 'DEMO-',
         'assignment_mode' => AssignmentMode::Instant,
         'cabinets_enabled' => true,
+        'code_format_prefix' => 'DEMO-',
+        'contact_email' => 'support@example.test',
+        'contact_phone_number' => '415 555 0114',
         'name' => 'Current Demo Team',
-        'work_orders_enabled' => true,
         'slug' => 'current-demo-team',
+        'work_orders_enabled' => true,
     ]);
 
     $user = User::factory()->withTeam($team)->createOne([
@@ -40,28 +42,28 @@ it('formats resource correctly', function (): void {
         ),
         'created_at' => $user->created_at->toJSON(),
         'current_team' => [
+            'assignment_mode' => 'instant',
+            'cabinets_enabled' => true,
+            'code_format_alphabet_type' => 'alphanumeric',
+            'code_format_length' => Team::DEFAULT_CODE_LENGTH,
+            'code_format_prefix' => 'DEMO-',
             'contact_email' => 'support@example.test',
             'contact_phone_number' => '(415) 555-0114',
             'country_code' => 'US',
             'created_at' => $team->created_at->toJSON(),
             'currency_code' => 'USD',
-            'id' => $team->public_id,
-            'code_format_alphabet_type' => 'alphanumeric',
-            'code_format_length' => Team::DEFAULT_CODE_LENGTH,
-            'code_format_prefix' => 'DEMO-',
-            'assignment_mode' => 'instant',
-            'cabinets_enabled' => true,
+            'id' => $team->sqid,
             'name' => 'Current Demo Team',
-            'work_orders_enabled' => true,
             'slug' => 'current-demo-team',
             'timezone' => 'America/Los_Angeles',
             'unit_system' => 'imperial',
             'updated_at' => $team->updated_at->toJSON(),
             'weight_unit' => 'pounds',
+            'work_orders_enabled' => true,
         ],
         'email' => $user->email,
         'first_name' => 'Jane',
-        'id' => $user->public_id,
+        'id' => $user->sqid,
         'is_email_verified' => true,
         'last_name' => 'Doe',
         'name' => 'Jane Doe',

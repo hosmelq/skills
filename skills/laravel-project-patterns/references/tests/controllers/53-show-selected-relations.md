@@ -30,9 +30,9 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($member): void {
                 $page->component('members/Show')
-                    ->where('member.id', $member->public_id)
-                    ->where('defaultAddress.id', $member->defaultAddress->public_id)
-                    ->where('team.id', $member->team->public_id);
+                    ->where('member.id', $member->sqid)
+                    ->where('defaultAddress.id', $member->defaultAddress->sqid)
+                    ->where('team.id', $member->team->sqid);
             });
     });
 });
@@ -72,11 +72,11 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($member, $cabinet, $servicePlan): void {
                 $page->component('members/cabinets/Show')
-                    ->where('member.id', $member->public_id)
-                    ->where('cabinet.id', $cabinet->public_id)
+                    ->where('member.id', $member->sqid)
+                    ->where('cabinet.id', $cabinet->sqid)
                     ->where('cabinet.code', $cabinet->code)
-                    ->where('team.id', $member->team->public_id)
-                    ->where('servicePlan.id', $servicePlan->public_id);
+                    ->where('team.id', $member->team->sqid)
+                    ->where('servicePlan.id', $servicePlan->sqid);
             });
     });
 });

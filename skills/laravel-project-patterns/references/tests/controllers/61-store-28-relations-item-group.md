@@ -45,7 +45,7 @@ describe('store', function (): void {
             'work_order' => $workOrder,
         ]), [
             'description' => 'Laptop computer',
-            'item_group_id' => $group->public_id,
+            'item_group_id' => $group->sqid,
             'quantity' => 2,
         ]);
 
@@ -65,7 +65,7 @@ describe('store', function (): void {
             'work_order' => $workOrder,
         ]), [
             'description' => 'Laptop computer',
-            'item_group_id' => $group->public_id,
+            'item_group_id' => $group->sqid,
             'quantity' => 2,
         ]);
 
@@ -85,7 +85,7 @@ describe('store', function (): void {
             'work_order' => $workOrder,
         ]), [
             'description' => 'Laptop computer',
-            'item_group_id' => $group->public_id,
+            'item_group_id' => $group->sqid,
             'quantity' => 2,
         ]);
 

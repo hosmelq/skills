@@ -110,20 +110,35 @@ probes found their needed families: one broad ancestry probe required two focuse
 queries and a retry with ten candidates. Six prior-action probes retained their
 targets. These results confirm those queries, not guaranteed top-five coverage.
 
-## Model Expansion
+## Initial Model and Serialization Expansion
 
-2026-09-24. The 255-reference catalog includes 46 model references with 113
-complete examples, mapped to 159 declarations / 186 static variants across Unit,
-Integration and Feature. Codex Sol 6 high and Claude Opus 5.5 reviewed coverage
-and corrections. Individual model references contain at most 1,131 source tokens.
+2026-09-24. The initial 255-reference catalog grouped 46 references with 113
+examples across models, HTTP Resources and a media listener. Its 159 declarations /
+186 static variants combined those categories; these are not model-only coverage counts. Codex Sol 6 high and Claude Opus 5.5 reviewed coverage
+and corrections. Those references contained at most 1,131 source tokens. The refresh below supersedes
+that grouping and corrects Sqid APIs and incomplete cast examples.
 
-Fifteen fixed model queries and three controller controls ranked their expected
-reference first, with complete bounded reads. Model search/read responses used
+Fifteen fixed mixed-category queries and three controller controls ranked their expected
+reference first, with complete bounded reads. Their search/read responses used
 581–1,535 `o200k_base` tokens (median 906); the entrypoint adds 918 once per
 context. These controlled probes use predetermined targets. Counts cover emitted
 stdout/stderr and exclude task inputs, commands, application discovery, reasoning
 and provider overhead. They do not measure autonomous task cost or billing.
 PHP examples passed syntax checks; application/database tests were not executed.
+
+## Category and Sqid Refresh
+
+2026-09-24. The 260-reference catalog separates models (33 references), HTTP
+Resources (16, with 20 complete examples) and listeners (one) from controllers
+(210). Current-source inventories cover 128 model declarations / 155 static
+variants, 20 HTTP Resource declarations and 693 controller declarations / 857
+variants; pending-only controller examples are excluded from those counts.
+
+All 27 fixed queries ranked their expected reference first, with
+complete bounded reads. HTTP Resource search/read responses used 590–1,142
+`o200k_base` tokens; the entrypoint adds 995 once per context. These controlled
+probes measure emitted text, not autonomous task cost or billing; the exclusions
+above apply. Application/database tests were not executed.
 
 ## Earlier Selection Evidence
 

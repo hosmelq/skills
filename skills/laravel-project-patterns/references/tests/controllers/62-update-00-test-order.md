@@ -80,9 +80,9 @@ Ordered Pest PATCH update cases: access and scoped bindings, inactive policy, co
 74. `maps partial measurements using stored values`
 75. `allows a lower bound update with an open-ended stored upper bound`
 76. `clears a relation and its dependent relation when both are empty`
-77. `accepts current inactive and deleted relations`
-78. `accepts a current deleted relation`
-79. `accepts a current deleted dependent relation`
+77. `accepts current historical relations`
+78. `accepts a current historical relation`
+79. `accepts a current historical dependent relation`
 80. `accepts a current inactive relation`
 81. `approves a request`
 82. `rejects a request`

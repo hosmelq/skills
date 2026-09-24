@@ -1,8 +1,6 @@
-# Model Tests: State Resource
+# HTTP Resource Tests: State Resource
 
-Exact resource JSON for an ordered state: base enum value, visibility, initial/final flags and explicit sort order. Separate cases cover final-state classification and deactivation formatting.
-
-Set sort order through the query builder, then refresh, when the creation hook assigns it automatically.
+Exact resource JSON for an ordered state: base enum, independent visibility and initial flags, factory-assigned order and timestamps. A separate case formats deactivation.
 
 ```php
 <?php
@@ -17,12 +15,10 @@ it('formats resource correctly', function (): void {
         'base_status' => BaseStatus::Ready,
         'color' => '#2563eb',
         'description' => 'Available at the counter.',
-        'is_member_visible' => true,
         'is_initial' => false,
+        'is_member_visible' => true,
         'name' => 'Ready',
     ]);
-    WorkOrderStatus::query()->whereKey($workOrderStatus)->update(['sort_order' => 7]);
-    $workOrderStatus->refresh();
 
     $resource = json_decode($workOrderStatus->toResource()->toJson(), true);
 
@@ -32,26 +28,13 @@ it('formats resource correctly', function (): void {
         'created_at' => $workOrderStatus->created_at->toJSON(),
         'deactivated_at' => null,
         'description' => 'Available at the counter.',
-        'id' => $workOrderStatus->public_id,
-        'is_member_visible' => true,
-        'is_final' => false,
+        'id' => $workOrderStatus->sqid,
         'is_initial' => false,
+        'is_member_visible' => true,
         'name' => 'Ready',
-        'sort_order' => 7,
+        'sort_order' => $workOrderStatus->sort_order,
         'updated_at' => $workOrderStatus->updated_at->toJSON(),
     ]);
-});
-
-it('formats final states correctly', function (): void {
-    $workOrderStatus = WorkOrderStatus::factory()
-        ->withBaseStatus(BaseStatus::Completed)
-        ->createOne();
-
-    $resource = json_decode($workOrderStatus->toResource()->toJson(), true);
-
-    expect($resource)
-        ->base_status->toBe(BaseStatus::Completed->value)
-        ->is_final->toBeTrue();
 });
 
 it('formats the deactivation timestamp when present', function (): void {

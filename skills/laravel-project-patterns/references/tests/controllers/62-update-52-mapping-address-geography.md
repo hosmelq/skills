@@ -25,7 +25,7 @@ describe('update', function (): void {
         $address = MemberAddress::factory()->createOne();
 
         $state = State::query()
-            ->where('country_code', CountryCode::Nicaragua)
+            ->where('country_code', CountryCode::UnitedStates)
             ->orderBy('name')
             ->firstOrFail();
 
@@ -43,7 +43,7 @@ describe('update', function (): void {
             'member' => $address->member,
             'address' => $address,
         ]), [
-            'country_code' => CountryCode::Nicaragua->value,
+            'country_code' => CountryCode::UnitedStates->value,
             'label' => 'Work',
             'province_code' => $state->iso2,
         ]);
@@ -57,7 +57,7 @@ describe('update', function (): void {
 
     it('maps the province using the current country when country is empty', function (): void {
         $address = MemberAddress::factory()->createOne([
-            'country_code' => CountryCode::Nicaragua,
+            'country_code' => CountryCode::UnitedStates,
         ]);
 
         login(team: $address->member->team);
@@ -66,7 +66,7 @@ describe('update', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (MemberAddress $addressArgument, UpdateMemberAddressInput $input): bool => $addressArgument->is($address)
-                && $input->provinceCode === 'MN');
+                && $input->provinceCode === 'WA');
 
         $response = patch(route('teams.members.addresses.update', [
             'team' => $address->member->team,
@@ -74,7 +74,7 @@ describe('update', function (): void {
             'address' => $address,
         ]), [
             'country_code' => '',
-            'province_code' => 'MN',
+            'province_code' => 'WA',
         ]);
 
         $response->assertRedirectToRoute('teams.members.addresses.index', [
@@ -86,8 +86,8 @@ describe('update', function (): void {
 
     it('clears the province when changing country without a province', function (): void {
         $address = MemberAddress::factory()->createOne([
-            'country_code' => CountryCode::Nicaragua,
-            'province_code' => 'MN',
+            'country_code' => CountryCode::UnitedStates,
+            'province_code' => 'WA',
         ]);
 
         login(team: $address->member->team);
@@ -96,7 +96,7 @@ describe('update', function (): void {
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (MemberAddress $addressArgument, UpdateMemberAddressInput $input): bool => $addressArgument->is($address)
-                && $input->countryCode === CountryCode::CostaRica
+                && $input->countryCode === CountryCode::Canada
                 && $input->provinceCode === null);
 
         $response = patch(route('teams.members.addresses.update', [
@@ -104,7 +104,7 @@ describe('update', function (): void {
             'member' => $address->member,
             'address' => $address,
         ]), [
-            'country_code' => CountryCode::CostaRica->value,
+            'country_code' => CountryCode::Canada->value,
         ]);
 
         $response->assertRedirectToRoute('teams.members.addresses.index', [

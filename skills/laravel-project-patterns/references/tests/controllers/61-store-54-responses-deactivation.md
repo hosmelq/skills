@@ -1,6 +1,6 @@
 # Store Tests: Responses Deactivation
 
-Pest POST store: Three complete success patterns: generic redirect and toast, exact collection redirect, and deeper existing-record binding. Only entity-label-equivalent generic two-binding successes share a representative.
+Pest POST store: Three complete success patterns: generic redirect and toast, exact collection redirect, and deeper existing-record binding. The mocked action proves delegation and response mapping; it does not prove persisted deactivation.
 
 ## Deactivates the record — variant 1
 

@@ -1,8 +1,8 @@
-# Model Tests: API Resource Envelopes
+# HTTP Resource Tests: API Resource Envelopes
 
 Explicit API resource wrappers serialize models into exact data/attributes/id/type envelopes. One example maps an enum status; the other includes optional contact formatting.
 
-These exercise explicit resource classes, separately from the model’s default `toResource()` discovery. They override `toId()` to return `public_id`; types follow the resource class name unless `toType()` is overridden.
+These exercise explicit resource classes, separately from the model’s default `toResource()` discovery. These `JsonApiResource` classes override `toId()` with `sqid` and `toType()` with the exact type asserted below.
 
 ```php
 <?php
@@ -22,7 +22,7 @@ it('formats resource correctly', function (): void {
             'attributes' => [
                 'status' => $enrollment->status->value,
             ],
-            'id' => $enrollment->public_id,
+            'id' => $enrollment->sqid,
             'type' => 'enrollments',
         ],
     ]);
@@ -51,7 +51,7 @@ it('formats resource correctly', function (): void {
                 'contact_phone_number' => $team->contact_phone_number?->formatE164(),
                 'name' => $team->name,
             ],
-            'id' => $team->public_id,
+            'id' => $team->sqid,
             'type' => 'teams',
         ],
     ]);

@@ -31,8 +31,8 @@ describe('index', function (): void {
                 $page->component('members/addresses/Index')
                     ->has('addresses.data', 1, function (AssertableInertia $json) use ($address, $unrelatedAddress): void {
                         $json
-                            ->where('id', $address->public_id)
-                            ->whereNot('id', $unrelatedAddress->public_id)
+                            ->where('id', $address->sqid)
+                            ->whereNot('id', $unrelatedAddress->sqid)
                             ->etc();
                     });
             });
@@ -70,8 +70,8 @@ describe('index', function (): void {
                 $page->component('service-plans/plan-rules/Index')
                     ->has('planRules.data', 1, function (AssertableJson $json) use ($planRule, $unrelatedPlanRule): void {
                         $json
-                            ->where('id', $planRule->public_id)
-                            ->whereNot('id', $unrelatedPlanRule->public_id)
+                            ->where('id', $planRule->sqid)
+                            ->whereNot('id', $unrelatedPlanRule->sqid)
                             ->etc();
                     });
             });

@@ -39,9 +39,9 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
                 ->component('work-orders/Index')
-                ->where('workOrders.data.0.id', $workOrder->public_id)
-                ->where('workOrders.data.0.member.id', $workOrder->member->public_id)
-                ->where('workOrders.data.0.status.id', $status->public_id)
+                ->where('workOrders.data.0.id', $workOrder->sqid)
+                ->where('workOrders.data.0.member.id', $workOrder->member->sqid)
+                ->where('workOrders.data.0.status.id', $status->sqid)
                 ->where('workOrders.data.0.status.is_final', true));
     });
 });

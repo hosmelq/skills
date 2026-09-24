@@ -59,31 +59,31 @@ describe('create', function (): void {
                     'members',
                     fn (Collection $options): bool => ! $options
                         ->pluck('id')
-                        ->contains($deletedMember->public_id),
+                        ->contains($deletedMember->sqid),
                 )->where(
                     'facilities',
                     fn (Collection $options): bool => ! $options->pluck('id')->intersect([
-                        $deactivatedFacility->public_id,
-                        $deletedFacility->public_id,
+                        $deactivatedFacility->sqid,
+                        $deletedFacility->sqid,
                     ])->isNotEmpty(),
                 )->where(
                     'enrollments',
                     fn (Collection $options): bool => ! $options->pluck('id')->intersect([
-                        $deactivatedEnrollment->public_id,
-                        $deletedEnrollment->public_id,
+                        $deactivatedEnrollment->sqid,
+                        $deletedEnrollment->sqid,
                     ])->isNotEmpty(),
                 )->where(
                     'servicePlans',
                     fn (Collection $options): bool => ! $options->pluck('id')->intersect([
-                        $deactivatedServicePlan->public_id,
-                        $deletedServicePlan->public_id,
+                        $deactivatedServicePlan->sqid,
+                        $deletedServicePlan->sqid,
                     ])->isNotEmpty(),
                 )->where(
                     'statuses',
                     fn (Collection $options): bool => ! $options->pluck('id')->intersect([
-                        $deactivatedStatus->public_id,
-                        $deletedStatus->public_id,
-                        $nonInitialStatus->public_id,
+                        $deactivatedStatus->sqid,
+                        $deletedStatus->sqid,
+                        $nonInitialStatus->sqid,
                     ])->isNotEmpty(),
                 );
             });

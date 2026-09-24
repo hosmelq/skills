@@ -47,16 +47,16 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
                 ->component('work-orders/Show')
-                ->where('workOrder.current_facility.id', $workOrder->currentFacility->public_id)
-                ->where('workOrder.member.id', $workOrder->member->public_id)
-                ->where('workOrder.cabinet.id', $workOrder->cabinet->public_id)
-                ->where('workOrder.status.id', $status->public_id)
-                ->where('workOrder.pickup_facility.id', $workOrder->pickupFacility->public_id)
-                ->where('workOrder.received_facility.id', $workOrder->receivedFacility->public_id)
-                ->where('workOrder.service_plan.id', $workOrder->servicePlan->public_id)
+                ->where('workOrder.current_facility.id', $workOrder->currentFacility->sqid)
+                ->where('workOrder.member.id', $workOrder->member->sqid)
+                ->where('workOrder.cabinet.id', $workOrder->cabinet->sqid)
+                ->where('workOrder.status.id', $status->sqid)
+                ->where('workOrder.pickup_facility.id', $workOrder->pickupFacility->sqid)
+                ->where('workOrder.received_facility.id', $workOrder->receivedFacility->sqid)
+                ->where('workOrder.service_plan.id', $workOrder->servicePlan->sqid)
                 ->where(
                     'workOrder.plan_rule.id',
-                    $workOrder->planRule->public_id,
+                    $workOrder->planRule->sqid,
                 ));
     });
 });
