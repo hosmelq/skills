@@ -6,7 +6,7 @@ Use `scripts/search.py` to select descriptions before reading catalog patterns. 
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
-The current references cover controller `create`, `destroy`, `edit`, `index`, `show`, `store`, `update`, authentication, reordering and initial/default selection tests. Other areas will be added
+The current references cover controller `create`, `destroy`, `edit`, `index`, `show`, `store`, `update`, authentication, reordering and initial/default selection tests, plus model traits, casts, defaults, predicates, lifecycle, database constraints, relationships, binding, resource serialization and media event effects. Other areas will be added
 incrementally; a returned reference is not evidence that an unrelated area is covered.
 
 ## Pattern
@@ -127,6 +127,14 @@ Keep catalog text out of automatic preload paths. Maintenance may inspect source
 files directly; application work retrieves them through the bounded search.
 
 ### Catalog Navigation For Maintenance
+
+#### Models
+
+- [Ordered model contract checklist and focused examples](../references/tests/models/00-model-test-order.md)
+
+Query the execution boundary and inspected behavior, such as an in-memory decimal
+cast, a database uniqueness constraint, or a loaded-null resource relation. Suite
+paths provide context; they do not determine the reference or database requirement.
 
 #### Create
 

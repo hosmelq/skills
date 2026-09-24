@@ -110,6 +110,21 @@ probes found their needed families: one broad ancestry probe required two focuse
 queries and a retry with ten candidates. Six prior-action probes retained their
 targets. These results confirm those queries, not guaranteed top-five coverage.
 
+## Model Expansion
+
+2026-09-24. The 255-reference catalog includes 46 model references with 113
+complete examples, mapped to 159 declarations / 186 static variants across Unit,
+Integration and Feature. Codex Sol 6 high and Claude Opus 5.5 reviewed coverage
+and corrections. Individual model references contain at most 1,131 source tokens.
+
+Fifteen fixed model queries and three controller controls ranked their expected
+reference first, with complete bounded reads. Model search/read responses used
+581–1,535 `o200k_base` tokens (median 906); the entrypoint adds 918 once per
+context. These controlled probes use predetermined targets. Counts cover emitted
+stdout/stderr and exclude task inputs, commands, application discovery, reasoning
+and provider overhead. They do not measure autonomous task cost or billing.
+PHP examples passed syntax checks; application/database tests were not executed.
+
 ## Earlier Selection Evidence
 
 The original `612b7e0` corpus contained 455 documents. On nine positive tasks,
