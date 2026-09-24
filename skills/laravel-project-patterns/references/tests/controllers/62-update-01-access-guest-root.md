@@ -1,8 +1,8 @@
 # Update Tests: Access Guest Root
 
-Pest PATCH update: Browser guests on tenant settings and direct-record routes, with empty requests or valid name and note payloads. Preserve each required route parameter.
+Pest PATCH update: Browser guest authentication on tenant settings and direct-record routes. Adapt the route, model and valid payload to the endpoint; both cases redirect to login.
 
-## Requires authentication — variant 1
+## Tenant settings
 
 ```php
 <?php
@@ -26,57 +26,7 @@ describe('update', function (): void {
 });
 ```
 
-## Requires authentication — variant 2
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use function Pest\Laravel\patch;
-
-use App\Models\Member;
-
-describe('update', function (): void {
-    it('requires authentication', function (): void {
-        $member = Member::factory()->createOne();
-
-        $response = patch(route('teams.members.update', [
-            'team' => $member->team,
-            'member' => $member,
-        ]));
-
-        $response->assertRedirectToRoute('login');
-    });
-});
-```
-
-## Requires authentication — variant 3
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use function Pest\Laravel\patch;
-
-use App\Models\WorkOrder;
-
-describe('update', function (): void {
-    it('requires authentication', function (): void {
-        $workOrder = WorkOrder::factory()->createOne();
-
-        $response = patch(route('teams.work-orders.update', [
-            'team' => $workOrder->team,
-            'work_order' => $workOrder,
-        ]), ['note' => 'No']);
-
-        $response->assertRedirectToRoute('login');
-    });
-});
-```
-
-## Requires authentication — variant 4
+## Direct record
 
 ```php
 <?php

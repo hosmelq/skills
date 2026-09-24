@@ -1,6 +1,6 @@
 # Update Tests: Mapping Settings
 
-Pest PATCH update: Settings update preserves the exact submitted property mapping and separately retains both false-valued flags; all successful paths assert the original redirect and toast.
+Pest PATCH update: Settings update preserves the submitted property mapping; a named dataset checks each enabled flag can become false. All cases assert the redirect and toast.
 
 ## Complete block
 
@@ -48,9 +48,9 @@ describe('update', function (): void {
             ->assertToast('Settings updated');
     });
 
-    it('allows disabling an enabled setting: cabinets_enabled', function (): void {
+    it('allows disabling an enabled setting', function (string $field, string $property): void {
         $team = Team::factory()->createOne([
-            'cabinets_enabled' => true,
+            $field => true,
         ]);
 
         mock(UpdateTeam::class)
@@ -59,7 +59,7 @@ describe('update', function (): void {
             ->withArgs(
                 fn (Team $actualTeam, UpdateTeamInput $input): bool =>
                     $actualTeam->is($team)
-                    && $input->cabinetsEnabled === false,
+                    && $input->{$property} === false,
             );
 
         signIn(team: $team);
@@ -67,37 +67,14 @@ describe('update', function (): void {
         $response = patch(route('teams.update', [
             'team' => $team,
         ]), [
-            'cabinets_enabled' => false,
+            $field => false,
         ]);
 
         $response->assertRedirectBack()
             ->assertToast('Settings updated');
-    });
-
-    it('allows disabling an enabled setting: shipments_enabled', function (): void {
-        $team = Team::factory()->createOne([
-            'shipments_enabled' => true,
-        ]);
-
-        mock(UpdateTeam::class)
-            ->shouldReceive('handle')
-            ->once()
-            ->withArgs(
-                fn (Team $actualTeam, UpdateTeamInput $input): bool =>
-                    $actualTeam->is($team)
-                    && $input->shipmentsEnabled === false,
-            );
-
-        signIn(team: $team);
-
-        $response = patch(route('teams.update', [
-            'team' => $team,
-        ]), [
-            'shipments_enabled' => false,
-        ]);
-
-        $response->assertRedirectBack()
-            ->assertToast('Settings updated');
-    });
+    })->with([
+        'cabinets enabled' => ['cabinets_enabled', 'cabinetsEnabled'],
+        'shipments enabled' => ['shipments_enabled', 'shipmentsEnabled'],
+    ]);
 });
 ```

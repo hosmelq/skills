@@ -1,8 +1,8 @@
 # Store Tests: Access Guest Root
 
-Pest POST store: Web guest; no bound tenant, tenant-only empty request, or tenant-only request with a name payload.
+Pest POST store: Browser guest authentication on routes with no bindings or a tenant binding. Adapt the route, model and valid payload to the endpoint; both cases redirect to login.
 
-## Requires authentication — variant 1
+## No route bindings
 
 ```php
 <?php
@@ -20,31 +20,7 @@ describe('store', function (): void {
 });
 ```
 
-## Requires authentication — variant 2
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use function Pest\Laravel\post;
-
-use App\Models\Team;
-
-describe('store', function (): void {
-    it('requires authentication', function (): void {
-        $team = Team::factory()->createOne();
-
-        $response = post(route('teams.facilities.store', [
-            'team' => $team,
-        ]));
-
-        $response->assertRedirectToRoute('login');
-    });
-});
-```
-
-## Requires authentication — variant 3
+## Tenant route binding
 
 ```php
 <?php

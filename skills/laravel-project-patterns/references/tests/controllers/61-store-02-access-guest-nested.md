@@ -1,33 +1,8 @@
 # Store Tests: Access Guest Nested
 
-Pest POST store: Web guest creating under a parent or ancestor chain; distinguish empty request from valid description/quantity payload.
+Pest POST store: Browser guest authentication below a parent or ancestor chain. Preserve every route binding and use the endpoint’s valid payload; both cases redirect to login.
 
-## Requires authentication — variant 1
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use function Pest\Laravel\post;
-
-use App\Models\Member;
-
-describe('store', function (): void {
-    it('requires authentication', function (): void {
-        $member = Member::factory()->createOne();
-
-        $response = post(route('teams.members.addresses.store', [
-            'team' => $member->team,
-            'member' => $member,
-        ]));
-
-        $response->assertRedirectToRoute('login');
-    });
-});
-```
-
-## Requires authentication — variant 2
+## Parent route binding
 
 ```php
 <?php
@@ -55,7 +30,7 @@ describe('store', function (): void {
 });
 ```
 
-## Requires authentication — variant 3
+## Ancestor and parent route bindings
 
 ```php
 <?php

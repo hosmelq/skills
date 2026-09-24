@@ -86,38 +86,6 @@ describe('edit', function (): void {
 });
 ```
 
-## Operational Child Tenant Integrity
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use function Pest\Laravel\get;
-
-use App\Models\Team;
-use App\Models\WorkOrder;
-use App\Models\WorkOrderLine;
-
-describe('edit', function (): void {
-    it('returns not found when the record tenant does not match its parent tenant', function (): void {
-        $workOrder = WorkOrder::factory()->createOne();
-        $otherTeam = Team::factory()->createOne();
-        $line = WorkOrderLine::factory()->for($workOrder)->for($otherTeam)->createOne();
-
-        signIn(team: $workOrder->team);
-
-        $response = get(route('teams.work-orders.lines.edit', [
-            'team' => $workOrder->team,
-            'work_order' => $workOrder,
-            'line' => $line,
-        ]));
-
-        $response->assertNotFound();
-    });
-});
-```
-
 ## Grandchild Target
 
 ```php
