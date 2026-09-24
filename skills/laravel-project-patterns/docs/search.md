@@ -1,6 +1,6 @@
 # Bounded Hybrid Search
 
-Use `scripts/search.py` for bounded retrieval of controller, model, HTTP Resource and media listener test patterns. It ranks Markdown with SQLite FTS5 BM25, Qwen3-Embedding 0.6B and reciprocal rank fusion; returned candidates establish applicability only for their stated contracts.
+Use `scripts/search.py` for bounded retrieval of test patterns. It ranks Markdown with SQLite FTS5 BM25, Qwen3-Embedding 0.6B and reciprocal rank fusion; returned candidates establish applicability only for their stated contracts.
 
 ## Local Setup
 
