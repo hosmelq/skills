@@ -22,7 +22,7 @@ describe('store', function (): void {
     it('maps a required active initial record rejection to validation', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(DeactivateWorkOrderStatus::class)
             ->shouldReceive('handle')
@@ -60,7 +60,7 @@ describe('store', function (): void {
     it('maps an active dependent record rejection to validation', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(DeactivateServicePlan::class)
             ->shouldReceive('handle')

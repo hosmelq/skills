@@ -19,7 +19,7 @@ describe('store', function (): void {
         $relatedTeam = Team::factory()->createOne();
         $unrelatedMember = Member::factory()->createOne();
 
-        signIn(team: $relatedTeam);
+        login(team: $relatedTeam);
 
         $response = post(route('teams.members.addresses.store', [
             'team' => $relatedTeam,
@@ -32,7 +32,7 @@ describe('store', function (): void {
     it('returns not found when the parent is soft deleted', function (): void {
         $member = Member::factory()->trashed()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.addresses.store', [
             'team' => $member->team,
@@ -61,7 +61,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.lines.store', [
             'team' => $team,
@@ -77,7 +77,7 @@ describe('store', function (): void {
     it('returns not found when the parent is soft deleted', function (): void {
         $workOrder = WorkOrder::factory()->trashed()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = post(route('teams.work-orders.lines.store', [
             'team' => $workOrder->team,

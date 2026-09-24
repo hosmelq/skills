@@ -19,7 +19,7 @@ describe('edit', function (): void {
     it('prevents viewing when the record is inactive', function (): void {
         $facility = Facility::factory()->deactivated()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         $response = get(route('teams.facilities.edit', [
             'team' => $facility->team,
@@ -46,7 +46,7 @@ describe('edit', function (): void {
     it('prevents viewing when the record is inactive', function (): void {
         $cabinet = Cabinet::factory()->deactivated()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         $response = get(route('teams.members.cabinets.edit', [
             'team' => $cabinet->member->team,
@@ -73,11 +73,9 @@ use App\Models\ServicePlan;
 
 describe('edit', function (): void {
     it('prevents viewing when the parent is inactive', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.edit', [
             'team' => $planRule->servicePlan->team,
@@ -105,14 +103,10 @@ use App\Models\ServicePlan;
 
 describe('edit', function (): void {
     it('prevents viewing when the ancestor is inactive', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.edit', [
             'team' => $rate->planRule->servicePlan->team,

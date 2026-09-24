@@ -18,7 +18,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $member = Member::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = patch(route('teams.members.update', [
             'team' => $member->team,
@@ -102,7 +102,7 @@ describe('update', function (): void {
     it('requires an email, name, or phone number', function (): void {
         $member = Member::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = patch(route('teams.members.update', [
             'team' => $member->team,

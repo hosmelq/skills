@@ -22,7 +22,7 @@ describe('destroy', function (): void {
     it('maps a final record rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(DeleteWorkOrder::class)
             ->shouldReceive('handle')
@@ -59,7 +59,7 @@ describe('destroy', function (): void {
     it('maps a final parent rejection to validation', function (): void {
         $line = WorkOrderLine::factory()->createOne();
 
-        signIn(team: $line->workOrder->team);
+        login(team: $line->workOrder->team);
 
         mock(DeleteWorkOrderLine::class)
             ->shouldReceive('handle')
@@ -98,7 +98,7 @@ describe('destroy', function (): void {
     it('maps an inactive parent rejection to validation', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(DeletePlanRule::class)
             ->shouldReceive('handle')
@@ -137,7 +137,7 @@ describe('destroy', function (): void {
     it('maps an inactive ancestor rejection to validation', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(DeletePlanRate::class)
             ->shouldReceive('handle')
@@ -179,7 +179,7 @@ describe('destroy', function (): void {
     it('maps an inactive relation rejection to validation', function (): void {
         $cabinet = Cabinet::factory()->deactivated()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         mock(ReactivateCabinet::class)
             ->shouldReceive('handle')

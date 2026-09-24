@@ -21,15 +21,15 @@ use Inertia\Testing\AssertableInertia;
 describe('edit', function (): void {
     it('shows the edit page with the current inactive option', function (): void {
         $currentGroup = ItemGroup::factory()->deactivated()->createOne();
-        $workOrder = WorkOrder::factory()->for($currentGroup->team)->createOne();
+        $workOrder = WorkOrder::factory()->recycle($currentGroup->team)->createOne();
         $line = WorkOrderLine::factory()
-            ->for($workOrder)
+            ->recycle($workOrder)
             ->for($currentGroup, 'itemGroup')
             ->createOne();
-        $activeGroup = ItemGroup::factory()->for($workOrder->team)->createOne();
-        ItemGroup::factory()->deactivated()->for($workOrder->team)->createOne();
+        $activeGroup = ItemGroup::factory()->recycle($workOrder->team)->createOne();
+        ItemGroup::factory()->deactivated()->recycle($workOrder->team)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = get(route('teams.work-orders.lines.edit', [
             'team' => $workOrder->team,

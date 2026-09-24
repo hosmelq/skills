@@ -22,7 +22,7 @@ describe('update', function (): void {
     it('updates the record', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(UpdatePlanRule::class)
             ->shouldReceive('handle')
@@ -49,7 +49,7 @@ describe('update', function (): void {
     it('clears the rounding increment when rounding is disabled', function (): void {
         $planRule = PlanRule::factory()->roundUp()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(UpdatePlanRule::class)
             ->shouldReceive('handle')
@@ -77,7 +77,7 @@ describe('update', function (): void {
     it('retains the stored increment while updating another field', function (): void {
         $planRule = PlanRule::factory()->roundUp()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(UpdatePlanRule::class)
             ->shouldReceive('handle')

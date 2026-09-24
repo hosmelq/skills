@@ -20,7 +20,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $cabinet = Cabinet::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.members.cabinets.deactivation.store', [
             'team' => $team,
@@ -38,7 +38,7 @@ describe('store', function (): void {
             'team_id' => $member->team_id,
         ]);
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.cabinets.deactivation.store', [
             'team' => $member->team,
@@ -51,12 +51,9 @@ describe('store', function (): void {
 
     it('returns not found when the record belongs to another parent in the same tenant', function (): void {
         $member = Member::factory()->createOne();
-        $otherMember = Member::factory()->for($member->team)->createOne();
-        $cabinet = Cabinet::factory()
-            ->for($otherMember)
-            ->createOne();
+        $cabinet = Cabinet::factory()->recycle($member->team)->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.cabinets.deactivation.store', [
             'team' => $member->team,
@@ -71,7 +68,7 @@ describe('store', function (): void {
         $member = Member::factory()->createOne();
         $cabinet = Cabinet::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.cabinets.deactivation.store', [
             'team' => $member->team,
@@ -85,7 +82,7 @@ describe('store', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $cabinet = Cabinet::factory()->trashed()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         $response = post(route('teams.members.cabinets.deactivation.store', [
             'team' => $cabinet->member->team,
@@ -104,7 +101,7 @@ describe('store', function (): void {
             ->for($otherTeam)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.cabinets.deactivation.store', [
             'team' => $member->team,

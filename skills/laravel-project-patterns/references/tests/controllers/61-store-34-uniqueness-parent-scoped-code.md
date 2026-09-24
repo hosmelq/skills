@@ -26,7 +26,7 @@ describe('store', function (): void {
             'country_code' => CountryCode::Canada,
         ]);
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = post(route('teams.service-plans.plan-rules.store', [
             'team' => $planRule->servicePlan->team,
@@ -48,16 +48,13 @@ describe('store', function (): void {
         $planRule = PlanRule::factory()->createOne([
             'country_code' => CountryCode::Canada,
         ]);
-
-        $servicePlan = ServicePlan::factory()
-            ->for($planRule->servicePlan->team)
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->recycle($planRule->servicePlan->team)->createOne();
         $createdPlanRule = PlanRule::factory()
-            ->for($servicePlan)
+            ->recycle($servicePlan)
             ->forCountry(CountryCode::Japan)
             ->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(CreatePlanRule::class)
             ->shouldReceive('handle')
@@ -92,11 +89,11 @@ describe('store', function (): void {
                 'country_code' => CountryCode::Canada,
             ]);
         $createdPlanRule = PlanRule::factory()
-            ->for($planRule->servicePlan)
+            ->recycle($planRule->servicePlan)
             ->forCountry(CountryCode::Japan)
             ->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(CreatePlanRule::class)
             ->shouldReceive('handle')

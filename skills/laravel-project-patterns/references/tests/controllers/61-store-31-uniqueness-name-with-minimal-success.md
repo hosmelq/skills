@@ -22,7 +22,7 @@ describe('store', function (): void {
             'name' => 'Electronics',
         ]);
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         $response = post(route('teams.item-groups.store', [
             'team' => $itemGroup->team,
@@ -44,7 +44,7 @@ describe('store', function (): void {
             'name' => 'Created result',
         ]);
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateItemGroup::class)
             ->shouldReceive('handle')
@@ -71,7 +71,7 @@ describe('store', function (): void {
             ->recycle($deleted->team)
             ->createOne(['name' => 'Created result']);
 
-        signIn(team: $deleted->team);
+        login(team: $deleted->team);
 
         mock(CreateItemGroup::class)
             ->shouldReceive('handle')

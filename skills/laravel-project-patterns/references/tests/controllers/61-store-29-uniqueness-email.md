@@ -23,7 +23,7 @@ describe('store', function (): void {
             'email' => 'john@gmail.com',
         ]);
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.store', [
             'team' => $member->team,
@@ -42,11 +42,9 @@ describe('store', function (): void {
         ]);
 
         $team = Team::factory()->createOne();
-        $member = Member::factory()
-            ->for($team)
-            ->createOne();
+        $member = Member::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateMember::class)
             ->shouldReceive('handle')
@@ -74,11 +72,9 @@ describe('store', function (): void {
             ->createOne([
                 'email' => 'john@gmail.com',
             ]);
-        $member = Member::factory()
-            ->for($deletedMember->team)
-            ->createOne();
+        $member = Member::factory()->recycle($deletedMember->team)->createOne();
 
-        signIn(team: $deletedMember->team);
+        login(team: $deletedMember->team);
 
         mock(CreateMember::class)
             ->shouldReceive('handle')

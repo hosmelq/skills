@@ -17,7 +17,7 @@ use App\Support\PublicId;
 it('validates fields', function (array $data, array $expected): void {
     $itemGroup = ItemGroup::factory()->createOne();
 
-    signIn(team: $itemGroup->team);
+    login(team: $itemGroup->team);
 
     $response = patch(route('teams.item-groups.move', [
         'team' => $itemGroup->team,
@@ -39,7 +39,7 @@ it('validates fields', function (array $data, array $expected): void {
 it('rejects moving a record after itself', function (): void {
     $itemGroup = ItemGroup::factory()->createOne();
 
-    signIn(team: $itemGroup->team);
+    login(team: $itemGroup->team);
 
     $response = patch(route('teams.item-groups.move', [
         'team' => $itemGroup->team,
@@ -57,7 +57,7 @@ it('rejects a predecessor from another tenant', function (): void {
     $itemGroup = ItemGroup::factory()->createOne();
     $moveAfterItemGroup = ItemGroup::factory()->createOne();
 
-    signIn(team: $itemGroup->team);
+    login(team: $itemGroup->team);
 
     $response = patch(route('teams.item-groups.move', [
         'team' => $itemGroup->team,
@@ -73,12 +73,9 @@ it('rejects a predecessor from another tenant', function (): void {
 
 it('rejects a soft deleted predecessor', function (): void {
     $itemGroup = ItemGroup::factory()->createOne();
-    $moveAfterItemGroup = ItemGroup::factory()
-        ->trashed()
-        ->recycle($itemGroup->team)
-        ->createOne();
+    $moveAfterItemGroup = ItemGroup::factory()->trashed()->recycle($itemGroup->team)->createOne();
 
-    signIn(team: $itemGroup->team);
+    login(team: $itemGroup->team);
 
     $response = patch(route('teams.item-groups.move', [
         'team' => $itemGroup->team,
@@ -95,7 +92,7 @@ it('rejects a soft deleted predecessor', function (): void {
 it('rejects a nonexistent predecessor', function (): void {
     $itemGroup = ItemGroup::factory()->createOne();
 
-    signIn(team: $itemGroup->team);
+    login(team: $itemGroup->team);
 
     $response = patch(route('teams.item-groups.move', [
         'team' => $itemGroup->team,

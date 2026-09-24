@@ -29,7 +29,7 @@ describe('store', function (): void {
             ->orderBy('name')
             ->firstOrFail();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         mock(CreateMemberAddress::class)
             ->shouldReceive('handle')

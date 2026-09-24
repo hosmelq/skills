@@ -29,7 +29,7 @@ describe('show', function (): void {
     it('prevents viewing from an unrelated tenant', function (): void {
         $address = MemberAddress::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = get(route('teams.members.addresses.show', [
             'team' => $address->member->team,

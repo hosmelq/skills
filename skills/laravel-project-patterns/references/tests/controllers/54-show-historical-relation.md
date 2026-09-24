@@ -19,17 +19,13 @@ use Inertia\Testing\AssertableInertia;
 describe('show', function (): void {
     it('shows the detail page with the current soft deleted relation', function (): void {
         $member = Member::factory()->createOne();
-        $servicePlan = ServicePlan::factory()
-            ->trashed()
-            ->for($member->team)
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->trashed()->recycle($member->team)->createOne();
         $cabinet = Cabinet::factory()
-            ->for($member)
-            ->for($member->team)
+            ->recycle([$member, $member->team])
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.cabinets.show', [
             'team' => $member->team,
@@ -69,17 +65,13 @@ use Inertia\Testing\AssertableInertia;
 describe('show', function (): void {
     it('shows the detail page with the current inactive relation', function (): void {
         $member = Member::factory()->createOne();
-        $servicePlan = ServicePlan::factory()
-            ->deactivated()
-            ->for($member->team)
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->deactivated()->recycle($member->team)->createOne();
         $cabinet = Cabinet::factory()
-            ->for($member)
-            ->for($member->team)
+            ->recycle([$member, $member->team])
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.cabinets.show', [
             'team' => $member->team,

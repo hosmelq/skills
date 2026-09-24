@@ -18,7 +18,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $servicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = patch(route('teams.service-plans.update', [
             'team' => $servicePlan->team,

@@ -23,7 +23,7 @@ describe('update', function (): void {
     it('maps a required received date rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -43,7 +43,7 @@ describe('update', function (): void {
     it('maps a duplicate reference rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')

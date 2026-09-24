@@ -22,7 +22,7 @@ describe('destroy', function (): void {
     it('maps an existing history rejection to validation', function (): void {
         $member = Member::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         mock(DeleteMember::class)
             ->shouldReceive('handle')
@@ -61,7 +61,7 @@ describe('destroy', function (): void {
     it('maps a required active initial record rejection to validation', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(DeleteWorkOrderStatus::class)
             ->shouldReceive('handle')
@@ -82,7 +82,7 @@ describe('destroy', function (): void {
     it('maps an assigned record rejection to validation', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(DeleteWorkOrderStatus::class)
             ->shouldReceive('handle')
@@ -120,7 +120,7 @@ describe('destroy', function (): void {
     it('maps an assigned record rejection to validation', function (): void {
         $itemGroup = ItemGroup::factory()->createOne();
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         mock(DeleteItemGroup::class)
             ->shouldReceive('handle')

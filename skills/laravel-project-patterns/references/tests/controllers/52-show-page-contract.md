@@ -18,7 +18,7 @@ describe('show', function (): void {
     it('shows the detail page', function (): void {
         $facility = Facility::factory()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         $response = get(route('teams.facilities.show', [
             'team' => $facility->team,
@@ -51,7 +51,7 @@ describe('show', function (): void {
     it('shows the detail page', function (): void {
         $address = MemberAddress::factory()->createOne();
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         $response = get(route('teams.members.addresses.show', [
             'team' => $address->member->team,
@@ -86,7 +86,7 @@ describe('show', function (): void {
     it('shows the detail page', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.show', [
             'team' => $rate->planRule->servicePlan->team,
@@ -124,7 +124,7 @@ describe('show', function (): void {
     it('shows the detail page', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         $response = get(route('teams.work-order-statuses.show', [
             'team' => $workOrderStatus->team,

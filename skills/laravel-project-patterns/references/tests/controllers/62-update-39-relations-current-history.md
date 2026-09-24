@@ -30,10 +30,10 @@ describe('update', function (): void {
             ->withReceivedFacility(Facility::factory()->trashed())
             ->withServicePlan(ServicePlan::factory()->deactivated()->trashed())
             ->withCabinet(Cabinet::factory()->deactivated()->trashed())
-            ->for($team)
+            ->recycle($team)
             ->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -67,10 +67,10 @@ describe('update', function (): void {
         $team = Team::factory()->createOne();
         $workOrder = WorkOrder::factory()
             ->withMember(Member::factory()->trashed())
-            ->for($team)
+            ->recycle($team)
             ->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -97,10 +97,10 @@ describe('update', function (): void {
         $workOrder = WorkOrder::factory()
             ->withServicePlan(ServicePlan::factory()->trashed())
             ->withPlanRule(PlanRule::factory()->trashed())
-            ->for($team)
+            ->recycle($team)
             ->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')

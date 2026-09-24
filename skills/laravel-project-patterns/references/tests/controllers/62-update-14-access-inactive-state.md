@@ -19,7 +19,7 @@ describe('update', function (): void {
     it('prevents updating when the record is inactive', function (): void {
         $facility = Facility::factory()->deactivated()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         mock(UpdateFacility::class)
             ->shouldNotReceive('handle');
@@ -51,7 +51,7 @@ describe('update', function (): void {
     it('prevents updating when the record is inactive', function (): void {
         $cabinet = Cabinet::factory()->deactivated()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         mock(UpdateCabinet::class)
             ->shouldNotReceive('handle');
@@ -83,11 +83,9 @@ use App\Models\ServicePlan;
 
 describe('update', function (): void {
     it('prevents updating when the parent is inactive', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(UpdatePlanRule::class)
             ->shouldNotReceive('handle');
@@ -120,14 +118,10 @@ use App\Models\ServicePlan;
 
 describe('update', function (): void {
     it('prevents updating when the ancestor is inactive', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(UpdatePlanRate::class)
             ->shouldNotReceive('handle');

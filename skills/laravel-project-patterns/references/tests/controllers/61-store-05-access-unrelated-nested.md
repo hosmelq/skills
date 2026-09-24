@@ -17,7 +17,7 @@ describe('store', function (): void {
     it('prevents storing from an unrelated tenant', function (): void {
         $member = Member::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = post(route('teams.members.addresses.store', [
             'team' => $member->team,
@@ -44,7 +44,7 @@ describe('store', function (): void {
     it('prevents storing from an unrelated tenant', function (): void {
         $unrelatedPlanRule = PlanRule::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = post(route('teams.service-plans.plan-rules.store', [
             'team' => $unrelatedPlanRule->servicePlan->team,
@@ -71,7 +71,7 @@ describe('store', function (): void {
     it('prevents storing from an unrelated tenant', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = post(route('teams.work-orders.lines.store', [
             'team' => $workOrder->team,
@@ -101,7 +101,7 @@ describe('store', function (): void {
     it('prevents storing from an unrelated tenant', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = post(route('teams.service-plans.plan-rules.rates.store', [
             'team' => $planRule->servicePlan->team,

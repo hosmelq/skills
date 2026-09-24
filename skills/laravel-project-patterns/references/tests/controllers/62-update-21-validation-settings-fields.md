@@ -20,7 +20,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = patch(route('teams.update', [
             'team' => $team,

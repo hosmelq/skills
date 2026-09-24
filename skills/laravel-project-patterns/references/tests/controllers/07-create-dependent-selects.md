@@ -25,7 +25,7 @@ describe('create', function (): void {
     it('shows the create page', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.facilities.create', [
             'team' => $team,
@@ -57,7 +57,7 @@ describe('create', function (): void {
             'value' => $region->iso2,
         ])->all();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.facilities.create', [
             'team' => $team,
@@ -80,7 +80,7 @@ describe('create', function (): void {
 
 Reuse the same two test names and assertions; only adapt the parent contract:
 
-1. Create a `Member` fixture and use its team for `signIn(team: $member->team)`.
+1. Create a `Member` fixture and use its team for `login(team: $member->team)`.
 2. Request `teams.members.addresses.create` with both `team` and `member` route
    parameters; keep `country_code` for the selected-country case.
 3. Expect `members/addresses/Create`. On initial load assert `member.id` and

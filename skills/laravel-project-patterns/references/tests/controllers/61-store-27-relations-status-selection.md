@@ -20,7 +20,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $status = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'work_order_status_id' => $status->public_id,
@@ -35,7 +35,7 @@ describe('store', function (): void {
         $status = WorkOrderStatus::factory()->deactivated()->createOne();
         $team = $status->team;
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'work_order_status_id' => $status->public_id,
@@ -50,7 +50,7 @@ describe('store', function (): void {
         $status = WorkOrderStatus::factory()->trashed()->createOne();
         $team = $status->team;
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'work_order_status_id' => $status->public_id,
@@ -67,7 +67,7 @@ describe('store', function (): void {
             ->createOne();
         $team = $status->team;
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'work_order_status_id' => $status->public_id,

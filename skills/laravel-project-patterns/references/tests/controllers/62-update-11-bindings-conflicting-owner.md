@@ -24,7 +24,7 @@ describe('update', function (): void {
             ->for($otherTeam)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = patch(route('teams.members.cabinets.update', [
             'team' => $member->team,
@@ -56,7 +56,7 @@ describe('update', function (): void {
         $otherTeam = Team::factory()->createOne();
         $line = WorkOrderLine::factory()->for($workOrder)->for($otherTeam)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = patch(route('teams.work-orders.lines.update', [
             'team' => $workOrder->team,

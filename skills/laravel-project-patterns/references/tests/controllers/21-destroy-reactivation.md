@@ -33,7 +33,7 @@ describe('destroy', function (): void {
     it('prevents reactivating from an unrelated tenant', function (): void {
         $unrelatedFacility = Facility::factory()->deactivated()->createOne();
 
-        signIn();
+        login();
 
         $response = delete(route('teams.facilities.deactivation.destroy', [
             'team' => $unrelatedFacility->team,
@@ -45,10 +45,9 @@ describe('destroy', function (): void {
 
     it('returns not found when the record belongs to another tenant', function (): void {
         $team = Team::factory()->createOne();
-
         $unrelatedFacility = Facility::factory()->deactivated()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = delete(route('teams.facilities.deactivation.destroy', [
             'team' => $team,
@@ -61,7 +60,7 @@ describe('destroy', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $facility = Facility::factory()->deactivated()->trashed()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         $response = delete(route('teams.facilities.deactivation.destroy', [
             'team' => $facility->team,
@@ -74,7 +73,7 @@ describe('destroy', function (): void {
     it('reactivates the record', function (): void {
         $facility = Facility::factory()->deactivated()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         mock(ReactivateFacility::class)
             ->shouldReceive('handle')
@@ -111,7 +110,7 @@ describe('destroy', function (): void {
     it('reactivates the record', function (): void {
         $cabinet = Cabinet::factory()->deactivated()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         mock(ReactivateCabinet::class)
             ->shouldReceive('handle')

@@ -24,7 +24,7 @@ describe('update', function (): void {
             ->recycle($servicePlan->team)
             ->createOne(['name' => 'Air Freight']);
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = patch(route('teams.service-plans.update', [
             'team' => $servicePlan->team,
@@ -42,12 +42,9 @@ describe('update', function (): void {
         $deactivatedServicePlan = ServicePlan::factory()->deactivated()->createOne([
             'name' => 'Air Freight',
         ]);
+        $servicePlan = ServicePlan::factory()->recycle($deactivatedServicePlan->team)->createOne();
 
-        $servicePlan = ServicePlan::factory()
-            ->recycle($deactivatedServicePlan->team)
-            ->createOne();
-
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = patch(route('teams.service-plans.update', [
             'team' => $servicePlan->team,
@@ -68,7 +65,7 @@ describe('update', function (): void {
 
         $servicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(UpdateServicePlan::class)
             ->shouldReceive('handle')
@@ -94,7 +91,7 @@ describe('update', function (): void {
             'name' => 'Air Freight',
         ]);
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(UpdateServicePlan::class)
             ->shouldReceive('handle')
@@ -121,12 +118,9 @@ describe('update', function (): void {
             ->createOne([
                 'name' => 'Air Freight',
             ]);
+        $servicePlan = ServicePlan::factory()->recycle($softDeletedServicePlan->team)->createOne();
 
-        $servicePlan = ServicePlan::factory()
-            ->recycle($softDeletedServicePlan->team)
-            ->createOne();
-
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(UpdateServicePlan::class)
             ->shouldReceive('handle')

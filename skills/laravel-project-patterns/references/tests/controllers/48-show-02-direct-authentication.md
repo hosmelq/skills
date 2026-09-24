@@ -28,7 +28,7 @@ describe('show', function (): void {
     it('prevents viewing from an unrelated tenant', function (): void {
         $unrelatedFacility = Facility::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = get(route('teams.facilities.show', [
             'team' => $unrelatedFacility->team,

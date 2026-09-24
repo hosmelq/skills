@@ -19,7 +19,7 @@ describe('update', function (): void {
         $address = MemberAddress::factory()->createOne();
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = patch(route('teams.members.addresses.update', [
             'team' => $team,
@@ -49,7 +49,7 @@ describe('update', function (): void {
         $team = Team::factory()->createOne();
         $cabinet = Cabinet::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = patch(route('teams.members.cabinets.update', [
             'team' => $team,
@@ -79,7 +79,7 @@ describe('update', function (): void {
         $team = Team::factory()->createOne();
         $line = WorkOrderLine::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = patch(route('teams.work-orders.lines.update', [
             'team' => $team,
@@ -107,10 +107,9 @@ use App\Models\ServicePlan;
 describe('update', function (): void {
     it('returns not found when the parent belongs to another tenant', function (): void {
         $planRule = PlanRule::factory()->createOne();
-
         $unrelatedServicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = patch(route('teams.service-plans.plan-rules.update', [
             'team' => $planRule->servicePlan->team,

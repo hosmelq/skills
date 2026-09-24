@@ -22,13 +22,13 @@ describe('show', function (): void {
     it('lists live child records oldest first', function (
     ): void {
         $workOrder = WorkOrder::factory()->createOne();
-        $firstLine = WorkOrderLine::factory()->withGroup()->for($workOrder)->createOne();
-        $secondLine = WorkOrderLine::factory()->for($workOrder)->createOne();
+        $firstLine = WorkOrderLine::factory()->withGroup()->recycle($workOrder)->createOne();
+        $secondLine = WorkOrderLine::factory()->recycle($workOrder)->createOne();
         WorkOrderLine::factory()->for($workOrder)->for(Team::factory())->createOne();
-        WorkOrderLine::factory()->trashed()->for($workOrder)->createOne();
+        WorkOrderLine::factory()->trashed()->recycle($workOrder)->createOne();
         WorkOrderLine::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = get(route('teams.work-orders.show', [
             'team' => $workOrder->team,

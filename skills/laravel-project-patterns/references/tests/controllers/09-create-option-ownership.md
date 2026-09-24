@@ -24,7 +24,7 @@ describe('create', function (): void {
             ->for(ServicePlan::factory()->for($team))
             ->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-orders.create', $team));
 

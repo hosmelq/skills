@@ -21,7 +21,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         $response = patch(route('teams.work-order-statuses.update', [
             'team' => $workOrderStatus->team,
@@ -85,7 +85,7 @@ describe('update', function (): void {
     it('returns only the enum error for an invalid initial base status', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->initial()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         $response = patch(route('teams.work-order-statuses.update', [
             'team' => $workOrderStatus->team,
@@ -108,7 +108,7 @@ describe('update', function (): void {
     it('prevents changing the initial base status', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->initial()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(UpdateWorkOrderStatus::class)
             ->shouldNotReceive('handle');

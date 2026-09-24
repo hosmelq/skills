@@ -22,13 +22,13 @@ describe('update', function (): void {
     it('rejects a duplicate value in the same scope', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
         PlanRule::factory()
-            ->for($servicePlan)
+            ->recycle($servicePlan)
             ->createOne(['country_code' => CountryCode::Canada]);
         $duplicatePlanRule = PlanRule::factory()
-            ->for($servicePlan)
+            ->recycle($servicePlan)
             ->createOne(['country_code' => CountryCode::Japan]);
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = patch(route('teams.service-plans.plan-rules.update', [
             'team' => $servicePlan->team,
@@ -47,15 +47,12 @@ describe('update', function (): void {
         $existingPlanRule = PlanRule::factory()->createOne([
             'country_code' => CountryCode::Canada,
         ]);
-
-        $servicePlan = ServicePlan::factory()
-            ->for($existingPlanRule->servicePlan->team)
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->recycle($existingPlanRule->servicePlan->team)->createOne();
         $planRule = PlanRule::factory()
-            ->for($servicePlan)
+            ->recycle($servicePlan)
             ->createOne(['country_code' => CountryCode::Japan]);
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(UpdatePlanRule::class)
             ->shouldReceive('handle')
@@ -84,7 +81,7 @@ describe('update', function (): void {
             'country_code' => CountryCode::Canada,
         ]);
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(UpdatePlanRule::class)
             ->shouldReceive('handle')

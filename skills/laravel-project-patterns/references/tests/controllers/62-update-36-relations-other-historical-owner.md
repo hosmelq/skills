@@ -20,11 +20,11 @@ use App\Models\WorkOrder;
 describe('update', function (): void {
     it('rejects a historical relation selected by another record', function (): void {
         $team = Team::factory()->createOne();
-        $member = Member::factory()->trashed()->for($team)->createOne();
-        WorkOrder::factory()->for($member)->for($team)->createOne();
-        $workOrder = WorkOrder::factory()->for($team)->createOne();
+        $member = Member::factory()->trashed()->recycle($team)->createOne();
+        WorkOrder::factory()->for($member)->recycle($team)->createOne();
+        $workOrder = WorkOrder::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(UpdateWorkOrder::class)
             ->shouldNotReceive('handle');

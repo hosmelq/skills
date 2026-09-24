@@ -20,7 +20,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(UpdatePlanRate::class)
             ->shouldNotReceive('handle');

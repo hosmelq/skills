@@ -11,18 +11,15 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Models\Member;
 use App\Models\MemberAddress;
 use Inertia\Testing\AssertableInertia;
 
 describe('index', function (): void {
     it('excludes records from other parents in the same tenant', function (): void {
         $address = MemberAddress::factory()->createOne();
-        $unrelatedAddress = MemberAddress::factory()
-            ->for(Member::factory()->recycle($address->member->team)->createOne())
-            ->createOne();
+        $unrelatedAddress = MemberAddress::factory()->recycle($address->member->team)->createOne();
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         $response = get(route('teams.members.addresses.index', [
             'team' => $address->member->team,
@@ -59,12 +56,9 @@ use Inertia\Testing\AssertableInertia;
 describe('index', function (): void {
     it('excludes records from other parents in the same tenant', function (): void {
         $planRule = PlanRule::factory()->createOne();
+        $unrelatedPlanRule = PlanRule::factory()->recycle($planRule->servicePlan->team)->createOne();
 
-        $unrelatedPlanRule = PlanRule::factory()
-            ->recycle($planRule->servicePlan->team)
-            ->createOne();
-
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.index', [
             'team' => $planRule->servicePlan->team,

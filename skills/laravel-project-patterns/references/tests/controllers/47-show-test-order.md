@@ -47,4 +47,4 @@ Use `shows the detail page` across direct and nested controllers. Specialized ex
 
 Historical selections remain attached to a live record; they are not available-choice filters. Ordered live children require exact count and both positions. Finality examples expose read-only flags while keeping GET successful; they do not prove action guards. Keep the historical flag example separate from the broader final-state dataset assertions.
 
-Examples are synthetic. Adapt models, namespaces, helpers, public IDs, routes and suite paths to the consuming project. Here `signIn()` creates an outsider and `signIn(team: ...)` supplies membership.
+Examples are synthetic. Adapt models, namespaces, helpers, public IDs, routes and suite paths to the consuming project. Here `login()` creates an outsider and `login(team: ...)` supplies membership.

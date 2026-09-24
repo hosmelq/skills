@@ -17,14 +17,12 @@ use App\Models\WorkOrderStatus;
 
 it('returns not found when the predecessor belongs to another group', function (): void {
     $team = Team::factory()->createOne();
-
     $workOrderStatus = WorkOrderStatus::factory()->recycle($team)->createOne();
-
     $moveAfterWorkOrderStatus = WorkOrderStatus::factory()->recycle($team)->createOne([
         'base_status' => WorkOrderBaseStatus::Exception,
     ]);
 
-    signIn(team: $team);
+    login(team: $team);
 
     $response = patch(route('teams.work-order-statuses.move', [
         'team' => $team,

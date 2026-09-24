@@ -18,7 +18,7 @@ describe('store', function (): void {
     it('rejects an invalid relation id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = post(route('teams.work-orders.lines.store', [
             'team' => $workOrder->team,
@@ -38,7 +38,7 @@ describe('store', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
         $group = ItemGroup::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = post(route('teams.work-orders.lines.store', [
             'team' => $workOrder->team,
@@ -56,12 +56,9 @@ describe('store', function (): void {
 
     it('rejects a newly assigned inactive relation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
-        $group = ItemGroup::factory()
-            ->deactivated()
-            ->for($workOrder->team)
-            ->createOne();
+        $group = ItemGroup::factory()->deactivated()->recycle($workOrder->team)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = post(route('teams.work-orders.lines.store', [
             'team' => $workOrder->team,
@@ -79,12 +76,9 @@ describe('store', function (): void {
 
     it('rejects a newly assigned soft deleted relation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
-        $group = ItemGroup::factory()
-            ->trashed()
-            ->for($workOrder->team)
-            ->createOne();
+        $group = ItemGroup::factory()->trashed()->recycle($workOrder->team)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = post(route('teams.work-orders.lines.store', [
             'team' => $workOrder->team,

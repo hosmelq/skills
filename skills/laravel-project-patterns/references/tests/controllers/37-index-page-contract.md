@@ -20,7 +20,7 @@ describe('index', function (): void {
     it('shows the index page', function (): void {
         $member = Member::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.index', [
             'team' => $member->team,
@@ -52,7 +52,7 @@ describe('index', function (): void {
     it('shows the index page', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.index', [
             'team' => $planRule->servicePlan->team,
@@ -86,7 +86,7 @@ describe('index', function (): void {
     it('shows the index page', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.index', [
             'team' => $rate->planRule->servicePlan->team,
@@ -125,7 +125,7 @@ describe('index', function (): void {
 
         MemberAddress::factory()->recycle($member)->count(2)->create();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.addresses.index', [
             'team' => $member->team,
@@ -159,7 +159,7 @@ describe('index', function (): void {
     it('shows the index page', function (): void {
         $cabinet = Cabinet::factory()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         $response = get(route('teams.members.cabinets.index', [
             'team' => $cabinet->member->team,
@@ -197,7 +197,7 @@ describe('index', function (): void {
     it('shows the index page', function (): void {
         $facility = Facility::factory()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         $response = get(route('teams.facilities.index', [
             'team' => $facility->team,

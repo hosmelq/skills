@@ -23,7 +23,7 @@ describe('store', function (): void {
     it('maps an overlapping range rejection to validation', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(CreatePlanRate::class)
             ->shouldReceive('handle')
@@ -54,7 +54,7 @@ describe('store', function (): void {
     it('maps a second open-ended range rejection to validation', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(CreatePlanRate::class)
             ->shouldReceive('handle')

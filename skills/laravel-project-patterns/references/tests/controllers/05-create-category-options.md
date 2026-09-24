@@ -22,18 +22,12 @@ use Inertia\Testing\AssertableInertia;
 describe('create', function (): void {
     it('shows the create page', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
-        $group = ItemGroup::factory()->for($workOrder->team)->createOne();
-        $inactiveGroup = ItemGroup::factory()
-            ->deactivated()
-            ->for($workOrder->team)
-            ->createOne();
-        $deletedGroup = ItemGroup::factory()
-            ->trashed()
-            ->for($workOrder->team)
-            ->createOne();
+        $group = ItemGroup::factory()->recycle($workOrder->team)->createOne();
+        $inactiveGroup = ItemGroup::factory()->deactivated()->recycle($workOrder->team)->createOne();
+        $deletedGroup = ItemGroup::factory()->trashed()->recycle($workOrder->team)->createOne();
         $otherGroup = ItemGroup::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = get(route('teams.work-orders.lines.create', [
             'team' => $workOrder->team,

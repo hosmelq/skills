@@ -19,7 +19,7 @@ describe('show', function (): void {
     it('shows the settings page', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.settings.general', [
             'team' => $team,

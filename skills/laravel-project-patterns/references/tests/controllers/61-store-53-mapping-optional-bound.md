@@ -21,11 +21,9 @@ use Spatie\LaravelData\Optional;
 describe('store', function (): void {
     it('stores the record with omitted optional fields', function (): void {
         $planRule = PlanRule::factory()->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(CreatePlanRate::class)
             ->shouldReceive('handle')
@@ -58,11 +56,9 @@ describe('store', function (): void {
 
     it('stores the record with an explicit null upper bound', function (): void {
         $planRule = PlanRule::factory()->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(CreatePlanRate::class)
             ->shouldReceive('handle')

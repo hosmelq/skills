@@ -25,7 +25,7 @@ describe('store', function (): void {
             'name' => 'Air Freight',
         ]);
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = post(route('teams.service-plans.store', [
             'team' => $servicePlan->team,
@@ -48,7 +48,7 @@ describe('store', function (): void {
             'name' => 'Air Freight',
         ]);
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = post(route('teams.service-plans.store', [
             'team' => $servicePlan->team,
@@ -72,11 +72,9 @@ describe('store', function (): void {
         ]);
 
         $team = Team::factory()->createOne();
-        $createdServicePlan = ServicePlan::factory()
-            ->for($team)
-            ->createOne();
+        $createdServicePlan = ServicePlan::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateServicePlan::class)
             ->shouldReceive('handle')
@@ -106,12 +104,9 @@ describe('store', function (): void {
             ->createOne([
                 'name' => 'Air Freight',
             ]);
+        $replacement = ServicePlan::factory()->recycle($servicePlan->team)->createOne();
 
-        $replacement = ServicePlan::factory()
-            ->for($servicePlan->team)
-            ->createOne();
-
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(CreateServicePlan::class)
             ->shouldReceive('handle')

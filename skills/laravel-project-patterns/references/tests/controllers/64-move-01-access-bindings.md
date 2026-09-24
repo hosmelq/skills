@@ -2,7 +2,7 @@
 
 Pest browser PATCH reorder: guest redirect, unrelated tenant 403, foreign record 404 and soft deleted record 404. These bindings apply to both tenant-wide and within-group ordering.
 
-Keep top-level tests in this order. `signIn()` creates an outsider; `signIn(team: ...)` supplies membership. Authenticate the URL tenant for each 404 case.
+Keep top-level tests in this order. `login()` creates an outsider; `login(team: ...)` supplies membership. Authenticate the URL tenant for each 404 case.
 
 ```php
 <?php
@@ -28,7 +28,7 @@ it('requires authentication', function (): void {
 it('prevents moving from an unrelated tenant', function (): void {
     $itemGroup = ItemGroup::factory()->createOne();
 
-    signIn();
+    login();
 
     $response = patch(route('teams.item-groups.move', [
         'team' => $itemGroup->team,
@@ -42,7 +42,7 @@ it('returns not found when the record belongs to another tenant', function (): v
     $team = Team::factory()->createOne();
     $itemGroup = ItemGroup::factory()->createOne();
 
-    signIn(team: $team);
+    login(team: $team);
 
     $response = patch(route('teams.item-groups.move', [
         'team' => $team,
@@ -55,7 +55,7 @@ it('returns not found when the record belongs to another tenant', function (): v
 it('returns not found when the record is soft deleted', function (): void {
     $itemGroup = ItemGroup::factory()->trashed()->createOne();
 
-    signIn(team: $itemGroup->team);
+    login(team: $itemGroup->team);
 
     $response = patch(route('teams.item-groups.move', [
         'team' => $itemGroup->team,

@@ -52,6 +52,13 @@ Keep behavior qualifiers (parent/ancestor, case-insensitive, relation state). Ad
 `: field_name` only to distinguish separate tests within one block; named dataset
 rows already distinguish fields. Do not introduce behavior to match an example.
 
+Inspect factory definitions: use `recycle()` for existing default parents and
+derive unmodified intermediates from the created record. Keep trashed parents
+explicit. Use `for()` for optional or role-specific relations, root-only tenant
+assignment and deliberate mismatches. Recycling reaches nested factories, matches
+model type and leaves fixed/derived foreign keys unchanged; verify option-list
+membership and avoid same-type pools when an exact parent matters.
+
 First search installs dependencies/model and builds the local index automatically;
 later searches refresh changed Markdown. Read loads no model. Resolve search
 failures rather than silently bypassing retrieval. Read the [search guide](docs/search.md)

@@ -29,7 +29,7 @@ describe('update', function (): void {
         $cabinet = Cabinet::factory()->createOne();
         $servicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldNotReceive('handle');
@@ -56,15 +56,12 @@ describe('update', function (): void {
 
     it('rejects a newly assigned inactive relation', function (): void {
         $team = Team::factory()->createOne();
-        $workOrder = WorkOrder::factory()->for($team)->createOne();
-        $facility = Facility::factory()->deactivated()->for($team)->createOne();
+        $workOrder = WorkOrder::factory()->recycle($team)->createOne();
+        $facility = Facility::factory()->deactivated()->recycle($team)->createOne();
         $cabinet = Cabinet::factory()->deactivated()->recycle($team)->createOne();
-        $servicePlan = ServicePlan::factory()
-            ->deactivated()
-            ->for($team)
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->deactivated()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(UpdateWorkOrder::class)
             ->shouldNotReceive('handle');
@@ -89,17 +86,14 @@ describe('update', function (): void {
 
     it('rejects a newly assigned soft deleted relation', function (): void {
         $team = Team::factory()->createOne();
-        $workOrder = WorkOrder::factory()->for($team)->createOne();
-        $member = Member::factory()->trashed()->for($team)->createOne();
-        $facility = Facility::factory()->trashed()->for($team)->createOne();
+        $workOrder = WorkOrder::factory()->recycle($team)->createOne();
+        $member = Member::factory()->trashed()->recycle($team)->createOne();
+        $facility = Facility::factory()->trashed()->recycle($team)->createOne();
         $cabinet = Cabinet::factory()->trashed()->recycle($team)->createOne();
-        $servicePlan = ServicePlan::factory()->trashed()->for($team)->createOne();
-        $planRule = PlanRule::factory()
-            ->trashed()
-            ->for(ServicePlan::factory()->for($team))
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->trashed()->recycle($team)->createOne();
+        $planRule = PlanRule::factory()->trashed()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(UpdateWorkOrder::class)
             ->shouldNotReceive('handle');

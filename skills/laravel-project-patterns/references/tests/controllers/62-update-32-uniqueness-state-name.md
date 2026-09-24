@@ -21,12 +21,11 @@ describe('update', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne([
             'name' => 'Ready',
         ]);
-
         $duplicateWorkOrderStatus = WorkOrderStatus::factory()->recycle($workOrderStatus->team)->createOne([
             'name' => 'Received',
         ]);
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         $response = patch(route('teams.work-order-statuses.update', [
             'team' => $workOrderStatus->team,
@@ -44,7 +43,6 @@ describe('update', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne([
             'name' => 'Ready',
         ]);
-
         $deactivatedWorkOrderStatus = WorkOrderStatus::factory()
             ->deactivated()
             ->recycle($workOrderStatus->team)
@@ -52,7 +50,7 @@ describe('update', function (): void {
                 'name' => 'Received',
             ]);
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         $response = patch(route('teams.work-order-statuses.update', [
             'team' => $workOrderStatus->team,
@@ -75,7 +73,7 @@ describe('update', function (): void {
             'name' => 'Ready',
         ]);
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(UpdateWorkOrderStatus::class)
             ->shouldReceive('handle')
@@ -105,7 +103,7 @@ describe('update', function (): void {
             'name' => 'Received',
         ]);
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(UpdateWorkOrderStatus::class)
             ->shouldReceive('handle')
@@ -142,7 +140,7 @@ describe('update', function (): void {
                 'name' => 'Ready',
             ]);
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(UpdateWorkOrderStatus::class)
             ->shouldReceive('handle')

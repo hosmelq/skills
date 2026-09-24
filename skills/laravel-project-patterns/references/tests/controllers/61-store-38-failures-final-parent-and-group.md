@@ -23,9 +23,9 @@ use App\Models\WorkOrder;
 describe('store', function (): void {
     it('maps an unavailable relation rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
-        $group = ItemGroup::factory()->for($workOrder->team)->createOne();
+        $group = ItemGroup::factory()->recycle($workOrder->team)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(CreateWorkOrderLine::class)
             ->shouldReceive('handle')
@@ -50,7 +50,7 @@ describe('store', function (): void {
     it('maps a final parent rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(CreateWorkOrderLine::class)
             ->shouldReceive('handle')

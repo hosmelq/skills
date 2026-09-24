@@ -2,7 +2,7 @@
 
 Pest browser PATCH default selection: ordered access, foreign/deleted parent, wrong same-tenant parent, foreign/deleted record and successful typed action delegation. Preserve the exact nested redirect and toast.
 
-Keep the top-level case order below and authenticate the URL tenant for 404 cases. The action is mocked; no database default change is asserted. `signIn()` creates an outsider; `signIn(team: ...)` supplies membership.
+Keep the top-level case order below and authenticate the URL tenant for 404 cases. The action is mocked; no database default change is asserted. `login()` creates an outsider; `login(team: ...)` supplies membership.
 
 ```php
 <?php
@@ -32,7 +32,7 @@ it('requires authentication', function (): void {
 it('prevents setting the default record from an unrelated tenant', function (): void {
     $address = MemberAddress::factory()->createOne();
 
-    signIn();
+    login();
 
     $response = patch(route('teams.members.addresses.make-default', [
         'team' => $address->member->team,
@@ -47,7 +47,7 @@ it('returns not found when the parent belongs to another tenant', function (): v
     $address = MemberAddress::factory()->createOne();
     $team = Team::factory()->createOne();
 
-    signIn(team: $team);
+    login(team: $team);
 
     $response = patch(route('teams.members.addresses.make-default', [
         'team' => $team,
@@ -60,11 +60,9 @@ it('returns not found when the parent belongs to another tenant', function (): v
 
 it('returns not found when the parent is soft deleted', function (): void {
     $member = Member::factory()->trashed()->createOne();
-    $address = MemberAddress::factory()
-        ->for($member)
-        ->createOne();
+    $address = MemberAddress::factory()->recycle($member)->createOne();
 
-    signIn(team: $member->team);
+    login(team: $member->team);
 
     $response = patch(route('teams.members.addresses.make-default', [
         'team' => $member->team,
@@ -77,12 +75,9 @@ it('returns not found when the parent is soft deleted', function (): void {
 
 it('returns not found when the record belongs to another parent in the same tenant', function (): void {
     $member = Member::factory()->createOne();
+    $unrelatedAddress = MemberAddress::factory()->recycle($member->team)->createOne();
 
-    $unrelatedAddress = MemberAddress::factory()
-        ->for(Member::factory()->recycle($member->team)->createOne())
-        ->createOne();
-
-    signIn(team: $member->team);
+    login(team: $member->team);
 
     $response = patch(route('teams.members.addresses.make-default', [
         'team' => $member->team,
@@ -97,7 +92,7 @@ it('returns not found when the record belongs to another tenant', function (): v
     $member = Member::factory()->createOne();
     $address = MemberAddress::factory()->createOne();
 
-    signIn(team: $member->team);
+    login(team: $member->team);
 
     $response = patch(route('teams.members.addresses.make-default', [
         'team' => $member->team,
@@ -111,7 +106,7 @@ it('returns not found when the record belongs to another tenant', function (): v
 it('returns not found when the record is soft deleted', function (): void {
     $address = MemberAddress::factory()->trashed()->createOne();
 
-    signIn(team: $address->member->team);
+    login(team: $address->member->team);
 
     $response = patch(route('teams.members.addresses.make-default', [
         'team' => $address->member->team,
@@ -125,7 +120,7 @@ it('returns not found when the record is soft deleted', function (): void {
 it('sets the default record', function (): void {
     $address = MemberAddress::factory()->createOne();
 
-    signIn(team: $address->member->team);
+    login(team: $address->member->team);
 
     mock(SetDefaultMemberAddress::class)
         ->shouldReceive('handle')

@@ -19,23 +19,23 @@ describe('index', function (): void {
     it('lists pending records newest first', function (): void {
         $member = Member::factory()->createOne();
         $olderEnrollment = Enrollment::factory()
-            ->for($member)
+            ->recycle($member)
             ->createOne(['requested_at' => now()->subDay()]);
         $recentEnrollment = Enrollment::factory()
-            ->for(Member::factory()->for($member->team))
+            ->recycle($member->team)
             ->createOne(['requested_at' => now()]);
 
         Enrollment::factory()
             ->approved()
-            ->for(Member::factory()->for($member->team))
+            ->recycle($member->team)
             ->createOne();
 
         Enrollment::factory()
             ->rejected()
-            ->for(Member::factory()->for($member->team))
+            ->recycle($member->team)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.enrollments.index', [
             'team' => $member->team,

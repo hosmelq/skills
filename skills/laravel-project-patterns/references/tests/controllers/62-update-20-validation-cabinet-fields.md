@@ -18,7 +18,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $cabinet = Cabinet::factory()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         $response = patch(route('teams.members.cabinets.update', [
             'team' => $cabinet->member->team,

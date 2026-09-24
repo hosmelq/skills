@@ -20,12 +20,9 @@ use App\Models\Team;
 describe('destroy', function (): void {
     it('returns not found when the record belongs to another parent in the same tenant', function (): void {
         $member = Member::factory()->createOne();
-        $otherMember = Member::factory()->for($member->team)->createOne();
-        $cabinet = Cabinet::factory()
-            ->for($otherMember)
-            ->createOne();
+        $cabinet = Cabinet::factory()->recycle($member->team)->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = delete(route('teams.members.cabinets.destroy', [
             'team' => $member->team,
@@ -40,7 +37,7 @@ describe('destroy', function (): void {
         $member = Member::factory()->createOne();
         $cabinet = Cabinet::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = delete(route('teams.members.cabinets.destroy', [
             'team' => $member->team,
@@ -54,7 +51,7 @@ describe('destroy', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $cabinet = Cabinet::factory()->trashed()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         $response = delete(route('teams.members.cabinets.destroy', [
             'team' => $cabinet->member->team,
@@ -73,7 +70,7 @@ describe('destroy', function (): void {
             ->for($otherTeam)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = delete(route('teams.members.cabinets.destroy', [
             'team' => $member->team,
@@ -98,25 +95,20 @@ use function Pest\Laravel\delete;
 use App\Enums\CountryCode;
 use App\Models\PlanRate;
 use App\Models\PlanRule;
-use App\Models\ServicePlan;
 
 describe('destroy', function (): void {
     it('returns not found when the record belongs to another parent under the same ancestor', function (): void {
         $planRule = PlanRule::factory()
             ->forCountry(CountryCode::Canada)
             ->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
         $unrelatedPlanRule = PlanRule::factory()
-            ->for($planRule->servicePlan)
+            ->recycle($planRule->servicePlan)
             ->forCountry(CountryCode::Japan)
             ->createOne();
-        $unrelatedRate = PlanRate::factory()
-            ->for($unrelatedPlanRule, 'planRule')
-            ->createOne();
+        $unrelatedRate = PlanRate::factory()->recycle($unrelatedPlanRule)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = delete(route('teams.service-plans.plan-rules.rates.destroy', [
             'team' => $rate->planRule->servicePlan->team,
@@ -130,11 +122,9 @@ describe('destroy', function (): void {
 
     it('returns not found when the record belongs to another ancestor in the same tenant', function (): void {
         $rate = PlanRate::factory()->createOne();
-        $otherPlan = ServicePlan::factory()->for($rate->planRule->servicePlan->team)->createOne();
-        $otherRule = PlanRule::factory()->for($otherPlan)->createOne();
-        $unrelatedRate = PlanRate::factory()->for($otherRule, 'planRule')->createOne();
+        $unrelatedRate = PlanRate::factory()->recycle($rate->planRule->servicePlan->team)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = delete(route('teams.service-plans.plan-rules.rates.destroy', [
             'team' => $rate->planRule->servicePlan->team,
@@ -150,7 +140,7 @@ describe('destroy', function (): void {
         $planRule = PlanRule::factory()->createOne();
         $unrelatedRate = PlanRate::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = delete(route('teams.service-plans.plan-rules.rates.destroy', [
             'team' => $planRule->servicePlan->team,
@@ -165,7 +155,7 @@ describe('destroy', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $rate = PlanRate::factory()->trashed()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = delete(route('teams.service-plans.plan-rules.rates.destroy', [
             'team' => $rate->planRule->servicePlan->team,

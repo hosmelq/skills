@@ -23,7 +23,7 @@ describe('update', function (): void {
     it('maps an inactive parent rejection to validation', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(UpdatePlanRule::class)
             ->shouldReceive('handle')
@@ -66,7 +66,7 @@ describe('update', function (): void {
     it('maps an inactive ancestor rejection to validation', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(UpdatePlanRate::class)
             ->shouldReceive('handle')

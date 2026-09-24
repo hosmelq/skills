@@ -24,7 +24,7 @@ describe('store', function (): void {
             'name' => 'Created result',
         ]);
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateItemGroup::class)
             ->shouldReceive('handle')

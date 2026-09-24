@@ -18,7 +18,7 @@ describe('show', function (): void {
     it('shows the detail page for an inactive record', function (): void {
         $itemGroup = ItemGroup::factory()->deactivated()->createOne();
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         $response = get(route('teams.item-groups.show', [
             'team' => $itemGroup->team,
@@ -54,11 +54,9 @@ use Inertia\Testing\AssertableInertia;
 
 describe('show', function (): void {
     it('shows the detail page under an inactive parent', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.show', [
             'team' => $planRule->servicePlan->team,
@@ -92,14 +90,10 @@ use Inertia\Testing\AssertableInertia;
 
 describe('show', function (): void {
     it('shows the detail page under an inactive ancestor', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.show', [
             'team' => $rate->planRule->servicePlan->team,

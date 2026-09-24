@@ -25,7 +25,7 @@ describe('show', function (): void {
     it('returns the authenticated user', function (): void {
         $user = User::factory()->createOne();
 
-        signIn($user);
+        login($user);
 
         $response = getJson(route('api.user.show'));
 
@@ -60,7 +60,7 @@ describe('show', function (): void {
         $team = Team::factory()->createOne();
         $user = User::factory()->unverified()->createOne();
 
-        signIn($user);
+        login($user);
 
         $response = getJson(route('api.teams.show', $team->public_id));
 
@@ -70,7 +70,7 @@ describe('show', function (): void {
     it('returns not found for an invalid public identifier', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = getJson(route('api.teams.show', $team->id));
 
@@ -80,7 +80,7 @@ describe('show', function (): void {
     it('returns the resource', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = getJson(route('api.teams.show', $team->public_id));
 

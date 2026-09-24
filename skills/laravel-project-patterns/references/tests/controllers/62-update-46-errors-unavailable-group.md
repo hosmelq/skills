@@ -22,11 +22,9 @@ use App\Models\WorkOrderLine;
 describe('update', function (): void {
     it('maps an unavailable relation rejection to validation', function (): void {
         $line = WorkOrderLine::factory()->createOne();
-        $group = ItemGroup::factory()
-            ->for($line->workOrder->team)
-            ->createOne();
+        $group = ItemGroup::factory()->recycle($line->workOrder->team)->createOne();
 
-        signIn(team: $line->workOrder->team);
+        login(team: $line->workOrder->team);
 
         mock(UpdateWorkOrderLine::class)
             ->shouldReceive('handle')

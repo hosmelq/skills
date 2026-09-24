@@ -24,7 +24,7 @@ describe('store', function (): void {
             'name' => 'Received',
         ]);
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         $response = post(route('teams.work-order-statuses.store', [
             'team' => $workOrderStatus->team,
@@ -43,7 +43,7 @@ describe('store', function (): void {
             'name' => 'Received',
         ]);
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         $response = post(route('teams.work-order-statuses.store', [
             'team' => $workOrderStatus->team,
@@ -63,11 +63,9 @@ describe('store', function (): void {
         ]);
 
         $team = Team::factory()->createOne();
-        $workOrderStatus = WorkOrderStatus::factory()
-            ->for($team)
-            ->createOne();
+        $workOrderStatus = WorkOrderStatus::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrderStatus::class)
             ->shouldReceive('handle')
@@ -99,11 +97,9 @@ describe('store', function (): void {
             ->createOne([
                 'name' => 'Received',
             ]);
-        $workOrderStatus = WorkOrderStatus::factory()
-            ->for($deletedWorkOrderStatus->team)
-            ->createOne();
+        $workOrderStatus = WorkOrderStatus::factory()->recycle($deletedWorkOrderStatus->team)->createOne();
 
-        signIn(team: $deletedWorkOrderStatus->team);
+        login(team: $deletedWorkOrderStatus->team);
 
         mock(CreateWorkOrderStatus::class)
             ->shouldReceive('handle')

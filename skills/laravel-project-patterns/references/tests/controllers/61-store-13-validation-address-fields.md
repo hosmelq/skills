@@ -18,7 +18,7 @@ describe('store', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $member = Member::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.addresses.store', [
             'team' => $member->team,

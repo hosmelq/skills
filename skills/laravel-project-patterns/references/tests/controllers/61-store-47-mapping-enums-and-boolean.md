@@ -21,11 +21,9 @@ use App\Models\WorkOrderStatus;
 describe('store', function (): void {
     it('stores the record', function (): void {
         $team = Team::factory()->createOne();
-        $workOrderStatus = WorkOrderStatus::factory()
-            ->for($team)
-            ->createOne();
+        $workOrderStatus = WorkOrderStatus::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrderStatus::class)
             ->shouldReceive('handle')
@@ -54,11 +52,9 @@ describe('store', function (): void {
 
     it('maps a boolean field into the input', function (): void {
         $team = Team::factory()->createOne();
-        $workOrderStatus = WorkOrderStatus::factory()
-            ->for($team)
-            ->createOne();
+        $workOrderStatus = WorkOrderStatus::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrderStatus::class)
             ->shouldReceive('handle')
@@ -107,11 +103,9 @@ use App\Models\Team;
 describe('store', function (): void {
     it('stores the record', function (): void {
         $team = Team::factory()->createOne();
-        $servicePlan = ServicePlan::factory()
-            ->for($team)
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateServicePlan::class)
             ->shouldReceive('handle')

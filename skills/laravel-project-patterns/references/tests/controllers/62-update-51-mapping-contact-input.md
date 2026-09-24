@@ -20,7 +20,7 @@ describe('update', function (): void {
     it('updates the record', function (): void {
         $member = Member::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         mock(UpdateMember::class)
             ->shouldReceive('handle')

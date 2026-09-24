@@ -19,7 +19,7 @@ describe('store', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $servicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = post(route('teams.service-plans.plan-rules.store', [
             'team' => $servicePlan->team,

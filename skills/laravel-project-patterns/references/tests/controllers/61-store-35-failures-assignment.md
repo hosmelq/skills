@@ -24,12 +24,9 @@ use App\Models\ServicePlan;
 describe('store', function (): void {
     it('maps an inactive relation rejection to validation', function (): void {
         $member = Member::factory()->createOne();
-        $servicePlan = ServicePlan::factory()
-            ->deactivated()
-            ->for($member->team)
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->deactivated()->recycle($member->team)->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         mock(CreateCabinet::class)
             ->shouldReceive('handle')
@@ -55,9 +52,9 @@ describe('store', function (): void {
 
     it('maps an already assigned relation rejection to validation', function (): void {
         $member = Member::factory()->createOne();
-        $servicePlan = ServicePlan::factory()->for($member->team)->createOne();
+        $servicePlan = ServicePlan::factory()->recycle($member->team)->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         mock(CreateCabinet::class)
             ->shouldReceive('handle')

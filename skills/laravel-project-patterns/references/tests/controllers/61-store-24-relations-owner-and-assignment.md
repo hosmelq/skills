@@ -20,7 +20,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $member = Member::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'member_id' => $member->public_id,
@@ -35,7 +35,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $cabinet = Cabinet::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'cabinet_id' => $cabinet->public_id,
@@ -50,7 +50,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $cabinet = Cabinet::factory()->deactivated()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'cabinet_id' => $cabinet->public_id,
@@ -63,9 +63,9 @@ describe('store', function (): void {
 
     it('rejects a newly assigned soft deleted relation: member_id', function (): void {
         $team = Team::factory()->createOne();
-        $member = Member::factory()->trashed()->for($team)->createOne();
+        $member = Member::factory()->trashed()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'member_id' => $member->public_id,
@@ -80,7 +80,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $cabinet = Cabinet::factory()->trashed()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'cabinet_id' => $cabinet->public_id,

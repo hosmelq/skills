@@ -99,4 +99,4 @@ Preserve typed action argument identity, decoded public IDs, enums, decimals, fa
 
 Approval and rejection select different actions and pass the actual reviewer; retain the opposite-action non-call assertion when present. Generic redirects, exact named redirects, redirect back, toast payloads and field errors prove different contracts. Mocked action returns do not establish persistence.
 
-Examples are synthetic. Adapt models, namespaces, helpers, public IDs, seeded geography and suite paths to the consuming project. `signIn()` creates an outsider; `signIn(team: ...)` supplies membership.
+Examples are synthetic. Adapt models, namespaces, helpers, public IDs, seeded geography and suite paths to the consuming project. `login()` creates an outsider; `login(team: ...)` supplies membership.

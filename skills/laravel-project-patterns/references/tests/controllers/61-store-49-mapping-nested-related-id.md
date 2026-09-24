@@ -21,13 +21,13 @@ use App\Models\ServicePlan;
 describe('store', function (): void {
     it('stores the record', function (): void {
         $member = Member::factory()->createOne();
-        $servicePlan = ServicePlan::factory()->for($member->team)->createOne();
+        $servicePlan = ServicePlan::factory()->recycle($member->team)->createOne();
         $cabinet = Cabinet::factory()
-            ->for($member)
+            ->recycle($member)
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         mock(CreateCabinet::class)
             ->shouldReceive('handle')
@@ -78,10 +78,10 @@ use App\Models\WorkOrderLine;
 describe('store', function (): void {
     it('stores the record', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
-        $group = ItemGroup::factory()->for($workOrder->team)->createOne();
-        $line = WorkOrderLine::factory()->for($workOrder)->createOne();
+        $group = ItemGroup::factory()->recycle($workOrder->team)->createOne();
+        $line = WorkOrderLine::factory()->recycle($workOrder)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(CreateWorkOrderLine::class)
             ->shouldReceive('handle')

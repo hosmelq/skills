@@ -20,11 +20,9 @@ use App\Models\Team;
 describe('store', function (): void {
     it('stores the record', function (): void {
         $team = Team::factory()->createOne();
-        $member = Member::factory()
-            ->for($team)
-            ->createOne();
+        $member = Member::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateMember::class)
             ->shouldReceive('handle')
@@ -67,11 +65,9 @@ use App\Models\Team;
 describe('store', function (): void {
     it('stores the record', function (): void {
         $team = Team::factory()->createOne();
-        $facility = Facility::factory()
-            ->for($team)
-            ->createOne();
+        $facility = Facility::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateFacility::class)
             ->shouldReceive('handle')

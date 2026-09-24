@@ -24,7 +24,7 @@ use Inertia\Testing\AssertableInertia;
 describe('show', function (): void {
     it('shows the detail page with its selected historical relations', function (): void {
         $team = Team::factory()->createOne();
-        $status = WorkOrderStatus::factory()->trashed()->for($team)->createOne();
+        $status = WorkOrderStatus::factory()->trashed()->recycle($team)->createOne();
         $workOrder = WorkOrder::factory()
             ->withCurrentFacility(Facility::factory()->trashed())
             ->withMember(Member::factory()->trashed())
@@ -34,10 +34,10 @@ describe('show', function (): void {
             ->withCabinet(Cabinet::factory()->trashed())
             ->withPlanRule(PlanRule::factory()->trashed())
             ->for($status, 'workOrderStatus')
-            ->for($team)
+            ->recycle($team)
             ->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-orders.show', [
             'team' => $team,

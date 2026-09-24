@@ -18,7 +18,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $facility = Facility::factory()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         $response = patch(route('teams.facilities.update', [
             'team' => $facility->team,

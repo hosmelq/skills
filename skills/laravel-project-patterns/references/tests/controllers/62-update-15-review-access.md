@@ -33,7 +33,7 @@ describe('update', function (): void {
     it('prevents updating from an unrelated tenant', function (): void {
         $enrollment = Enrollment::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = patch(route('teams.enrollments.status.update', [
             'enrollment' => $enrollment,
@@ -49,7 +49,7 @@ describe('update', function (): void {
         $team = Team::factory()->createOne();
         $enrollment = Enrollment::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = patch(route('teams.enrollments.status.update', [
             'enrollment' => $enrollment,
@@ -68,7 +68,7 @@ describe('update', function (): void {
             ->for(Team::factory())
             ->createOne();
 
-        signIn(team: $enrollment->team);
+        login(team: $enrollment->team);
 
         $response = patch(route('teams.enrollments.status.update', [
             'enrollment' => $enrollment,

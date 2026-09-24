@@ -2,7 +2,7 @@
 
 Pest browser POST initial selection: ordered guest/tenant access, foreign/deleted record bindings, mocked eligibility exception mapped to validation and successful action delegation with redirect/toast.
 
-Keep the top-level case order below. The rejection uses an ordinary fixture and a mocked action exception; it does not establish actual ineligibility. The successful mock does not prove persistence. `signIn()` creates an outsider; `signIn(team: ...)` supplies membership.
+Keep the top-level case order below. The rejection uses an ordinary fixture and a mocked action exception; it does not establish actual ineligibility. The successful mock does not prove persistence. `login()` creates an outsider; `login(team: ...)` supplies membership.
 
 ```php
 <?php
@@ -31,7 +31,7 @@ it('requires authentication', function (): void {
 it('prevents setting the initial record from an unrelated tenant', function (): void {
     $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-    signIn();
+    login();
 
     $response = post(route('teams.work-order-statuses.initial.store', [
         'team' => $workOrderStatus->team,
@@ -43,10 +43,9 @@ it('prevents setting the initial record from an unrelated tenant', function (): 
 
 it('returns not found when the record belongs to another tenant', function (): void {
     $team = Team::factory()->createOne();
-
     $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-    signIn(team: $team);
+    login(team: $team);
 
     $response = post(route('teams.work-order-statuses.initial.store', [
         'team' => $team,
@@ -59,7 +58,7 @@ it('returns not found when the record belongs to another tenant', function (): v
 it('returns not found when the record is soft deleted', function (): void {
     $workOrderStatus = WorkOrderStatus::factory()->trashed()->createOne();
 
-    signIn(team: $workOrderStatus->team);
+    login(team: $workOrderStatus->team);
 
     $response = post(route('teams.work-order-statuses.initial.store', [
         'team' => $workOrderStatus->team,
@@ -72,7 +71,7 @@ it('returns not found when the record is soft deleted', function (): void {
 it('maps an ineligible initial record rejection to validation', function (): void {
     $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-    signIn(team: $workOrderStatus->team);
+    login(team: $workOrderStatus->team);
 
     mock(SetInitialWorkOrderStatus::class)
         ->shouldReceive('handle')
@@ -93,7 +92,7 @@ it('maps an ineligible initial record rejection to validation', function (): voi
 it('sets the initial record', function (): void {
     $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-    signIn(team: $workOrderStatus->team);
+    login(team: $workOrderStatus->team);
 
     mock(SetInitialWorkOrderStatus::class)
         ->shouldReceive('handle')

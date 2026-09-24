@@ -26,7 +26,7 @@ describe('index', function (): void {
             ->for($otherTeam)
             ->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         $response = get(route('teams.members.cabinets.index', [
             'team' => $cabinet->member->team,
@@ -63,16 +63,14 @@ use Inertia\Testing\AssertableInertia;
 describe('index', function (): void {
     it('excludes records whose parent belongs to another tenant', function (): void {
         $member = Member::factory()->createOne();
-        $enrollment = Enrollment::factory()
-            ->for($member)
-            ->createOne();
+        $enrollment = Enrollment::factory()->recycle($member)->createOne();
         $unrelatedMember = Member::factory()->createOne();
         $unrelatedEnrollment = Enrollment::factory()
             ->for($unrelatedMember)
             ->for($member->team)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.enrollments.index', [
             'team' => $member->team,

@@ -25,7 +25,7 @@ describe('store', function (): void {
     it('maps a relation ownership mismatch to validation', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrder::class)
             ->shouldReceive('handle')
@@ -42,7 +42,7 @@ describe('store', function (): void {
     it('maps a missing prerequisite relation rejection to validation', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrder::class)
             ->shouldReceive('handle')
@@ -61,7 +61,7 @@ describe('store', function (): void {
     ): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrder::class)
             ->shouldReceive('handle')
@@ -79,7 +79,7 @@ describe('store', function (): void {
     it('maps a mismatched weight unit rejection to validation', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrder::class)
             ->shouldReceive('handle')

@@ -23,7 +23,7 @@ describe('update', function (): void {
     it('updates the record', function (): void {
         $facility = Facility::factory()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         mock(UpdateFacility::class)
             ->shouldReceive('handle')
@@ -50,7 +50,7 @@ describe('update', function (): void {
             'country_code' => CountryCode::Nicaragua,
         ]);
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         mock(UpdateFacility::class)
             ->shouldReceive('handle')
@@ -79,7 +79,7 @@ describe('update', function (): void {
             'province_code' => 'MN',
         ]);
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         mock(UpdateFacility::class)
             ->shouldReceive('handle')

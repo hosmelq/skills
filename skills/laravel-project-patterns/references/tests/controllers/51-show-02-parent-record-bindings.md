@@ -17,12 +17,9 @@ use App\Models\MemberAddress;
 describe('show', function (): void {
     it('returns not found when the record belongs to another parent in the same tenant', function (): void {
         $member = Member::factory()->createOne();
+        $unrelatedAddress = MemberAddress::factory()->recycle($member->team)->createOne();
 
-        $unrelatedAddress = MemberAddress::factory()
-            ->for(Member::factory()->recycle($member->team)->createOne())
-            ->createOne();
-
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.addresses.show', [
             'team' => $member->team,
@@ -37,7 +34,7 @@ describe('show', function (): void {
         $member = Member::factory()->createOne();
         $address = MemberAddress::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.addresses.show', [
             'team' => $member->team,
@@ -51,7 +48,7 @@ describe('show', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $address = MemberAddress::factory()->trashed()->createOne();
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         $response = get(route('teams.members.addresses.show', [
             'team' => $address->member->team,
@@ -80,11 +77,10 @@ use App\Models\WorkOrderLine;
 describe('show', function (): void {
     it('returns not found when the record belongs to another parent in the same tenant', function (): void {
         $team = Team::factory()->createOne();
-        $workOrder = WorkOrder::factory()->for($team)->createOne();
-        $otherWorkOrder = WorkOrder::factory()->for($team)->createOne();
-        $otherLine = WorkOrderLine::factory()->for($otherWorkOrder)->createOne();
+        $workOrder = WorkOrder::factory()->recycle($team)->createOne();
+        $otherLine = WorkOrderLine::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-orders.lines.show', [
             'team' => $workOrder->team,
@@ -112,12 +108,9 @@ use App\Models\ServicePlan;
 describe('show', function (): void {
     it('returns not found when the record belongs to another parent in the same tenant', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
+        $unrelatedPlanRule = PlanRule::factory()->recycle($servicePlan->team)->createOne();
 
-        $unrelatedPlanRule = PlanRule::factory()
-            ->recycle($servicePlan->team)
-            ->createOne();
-
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.show', [
             'team' => $servicePlan->team,

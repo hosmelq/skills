@@ -23,7 +23,7 @@ describe('store', function (): void {
             'phone_number' => '+50588888888',
         ]);
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.store', [
             'team' => $member->team,
@@ -42,11 +42,9 @@ describe('store', function (): void {
         ]);
 
         $team = Team::factory()->createOne();
-        $member = Member::factory()
-            ->for($team)
-            ->createOne();
+        $member = Member::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateMember::class)
             ->shouldReceive('handle')
@@ -74,11 +72,9 @@ describe('store', function (): void {
             ->createOne([
                 'phone_number' => '+50588888888',
             ]);
-        $member = Member::factory()
-            ->for($deletedMember->team)
-            ->createOne();
+        $member = Member::factory()->recycle($deletedMember->team)->createOne();
 
-        signIn(team: $deletedMember->team);
+        login(team: $deletedMember->team);
 
         mock(CreateMember::class)
             ->shouldReceive('handle')

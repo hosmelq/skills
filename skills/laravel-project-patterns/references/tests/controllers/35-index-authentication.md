@@ -28,7 +28,7 @@ describe('index', function (): void {
     it('prevents listing from an unrelated tenant', function (): void {
         $unrelatedMember = Member::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = get(route('teams.members.index', [
             'team' => $unrelatedMember->team,
@@ -65,7 +65,7 @@ describe('index', function (): void {
     it('prevents listing from an unrelated tenant', function (): void {
         $member = Member::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = get(route('teams.members.addresses.index', [
             'team' => $member->team,
@@ -104,7 +104,7 @@ describe('index', function (): void {
     it('prevents listing from an unrelated tenant', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = get(route('teams.service-plans.plan-rules.rates.index', [
             'team' => $planRule->servicePlan->team,

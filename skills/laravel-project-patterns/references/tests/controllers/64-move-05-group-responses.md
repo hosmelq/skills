@@ -18,11 +18,10 @@ use App\Models\WorkOrderStatus;
 
 it('moves the record after another record in the same group', function (): void {
     $team = Team::factory()->createOne();
-
     $firstReceived = WorkOrderStatus::factory()->recycle($team)->createOne();
     $secondReceived = WorkOrderStatus::factory()->recycle($team)->createOne();
 
-    signIn(team: $team);
+    login(team: $team);
 
     mock(MoveWorkOrderStatus::class)
         ->shouldReceive('handle')
@@ -46,10 +45,9 @@ it('moves the record after another record in the same group', function (): void 
 
 it('moves the record to the start of its group', function (): void {
     $team = Team::factory()->createOne();
-
     $workOrderStatus = WorkOrderStatus::factory()->recycle($team)->createOne();
 
-    signIn(team: $team);
+    login(team: $team);
 
     mock(MoveWorkOrderStatus::class)
         ->shouldReceive('handle')
@@ -73,13 +71,9 @@ it('moves the record to the start of its group', function (): void {
 
 it('moves an inactive record to the start of its group', function (): void {
     $team = Team::factory()->createOne();
+    $workOrderStatus = WorkOrderStatus::factory()->deactivated()->recycle($team)->createOne();
 
-    $workOrderStatus = WorkOrderStatus::factory()
-        ->deactivated()
-        ->recycle($team)
-        ->createOne();
-
-    signIn(team: $team);
+    login(team: $team);
 
     mock(MoveWorkOrderStatus::class)
         ->shouldReceive('handle')

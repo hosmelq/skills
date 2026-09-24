@@ -26,7 +26,7 @@ describe('update', function (): void {
     it('maps an unavailable relation rejection to validation: service_plan_id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -46,7 +46,7 @@ describe('update', function (): void {
     it('maps an unavailable relation rejection to validation: member_id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -66,7 +66,7 @@ describe('update', function (): void {
     it('maps an unavailable relation rejection to validation: received_facility_id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -86,7 +86,7 @@ describe('update', function (): void {
     it('maps an unavailable relation rejection to validation: pickup_facility_id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -106,7 +106,7 @@ describe('update', function (): void {
     it('maps an unavailable relation rejection to validation: cabinet_id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')

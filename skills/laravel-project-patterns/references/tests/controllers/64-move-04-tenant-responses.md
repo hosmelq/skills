@@ -21,7 +21,7 @@ it('moves the record after another record in the same tenant', function (): void
     $first = ItemGroup::factory()->recycle($team)->createOne();
     $second = ItemGroup::factory()->recycle($team)->createOne();
 
-    signIn(team: $team);
+    login(team: $team);
 
     mock(MoveItemGroup::class)
         ->shouldReceive('handle')
@@ -46,7 +46,7 @@ it('moves the record after another record in the same tenant', function (): void
 it('moves an inactive record to the start', function (): void {
     $itemGroup = ItemGroup::factory()->deactivated()->createOne();
 
-    signIn(team: $itemGroup->team);
+    login(team: $itemGroup->team);
 
     mock(MoveItemGroup::class)
         ->shouldReceive('handle')

@@ -18,7 +18,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $address = MemberAddress::factory()->createOne();
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         $response = patch(route('teams.members.addresses.update', [
             'team' => $address->member->team,

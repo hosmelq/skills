@@ -21,7 +21,7 @@ use App\Models\User;
 
 describe('store', function (): void {
     it('stores the record', function (): void {
-        $user = signIn();
+        $user = login();
         $team = Team::factory()->createOne();
 
         mock(CreateTeam::class)

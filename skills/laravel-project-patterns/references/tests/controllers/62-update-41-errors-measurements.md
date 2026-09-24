@@ -24,7 +24,7 @@ describe('update', function (): void {
     it('maps an incomplete weight rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -44,7 +44,7 @@ describe('update', function (): void {
     it('maps a mismatched weight unit rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -66,7 +66,7 @@ describe('update', function (): void {
     it('maps incomplete dimensions to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')

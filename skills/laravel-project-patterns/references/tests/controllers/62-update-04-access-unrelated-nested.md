@@ -17,7 +17,7 @@ describe('update', function (): void {
     it('prevents updating from an unrelated tenant', function (): void {
         $address = MemberAddress::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = patch(route('teams.members.addresses.update', [
             'team' => $address->member->team,
@@ -45,7 +45,7 @@ describe('update', function (): void {
     it('prevents updating from an unrelated tenant', function (): void {
         $line = WorkOrderLine::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = patch(
             route('teams.work-orders.lines.update', [
@@ -76,7 +76,7 @@ describe('update', function (): void {
     it('prevents updating from an unrelated tenant', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = patch(route('teams.service-plans.plan-rules.rates.update', [
             'team' => $rate->planRule->servicePlan->team,

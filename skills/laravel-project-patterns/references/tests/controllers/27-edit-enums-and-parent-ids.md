@@ -21,7 +21,7 @@ describe('edit', function (): void {
     it('shows the edit page', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         $response = get(route('teams.work-order-statuses.edit', [
             'team' => $workOrderStatus->team,
@@ -55,7 +55,7 @@ describe('edit', function (): void {
     it('shows the edit page', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.edit', [
             'team' => $rate->planRule->servicePlan->team,

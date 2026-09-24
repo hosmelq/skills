@@ -24,31 +24,21 @@ use Inertia\Testing\AssertableInertia;
 describe('create', function (): void {
     it('shows the create page without unavailable options', function (): void {
         $team = Team::factory()->createOne();
-
-        $deletedMember = Member::factory()->trashed()->for($team)->createOne();
-        $deactivatedFacility = Facility::factory()->deactivated()->for($team)->createOne();
-        $deletedFacility = Facility::factory()->trashed()->for($team)->createOne();
+        $deletedMember = Member::factory()->trashed()->recycle($team)->createOne();
+        $deactivatedFacility = Facility::factory()->deactivated()->recycle($team)->createOne();
+        $deletedFacility = Facility::factory()->trashed()->recycle($team)->createOne();
         $deactivatedEnrollment = Enrollment::factory()->deactivated()->recycle($team)->createOne();
         $deletedEnrollment = Enrollment::factory()->trashed()->recycle($team)->createOne();
-        $deactivatedServicePlan = ServicePlan::factory()
-            ->deactivated()
-            ->for($team)
-            ->createOne();
-        $deletedServicePlan = ServicePlan::factory()
-            ->trashed()
-            ->for($team)
-            ->createOne();
-        $deactivatedStatus = WorkOrderStatus::factory()
-            ->deactivated()
-            ->for($team)
-            ->createOne();
-        $deletedStatus = WorkOrderStatus::factory()->trashed()->for($team)->createOne();
+        $deactivatedServicePlan = ServicePlan::factory()->deactivated()->recycle($team)->createOne();
+        $deletedServicePlan = ServicePlan::factory()->trashed()->recycle($team)->createOne();
+        $deactivatedStatus = WorkOrderStatus::factory()->deactivated()->recycle($team)->createOne();
+        $deletedStatus = WorkOrderStatus::factory()->trashed()->recycle($team)->createOne();
         $nonInitialStatus = WorkOrderStatus::factory()
             ->withBaseStatus(WorkOrderBaseStatus::InProgress)
-            ->for($team)
+            ->recycle($team)
             ->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-orders.create', $team));
 
@@ -120,16 +110,10 @@ describe('create', function (): void {
     it('shows the create page without unavailable options', function (): void {
         $member = Member::factory()->createOne();
 
-        ServicePlan::factory()
-            ->deactivated()
-            ->for($member->team)
-            ->createOne();
-        ServicePlan::factory()
-            ->trashed()
-            ->for($member->team)
-            ->createOne();
+        ServicePlan::factory()->deactivated()->recycle($member->team)->createOne();
+        ServicePlan::factory()->trashed()->recycle($member->team)->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.enrollments.create', [
             'team' => $member->team,

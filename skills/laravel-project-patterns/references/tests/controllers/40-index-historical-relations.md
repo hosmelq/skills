@@ -24,15 +24,15 @@ describe('index', function (): void {
         $status = WorkOrderStatus::factory()
             ->trashed()
             ->withBaseStatus(WorkOrderBaseStatus::Completed)
-            ->for($team)
+            ->recycle($team)
             ->createOne();
         $workOrder = WorkOrder::factory()
             ->withMember(Member::factory()->trashed())
             ->for($status, 'workOrderStatus')
-            ->for($team)
+            ->recycle($team)
             ->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-orders.index', $team));
 

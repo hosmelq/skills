@@ -29,7 +29,7 @@ describe('update', function (): void {
             ->orderBy('name')
             ->firstOrFail();
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         mock(UpdateMemberAddress::class)
             ->shouldReceive('handle')
@@ -60,7 +60,7 @@ describe('update', function (): void {
             'country_code' => CountryCode::Nicaragua,
         ]);
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         mock(UpdateMemberAddress::class)
             ->shouldReceive('handle')
@@ -90,7 +90,7 @@ describe('update', function (): void {
             'province_code' => 'MN',
         ]);
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         mock(UpdateMemberAddress::class)
             ->shouldReceive('handle')

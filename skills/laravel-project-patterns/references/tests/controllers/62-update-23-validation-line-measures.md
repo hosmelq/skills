@@ -25,7 +25,7 @@ describe('update', function (): void {
     ): void {
         $line = WorkOrderLine::factory()->createOne($attributes);
 
-        signIn(team: $line->workOrder->team);
+        login(team: $line->workOrder->team);
 
         $response = patch(route('teams.work-orders.lines.update', [
             'team' => $line->workOrder->team,

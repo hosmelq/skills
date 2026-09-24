@@ -32,7 +32,7 @@ describe('edit', function (): void {
     it('prevents viewing from an unrelated tenant', function (): void {
         $unrelatedMember = Member::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = get(route('teams.members.edit', [
             'team' => $unrelatedMember->team,
@@ -44,10 +44,9 @@ describe('edit', function (): void {
 
     it('returns not found when the record belongs to another tenant', function (): void {
         $relatedTeam = Team::factory()->createOne();
-
         $unrelatedMember = Member::factory()->createOne();
 
-        signIn(team: $relatedTeam);
+        login(team: $relatedTeam);
 
         $response = get(route('teams.members.edit', [
             'team' => $relatedTeam,
@@ -60,7 +59,7 @@ describe('edit', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $member = Member::factory()->trashed()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.edit', [
             'team' => $member->team,
@@ -73,7 +72,7 @@ describe('edit', function (): void {
     it('shows the edit page', function (): void {
         $member = Member::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.edit', [
             'team' => $member->team,
@@ -117,7 +116,7 @@ describe('edit', function (): void {
     it('prevents viewing from an unrelated tenant', function (): void {
         $address = MemberAddress::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = get(route('teams.members.addresses.edit', [
             'team' => $address->member->team,
@@ -158,7 +157,7 @@ describe('edit', function (): void {
     it('prevents viewing from an unrelated tenant', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = get(route('teams.service-plans.plan-rules.rates.edit', [
             'team' => $rate->planRule->servicePlan->team,

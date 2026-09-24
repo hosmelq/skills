@@ -21,10 +21,10 @@ use App\Models\WorkOrder;
 describe('store', function (): void {
     it('stores the record', function (): void {
         $team = Team::factory()->createOne();
-        $facility = Facility::factory()->for($team)->createOne();
-        $workOrder = WorkOrder::factory()->for($team)->createOne();
+        $facility = Facility::factory()->recycle($team)->createOne();
+        $workOrder = WorkOrder::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrder::class)
             ->shouldReceive('handle')

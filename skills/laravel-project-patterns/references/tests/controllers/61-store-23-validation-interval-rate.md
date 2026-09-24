@@ -20,7 +20,7 @@ describe('store', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(CreatePlanRate::class)
             ->shouldNotReceive('handle');

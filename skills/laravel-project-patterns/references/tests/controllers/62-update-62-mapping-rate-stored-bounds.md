@@ -23,7 +23,7 @@ describe('update', function (): void {
             ->forRange(10, 15)
             ->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(UpdatePlanRate::class)
             ->shouldNotReceive('handle');
@@ -47,7 +47,7 @@ describe('update', function (): void {
             ->forRange(5, 10)
             ->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = patch(route('teams.service-plans.plan-rules.rates.update', [
             'team' => $rate->planRule->servicePlan->team,
@@ -68,7 +68,7 @@ describe('update', function (): void {
             ->forRange(2, 10)
             ->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(UpdatePlanRate::class)
             ->shouldReceive('handle')
@@ -103,7 +103,7 @@ describe('update', function (): void {
             ->forRange(5, null)
             ->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(UpdatePlanRate::class)
             ->shouldReceive('handle')

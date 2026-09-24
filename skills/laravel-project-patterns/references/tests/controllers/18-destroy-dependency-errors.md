@@ -17,7 +17,6 @@ use function Pest\Laravel\mock;
 use App\Actions\ServicePlans\DeleteServicePlan;
 use App\Exceptions\CannotDeleteServicePlanInUse;
 use App\Models\Cabinet;
-use App\Models\Member;
 use App\Models\PlanRule;
 use App\Models\ServicePlan;
 
@@ -25,7 +24,7 @@ describe('destroy', function (): void {
     it('rejects deleting when child records exist', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(DeleteServicePlan::class)
             ->shouldReceive('handle')
@@ -46,7 +45,7 @@ describe('destroy', function (): void {
     it('rejects deleting when soft deleted child records exist', function (): void {
         $planRule = PlanRule::factory()->trashed()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(DeleteServicePlan::class)
             ->shouldReceive('handle')
@@ -66,16 +65,12 @@ describe('destroy', function (): void {
 
     it('rejects deleting when related records exist', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
-        $member = Member::factory()
-            ->for($servicePlan->team)
-            ->createOne();
-
         Cabinet::factory()
-            ->for($member)
+            ->recycle($servicePlan->team)
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(DeleteServicePlan::class)
             ->shouldReceive('handle')
@@ -95,17 +90,13 @@ describe('destroy', function (): void {
 
     it('rejects deleting when soft deleted related records exist', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
-        $member = Member::factory()
-            ->for($servicePlan->team)
-            ->createOne();
-
         Cabinet::factory()
             ->trashed()
-            ->for($member)
+            ->recycle($servicePlan->team)
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(DeleteServicePlan::class)
             ->shouldReceive('handle')

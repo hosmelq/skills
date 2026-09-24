@@ -20,7 +20,7 @@ describe('show', function (): void {
             ->withDefaultAddress()
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.show', [
             'team' => $member->team,
@@ -55,14 +55,13 @@ use Inertia\Testing\AssertableInertia;
 describe('show', function (): void {
     it('shows the detail page with the selected relation', function (): void {
         $member = Member::factory()->createOne();
-        $servicePlan = ServicePlan::factory()->for($member->team)->createOne();
+        $servicePlan = ServicePlan::factory()->recycle($member->team)->createOne();
         $cabinet = Cabinet::factory()
-            ->for($member)
-            ->for($member->team)
+            ->recycle([$member, $member->team])
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.cabinets.show', [
             'team' => $member->team,

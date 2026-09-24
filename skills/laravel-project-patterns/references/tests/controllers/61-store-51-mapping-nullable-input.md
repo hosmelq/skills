@@ -20,9 +20,9 @@ use App\Models\WorkOrder;
 describe('store', function (): void {
     it('accepts explicit nulls for nullable fields', function (): void {
         $team = Team::factory()->createOne();
-        $workOrder = WorkOrder::factory()->for($team)->createOne();
+        $workOrder = WorkOrder::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrder::class)
             ->shouldReceive('handle')

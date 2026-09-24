@@ -49,4 +49,4 @@ Use deletes the record for collection or parent-detail redirects, and reactivate
 
 Success examples mock the action; they prove delegation, response and toast, not persistence. Do not infer cleanup, replacement defaults or persisted state changes.
 
-Reuse these names across controllers; qualify only to distinguish otherwise identical cases within one block. Here signIn() authenticates an outsider and signIn(team: ...) authorizes that team. Adapt helpers, assertToast(), exception messages, factories and route keys to the project.
+Reuse these names across controllers; qualify only to distinguish otherwise identical cases within one block. Here login() authenticates an outsider and login(team: ...) authorizes that team. Adapt helpers, assertToast(), exception messages, factories and route keys to the project.

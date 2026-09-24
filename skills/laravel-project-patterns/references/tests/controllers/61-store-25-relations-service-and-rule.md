@@ -21,7 +21,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $servicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'service_plan_id' => $servicePlan->public_id,
@@ -35,14 +35,14 @@ describe('store', function (): void {
     it('rejects a newly assigned relation from another tenant: plan_rule_id', function (bool $sameParentTeam): void {
         $team = Team::factory()->createOne();
         $servicePlan = ServicePlan::factory()
-            ->when($sameParentTeam, fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->for($team))
+            ->when($sameParentTeam, fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->recycle($team))
             ->createOne();
         $planRule = PlanRule::factory()
             ->for(Team::factory())
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'plan_rule_id' => $planRule->public_id,
@@ -59,9 +59,9 @@ describe('store', function (): void {
 
     it('rejects a newly assigned inactive relation: service_plan_id', function (): void {
         $team = Team::factory()->createOne();
-        $servicePlan = ServicePlan::factory()->deactivated()->for($team)->createOne();
+        $servicePlan = ServicePlan::factory()->deactivated()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'service_plan_id' => $servicePlan->public_id,
@@ -74,9 +74,9 @@ describe('store', function (): void {
 
     it('rejects a newly assigned soft deleted relation: service_plan_id', function (): void {
         $team = Team::factory()->createOne();
-        $servicePlan = ServicePlan::factory()->trashed()->for($team)->createOne();
+        $servicePlan = ServicePlan::factory()->trashed()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'service_plan_id' => $servicePlan->public_id,
@@ -89,12 +89,9 @@ describe('store', function (): void {
 
     it('rejects a newly assigned soft deleted relation: plan_rule_id', function (): void {
         $team = Team::factory()->createOne();
-        $planRule = PlanRule::factory()
-            ->trashed()
-            ->for(ServicePlan::factory()->for($team))
-            ->createOne();
+        $planRule = PlanRule::factory()->trashed()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'plan_rule_id' => $planRule->public_id,
@@ -109,11 +106,9 @@ describe('store', function (): void {
     it('rejects a newly assigned relation with an inactive parent', function (): void {
         $servicePlan = ServicePlan::factory()->deactivated()->createOne();
         $team = $servicePlan->team;
-        $planRule = PlanRule::factory()
-            ->for($servicePlan)
-            ->createOne();
+        $planRule = PlanRule::factory()->recycle($servicePlan)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'plan_rule_id' => $planRule->public_id,
@@ -128,11 +123,9 @@ describe('store', function (): void {
     it('rejects a newly assigned relation with a soft deleted parent', function (): void {
         $servicePlan = ServicePlan::factory()->trashed()->createOne();
         $team = $servicePlan->team;
-        $planRule = PlanRule::factory()
-            ->for($servicePlan)
-            ->createOne();
+        $planRule = PlanRule::factory()->recycle($servicePlan)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'plan_rule_id' => $planRule->public_id,

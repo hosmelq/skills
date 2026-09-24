@@ -24,7 +24,7 @@ describe('update', function (): void {
             ->recycle($itemGroup->team)
             ->createOne(['name' => 'Electronics']);
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         $response = patch(route('teams.item-groups.update', [
             'team' => $itemGroup->team,
@@ -44,7 +44,7 @@ describe('update', function (): void {
         ]);
         $itemGroup = ItemGroup::factory()->createOne();
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         mock(UpdateItemGroup::class)
             ->shouldReceive('handle')
@@ -71,7 +71,7 @@ describe('update', function (): void {
             ->recycle($itemGroup->team)
             ->createOne(['name' => 'Electronics']);
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         mock(UpdateItemGroup::class)
             ->shouldReceive('handle')
@@ -95,7 +95,7 @@ describe('update', function (): void {
             'name' => 'Electronics',
         ]);
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         mock(UpdateItemGroup::class)
             ->shouldReceive('handle')

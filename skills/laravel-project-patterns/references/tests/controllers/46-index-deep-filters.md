@@ -22,18 +22,14 @@ describe('index', function (): void {
         $planRule = PlanRule::factory()
             ->forCountry(CountryCode::Canada)
             ->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
         $unrelatedPlanRule = PlanRule::factory()
-            ->for($planRule->servicePlan)
+            ->recycle($planRule->servicePlan)
             ->forCountry(CountryCode::Japan)
             ->createOne();
-        $unrelatedRate = PlanRate::factory()
-            ->for($unrelatedPlanRule, 'planRule')
-            ->createOne();
+        $unrelatedRate = PlanRate::factory()->recycle($unrelatedPlanRule)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.index', [
             'team' => $rate->planRule->servicePlan->team,
@@ -71,11 +67,9 @@ use Inertia\Testing\AssertableInertia;
 describe('index', function (): void {
     it('excludes records from other ancestors in the same tenant', function (): void {
         $rate = PlanRate::factory()->createOne();
-        $unrelatedRate = PlanRate::factory()
-            ->recycle($rate->planRule->servicePlan->team)
-            ->createOne();
+        $unrelatedRate = PlanRate::factory()->recycle($rate->planRule->servicePlan->team)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.index', [
             'team' => $rate->planRule->servicePlan->team,
@@ -116,12 +110,12 @@ describe('index', function (): void {
             ->forRange(0, 10)
             ->createOne();
         $deletedRate = PlanRate::factory()
-            ->for($rate->planRule, 'planRule')
+            ->recycle($rate->planRule)
             ->forRange(10, 20)
             ->trashed()
             ->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.index', [
             'team' => $rate->planRule->servicePlan->team,

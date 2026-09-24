@@ -21,7 +21,7 @@ describe('destroy', function (): void {
     it('deletes the record', function (): void {
         $address = MemberAddress::factory()->createOne();
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         mock(DeleteMemberAddress::class)
             ->shouldReceive('handle')
@@ -44,7 +44,7 @@ describe('destroy', function (): void {
     it('deletes the default record', function (): void {
         $defaultAddress = MemberAddress::factory()->createOne(['is_default' => true]);
 
-        signIn(team: $defaultAddress->member->team);
+        login(team: $defaultAddress->member->team);
 
         mock(DeleteMemberAddress::class)
             ->shouldReceive('handle')
@@ -83,7 +83,7 @@ describe('destroy', function (): void {
     it('deletes the record', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(DeletePlanRate::class)
             ->shouldReceive('handle')
@@ -126,7 +126,7 @@ describe('destroy', function (): void {
     it('deletes the record', function (): void {
         $line = WorkOrderLine::factory()->createOne();
 
-        signIn(team: $line->workOrder->team);
+        login(team: $line->workOrder->team);
 
         mock(DeleteWorkOrderLine::class)
             ->shouldReceive('handle')
@@ -165,7 +165,7 @@ describe('destroy', function (): void {
     it('deletes the record', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(DeletePlanRule::class)
             ->shouldReceive('handle')

@@ -22,7 +22,7 @@ describe('update', function (): void {
     it('maps a final record rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -59,7 +59,7 @@ describe('update', function (): void {
     it('maps a final parent rejection to validation', function (): void {
         $line = WorkOrderLine::factory()->createOne();
 
-        signIn(team: $line->workOrder->team);
+        login(team: $line->workOrder->team);
 
         mock(UpdateWorkOrderLine::class)
             ->shouldReceive('handle')

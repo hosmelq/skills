@@ -33,7 +33,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $user = User::factory()->unverified()->createOne();
 
-        signIn($user);
+        login($user);
 
         $response = postJson(route('api.teams.enrollments.store', $team->public_id));
 
@@ -43,7 +43,7 @@ describe('store', function (): void {
     it('returns not found when the tenant public identifier is invalid', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = postJson(route('api.teams.enrollments.store', $team->id));
 
@@ -63,7 +63,7 @@ describe('store', function (): void {
             ))
             ->andThrow(CannotRequestEnrollment::becauseCabinetsAreDisabled());
 
-        signIn($user);
+        login($user);
 
         $response = postJson(route('api.teams.enrollments.store', $team->public_id));
 
@@ -87,7 +87,7 @@ describe('store', function (): void {
             ))
             ->andReturn($enrollment);
 
-        signIn($user);
+        login($user);
 
         $response = postJson(route('api.teams.enrollments.store', $team->public_id));
 

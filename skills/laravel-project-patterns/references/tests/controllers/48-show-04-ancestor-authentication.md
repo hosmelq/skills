@@ -30,7 +30,7 @@ describe('show', function (): void {
     it('prevents viewing from an unrelated tenant', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = get(route('teams.service-plans.plan-rules.rates.show', [
             'team' => $rate->planRule->servicePlan->team,

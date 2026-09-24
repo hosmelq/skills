@@ -34,7 +34,7 @@ describe('update', function (): void {
                     && $input->name === 'Updated Team',
             );
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = patch(route('teams.update', [
             'team' => $team,
@@ -62,7 +62,7 @@ describe('update', function (): void {
                     && $input->{$property} === false,
             );
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = patch(route('teams.update', [
             'team' => $team,

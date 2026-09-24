@@ -19,7 +19,7 @@ describe('index', function (): void {
         $member = Member::factory()->createOne();
         $unrelatedMember = Member::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.index', [
             'team' => $member->team,
@@ -57,7 +57,7 @@ describe('index', function (): void {
         $address = MemberAddress::factory()->createOne();
         $unrelatedAddress = MemberAddress::factory()->createOne();
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         $response = get(route('teams.members.addresses.index', [
             'team' => $address->member->team,
@@ -96,7 +96,7 @@ describe('index', function (): void {
         $rate = PlanRate::factory()->createOne();
         $unrelatedRate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.index', [
             'team' => $rate->planRule->servicePlan->team,

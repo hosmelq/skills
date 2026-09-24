@@ -19,14 +19,14 @@ describe('create', function (): void {
     it('shows the create page', function (): void {
         $member = Member::factory()->createOne();
         $secondServicePlan = ServicePlan::factory()
-            ->for($member->team)
+            ->recycle($member->team)
             ->createOne(['name' => 'Zulu Plan']);
         $firstServicePlan = ServicePlan::factory()
-            ->for($member->team)
+            ->recycle($member->team)
             ->createOne(['name' => 'Alpha Plan']);
         ServicePlan::factory()->createOne(['name' => 'Other team']);
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.enrollments.create', [
             'team' => $member->team,

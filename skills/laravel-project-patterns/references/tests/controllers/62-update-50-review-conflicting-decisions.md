@@ -24,7 +24,7 @@ use App\Models\User;
 describe('update', function (): void {
     it('maps a rejected request approval conflict to validation', function (): void {
         $enrollment = Enrollment::factory()->createOne();
-        $reviewedByUser = signIn(team: $enrollment->team);
+        $reviewedByUser = login(team: $enrollment->team);
 
         mock(ApproveEnrollment::class)
             ->shouldReceive('handle')
@@ -52,7 +52,7 @@ describe('update', function (): void {
 
     it('maps an approved request rejection conflict to validation', function (): void {
         $enrollment = Enrollment::factory()->createOne();
-        $reviewedByUser = signIn(team: $enrollment->team);
+        $reviewedByUser = login(team: $enrollment->team);
 
         mock(RejectEnrollment::class)
             ->shouldReceive('handle')

@@ -21,12 +21,12 @@ describe('index', function (): void {
     it('paginates live records with the newest record first', function (
     ): void {
         $team = Team::factory()->createOne();
-        $workOrders = WorkOrder::factory()->count(16)->for($team)->create();
+        $workOrders = WorkOrder::factory()->count(16)->recycle($team)->create();
         $newest = $workOrders->last();
         WorkOrder::factory()->createOne();
-        WorkOrder::factory()->trashed()->for($team)->createOne();
+        WorkOrder::factory()->trashed()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-orders.index', $team));
 

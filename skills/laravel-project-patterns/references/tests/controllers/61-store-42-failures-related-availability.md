@@ -24,7 +24,7 @@ describe('store', function (): void {
     it('maps an unavailable relation rejection to validation: member_id', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrder::class)
             ->shouldReceive('handle')
@@ -41,7 +41,7 @@ describe('store', function (): void {
     it('maps an unavailable relation rejection to validation: cabinet_id', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrder::class)
             ->shouldReceive('handle')
@@ -58,7 +58,7 @@ describe('store', function (): void {
     it('maps an unavailable relation rejection to validation: service_plan_id', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         mock(CreateWorkOrder::class)
             ->shouldReceive('handle')

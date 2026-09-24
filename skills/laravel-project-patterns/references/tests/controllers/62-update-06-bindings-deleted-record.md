@@ -17,7 +17,7 @@ describe('update', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $itemGroup = ItemGroup::factory()->trashed()->createOne();
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         $response = patch(route('teams.item-groups.update', [
             'team' => $itemGroup->team,

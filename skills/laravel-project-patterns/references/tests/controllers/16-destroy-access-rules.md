@@ -21,7 +21,7 @@ describe('destroy', function (): void {
     it('prevents deleting when the record is inactive', function (): void {
         $servicePlan = ServicePlan::factory()->deactivated()->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(DeleteServicePlan::class)
             ->shouldNotReceive('handle');
@@ -52,11 +52,9 @@ use App\Models\ServicePlan;
 
 describe('destroy', function (): void {
     it('prevents deleting when the parent is inactive', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(DeletePlanRule::class)
             ->shouldNotReceive('handle');
@@ -87,14 +85,10 @@ use App\Models\ServicePlan;
 
 describe('destroy', function (): void {
     it('prevents deleting when the ancestor is inactive', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = delete(route('teams.service-plans.plan-rules.rates.destroy', [
             'team' => $rate->planRule->servicePlan->team,
@@ -125,7 +119,7 @@ describe('destroy', function (): void {
     it('prevents reactivating when the record is active', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(ReactivateWorkOrderStatus::class)
             ->shouldNotReceive('handle');

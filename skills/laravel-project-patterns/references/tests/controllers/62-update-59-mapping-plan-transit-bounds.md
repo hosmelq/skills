@@ -23,7 +23,7 @@ describe('update', function (): void {
             'minimum_estimated_transit_time' => 4,
         ]);
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = patch(route('teams.service-plans.update', [
             'team' => $servicePlan->team,
@@ -43,7 +43,7 @@ describe('update', function (): void {
             'minimum_estimated_transit_time' => 3,
         ]);
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = patch(route('teams.service-plans.update', [
             'team' => $servicePlan->team,
@@ -60,7 +60,7 @@ describe('update', function (): void {
     it('updates the record', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(UpdateServicePlan::class)
             ->shouldReceive('handle')
@@ -88,7 +88,7 @@ describe('update', function (): void {
             'minimum_estimated_transit_time' => 3,
         ]);
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(UpdateServicePlan::class)
             ->shouldReceive('handle')

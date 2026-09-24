@@ -18,7 +18,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $enrollment = Enrollment::factory()->createOne();
 
-        signIn(team: $enrollment->team);
+        login(team: $enrollment->team);
 
         $response = patch(route('teams.enrollments.status.update', [
             'enrollment' => $enrollment,

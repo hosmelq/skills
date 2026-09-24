@@ -19,7 +19,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $facility = Facility::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'current_facility_id' => $facility->public_id,
@@ -36,9 +36,9 @@ describe('store', function (): void {
 
     it('rejects a newly assigned inactive relation', function (): void {
         $team = Team::factory()->createOne();
-        $facility = Facility::factory()->deactivated()->for($team)->createOne();
+        $facility = Facility::factory()->deactivated()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'current_facility_id' => $facility->public_id,
@@ -55,9 +55,9 @@ describe('store', function (): void {
 
     it('rejects a newly assigned soft deleted relation', function (): void {
         $team = Team::factory()->createOne();
-        $facility = Facility::factory()->trashed()->for($team)->createOne();
+        $facility = Facility::factory()->trashed()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.work-orders.store', $team), [
             'current_facility_id' => $facility->public_id,

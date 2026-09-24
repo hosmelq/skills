@@ -18,7 +18,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $errors): void {
         $itemGroup = ItemGroup::factory()->createOne();
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         $response = patch(route('teams.item-groups.update', [
             'team' => $itemGroup->team,

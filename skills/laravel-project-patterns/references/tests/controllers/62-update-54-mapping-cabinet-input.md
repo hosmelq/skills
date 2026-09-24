@@ -20,7 +20,7 @@ describe('update', function (): void {
     it('updates the record', function (): void {
         $cabinet = Cabinet::factory()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         mock(UpdateCabinet::class)
             ->shouldReceive('handle')

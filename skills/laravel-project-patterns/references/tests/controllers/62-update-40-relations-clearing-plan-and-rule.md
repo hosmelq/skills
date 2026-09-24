@@ -24,7 +24,7 @@ describe('update', function (): void {
     it('maps a cleared prerequisite rejection to validation when the dependent field is omitted', function (): void {
         $workOrder = WorkOrder::factory()->withPlanRule()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')
@@ -53,7 +53,7 @@ describe('update', function (): void {
     it('clears a relation and its dependent relation when both are empty', function (): void {
         $workOrder = WorkOrder::factory()->withPlanRule()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldReceive('handle')

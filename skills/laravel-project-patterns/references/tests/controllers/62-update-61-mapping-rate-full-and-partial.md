@@ -20,7 +20,7 @@ describe('update', function (): void {
     it('updates the record', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(UpdatePlanRate::class)
             ->shouldReceive('handle')
@@ -60,7 +60,7 @@ describe('update', function (): void {
             ->forRange(0, 2)
             ->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(UpdatePlanRate::class)
             ->shouldReceive('handle')

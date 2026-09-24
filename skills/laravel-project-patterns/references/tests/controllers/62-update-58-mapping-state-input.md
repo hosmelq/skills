@@ -21,7 +21,7 @@ describe('update', function (): void {
     it('updates the record', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(UpdateWorkOrderStatus::class)
             ->shouldReceive('handle')
@@ -49,7 +49,7 @@ describe('update', function (): void {
     it('maps a base status to the update input', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(UpdateWorkOrderStatus::class)
             ->shouldReceive('handle')
@@ -77,7 +77,7 @@ describe('update', function (): void {
     it('maps a false boolean to the update input', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(UpdateWorkOrderStatus::class)
             ->shouldReceive('handle')

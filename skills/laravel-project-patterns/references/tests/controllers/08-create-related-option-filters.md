@@ -24,20 +24,19 @@ describe('create', function (): void {
         $team = Team::factory()->createOne();
         $member = Member::factory()
             ->when($state === 'deleted member', fn (MemberFactory $factory): MemberFactory => $factory->trashed())
-            ->for($team)
+            ->recycle($team)
             ->createOne();
         $servicePlan = ServicePlan::factory()
             ->when($state === 'deactivated service plan', fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->deactivated())
             ->when($state === 'deleted service plan', fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->trashed())
-            ->for($team)
+            ->recycle($team)
             ->createOne();
         Enrollment::factory()
-            ->for($member)
-            ->for($team)
+            ->recycle([$member, $team])
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-orders.create', $team));
 

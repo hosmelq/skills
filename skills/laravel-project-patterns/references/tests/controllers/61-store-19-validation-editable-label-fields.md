@@ -18,7 +18,7 @@ describe('store', function (): void {
     it('validates fields', function (array $data, array $errors): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.item-groups.store', [
             'team' => $team,
@@ -48,7 +48,7 @@ describe('store', function (): void {
     it('requires a name', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.item-groups.store', [
             'team' => $team,

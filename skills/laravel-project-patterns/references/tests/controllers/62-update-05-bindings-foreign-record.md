@@ -19,7 +19,7 @@ describe('update', function (): void {
         $team = Team::factory()->createOne();
         $itemGroup = ItemGroup::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = patch(route('teams.item-groups.update', [
             'team' => $team,

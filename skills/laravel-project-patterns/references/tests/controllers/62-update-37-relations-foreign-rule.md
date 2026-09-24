@@ -23,14 +23,14 @@ describe('update', function (): void {
     it('rejects a newly assigned relation from another tenant: plan_rule_id', function (bool $sameParentTeam): void {
         $workOrder = WorkOrder::factory()->createOne();
         $servicePlan = ServicePlan::factory()
-            ->when($sameParentTeam, fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->for($workOrder->team))
+            ->when($sameParentTeam, fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->recycle($workOrder->team))
             ->createOne();
         $planRule = PlanRule::factory()
             ->for(Team::factory())
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrder::class)
             ->shouldNotReceive('handle');

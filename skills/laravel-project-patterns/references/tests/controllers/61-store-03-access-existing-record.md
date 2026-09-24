@@ -28,7 +28,7 @@ describe('store', function (): void {
     it('prevents deactivating from an unrelated tenant', function (): void {
         $unrelatedFacility = Facility::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = post(route('teams.facilities.deactivation.store', [
             'team' => $unrelatedFacility->team,
@@ -67,7 +67,7 @@ describe('store', function (): void {
     it('prevents deactivating from an unrelated tenant', function (): void {
         $cabinet = Cabinet::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = post(route('teams.members.cabinets.deactivation.store', [
             'team' => $cabinet->member->team,

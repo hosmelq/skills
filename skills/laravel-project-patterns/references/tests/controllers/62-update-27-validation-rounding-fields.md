@@ -19,7 +19,7 @@ describe('update', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = patch(route('teams.service-plans.plan-rules.update', [
             'team' => $planRule->servicePlan->team,

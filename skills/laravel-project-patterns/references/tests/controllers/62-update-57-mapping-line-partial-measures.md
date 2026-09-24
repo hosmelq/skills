@@ -24,7 +24,7 @@ describe('update', function (): void {
     it('maps submitted and omitted fields to the action', function (): void {
         $line = WorkOrderLine::factory()->createOne();
 
-        signIn(team: $line->workOrder->team);
+        login(team: $line->workOrder->team);
 
         mock(UpdateWorkOrderLine::class)
             ->shouldReceive('handle')
@@ -58,7 +58,7 @@ describe('update', function (): void {
     ): void {
         $line = WorkOrderLine::factory()->createOne($attributes);
 
-        signIn(team: $line->team);
+        login(team: $line->team);
 
         mock(UpdateWorkOrderLine::class)
             ->shouldReceive('handle')

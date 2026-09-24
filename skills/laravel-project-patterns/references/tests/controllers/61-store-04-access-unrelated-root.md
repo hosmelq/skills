@@ -17,7 +17,7 @@ describe('store', function (): void {
     it('prevents storing from an unrelated tenant', function (): void {
         $unrelatedTeam = Team::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = post(route('teams.facilities.store', [
             'team' => $unrelatedTeam,
@@ -43,7 +43,7 @@ describe('store', function (): void {
     it('prevents storing from an unrelated tenant', function (): void {
         $unrelatedMember = Member::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = post(route('teams.members.store', [
             'team' => $unrelatedMember->team,
@@ -69,7 +69,7 @@ describe('store', function (): void {
     it('prevents storing from an unrelated tenant', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = post(route('teams.item-groups.store', [
             'team' => $team,
@@ -98,7 +98,7 @@ describe('store', function (): void {
     it('prevents storing from an unrelated tenant', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = post(route('teams.work-order-statuses.store', [
             'team' => $team,

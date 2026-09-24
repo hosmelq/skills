@@ -26,10 +26,9 @@ describe('show', function (): void {
 
     it('prevents viewing from an unrelated tenant', function (): void {
         $unrelatedTeam = Team::factory()->createOne();
-
         $userTeam = Team::factory()->createOne();
 
-        signIn(team: $userTeam);
+        login(team: $userTeam);
 
         $response = get(route('teams.settings.general', [
             'team' => $unrelatedTeam,

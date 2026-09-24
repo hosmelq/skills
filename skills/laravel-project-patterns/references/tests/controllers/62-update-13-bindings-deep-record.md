@@ -22,18 +22,14 @@ describe('update', function (): void {
         $planRule = PlanRule::factory()
             ->forCountry(CountryCode::Canada)
             ->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
         $unrelatedPlanRule = PlanRule::factory()
-            ->for($planRule->servicePlan)
+            ->recycle($planRule->servicePlan)
             ->forCountry(CountryCode::Japan)
             ->createOne();
-        $unrelatedRate = PlanRate::factory()
-            ->for($unrelatedPlanRule, 'planRule')
-            ->createOne();
+        $unrelatedRate = PlanRate::factory()->recycle($unrelatedPlanRule)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = patch(route('teams.service-plans.plan-rules.rates.update', [
             'team' => $rate->planRule->servicePlan->team,
@@ -47,11 +43,9 @@ describe('update', function (): void {
 
     it('returns not found when the record belongs to another ancestor in the same tenant', function (): void {
         $rate = PlanRate::factory()->createOne();
-        $unrelatedRate = PlanRate::factory()
-            ->recycle($rate->planRule->servicePlan->team)
-            ->createOne();
+        $unrelatedRate = PlanRate::factory()->recycle($rate->planRule->servicePlan->team)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = patch(route('teams.service-plans.plan-rules.rates.update', [
             'team' => $rate->planRule->servicePlan->team,
@@ -67,7 +61,7 @@ describe('update', function (): void {
         $planRule = PlanRule::factory()->createOne();
         $unrelatedRate = PlanRate::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = patch(route('teams.service-plans.plan-rules.rates.update', [
             'team' => $planRule->servicePlan->team,
@@ -82,7 +76,7 @@ describe('update', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $rate = PlanRate::factory()->trashed()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         mock(UpdatePlanRate::class)
             ->shouldNotReceive('handle');

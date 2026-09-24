@@ -42,4 +42,4 @@ Selected historical resources and available choices are separate contracts. Pres
 
 Inactive-policy fixtures return 403. Final-state examples remain viewable: the record case asserts is_final; the child dataset asserts canMutate=false. Do not substitute one for the other or infer write-action validation.
 
-Reuse canonical names across controllers; qualify only to distinguish cases within one block. Here signIn() authenticates an outsider and signIn(team: ...) authorizes that team. Adapt synthetic models, helpers, public-ID fields, routes and suite namespaces to the consuming project.
+Reuse canonical names across controllers; qualify only to distinguish cases within one block. Here login() authenticates an outsider and login(team: ...) authorizes that team. Adapt synthetic models, helpers, public-ID fields, routes and suite namespaces to the consuming project.

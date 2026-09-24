@@ -20,7 +20,7 @@ describe('store', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $member = Member::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.cabinets.store', [
             'team' => $member->team,
@@ -57,7 +57,7 @@ describe('store', function (): void {
         $member = Member::factory()->createOne();
         $servicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.cabinets.store', [
             'team' => $member->team,
@@ -73,12 +73,9 @@ describe('store', function (): void {
 
     it('rejects a newly assigned soft deleted relation', function (): void {
         $member = Member::factory()->createOne();
-        $servicePlan = ServicePlan::factory()
-            ->trashed()
-            ->for($member->team)
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->trashed()->recycle($member->team)->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = post(route('teams.members.cabinets.store', [
             'team' => $member->team,

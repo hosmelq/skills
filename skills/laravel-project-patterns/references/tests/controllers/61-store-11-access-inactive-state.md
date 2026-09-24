@@ -17,7 +17,7 @@ describe('store', function (): void {
     it('prevents deactivating when the record is inactive', function (): void {
         $itemGroup = ItemGroup::factory()->deactivated()->createOne();
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         $response = post(route('teams.item-groups.deactivation.store', [
             'team' => $itemGroup->team,
@@ -46,7 +46,7 @@ describe('store', function (): void {
     it('prevents deactivating when the record is inactive', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->deactivated()->createOne();
 
-        signIn(team: $workOrderStatus->team);
+        login(team: $workOrderStatus->team);
 
         mock(DeactivateWorkOrderStatus::class)
             ->shouldNotReceive('handle');
@@ -77,7 +77,7 @@ describe('store', function (): void {
     it('prevents storing when the parent is inactive', function (): void {
         $servicePlan = ServicePlan::factory()->deactivated()->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(CreatePlanRule::class)
             ->shouldNotReceive('handle');
@@ -108,11 +108,9 @@ use App\Models\ServicePlan;
 
 describe('store', function (): void {
     it('prevents storing when the ancestor is inactive', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         mock(CreatePlanRate::class)
             ->shouldNotReceive('handle');

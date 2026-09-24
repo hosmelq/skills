@@ -20,7 +20,7 @@ describe('show', function (): void {
         $address = MemberAddress::factory()->createOne();
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.members.addresses.show', [
             'team' => $team,
@@ -33,11 +33,9 @@ describe('show', function (): void {
 
     it('returns not found when the parent is soft deleted', function (): void {
         $member = Member::factory()->trashed()->createOne();
-        $address = MemberAddress::factory()
-            ->for($member)
-            ->createOne();
+        $address = MemberAddress::factory()->recycle($member)->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.addresses.show', [
             'team' => $member->team,
@@ -65,10 +63,9 @@ use App\Models\ServicePlan;
 describe('show', function (): void {
     it('returns not found when the parent belongs to another tenant', function (): void {
         $planRule = PlanRule::factory()->createOne();
-
         $unrelatedServicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.show', [
             'team' => $planRule->servicePlan->team,
@@ -101,7 +98,7 @@ describe('show', function (): void {
             'team_id' => $member->team_id,
         ]);
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.cabinets.show', [
             'team' => $member->team,
@@ -133,7 +130,7 @@ describe('show', function (): void {
         $team = Team::factory()->createOne();
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.show', [
             'team' => $team,
@@ -147,19 +144,14 @@ describe('show', function (): void {
 
     it('returns not found when the ancestor is soft deleted', function (): void {
         $servicePlan = ServicePlan::factory()->trashed()->createOne();
-        $planRule = PlanRule::factory()
-            ->for($servicePlan)
-            ->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $rate = PlanRate::factory()->recycle($servicePlan)->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.show', [
             'team' => $servicePlan->team,
             'service_plan' => $servicePlan,
-            'plan_rule' => $planRule,
+            'plan_rule' => $rate->planRule,
             'rate' => $rate,
         ]));
 
@@ -168,19 +160,14 @@ describe('show', function (): void {
 
     it('returns not found when the parent belongs to another ancestor in the same tenant', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
-        $planRule = PlanRule::factory()
-            ->recycle($servicePlan->team)
-            ->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $rate = PlanRate::factory()->recycle($servicePlan->team)->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.show', [
             'team' => $servicePlan->team,
             'service_plan' => $servicePlan,
-            'plan_rule' => $planRule,
+            'plan_rule' => $rate->planRule,
             'rate' => $rate,
         ]));
 
@@ -191,7 +178,7 @@ describe('show', function (): void {
         $rate = PlanRate::factory()->createOne();
         $unrelatedPlanRule = PlanRule::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.show', [
             'team' => $rate->planRule->servicePlan->team,
@@ -205,11 +192,9 @@ describe('show', function (): void {
 
     it('returns not found when the parent is soft deleted', function (): void {
         $planRule = PlanRule::factory()->trashed()->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.show', [
             'team' => $planRule->servicePlan->team,

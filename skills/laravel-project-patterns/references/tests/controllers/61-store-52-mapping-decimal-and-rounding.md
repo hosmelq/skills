@@ -24,11 +24,11 @@ describe('store', function (): void {
     it('stores the record', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
         $planRule = PlanRule::factory()
-            ->for($servicePlan)
+            ->recycle($servicePlan)
             ->forCountry(CountryCode::Nicaragua)
             ->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(CreatePlanRule::class)
             ->shouldReceive('handle')
@@ -61,11 +61,11 @@ describe('store', function (): void {
     it('clears the rounding increment when rounding is disabled', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
         $planRule = PlanRule::factory()
-            ->for($servicePlan)
+            ->recycle($servicePlan)
             ->forCountry(CountryCode::Nicaragua)
             ->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         mock(CreatePlanRule::class)
             ->shouldReceive('handle')

@@ -20,7 +20,6 @@ use Inertia\Testing\AssertableInertia;
 describe('index', function (): void {
     it('lists records in the configured order', function (): void {
         $team = Team::factory()->createOne();
-
         $second = ItemGroup::factory()->recycle($team)->createOne([
             'name' => 'Second',
         ]);
@@ -29,7 +28,7 @@ describe('index', function (): void {
         ]);
         $first->moveOrderUp();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.item-groups.index', [
             'team' => $team,
@@ -65,18 +64,16 @@ use Inertia\Testing\AssertableInertia;
 describe('index', function (): void {
     it('lists records in the configured order', function (): void {
         $team = Team::factory()->createOne();
-
         $second = WorkOrderStatus::factory()->recycle($team)->createOne([
             'name' => 'Second',
         ]);
-
         $first = WorkOrderStatus::factory()->recycle($team)->createOne([
             'name' => 'First',
         ]);
 
         $first->moveOrderUp();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-order-statuses.index', [
             'team' => $team,
@@ -111,12 +108,9 @@ describe('index', function (): void {
         $itemGroup = ItemGroup::factory()->createOne();
 
         ItemGroup::factory()->createOne();
-        ItemGroup::factory()
-            ->trashed()
-            ->recycle($itemGroup->team)
-            ->createOne();
+        ItemGroup::factory()->trashed()->recycle($itemGroup->team)->createOne();
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         $response = get(route('teams.item-groups.index', [
             'team' => $itemGroup->team,

@@ -17,10 +17,9 @@ use App\Models\Team;
 describe('store', function (): void {
     it('returns not found when the record belongs to another tenant', function (): void {
         $team = Team::factory()->createOne();
-
         $unrelatedFacility = Facility::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.facilities.deactivation.store', [
             'team' => $team,
@@ -33,7 +32,7 @@ describe('store', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $facility = Facility::factory()->trashed()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         $response = post(route('teams.facilities.deactivation.store', [
             'team' => $facility->team,

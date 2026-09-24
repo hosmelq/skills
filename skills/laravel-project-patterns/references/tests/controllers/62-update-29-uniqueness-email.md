@@ -25,7 +25,7 @@ describe('update', function (): void {
             'email' => 'jane@gmail.com',
         ]);
 
-        signIn(team: $member1->team);
+        login(team: $member1->team);
 
         $response = patch(route('teams.members.update', [
             'team' => $member1->team,
@@ -48,7 +48,7 @@ describe('update', function (): void {
             'email' => 'jane@gmail.com',
         ]);
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         mock(UpdateMember::class)
             ->shouldReceive('handle')
@@ -75,7 +75,7 @@ describe('update', function (): void {
             'email' => 'john@gmail.com',
         ]);
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         mock(UpdateMember::class)
             ->shouldReceive('handle')
@@ -107,7 +107,7 @@ describe('update', function (): void {
             'email' => 'jane@gmail.com',
         ]);
 
-        signIn(team: $deletedMember->team);
+        login(team: $deletedMember->team);
 
         mock(UpdateMember::class)
             ->shouldReceive('handle')

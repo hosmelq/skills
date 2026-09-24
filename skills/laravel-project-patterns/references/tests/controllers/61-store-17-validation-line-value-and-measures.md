@@ -20,7 +20,7 @@ describe('store', function (): void {
     it('validates fields', function (array $data, array $expected): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = post(route('teams.work-orders.lines.store', [
             'team' => $workOrder->team,

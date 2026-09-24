@@ -28,7 +28,7 @@ describe('edit', function (): void {
             ->orderBy('name')
             ->first();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         $response = get(route('teams.facilities.edit', [
             'team' => $facility->team,
@@ -56,7 +56,7 @@ describe('edit', function (): void {
             ->orderBy('name')
             ->first();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         $response = get(route('teams.facilities.edit', [
             'team' => $facility->team,
@@ -99,7 +99,7 @@ describe('edit', function (): void {
             ->orderBy('name')
             ->firstOrFail();
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         $response = get(route('teams.members.addresses.edit', [
             'team' => $address->member->team,
@@ -128,7 +128,7 @@ describe('edit', function (): void {
             ->orderBy('name')
             ->firstOrFail();
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         $response = get(route('teams.members.addresses.edit', [
             'team' => $address->member->team,

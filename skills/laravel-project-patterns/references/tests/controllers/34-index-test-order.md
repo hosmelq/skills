@@ -38,4 +38,4 @@ Assert membership with exact count and identities when the contract calls for bo
 
 Inactive rows and ancestors can remain visible. Historical relations concern live principal rows with deleted relations. Keep wrong-parent binding, ordinary collection scope and both conflicting-ownership directions separate. Deep fixtures must satisfy unrelated uniqueness and range constraints.
 
-Examples use synthetic models, `signIn()` for an outsider, `signIn(team: ...)` for membership and `public_id`. Adapt these to actual namespaces, helpers, suite paths and inspected contracts.
+Examples use synthetic models, `login()` for an outsider, `login(team: ...)` for membership and `public_id`. Adapt these to actual namespaces, helpers, suite paths and inspected contracts.

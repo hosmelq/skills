@@ -19,7 +19,7 @@ describe('store', function (): void {
     it('deactivates the record', function (): void {
         $itemGroup = ItemGroup::factory()->createOne();
 
-        signIn(team: $itemGroup->team);
+        login(team: $itemGroup->team);
 
         mock(DeactivateItemGroup::class)
             ->shouldReceive('handle')
@@ -56,7 +56,7 @@ describe('store', function (): void {
     it('deactivates the record', function (): void {
         $facility = Facility::factory()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         mock(DeactivateFacility::class)
             ->shouldReceive('handle')
@@ -93,7 +93,7 @@ describe('store', function (): void {
     it('deactivates the record', function (): void {
         $cabinet = Cabinet::factory()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         mock(DeactivateCabinet::class)
             ->shouldReceive('handle')

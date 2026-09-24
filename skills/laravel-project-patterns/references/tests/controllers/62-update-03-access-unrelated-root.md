@@ -16,10 +16,9 @@ use App\Models\Team;
 describe('update', function (): void {
     it('prevents updating from an unrelated tenant', function (): void {
         $unrelatedTeam = Team::factory()->createOne();
-
         $userTeam = Team::factory()->createOne();
 
-        signIn(team: $userTeam);
+        login(team: $userTeam);
 
         $response = patch(route('teams.update', [
             'team' => $unrelatedTeam,
@@ -45,7 +44,7 @@ describe('update', function (): void {
     it('prevents updating from an unrelated tenant', function (): void {
         $unrelatedMember = Member::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = patch(route('teams.members.update', [
             'team' => $unrelatedMember->team,
@@ -72,7 +71,7 @@ describe('update', function (): void {
     it('prevents updating from an unrelated tenant', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = patch(route('teams.work-orders.update', [
             'team' => $workOrder->team,
@@ -99,7 +98,7 @@ describe('update', function (): void {
     it('prevents updating from an unrelated tenant', function (): void {
         $itemGroup = ItemGroup::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = patch(route('teams.item-groups.update', [
             'team' => $itemGroup->team,
@@ -128,7 +127,7 @@ describe('update', function (): void {
     it('prevents updating from an unrelated tenant', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = patch(route('teams.work-order-statuses.update', [
             'team' => $workOrderStatus->team,

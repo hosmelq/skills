@@ -23,20 +23,19 @@ use Inertia\Testing\AssertableInertia;
 describe('create', function (): void {
     it('shows the create page', function (): void {
         $team = Team::factory()->createOne();
-        $member = Member::factory()->for($team)->createOne();
-        $facility = Facility::factory()->for($team)->createOne();
-        $servicePlan = ServicePlan::factory()->for($team)->createOne([
+        $member = Member::factory()->recycle($team)->createOne();
+        $facility = Facility::factory()->recycle($team)->createOne();
+        $servicePlan = ServicePlan::factory()->recycle($team)->createOne([
             'weight_unit' => WeightUnit::Kilograms,
         ]);
-        $planRule = PlanRule::factory()->for($servicePlan)->createOne();
+        $planRule = PlanRule::factory()->recycle($servicePlan)->createOne();
         $enrollment = Enrollment::factory()
-            ->for($member)
-            ->for($team)
+            ->recycle([$member, $team])
             ->for($servicePlan)
             ->createOne(['label' => 'Workshop plan']);
-        $status = WorkOrderStatus::factory()->initial()->for($team)->createOne();
+        $status = WorkOrderStatus::factory()->initial()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-orders.create', $team));
 

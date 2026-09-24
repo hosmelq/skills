@@ -21,14 +21,13 @@ use Inertia\Testing\AssertableInertia;
 describe('edit', function (): void {
     it('shows the edit page', function (): void {
         $member = Member::factory()->createOne();
-        $servicePlan = ServicePlan::factory()->for($member->team)->createOne();
+        $servicePlan = ServicePlan::factory()->recycle($member->team)->createOne();
         $cabinet = Cabinet::factory()
-            ->for($member)
-            ->for($member->team)
+            ->recycle([$member, $member->team])
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.cabinets.edit', [
             'team' => $member->team,
@@ -49,17 +48,13 @@ describe('edit', function (): void {
 
     it('shows the edit page with the current soft deleted relation', function (): void {
         $member = Member::factory()->createOne();
-        $servicePlan = ServicePlan::factory()
-            ->trashed()
-            ->for($member->team)
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->trashed()->recycle($member->team)->createOne();
         $cabinet = Cabinet::factory()
-            ->for($member)
-            ->for($member->team)
+            ->recycle([$member, $member->team])
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.cabinets.edit', [
             'team' => $member->team,
@@ -81,17 +76,13 @@ describe('edit', function (): void {
 
     it('shows the edit page with the current inactive relation', function (): void {
         $member = Member::factory()->createOne();
-        $servicePlan = ServicePlan::factory()
-            ->deactivated()
-            ->for($member->team)
-            ->createOne();
+        $servicePlan = ServicePlan::factory()->deactivated()->recycle($member->team)->createOne();
         $cabinet = Cabinet::factory()
-            ->for($member)
-            ->for($member->team)
+            ->recycle([$member, $member->team])
             ->for($servicePlan)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.cabinets.edit', [
             'team' => $member->team,

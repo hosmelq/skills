@@ -25,7 +25,7 @@ describe('edit', function (): void {
             ->createOne();
         $workOrder = WorkOrder::factory()->recycle($status->team)->for($status, 'workOrderStatus')->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = get(route('teams.work-orders.edit', [
             'team' => $workOrder->team,
@@ -59,9 +59,9 @@ describe('edit', function (): void {
     it('marks the page read only for final parent states', function (WorkOrderBaseStatus $baseStatus): void {
         $status = WorkOrderStatus::factory()->withBaseStatus($baseStatus)->createOne();
         $workOrder = WorkOrder::factory()->recycle($status->team)->for($status, 'workOrderStatus')->createOne();
-        $line = WorkOrderLine::factory()->for($workOrder)->createOne();
+        $line = WorkOrderLine::factory()->recycle($workOrder)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = get(route('teams.work-orders.lines.edit', [
             'team' => $workOrder->team,

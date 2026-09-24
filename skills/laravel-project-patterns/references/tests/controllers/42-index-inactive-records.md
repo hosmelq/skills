@@ -18,7 +18,7 @@ describe('index', function (): void {
     it('includes inactive records in the list', function (): void {
         $facility = Facility::factory()->deactivated()->createOne();
 
-        signIn(team: $facility->team);
+        login(team: $facility->team);
 
         $response = get(route('teams.facilities.index', [
             'team' => $facility->team,
@@ -50,7 +50,7 @@ describe('index', function (): void {
     it('includes inactive records in the list', function (): void {
         $cabinet = Cabinet::factory()->deactivated()->createOne();
 
-        signIn(team: $cabinet->member->team);
+        login(team: $cabinet->member->team);
 
         $response = get(route('teams.members.cabinets.index', [
             'team' => $cabinet->member->team,
@@ -82,11 +82,9 @@ use Inertia\Testing\AssertableInertia;
 
 describe('index', function (): void {
     it('lists records under an inactive parent', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.index', [
             'team' => $planRule->servicePlan->team,
@@ -119,14 +117,10 @@ use Inertia\Testing\AssertableInertia;
 
 describe('index', function (): void {
     it('lists records under an inactive ancestor', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
-        $rate = PlanRate::factory()
-            ->for($planRule, 'planRule')
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
+        $rate = PlanRate::factory()->recycle($planRule)->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.index', [
             'team' => $rate->planRule->servicePlan->team,

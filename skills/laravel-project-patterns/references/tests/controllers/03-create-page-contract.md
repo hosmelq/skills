@@ -31,7 +31,7 @@ describe('create', function (): void {
     it('shows the create page', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.service-plans.create', [
             'team' => $team,
@@ -67,7 +67,7 @@ describe('create', function (): void {
     it('shows the create page', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.create', [
             'team' => $servicePlan->team,
@@ -105,7 +105,7 @@ describe('create', function (): void {
     it('shows the create page', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.create', [
             'team' => $planRule->servicePlan->team,

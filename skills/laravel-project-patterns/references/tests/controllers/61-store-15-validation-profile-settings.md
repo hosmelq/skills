@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 
 describe('store', function (): void {
     it('validates fields', function (array $data, array $expected): void {
-        signIn();
+        login();
 
         $response = post(route('teams.store'), $data);
 

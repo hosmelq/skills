@@ -17,11 +17,9 @@ use App\Models\MemberAddress;
 describe('update', function (): void {
     it('returns not found when the parent is soft deleted', function (): void {
         $member = Member::factory()->trashed()->createOne();
-        $address = MemberAddress::factory()
-            ->for($member)
-            ->createOne();
+        $address = MemberAddress::factory()->recycle($member)->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = patch(route('teams.members.addresses.update', [
             'team' => $member->team,
@@ -54,7 +52,7 @@ describe('update', function (): void {
             'team_id' => $member->team_id,
         ]);
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = patch(route('teams.members.cabinets.update', [
             'team' => $member->team,
@@ -82,9 +80,9 @@ use App\Models\WorkOrderLine;
 describe('update', function (): void {
     it('returns not found when the parent is soft deleted', function (): void {
         $workOrder = WorkOrder::factory()->trashed()->createOne();
-        $line = WorkOrderLine::factory()->for($workOrder)->createOne();
+        $line = WorkOrderLine::factory()->recycle($workOrder)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = patch(
             route('teams.work-orders.lines.update', [

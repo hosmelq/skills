@@ -19,7 +19,7 @@ describe('update', function (): void {
         $member = Member::factory()->createOne();
         $address = MemberAddress::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = patch(route('teams.members.addresses.update', [
             'team' => $member->team,
@@ -33,7 +33,7 @@ describe('update', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $address = MemberAddress::factory()->trashed()->createOne();
 
-        signIn(team: $address->member->team);
+        login(team: $address->member->team);
 
         $response = patch(route('teams.members.addresses.update', [
             'team' => $address->member->team,
@@ -60,10 +60,9 @@ use App\Models\PlanRule;
 describe('update', function (): void {
     it('returns not found when the record belongs to another tenant', function (): void {
         $planRule = PlanRule::factory()->createOne();
-
         $unrelatedPlanRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = patch(route('teams.service-plans.plan-rules.update', [
             'team' => $planRule->servicePlan->team,
@@ -91,9 +90,9 @@ use App\Models\WorkOrderLine;
 describe('update', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
-        $line = WorkOrderLine::factory()->trashed()->for($workOrder)->createOne();
+        $line = WorkOrderLine::factory()->trashed()->recycle($workOrder)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = patch(
             route('teams.work-orders.lines.update', [

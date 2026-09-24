@@ -21,7 +21,7 @@ describe('show', function (): void {
             'reference' => 'REF-100',
         ]);
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = get(route('teams.work-orders.show', [
             'team' => $workOrder->team,

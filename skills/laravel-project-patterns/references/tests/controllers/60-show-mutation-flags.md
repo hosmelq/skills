@@ -20,7 +20,7 @@ describe('show', function (): void {
     it('exposes mutation availability for a nonfinal parent', function (): void {
         $line = WorkOrderLine::factory()->withGroup()->createOne();
 
-        signIn(team: $line->workOrder->team);
+        login(team: $line->workOrder->team);
 
         $response = get(route('teams.work-orders.lines.show', [
             'team' => $line->workOrder->team,
@@ -65,9 +65,9 @@ describe('show', function (): void {
     ): void {
         $status = WorkOrderStatus::factory()->withBaseStatus($baseStatus)->createOne();
         $workOrder = WorkOrder::factory()->recycle($status->team)->for($status, 'workOrderStatus')->createOne();
-        $line = WorkOrderLine::factory()->for($workOrder)->createOne();
+        $line = WorkOrderLine::factory()->recycle($workOrder)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = get(route('teams.work-orders.lines.show', [
             'team' => $workOrder->team,
@@ -109,16 +109,16 @@ describe('show', function (): void {
         $team = Team::factory()->createOne();
         $workOrderStatus = WorkOrderStatus::factory()
             ->trashed()
-            ->for($team)
+            ->recycle($team)
             ->withBaseStatus(WorkOrderBaseStatus::Collected)
             ->createOne();
         $workOrder = WorkOrder::factory()
-            ->for($team)
+            ->recycle($team)
             ->for($workOrderStatus)
             ->createOne();
-        $line = WorkOrderLine::factory()->for($workOrder)->createOne();
+        $line = WorkOrderLine::factory()->recycle($workOrder)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-orders.lines.show', [
             'team' => $workOrder->team,

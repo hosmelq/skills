@@ -33,7 +33,7 @@ describe('destroy', function (): void {
     it('prevents deleting from an unrelated tenant', function (): void {
         $unrelatedMember = Member::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = delete(route('teams.members.destroy', [
             'team' => $unrelatedMember->team,
@@ -45,10 +45,9 @@ describe('destroy', function (): void {
 
     it('returns not found when the record belongs to another tenant', function (): void {
         $relatedTeam = Team::factory()->createOne();
-
         $unrelatedMember = Member::factory()->createOne();
 
-        signIn(team: $relatedTeam);
+        login(team: $relatedTeam);
 
         $response = delete(route('teams.members.destroy', [
             'team' => $relatedTeam,
@@ -61,7 +60,7 @@ describe('destroy', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
         $member = Member::factory()->trashed()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = delete(route('teams.members.destroy', [
             'team' => $member->team,
@@ -74,7 +73,7 @@ describe('destroy', function (): void {
     it('deletes the record', function (): void {
         $member = Member::factory()->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         mock(DeleteMember::class)
             ->shouldReceive('handle')

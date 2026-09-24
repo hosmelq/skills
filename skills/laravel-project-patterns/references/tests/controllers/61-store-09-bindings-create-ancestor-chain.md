@@ -20,7 +20,7 @@ describe('store', function (): void {
         $team = Team::factory()->createOne();
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = post(route('teams.service-plans.plan-rules.rates.store', [
             'team' => $team,
@@ -33,11 +33,9 @@ describe('store', function (): void {
 
     it('returns not found when the ancestor is soft deleted', function (): void {
         $servicePlan = ServicePlan::factory()->trashed()->createOne();
-        $planRule = PlanRule::factory()
-            ->for($servicePlan)
-            ->createOne();
+        $planRule = PlanRule::factory()->recycle($servicePlan)->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = post(route('teams.service-plans.plan-rules.rates.store', [
             'team' => $servicePlan->team,
@@ -50,11 +48,9 @@ describe('store', function (): void {
 
     it('returns not found when the parent belongs to another ancestor in the same tenant', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
-        $planRule = PlanRule::factory()
-            ->recycle($servicePlan->team)
-            ->createOne();
+        $planRule = PlanRule::factory()->recycle($servicePlan->team)->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = post(route('teams.service-plans.plan-rules.rates.store', [
             'team' => $servicePlan->team,
@@ -69,7 +65,7 @@ describe('store', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
         $unrelatedPlanRule = PlanRule::factory()->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = post(route('teams.service-plans.plan-rules.rates.store', [
             'team' => $servicePlan->team,
@@ -83,7 +79,7 @@ describe('store', function (): void {
     it('returns not found when the parent is soft deleted', function (): void {
         $planRule = PlanRule::factory()->trashed()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = post(route('teams.service-plans.plan-rules.rates.store', [
             'team' => $planRule->servicePlan->team,

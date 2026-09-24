@@ -28,7 +28,7 @@ use Inertia\Testing\AssertableInertia;
 describe('edit', function (): void {
     it('shows the edit page with its selected historical relations', function (): void {
         $team = Team::factory()->createOne();
-        $status = WorkOrderStatus::factory()->trashed()->for($team)->createOne();
+        $status = WorkOrderStatus::factory()->trashed()->recycle($team)->createOne();
         $workOrder = WorkOrder::factory()
             ->withCurrentFacility(Facility::factory()->trashed())
             ->withMember(Member::factory()->trashed())
@@ -40,9 +40,9 @@ describe('edit', function (): void {
             ->for($status, 'workOrderStatus')
             ->for($team)
             ->createOne();
-        $activeMember = Member::factory()->for($team)->createOne();
+        $activeMember = Member::factory()->recycle($team)->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.work-orders.edit', [
             'team' => $team,

@@ -21,7 +21,7 @@ describe('create', function (): void {
         $status = WorkOrderStatus::factory()->withBaseStatus($baseStatus)->createOne();
         $workOrder = WorkOrder::factory()->recycle($status->team)->for($status, 'workOrderStatus')->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = get(route('teams.work-orders.lines.create', [
             'team' => $workOrder->team,

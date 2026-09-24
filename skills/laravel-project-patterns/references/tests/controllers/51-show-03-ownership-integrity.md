@@ -24,7 +24,7 @@ describe('show', function (): void {
             ->for($otherTeam)
             ->createOne();
 
-        signIn(team: $member->team);
+        login(team: $member->team);
 
         $response = get(route('teams.members.cabinets.show', [
             'team' => $member->team,
@@ -56,7 +56,7 @@ describe('show', function (): void {
         $otherTeam = Team::factory()->createOne();
         $line = WorkOrderLine::factory()->for($workOrder)->for($otherTeam)->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         $response = get(route('teams.work-orders.lines.show', [
             'team' => $workOrder->team,

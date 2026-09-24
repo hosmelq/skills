@@ -16,11 +16,9 @@ use App\Models\ServicePlan;
 
 describe('create', function (): void {
     it('prevents viewing when the parent is inactive', function (): void {
-        $planRule = PlanRule::factory()
-            ->for(ServicePlan::factory()->deactivated())
-            ->createOne();
+        $planRule = PlanRule::factory()->for(ServicePlan::factory()->deactivated())->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.rates.create', [
             'team' => $planRule->servicePlan->team,

@@ -23,7 +23,7 @@ describe('edit', function (): void {
     it('shows the edit page', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
 
-        signIn(team: $servicePlan->team);
+        login(team: $servicePlan->team);
 
         $response = get(route('teams.service-plans.edit', [
             'team' => $servicePlan->team,
@@ -44,7 +44,7 @@ describe('edit', function (): void {
     it('shows the edit page and marks existing rates', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.edit', [
             'team' => $rate->planRule->servicePlan->team,
@@ -80,7 +80,7 @@ describe('edit', function (): void {
     it('shows the edit page', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
-        signIn(team: $planRule->servicePlan->team);
+        login(team: $planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.edit', [
             'team' => $planRule->servicePlan->team,
@@ -104,7 +104,7 @@ describe('edit', function (): void {
     it('shows the edit page and marks existing rates', function (): void {
         $rate = PlanRate::factory()->createOne();
 
-        signIn(team: $rate->planRule->servicePlan->team);
+        login(team: $rate->planRule->servicePlan->team);
 
         $response = get(route('teams.service-plans.plan-rules.edit', [
             'team' => $rate->planRule->servicePlan->team,

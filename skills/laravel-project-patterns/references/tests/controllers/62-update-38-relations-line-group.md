@@ -23,7 +23,7 @@ describe('update', function (): void {
         $line = WorkOrderLine::factory()->createOne();
         $group = ItemGroup::factory()->createOne();
 
-        signIn(team: $line->workOrder->team);
+        login(team: $line->workOrder->team);
 
         $response = patch(route('teams.work-orders.lines.update', [
             'team' => $line->workOrder->team,
@@ -40,12 +40,9 @@ describe('update', function (): void {
 
     it('rejects a newly assigned inactive relation', function (): void {
         $line = WorkOrderLine::factory()->createOne();
-        $group = ItemGroup::factory()
-            ->deactivated()
-            ->for($line->workOrder->team)
-            ->createOne();
+        $group = ItemGroup::factory()->deactivated()->recycle($line->workOrder->team)->createOne();
 
-        signIn(team: $line->workOrder->team);
+        login(team: $line->workOrder->team);
 
         $response = patch(route('teams.work-orders.lines.update', [
             'team' => $line->workOrder->team,
@@ -62,12 +59,9 @@ describe('update', function (): void {
 
     it('rejects a newly assigned soft deleted relation', function (): void {
         $line = WorkOrderLine::factory()->createOne();
-        $group = ItemGroup::factory()
-            ->trashed()
-            ->for($line->workOrder->team)
-            ->createOne();
+        $group = ItemGroup::factory()->trashed()->recycle($line->workOrder->team)->createOne();
 
-        signIn(team: $line->workOrder->team);
+        login(team: $line->workOrder->team);
 
         $response = patch(route('teams.work-orders.lines.update', [
             'team' => $line->workOrder->team,
@@ -84,13 +78,13 @@ describe('update', function (): void {
 
     it('accepts a current inactive relation', function (): void {
         $group = ItemGroup::factory()->deactivated()->createOne();
-        $workOrder = WorkOrder::factory()->for($group->team)->createOne();
+        $workOrder = WorkOrder::factory()->recycle($group->team)->createOne();
         $line = WorkOrderLine::factory()
-            ->for($workOrder)
+            ->recycle($workOrder)
             ->for($group, 'itemGroup')
             ->createOne();
 
-        signIn(team: $workOrder->team);
+        login(team: $workOrder->team);
 
         mock(UpdateWorkOrderLine::class)
             ->shouldReceive('handle')

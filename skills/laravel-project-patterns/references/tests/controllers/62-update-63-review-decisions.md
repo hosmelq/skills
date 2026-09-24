@@ -21,7 +21,7 @@ use App\Models\User;
 describe('update', function (): void {
     it('approves a request', function (): void {
         $enrollment = Enrollment::factory()->createOne();
-        $reviewedByUser = signIn(team: $enrollment->team);
+        $reviewedByUser = login(team: $enrollment->team);
 
         mock(RejectEnrollment::class)->shouldNotReceive('handle');
         mock(ApproveEnrollment::class)
@@ -48,7 +48,7 @@ describe('update', function (): void {
 
     it('rejects a request', function (): void {
         $enrollment = Enrollment::factory()->createOne();
-        $reviewedByUser = signIn(team: $enrollment->team);
+        $reviewedByUser = login(team: $enrollment->team);
 
         mock(ApproveEnrollment::class)->shouldNotReceive('handle');
         mock(RejectEnrollment::class)

@@ -25,7 +25,7 @@ Reuse these names across controllers; the file identifies the entity. Qualify a 
 
 ## Base Example
 
-Here `signIn()` authenticates an outsider; `signIn(team: ...)` authorizes that team. For nested routes, provide valid parents and all route parameters even in authentication and authorization tests.
+Here `login()` authenticates an outsider; `login(team: ...)` authorizes that team. For nested routes, provide valid parents and all route parameters even in authentication and authorization tests.
 
 ```php
 <?php
@@ -51,7 +51,7 @@ describe('create', function (): void {
     it('prevents viewing from an unrelated tenant', function (): void {
         $unrelatedTeam = Team::factory()->createOne();
 
-        signIn();
+        login();
 
         $response = get(route('teams.members.create', [
             'team' => $unrelatedTeam,
@@ -63,7 +63,7 @@ describe('create', function (): void {
     it('shows the create page', function (): void {
         $team = Team::factory()->createOne();
 
-        signIn(team: $team);
+        login(team: $team);
 
         $response = get(route('teams.members.create', [
             'team' => $team,
