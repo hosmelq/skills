@@ -6,7 +6,7 @@ Use `scripts/search.py` to select descriptions before reading catalog patterns. 
 BM25 and Qwen3-Embedding 0.6B vectors with reciprocal rank fusion. Markdown stays
 the source of truth; there is no generative helper or external inference API.
 
-The current references cover controller `create`, `destroy`, `edit`, `index`, `show`, `store` and `update` tests. Other areas will be added
+The current references cover controller `create`, `destroy`, `edit`, `index`, `show`, `store`, `update`, authentication, reordering and initial/default selection tests. Other areas will be added
 incrementally; a returned reference is not evidence that an unrelated area is covered.
 
 ## Pattern
@@ -333,6 +333,38 @@ files directly; application work retrieves them through the bounded search.
 - [Full and partial rate inputs](../references/tests/controllers/62-update-61-mapping-rate-full-and-partial.md)
 - [Rate inputs with stored bounds](../references/tests/controllers/62-update-62-mapping-rate-stored-bounds.md)
 - [Approval and rejection](../references/tests/controllers/62-update-63-review-decisions.md)
+
+#### Authentication
+
+- [Authentication case order](../references/tests/controllers/63-auth-00-test-order.md)
+- [Verification Code Request](../references/tests/controllers/63-auth-01-code-request.md)
+- [Verification Code Validation](../references/tests/controllers/63-auth-02-code-validation.md)
+- [Verification Code Sign-In](../references/tests/controllers/63-auth-03-code-sign-in.md)
+- [Google Token Validation](../references/tests/controllers/63-auth-04-google-token-validation.md)
+- [Google Account Conflicts](../references/tests/controllers/63-auth-05-google-account-conflicts.md)
+- [Existing Google Identity](../references/tests/controllers/63-auth-06-google-existing-identity.md)
+- [New Google Identity](../references/tests/controllers/63-auth-07-google-registration.md)
+- [Signed Identity Token Fixture](../references/tests/controllers/63-auth-08-apple-token-fixture.md)
+- [Apple Field Validation](../references/tests/controllers/63-auth-09-apple-field-validation.md)
+- [Apple Token Rejections](../references/tests/controllers/63-auth-10-apple-token-rejections.md)
+- [Apple Account Conflicts](../references/tests/controllers/63-auth-11-apple-account-conflicts.md)
+- [Existing Apple Identity](../references/tests/controllers/63-auth-12-apple-existing-identity.md)
+- [New Apple Identity](../references/tests/controllers/63-auth-13-apple-registration.md)
+- [Verification Page](../references/tests/controllers/63-auth-14-verification-page.md)
+
+#### Move
+
+- [Move case order](../references/tests/controllers/64-move-00-test-order.md)
+- [Access and Record Binding](../references/tests/controllers/64-move-01-access-bindings.md)
+- [Predecessor Validation](../references/tests/controllers/64-move-02-predecessor-validation.md)
+- [Predecessor Group Binding](../references/tests/controllers/64-move-03-predecessor-group.md)
+- [Tenant-Wide Ordering Responses](../references/tests/controllers/64-move-04-tenant-responses.md)
+- [Group Ordering Responses](../references/tests/controllers/64-move-05-group-responses.md)
+
+#### Initial and Default Selection
+
+- [Initial selection ordered cases](../references/tests/controllers/65-initial-record.md)
+- [Default selection ordered cases](../references/tests/controllers/66-default-record.md)
 
 ## Related References
 
