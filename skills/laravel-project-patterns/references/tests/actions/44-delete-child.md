@@ -20,9 +20,7 @@ it('rejects deactivated parent records', function (): void {
         ->for(ServicePlan::factory()->deactivated())
         ->createOne();
 
-    expect(fn () => resolve(DeletePlanRule::class)->handle(
-        $planRule,
-    ))->toThrow(
+    expect(fn () => resolve(DeletePlanRule::class)->handle($planRule))->toThrow(
         CannotUseDeactivatedServicePlan::class,
         'Cannot use a deactivated service plan.',
     );
@@ -33,9 +31,7 @@ it('rejects deactivated parent records', function (): void {
 it('soft deletes a record under an active parent', function (): void {
     $planRule = PlanRule::factory()->createOne();
 
-    resolve(DeletePlanRule::class)->handle(
-        $planRule,
-    );
+    resolve(DeletePlanRule::class)->handle($planRule);
 
     assertSoftDeleted($planRule);
 });

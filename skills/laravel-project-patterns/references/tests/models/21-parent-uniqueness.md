@@ -62,9 +62,7 @@ it('enforces one record per member and tenant at the database level', function (
     expect(fn () => Enrollment::factory()
         ->recycle($firstMember)
         ->createOne())->toThrow(function (UniqueConstraintViolationException $exception): void {
-            expect($exception->index)->toBe(
-                'enrollments_member_team_unique',
-            );
+            expect($exception->index)->toBe('enrollments_member_team_unique');
         });
 });
 ```

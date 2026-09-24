@@ -53,6 +53,8 @@ Keep canonical test names, documented case order, fixtures, assertions and datas
 Keep behavior qualifiers (parent/ancestor, case-insensitive, relation state). Add
 `: field_name` only to distinguish separate tests within one block; named dataset
 rows already distinguish fields. Do not introduce behavior to match an example.
+Prefer one line for simple calls of up to 100 characters; wrap longer calls or
+when a break improves readability.
 
 Inspect factory definitions: use `recycle()` for existing default parents and
 derive unmodified intermediates from the created record. Keep trashed parents

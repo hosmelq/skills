@@ -65,10 +65,7 @@ describe('edit', function (): void {
                     ->where('workOrder.pickup_facility.id', $workOrder->pickupFacility->sqid)
                     ->where('workOrder.received_facility.id', $workOrder->receivedFacility->sqid)
                     ->where('workOrder.service_plan.id', $workOrder->servicePlan->sqid)
-                    ->where(
-                        'workOrder.plan_rule.id',
-                        $workOrder->planRule->sqid,
-                    )
+                    ->where('workOrder.plan_rule.id', $workOrder->planRule->sqid)
                     ->where('members.0.id', $activeMember->sqid)
                     ->where('members.0.display_name', $activeMember->display_name)
                     ->has('facilities')

@@ -44,10 +44,7 @@ it('approves a pending request', function (): void {
             && $enrollmentArgument->status === EnrollmentStatus::Approved
         ));
 
-    $result = resolve(ApproveEnrollment::class)->handle(
-        $enrollment,
-        $reviewedByUser,
-    );
+    $result = resolve(ApproveEnrollment::class)->handle($enrollment, $reviewedByUser);
 
     expect($result->is($enrollment))->toBeTrue();
 
@@ -79,10 +76,7 @@ it('preserves and provisions an approved request', function (): void {
             $enrollmentArgument->is($enrollment)
         ));
 
-    resolve(ApproveEnrollment::class)->handle(
-        $enrollment,
-        $reviewedByUser,
-    );
+    resolve(ApproveEnrollment::class)->handle($enrollment, $reviewedByUser);
 
     assertDatabaseHas(Enrollment::class, [
         'id' => $enrollment->id,

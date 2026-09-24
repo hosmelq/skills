@@ -24,9 +24,7 @@ it('rejects a deactivated ancestor', function (): void {
         ->recycle($planRule)
         ->createOne();
 
-    expect(fn () => resolve(DeletePlanRate::class)->handle(
-        $rate,
-    ))->toThrow(
+    expect(fn () => resolve(DeletePlanRate::class)->handle($rate))->toThrow(
         CannotUseDeactivatedServicePlan::class,
         'Cannot use a deactivated service plan.',
     );
@@ -37,9 +35,7 @@ it('rejects a deactivated ancestor', function (): void {
 it('soft deletes a record under an active ancestor', function (): void {
     $rate = PlanRate::factory()->createOne();
 
-    resolve(DeletePlanRate::class)->handle(
-        $rate,
-    );
+    resolve(DeletePlanRate::class)->handle($rate);
 
     assertSoftDeleted($rate);
 });

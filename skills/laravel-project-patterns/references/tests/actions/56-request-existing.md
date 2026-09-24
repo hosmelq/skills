@@ -34,10 +34,7 @@ it('approves and provisions an instant request', function (): void {
             $enrollment->status === EnrollmentStatus::Approved
         ));
 
-    $enrollment = resolve(RequestEnrollment::class)->handle(
-        $team,
-        $user,
-    );
+    $enrollment = resolve(RequestEnrollment::class)->handle($team, $user);
 
     assertDatabaseHas(Enrollment::class, [
         'id' => $enrollment->id,

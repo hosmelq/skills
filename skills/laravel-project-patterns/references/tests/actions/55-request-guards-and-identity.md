@@ -27,10 +27,7 @@ it('rejects requests when assignment self-service is disabled', function (): voi
 
     mock(ProvisionMemberCabinets::class)->shouldNotReceive('handle');
 
-    expect(fn () => resolve(RequestEnrollment::class)->handle(
-        $team,
-        $user,
-    ))->toThrow(
+    expect(fn () => resolve(RequestEnrollment::class)->handle($team, $user))->toThrow(
         CannotRequestEnrollment::class,
         'Cabinet self-service is not enabled for this team.',
     );
@@ -45,10 +42,7 @@ it('rejects requests without a verified email', function (): void {
 
     mock(ProvisionMemberCabinets::class)->shouldNotReceive('handle');
 
-    expect(fn () => resolve(RequestEnrollment::class)->handle(
-        $team,
-        $user,
-    ))->toThrow(
+    expect(fn () => resolve(RequestEnrollment::class)->handle($team, $user))->toThrow(
         CannotRequestEnrollment::class,
         'A verified email is required to request cabinets.',
     );
@@ -72,10 +66,7 @@ it('creates an owner and pending request', function (): void {
 
     mock(ProvisionMemberCabinets::class)->shouldNotReceive('handle');
 
-    $enrollment = resolve(RequestEnrollment::class)->handle(
-        $team,
-        $user,
-    );
+    $enrollment = resolve(RequestEnrollment::class)->handle($team, $user);
 
     expect($enrollment)->toBeInstanceOf(Enrollment::class);
 
@@ -106,10 +97,7 @@ it('reuses an owner with a case-insensitive email match', function (): void {
 
     mock(ProvisionMemberCabinets::class)->shouldNotReceive('handle');
 
-    $enrollment = resolve(RequestEnrollment::class)->handle(
-        $team,
-        $user,
-    );
+    $enrollment = resolve(RequestEnrollment::class)->handle($team, $user);
 
     expect($enrollment->member_id)->toBe($member->id);
 

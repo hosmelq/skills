@@ -70,9 +70,7 @@ it('propagates assignment creation failures when no assignment exists', function
         ->once()
         ->andThrow(CannotCreateCabinet::becauseServicePlanIsAlreadyAssigned());
 
-    expect(fn () => resolve(ProvisionMemberCabinets::class)->handle(
-        $enrollment,
-    ))->toThrow(
+    expect(fn () => resolve(ProvisionMemberCabinets::class)->handle($enrollment))->toThrow(
         CannotCreateCabinet::class,
         'A member can only have one cabinet per service plan.',
     );

@@ -32,10 +32,7 @@ it('rejects a pending request', function (): void {
     $enrollment = Enrollment::factory()->createOne();
     $reviewedByUser = User::factory()->createOne();
 
-    $result = resolve(RejectEnrollment::class)->handle(
-        $enrollment,
-        $reviewedByUser,
-    );
+    $result = resolve(RejectEnrollment::class)->handle($enrollment, $reviewedByUser);
 
     expect($result->is($enrollment))->toBeTrue();
 
@@ -57,10 +54,7 @@ it('preserves a rejected request', function (): void {
 
     $reviewedByUser = User::factory()->createOne();
 
-    resolve(RejectEnrollment::class)->handle(
-        $enrollment,
-        $reviewedByUser,
-    );
+    resolve(RejectEnrollment::class)->handle($enrollment, $reviewedByUser);
 
     assertDatabaseHas(Enrollment::class, [
         'id' => $enrollment->id,
