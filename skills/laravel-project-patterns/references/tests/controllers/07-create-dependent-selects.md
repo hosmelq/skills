@@ -1,6 +1,6 @@
 # Create Tests: Dependent Select Options And Partial Reload
 
-Complete HTTP/Inertia create-page contract for dependent selects: component, public IDs, enum options, null selected value and empty child list, followed by selected-value echo and ordered partial-reload options. Includes standalone and nested-parent forms.
+HTTP/Inertia create-page contract for dependent selects: component, public IDs, enum options, null selected value and empty child list, followed by selected-value echo and ordered partial-reload options. Includes standalone and nested-parent forms.
 
 Use `shows the create page`, then `loads dependent options for the selected value`. Qualify the field pair only when multiple dependent selects need distinct names. These cases do not test browser change handlers, selection clearing or submission validation.
 

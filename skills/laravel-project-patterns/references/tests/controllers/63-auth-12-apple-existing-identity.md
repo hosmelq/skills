@@ -1,6 +1,6 @@
 # Authentication Tests: Existing Apple Identity
 
-Pest POST JSON Apple login: authenticate an existing subject, accept a missing email claim for that linked subject, and update provider email without changing the account email. Preserve user ID and token counts.
+POST JSON Apple login: authenticate an existing subject, accept a missing email claim for that linked subject, and update provider email without changing the account email. Preserve user ID and token counts.
 
 Use the [signed token fixture](63-auth-08-apple-token-fixture.md) if the suite lacks an equivalent builder. Configure `services.apple.client_id` for the test application.
 

@@ -2,8 +2,6 @@
 
 Direct GET show route with tenant and record: a foreign tenant record or soft deleted target returns 404. Authenticate in the URL tenant and preserve the exact bound record fixtures.
 
-## Direct Record
-
 ```php
 <?php
 

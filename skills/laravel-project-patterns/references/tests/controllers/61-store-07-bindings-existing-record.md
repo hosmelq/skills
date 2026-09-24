@@ -1,8 +1,6 @@
 # Store Tests: Bindings Existing Record
 
-Pest POST store: Two bindings: existing record belongs to another tenant or is soft deleted.
-
-## Complete block
+POST store: Two bindings: existing record belongs to another tenant or is soft deleted.
 
 ```php
 <?php

@@ -1,8 +1,6 @@
 # Store Tests: Mapping Optional Bound
 
-Pest POST store: Two complete success cases preserve omitted Optional versus explicit null upper bound and decimal strings.
-
-## Complete block
+POST store: Two complete success cases preserve omitted Optional versus explicit null upper bound and decimal strings.
 
 ```php
 <?php

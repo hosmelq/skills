@@ -1,10 +1,6 @@
 # Store Tests: Failures State And Reference
 
-Pest POST store: Required initial status, unavailable selected status and duplicate reference remain distinct action exception translations.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+POST store: Mocked exceptions test validation mapping only. Required initial status, unavailable selected status and duplicate reference remain distinct action exception translations.
 
 ```php
 <?php

@@ -1,8 +1,6 @@
 # Update Tests: Mapping Rate Stored Bounds
 
-Pest PATCH update: Rate bound validation checks stored lower/upper values; separate successful cases explicitly clear the upper bound or update the lower bound against an already open-ended upper bound.
-
-## Complete block
+PATCH update: Rate bound validation checks stored lower/upper values; separate successful cases explicitly clear the upper bound or update the lower bound against an already open-ended upper bound.
 
 ```php
 <?php

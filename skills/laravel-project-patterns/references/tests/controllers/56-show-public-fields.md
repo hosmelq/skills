@@ -1,8 +1,6 @@
 # Show Tests: Public Fields And Hidden Foreign Keys
 
-Complete GET show detail contract verifies a known reference, initial state value, derived finality false and public record/tenant IDs. Three explicit raw foreign keys must be absent from the serialized record.
-
-## Public Record
+GET show detail contract verifies a known reference, initial state value, derived finality false and public record/tenant IDs. Three explicit raw foreign keys must be absent from the serialized record.
 
 ```php
 <?php

@@ -2,8 +2,6 @@
 
 A live index row retains its soft deleted related member and final status. Complete GET example asserts the row and both relation IDs plus derived finality true; the principal record remains live.
 
-## Historical Relations
-
 ```php
 <?php
 

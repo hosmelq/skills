@@ -1,8 +1,6 @@
 # Store Tests: Validation Assignment Id
 
-Pest POST store: Complete related-ID/label dataset plus foreign-tenant and soft-deleted relation rejection.
-
-## Complete block
+POST store: Complete related-ID/label dataset plus foreign-tenant and soft-deleted relation rejection.
 
 ```php
 <?php

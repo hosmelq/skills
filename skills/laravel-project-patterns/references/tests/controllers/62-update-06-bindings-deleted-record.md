@@ -1,6 +1,6 @@
 # Update Tests: Bindings Deleted Record
 
-Pest PATCH update: A soft deleted direct record returns 404. Authenticate its own URL tenant; adapt the model, route and valid payload to the endpoint.
+PATCH update: A soft-deleted direct record returns 404 with its URL tenant authenticated.
 
 ## Soft deleted record
 

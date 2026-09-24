@@ -1,8 +1,6 @@
 # Store Tests: Bindings Create Ancestor Chain
 
-Pest POST store: Three bindings: ancestor foreign/deleted, parent foreign/deleted, or parent attached to another ancestor in the same tenant.
-
-## Complete block
+POST store: Three bindings: ancestor foreign/deleted, parent foreign/deleted, or parent attached to another ancestor in the same tenant.
 
 ```php
 <?php

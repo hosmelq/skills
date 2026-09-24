@@ -1,8 +1,6 @@
 # Store Tests: Uniqueness Name With Mapped Success
 
-Pest POST store: Case-insensitive duplicates and exact inactive-name reservation; reuse carries typed name predicate and toast.
-
-## Complete block
+POST store: Case-insensitive duplicates and exact inactive-name reservation; reuse carries typed name predicate and toast.
 
 ```php
 <?php

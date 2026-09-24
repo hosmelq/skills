@@ -1,6 +1,6 @@
 # Update Tests: Validation Address Fields
 
-Pest PATCH update: Whole contact/postal/geographic dataset, preserving nullable or optional update fields, both coordinate bounds and the country/province field contract.
+PATCH update: Whole contact/postal/geographic dataset, preserving nullable or optional update fields, both coordinate bounds and the country/province field contract.
 
 ## Validates fields
 

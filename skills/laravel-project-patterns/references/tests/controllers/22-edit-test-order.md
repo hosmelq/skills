@@ -1,6 +1,6 @@
 # Controller Tests: Ordered Edit Block
 
-Ordered Pest GET edit cases: authentication, scoped route binding, tenant integrity, inactive-policy restrictions, page props, dependent selects, retained historical selections, related-record flags and final-state forms. Canonical names and assertion boundaries for assembling the applicable complete block.
+Ordered GET edit tests for access and binding, page props, dependent options, retained historical selections, related-record flags, and final-state forms.
 
 ## Case Order
 
@@ -42,4 +42,4 @@ Selected historical resources and available choices are separate contracts. Pres
 
 Inactive-policy fixtures return 403. Final-state examples remain viewable: the record case asserts is_final; the child dataset asserts canMutate=false. Do not substitute one for the other or infer write-action validation.
 
-Reuse canonical names across controllers; qualify only to distinguish cases within one block. Here login() authenticates an outsider and login(team: ...) authorizes that team. Adapt synthetic models, helpers, public-ID fields, routes and suite namespaces to the consuming project.
+Reuse canonical names across controllers; qualify only to distinguish cases within one block. Here login() authenticates an outsider and login(team: ...) authorizes that team.

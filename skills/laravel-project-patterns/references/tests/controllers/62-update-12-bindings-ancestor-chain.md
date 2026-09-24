@@ -1,8 +1,6 @@
 # Update Tests: Bindings Ancestor Chain
 
-Pest PATCH update: Two-parent routes: ancestor foreign/deleted, parent under another same-tenant ancestor, parent foreign/deleted. Preserve every live descendant.
-
-## Complete block
+PATCH update: Two-parent routes: ancestor foreign/deleted, parent under another same-tenant ancestor, parent foreign/deleted. Preserve every live descendant.
 
 ```php
 <?php

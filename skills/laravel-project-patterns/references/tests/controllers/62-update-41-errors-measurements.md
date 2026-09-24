@@ -1,10 +1,6 @@
 # Update Tests: Errors Measurements
 
-Pest PATCH update: Mocked action exceptions for incomplete weight, mismatched weight unit and incomplete dimensions map to their exact validation fields; no real guard is executed.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+PATCH update: Mocked action exceptions for incomplete weight, mismatched weight unit and incomplete dimensions map to their exact validation fields; no real guard is executed.
 
 ```php
 <?php

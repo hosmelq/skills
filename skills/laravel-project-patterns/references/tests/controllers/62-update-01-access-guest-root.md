@@ -1,6 +1,6 @@
 # Update Tests: Access Guest Root
 
-Pest PATCH update: Browser guest authentication on tenant settings and direct-record routes. Adapt the route, model and valid payload to the endpoint; both cases redirect to login.
+PATCH update: Browser guest authentication on tenant settings and direct-record routes. Adapt the route, model and valid payload to the endpoint; both cases redirect to login.
 
 ## Tenant settings
 

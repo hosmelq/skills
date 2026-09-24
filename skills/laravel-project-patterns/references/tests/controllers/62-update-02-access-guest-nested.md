@@ -1,6 +1,6 @@
 # Update Tests: Access Guest Nested
 
-Pest PATCH update: Browser PATCH guests on one-parent and two-parent record routes; preserve the valid description payload variant.
+PATCH update: Browser PATCH guests on one-parent and two-parent record routes; preserve the valid description payload variant.
 
 ## Requires authentication — variant 1
 

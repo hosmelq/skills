@@ -1,6 +1,6 @@
 # Controller Tests: Ordered Show Block
 
-Ordered Pest GET show cases for browser pages, current-user JSON and public-ID JSON API: authentication, verification and tenant access, scoped route bindings, page and resource contracts, historical relations, child collections and mutation flags. Canonical names and assertion boundaries.
+Ordered GET show tests for browser pages and JSON resources: access, bindings, page contracts, historical relations, child collections, and mutation flags.
 
 ## Case Order
 
@@ -47,4 +47,4 @@ Use `shows the detail page` across direct and nested controllers. Specialized ex
 
 Historical selections remain attached to a live record; they are not available-choice filters. Ordered live children require exact count and both positions. Finality examples expose read-only flags while keeping GET successful; they do not prove action guards. Keep the historical flag example separate from the broader final-state dataset assertions.
 
-Examples are synthetic. Adapt models, namespaces, helpers, public IDs, routes and suite paths to the consuming project. Here `login()` creates an outsider and `login(team: ...)` supplies membership.
+Here `login()` creates an outsider and `login(team: ...)` supplies membership.

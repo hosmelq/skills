@@ -1,8 +1,6 @@
 # Store Tests: Validation State Fields
 
-Pest POST store: Complete enum/base-state, boolean visibility, color, name and description dataset.
-
-## Validates fields
+POST store: Complete enum/base-state, boolean visibility, color, name and description dataset.
 
 ```php
 <?php

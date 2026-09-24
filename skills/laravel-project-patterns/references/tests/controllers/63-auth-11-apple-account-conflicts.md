@@ -1,6 +1,6 @@
 # Authentication Tests: Apple Account Conflicts
 
-Pest POST JSON Apple login: reject a registered email with no linked identity and an email linked to another subject. Preserve both fixtures despite their shared 422 response.
+POST JSON Apple login: reject a registered email with no linked identity and an email linked to another subject. Preserve both fixtures despite their shared 422 response.
 
 Use the [signed token fixture](63-auth-08-apple-token-fixture.md) if the suite lacks an equivalent builder. Configure `services.apple.client_id` for the test application.
 

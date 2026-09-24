@@ -1,10 +1,6 @@
 # Update Tests: Mapping Facility Geography
 
-Pest PATCH update: Facility update maps the submitted name and both current-country/cleared-province geographic transformations.
-
-Use valid country/province pairs from the consuming suite. Empty country context and changing country without a province are separate cases.
-
-## Complete block
+PATCH update: Facility update maps the submitted name and both current-country/cleared-province geographic transformations. Use valid seeded country/province pairs.
 
 ```php
 <?php

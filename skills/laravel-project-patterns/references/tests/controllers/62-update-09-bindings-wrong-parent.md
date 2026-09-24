@@ -1,6 +1,6 @@
 # Update Tests: Bindings Wrong Parent
 
-Pest PATCH update: Same-tenant wrong-parent fixtures retain recycled tenant, distinct same-tenant parents and child ownership graphs.
+PATCH update: Same-tenant wrong-parent fixtures retain recycled tenant, distinct same-tenant parents and child ownership graphs.
 
 ## Returns not found when the record belongs to another parent in the same tenant — variant 1
 

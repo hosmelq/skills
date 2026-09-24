@@ -1,6 +1,6 @@
 # Authentication Tests: Apple Field Validation
 
-Pest POST JSON Apple login: complete named dataset for overlong profile names and required identity token/nonce, with exact 422 field errors.
+POST JSON Apple login: complete named dataset for overlong profile names and required identity token/nonce, with exact 422 field errors.
 
 ```php
 <?php

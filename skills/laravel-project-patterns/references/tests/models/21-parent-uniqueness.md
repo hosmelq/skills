@@ -2,7 +2,7 @@
 
 Database uniqueness for an enum value under one parent, and for a member/tenant pair. The composite example also proves another member in the same tenant can persist.
 
-These are separate model files; reuse the canonical title for equivalent scopes.
+Use the canonical title for each equivalent scope.
 
 ```php
 <?php

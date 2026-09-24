@@ -1,6 +1,6 @@
 # Update Tests: Bindings Foreign Record
 
-Pest PATCH update: A direct record from another tenant returns 404. Authenticate the URL tenant independently of the foreign record; adapt the model, route and valid payload to the endpoint.
+PATCH update: A direct foreign-tenant record returns 404 with the URL tenant authenticated.
 
 ## Foreign tenant record
 

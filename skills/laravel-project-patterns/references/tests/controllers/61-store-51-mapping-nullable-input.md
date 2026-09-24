@@ -1,6 +1,6 @@
 # Store Tests: Mapping Nullable Input
 
-Pest POST store: One complete explicit-null case asserts all 20 nullable input properties. It stays separate so ordinary ID/required-field queries do not load these fields.
+POST store: One complete explicit-null case asserts all 20 nullable input properties. It stays separate so ordinary ID/required-field queries do not load these fields.
 
 ## Accepts explicit nulls for nullable fields
 

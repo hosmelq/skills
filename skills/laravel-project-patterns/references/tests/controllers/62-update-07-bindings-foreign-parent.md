@@ -1,6 +1,6 @@
 # Update Tests: Bindings Foreign Parent
 
-Pest PATCH update: One-parent routes with a foreign parent: aligned foreign chain versus replacement of the parent only; do not claim each fixture isolates a single edge.
+PATCH update: One-parent routes with a foreign parent return 404: aligned foreign chains and parent-only replacement; fixtures do not isolate every edge.
 
 ## Returns not found when the parent belongs to another tenant — variant 1
 

@@ -1,8 +1,6 @@
 # Store Tests: Relations Item Group
 
-Pest POST store: Selected group invalid public ID, foreign tenant, inactive or deleted with valid base payload.
-
-## Complete block
+POST store: Selected group invalid public ID, foreign tenant, inactive or deleted with valid base payload.
 
 ```php
 <?php

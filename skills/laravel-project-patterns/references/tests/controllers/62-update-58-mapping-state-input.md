@@ -1,8 +1,6 @@
 # Update Tests: Mapping State Input
 
-Pest PATCH update: State update preserves name mapping, enum conversion and a false boolean in separate complete action expectations and responses.
-
-## Complete block
+PATCH update: State update preserves name mapping, enum conversion and a false boolean in separate complete action expectations and responses.
 
 ```php
 <?php

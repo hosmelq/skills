@@ -1,6 +1,6 @@
 # Controller Tests: Ordered Create Block
 
-Ordered Laravel Pest tests for GET create forms: authentication redirects, tenant authorization, scoped parents, lifecycle restrictions, positive page contracts, dependent selects, option exclusions and read-only states. Includes the base block and canonical names.
+Ordered GET create-form tests for authentication, tenant and parent access, page props, dependent options, option exclusions, and read-only states.
 
 ## Test Order
 

@@ -1,10 +1,6 @@
 # Store Tests: Failures Range Collision
 
-Pest POST store: Overlap vs second open-ended interval: different input bounds, exceptions and error fields.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+POST store: Mocked exceptions test validation mapping only. Overlap vs second open-ended interval: different input bounds, exceptions and error fields.
 
 ```php
 <?php

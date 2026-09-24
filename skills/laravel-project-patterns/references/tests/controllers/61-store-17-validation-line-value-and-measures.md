@@ -1,8 +1,6 @@
 # Store Tests: Validation Line Value And Measures
 
-Pest POST store: Complete required description/quantity dataset with precision, numeric bounds, currency/value and all dimension/weight couplings; valid base payload is replaced per row.
-
-## Validates fields
+POST store: Complete required description/quantity dataset with precision, numeric bounds, currency/value and all dimension/weight couplings; valid base payload is replaced per row.
 
 ```php
 <?php

@@ -1,6 +1,6 @@
 # Update Tests: Access Unrelated Nested
 
-Pest PATCH update: Unrelated-tenant PATCH denials on valid one-parent and two-parent routes, including the supplied-description variant.
+PATCH update: Unrelated-tenant PATCH denials on valid one-parent and two-parent routes, including the supplied-description variant.
 
 ## Prevents updating from an unrelated tenant — variant 1
 

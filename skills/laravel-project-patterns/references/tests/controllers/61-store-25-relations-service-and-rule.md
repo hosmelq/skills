@@ -1,8 +1,6 @@
 # Store Tests: Relations Service And Rule
 
-Pest POST store: Selected service foreign/inactive/deleted; selected rule foreign/deleted or backed by inactive/deleted service. The two-row direct-owner/parent-owner dataset remains complete.
-
-## Complete block
+POST store: Selected service foreign/inactive/deleted; selected rule foreign/deleted or backed by inactive/deleted service. The two-row direct-owner/parent-owner dataset remains complete.
 
 ```php
 <?php

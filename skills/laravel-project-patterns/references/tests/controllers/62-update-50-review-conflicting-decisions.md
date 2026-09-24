@@ -1,10 +1,6 @@
 # Update Tests: Review Conflicting Decisions
 
-Pest PATCH update: Opposite review decisions map their respective mocked action exceptions to validation. Keep the default request fixture: the conflict comes from the mock, not an approved/rejected factory state.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+PATCH update: Opposite review decisions map their respective mocked action exceptions to validation. Keep the default request fixture: the conflict comes from the mock, not an approved/rejected factory state.
 
 ```php
 <?php

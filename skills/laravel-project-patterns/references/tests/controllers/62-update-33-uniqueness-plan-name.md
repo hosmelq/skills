@@ -1,8 +1,6 @@
 # Update Tests: Uniqueness Plan Name
 
-Pest PATCH update: Plan-name uniqueness keeps active and inactive conflicts distinct, with separate current/other-tenant/deleted acceptance fixtures and action mappings.
-
-## Complete block
+PATCH update: Plan-name uniqueness keeps active and inactive conflicts distinct, with separate current/other-tenant/deleted acceptance fixtures and action mappings.
 
 ```php
 <?php

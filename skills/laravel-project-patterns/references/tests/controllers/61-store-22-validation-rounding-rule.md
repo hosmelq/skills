@@ -1,8 +1,6 @@
 # Store Tests: Validation Rounding Rule
 
-Pest POST store: Complete rule dataset: decimal precision, country/currency/mode enums, positive increment, nonnegative minimum and conditional requirement.
-
-## Validates fields
+POST store: Complete rule dataset: decimal precision, country/currency/mode enums, positive increment, nonnegative minimum and conditional requirement.
 
 ```php
 <?php

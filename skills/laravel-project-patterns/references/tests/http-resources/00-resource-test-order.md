@@ -1,10 +1,10 @@
 # HTTP Resource Tests: Ordered Contract Checklist
 
-HTTP Resource tests assert serialized JSON fields, formats, timestamps, nested payloads and explicit JSON:API envelopes. Keep these in the project's HTTP Resource test category, separate from model casts and controller responses.
+HTTP Resource tests assert exact JSON fields, formats, nested payloads, timestamps and API envelopes. Keep them separate from model and controller tests. `toResource()->toJson()` selects the default resource; `Resource::make($model)` selects an explicit class.
 
-Inspect the resource class, its model casts, factory and configured suite; preserve actual paths, including DDD modules and `tests-new`. `toResource()->toJson()` selects the model's default resource; `Resource::make($model)` selects an explicit class. Preserve full expected arrays, Sqids, nulls, scalar types and phone/date/decimal formats.
+Inspect the resource, casts and factory. Preserve the full expected payload, including Sqids, nulls and phone/date/decimal formats. Examples are alternative shapes; do not add fields absent from the inspected payload.
 
-Use standalone `it()` declarations where the suite does. Start with `formats resource correctly`; then add applicable `formats the deactivation timestamp when present`, `formats the deletion timestamp when present`, or `includes a null current tenant when none is assigned` in the example order. Keep setup, serialization and assertions separated by a blank line. Examples are alternatives for distinct resource shapes; adapt their synthetic fields to the inspected payload without inventing extra fields.
+Start with `formats resource correctly`, then applicable cases in example order: `formats the deactivation timestamp when present`, `formats the deletion timestamp when present`, or `includes a null current tenant when none is assigned`. Match the suite's standalone `it()` style. Separate setup, serialization and assertions with blank lines.
 
 ## Reference Order
 

@@ -1,8 +1,6 @@
 # Store Tests: Relations Facility Roles
 
-Pest POST store: Three separate facility fields asserted together for foreign tenant, inactive and deleted relation fixtures.
-
-## Complete block
+POST store: Three separate facility fields asserted together for foreign tenant, inactive and deleted relation fixtures.
 
 ```php
 <?php

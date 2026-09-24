@@ -1,6 +1,6 @@
 # Store Tests: Mapping Root Related Id
 
-Pest POST store: Public facility ID decoded with reference value under tenant; returned record drives detail redirect.
+POST store: Public facility ID decoded with reference value under tenant; returned record drives detail redirect.
 
 ## Stores the record
 

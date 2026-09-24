@@ -1,10 +1,10 @@
 # Store Tests: Failures Inactive Parent
 
-Pest POST store: Initially active parent/ancestor reaches action, which throws inactive-state exception; different bound parent types and DTO predicates remain.
+POST store: Initially active parent/ancestor reaches action, which throws inactive-state exception; different bound parent types and DTO predicates remain.
 
 The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
 
-## Maps an inactive parent rejection to validation — variant 1
+## Inactive parent rejection
 
 ```php
 <?php
@@ -54,7 +54,7 @@ describe('store', function (): void {
 });
 ```
 
-## Maps an inactive ancestor rejection to validation — variant 2
+## Inactive ancestor rejection
 
 ```php
 <?php

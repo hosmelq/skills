@@ -1,8 +1,6 @@
 # Update Tests: Errors Final Record
 
-Pest PATCH update: Mocked finality exceptions for principal and child update routes preserve response fields and supplied payload; these do not use final-state fixtures.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
+PATCH update: Mocked finality exceptions for principal and child update routes preserve response fields and supplied payload; these do not use final-state fixtures.
 
 ## Maps a final record rejection to validation — variant 1
 

@@ -1,6 +1,6 @@
 # Store Tests: Mapping Scalar Input
 
-Pest POST store: Two complete scalar-input examples: email and name. Different required payloads and detail routes are retained rather than declared equivalent.
+POST store: Email and name examples require different payloads and detail redirects.
 
 ## Stores the record — variant 1
 

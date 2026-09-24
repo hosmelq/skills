@@ -1,8 +1,6 @@
 # Authentication Tests: Verification Code Request
 
-Pest POST JSON code request: complete email validation dataset, mocked code generation and on-demand notification addressed to the requested email with the same code model.
-
-Order: `validates fields`, then `requests a verification code`. The generator is mocked; this verifies delegation and notification, not creation of the code record.
+POST JSON code request: complete email validation dataset, mocked code generation (no code-record creation assertion) and on-demand notification addressed to the requested email with the same code model.
 
 ```php
 <?php

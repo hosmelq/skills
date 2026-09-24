@@ -1,8 +1,6 @@
 # Update Tests: Mapping Settings
 
-Pest PATCH update: Settings update preserves the submitted property mapping; a named dataset checks each enabled flag can become false. All cases assert the redirect and toast.
-
-## Complete block
+PATCH update: Settings update preserves the submitted property mapping; a named dataset checks each enabled flag can become false. All cases assert the redirect and toast.
 
 ```php
 <?php

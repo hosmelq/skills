@@ -1,6 +1,6 @@
 # Update Tests: Relations Foreign Rule
 
-Pest PATCH update: A complete two-row dataset rejects a foreign-tenant rule whose parent belongs either to the current tenant or to another tenant. Preserve both ownership graphs and the exact field error.
+PATCH update: A complete two-row dataset rejects a foreign-tenant rule whose parent belongs either to the current tenant or to another tenant. Preserve both ownership graphs and the exact field error.
 
 ## Rejects a newly assigned relation from another tenant: plan_rule_id
 

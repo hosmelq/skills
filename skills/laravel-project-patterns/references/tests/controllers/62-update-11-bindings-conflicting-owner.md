@@ -1,6 +1,6 @@
 # Update Tests: Bindings Conflicting Owner
 
-Pest PATCH update: The leaf belongs to the correct parent but its directly stored tenant differs; both cabinet and line fixture graphs are retained.
+PATCH update: The leaf belongs to the correct parent but its directly stored tenant differs; both cabinet and line fixture graphs are retained.
 
 ## Returns not found when the record tenant does not match its parent tenant — variant 1
 

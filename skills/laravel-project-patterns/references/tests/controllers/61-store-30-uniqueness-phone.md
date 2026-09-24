@@ -1,8 +1,6 @@
 # Store Tests: Uniqueness Phone
 
-Pest POST store: Phone uniqueness: formatted input normalizes before uniqueness and action mapping; preserve duplicate, other tenant and deleted-record variants.
-
-## Complete block
+POST store: Phone uniqueness: formatted input normalizes before uniqueness and action mapping; preserve duplicate, other tenant and deleted-record variants.
 
 ```php
 <?php

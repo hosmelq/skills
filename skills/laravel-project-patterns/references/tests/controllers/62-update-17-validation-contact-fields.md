@@ -1,8 +1,6 @@
 # Update Tests: Validation Contact Fields
 
-Pest PATCH update: Whole contact-field dataset plus the no-displayable-value case in its named general error bag.
-
-## Complete block
+PATCH update: Whole contact-field dataset plus the no-displayable-value case in its named general error bag.
 
 The country-restricted phone row uses a valid number from outside the allowed `CountryCode` values; preserve that exclusion when adapting the fixture.
 

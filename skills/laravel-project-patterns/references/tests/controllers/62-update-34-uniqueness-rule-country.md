@@ -1,8 +1,6 @@
 # Update Tests: Uniqueness Rule Country
 
-Pest PATCH update: Country uniqueness is scoped to the parent plan; retain current-record reuse, another parent scope and exact converted country input.
-
-## Complete block
+PATCH update: Country uniqueness is scoped to the parent plan; retain current-record reuse, another parent scope and exact converted country input.
 
 ```php
 <?php

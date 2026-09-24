@@ -2,7 +2,7 @@
 
 In-memory account casts for immutable dates, a person-name value object and hashed passwords; administrator predicates use a configured email allowlist.
 
-The fictional `PersonName` type is the inspected application cast. `Hash` and `config()` require the application bootstrap even without database rows.
+`Hash` and `config()` require the application bootstrap even without database rows.
 
 ```php
 <?php

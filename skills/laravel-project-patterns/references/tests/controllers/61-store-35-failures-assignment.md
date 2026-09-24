@@ -1,10 +1,8 @@
 # Store Tests: Failures Assignment
 
-Pest POST store: Distinct action exceptions for inactive selected service and duplicate assignment; same mapped ID field but different guards/messages.
+POST store: Distinct action exceptions for inactive selected service and duplicate assignment; same mapped ID field but different guards/messages.
 
 The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
 
 ```php
 <?php

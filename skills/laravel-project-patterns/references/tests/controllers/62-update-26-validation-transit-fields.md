@@ -1,6 +1,6 @@
 # Update Tests: Validation Transit Fields
 
-Pest PATCH update: Whole name/enum/integer/range dataset for transit settings; preserve which fields are omitted and which supplied bounds conflict.
+PATCH update: Whole name/enum/integer/range dataset for transit settings; preserve which fields are omitted and which supplied bounds conflict.
 
 ## Validates fields
 

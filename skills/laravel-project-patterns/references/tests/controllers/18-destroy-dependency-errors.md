@@ -4,8 +4,6 @@ DELETE destroy translates mocked dependency rejections with live and soft-delete
 
 Keep live and trashed variants separate. Related-record examples create a valid intermediary in the same tenant.
 
-## Child And Related Records
-
 ```php
 <?php
 

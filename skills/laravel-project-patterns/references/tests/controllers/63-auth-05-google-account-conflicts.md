@@ -1,6 +1,6 @@
 # Authentication Tests: Google Account Conflicts
 
-Pest POST JSON Google login: reject a registered email with no linked identity and an email linked to another provider subject. Both use verified client claims and return the same 422 error.
+POST JSON Google login: reject a registered email with no linked identity and an email linked to another provider subject. Both use verified client claims and return the same 422 error.
 
 ```php
 <?php

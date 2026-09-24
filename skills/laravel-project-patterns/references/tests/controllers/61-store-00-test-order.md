@@ -1,6 +1,6 @@
 # Controller Tests: Ordered Store Block
 
-Ordered Pest POST store cases for record creation, API requests and deactivation subresources: access, scoped bindings, inactive policy, complete field datasets, related-record eligibility, scoped uniqueness, action-error translation and accepted input mapping. Canonical names and boundaries for the applicable operation.
+Ordered POST store tests for creation, API responses and deactivation: access, bindings, validation, relation eligibility, scoped uniqueness, action errors, and input mapping.
 
 ## Case Order
 
@@ -77,4 +77,4 @@ New-relation eligibility, route binding and action exceptions are distinct. Reta
 
 Preserve typed action arguments and exact model identity, decoded IDs, enums, decimal strings, booleans, phone normalization and actor selection. Omitted Optional, explicit null and cleared dependent values differ. Mocked exceptions prove translation only; an initially active fixture reaching an action is not an inactive-policy fixture. Preserve negative action expectations only where asserted.
 
-Specific redirects, redirect-back errors, generic redirects, toast payloads and JSON API media type/IDs/status have different assertion strength. A pre-created action return does not prove database persistence. Synthetic `login()` is an outsider; `login(team: ...)` supplies membership. Adapt models, namespaces, helpers, public IDs, seeded data and suite paths to the consuming project.
+Specific redirects, redirect-back errors, generic redirects, toast payloads and JSON API media type/IDs/status have different assertion strength. A pre-created action return does not prove database persistence. Synthetic `login()` is an outsider; `login(team: ...)` supplies membership.

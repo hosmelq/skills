@@ -1,10 +1,6 @@
 # Store Tests: Failures Related Availability
 
-Pest POST store: Selected member, cabinet or service becomes unavailable after request validation; each concrete field retained.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+POST store: Mocked exceptions test validation mapping only. Selected member, cabinet or service becomes unavailable after request validation; each concrete field retained.
 
 ```php
 <?php

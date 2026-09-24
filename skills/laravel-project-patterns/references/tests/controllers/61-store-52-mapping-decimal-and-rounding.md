@@ -1,8 +1,6 @@
 # Store Tests: Mapping Decimal And Rounding
 
-Pest POST store: Country/currency enums and numeric zero to string, plus clearing explicit increment when rounding is disabled.
-
-## Complete block
+POST store: Country/currency enums and numeric zero to string, plus clearing explicit increment when rounding is disabled.
 
 ```php
 <?php

@@ -1,8 +1,8 @@
 # Default Record Tests: Ordered Cases
 
-Pest browser PATCH default selection: ordered access, foreign/deleted parent, wrong same-tenant parent, foreign/deleted record and successful typed action delegation. Preserve the exact nested redirect and toast.
+Browser PATCH default selection: ordered access, foreign/deleted parent, wrong same-tenant parent, foreign/deleted record and successful typed action delegation. Preserve the exact nested redirect and toast.
 
-Keep the top-level case order below and authenticate the URL tenant for 404 cases. The action is mocked; no database default change is asserted. `login()` creates an outsider; `login(team: ...)` supplies membership.
+Authenticate the URL tenant for 404 cases. The action is mocked; no database default change is asserted. `login()` creates an outsider; `login(team: ...)` supplies membership.
 
 ```php
 <?php

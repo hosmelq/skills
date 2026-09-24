@@ -1,6 +1,6 @@
 # Show Tests: Flat JSON And JSON API
 
-Complete GET JSON show blocks distinguish the authenticated-user root id response from a public-ID JSON API resource. Preserve 401, verification 403, raw numeric ID 404, media type and data.id/type; membership is not required by the latter contract.
+GET JSON show blocks distinguish the authenticated-user root id response from a public-ID JSON API resource. Preserve 401, verification 403, raw numeric ID 404, media type and data.id/type; membership is not required by the latter contract.
 
 An existing numeric database ID is invalid on the public-ID route. It is not a fixture for a nonexistent database row.
 

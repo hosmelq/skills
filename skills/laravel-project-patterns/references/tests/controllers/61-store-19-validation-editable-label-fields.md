@@ -1,8 +1,6 @@
 # Store Tests: Validation Editable Label Fields
 
-Pest POST store: Separate required-name case plus complete name/description/color dataset with defaults and data spread.
-
-## Complete block
+POST store: Separate required-name case plus complete name/description/color dataset with defaults and data spread.
 
 ```php
 <?php

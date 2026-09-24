@@ -1,8 +1,6 @@
 # Update Tests: Uniqueness Phone
 
-Pest PATCH update: Phone uniqueness: reject a duplicate in the same tenant; allow the current value, another tenant and a soft-deleted record. Keep normalization and typed input checks.
-
-## Complete block
+PATCH update: Phone uniqueness: reject a duplicate in the same tenant; allow the current value, another tenant and a soft-deleted record. Keep normalization and typed input checks.
 
 ```php
 <?php

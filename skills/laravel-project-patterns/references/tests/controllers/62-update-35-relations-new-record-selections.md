@@ -1,8 +1,6 @@
 # Update Tests: Relations New Record Selections
 
-Pest PATCH update: Newly assigned principal-record relations from another tenant, inactive relations and soft-deleted relations remain separate complete fixtures and field-error sets.
-
-## Complete block
+PATCH update: Newly assigned principal-record relations from another tenant, inactive relations and soft-deleted relations remain separate complete fixtures and field-error sets.
 
 ```php
 <?php

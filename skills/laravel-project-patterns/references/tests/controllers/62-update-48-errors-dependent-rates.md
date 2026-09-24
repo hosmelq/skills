@@ -1,8 +1,6 @@
 # Update Tests: Errors Dependent Rates
 
-Pest PATCH update: Mocked dependent-rate errors prevent a plan weight-unit or rule currency update through validation responses; typed fields and exception factories remain distinct.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
+PATCH update: Mocked dependent-rate errors prevent a plan weight-unit or rule currency update through validation responses; typed fields and exception factories remain distinct.
 
 ## Maps a dependent rate rejection to validation — variant 1
 

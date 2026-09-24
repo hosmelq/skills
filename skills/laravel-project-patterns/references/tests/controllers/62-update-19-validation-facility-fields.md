@@ -1,6 +1,6 @@
 # Update Tests: Validation Facility Fields
 
-Pest PATCH update: Whole geographic-record update dataset, retaining string/enum requirements and both coordinate bounds and numeric cases.
+PATCH update: Whole geographic-record update dataset, retaining string/enum requirements and both coordinate bounds and numeric cases.
 
 ## Validates fields
 

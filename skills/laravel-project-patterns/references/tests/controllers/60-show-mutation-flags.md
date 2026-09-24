@@ -1,6 +1,6 @@
 # Show Tests: Parent Finality And Mutation Flags
 
-Complete GET child show examples distinguish a nonfinal parent, three final-state dataset variants and a historical final state. Preserve canMutate, tested canDelete absence, relation data and raw foreign-key omissions without inferring write-action validation.
+GET child show examples distinguish a nonfinal parent, three final-state dataset variants and a historical final state. Preserve canMutate, tested canDelete absence, relation data and raw foreign-key omissions without inferring write-action validation.
 
 The historical example asserts canMutate=false but does not assert canDelete absence. Keep that boundary when adapting it.
 

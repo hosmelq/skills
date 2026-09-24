@@ -1,6 +1,6 @@
 # Store Tests: Mapping Editable Fields
 
-Pest POST store: Editable name, description and color mapped to typed action input; returned record selects detail route and toast.
+POST store: Editable name, description and color mapped to typed action input; returned record selects detail route and toast.
 
 ## Stores the record
 

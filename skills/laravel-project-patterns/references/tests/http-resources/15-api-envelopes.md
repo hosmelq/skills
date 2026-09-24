@@ -2,7 +2,7 @@
 
 Explicit API resource wrappers serialize models into exact data/attributes/id/type envelopes. One example maps an enum status; the other includes optional contact formatting.
 
-These exercise explicit resource classes, separately from the model’s default `toResource()` discovery. These `JsonApiResource` classes override `toId()` with `sqid` and `toType()` with the exact type asserted below.
+These explicit `JsonApiResource` classes override `toId()` with `sqid` and `toType()` with the asserted type.
 
 ```php
 <?php

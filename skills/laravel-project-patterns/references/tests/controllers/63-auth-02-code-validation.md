@@ -1,6 +1,6 @@
 # Authentication Tests: Verification Code Validation
 
-Pest POST JSON email login: complete email/code validation dataset and separate expired or already used verification code rejection. All failures return 422 with exact field errors.
+POST JSON email login: complete email/code validation dataset and separate expired or already used verification code rejection. All failures return 422 with exact field errors.
 
 Order: field dataset, expired code, used code. Keep valid, DNS-invalid, syntax-invalid and disposable email fixtures distinct.
 

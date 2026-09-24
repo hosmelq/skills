@@ -1,8 +1,6 @@
 # Update Tests: Uniqueness Editable Label
 
-Pest PATCH update: Case-insensitive inactive-name reservation, another tenant, soft-deleted reuse and current-name acceptance with an explicit null description.
-
-## Complete block
+PATCH update: Case-insensitive inactive-name reservation, another tenant, soft-deleted reuse and current-name acceptance with an explicit null description.
 
 ```php
 <?php

@@ -1,6 +1,6 @@
 # Update Tests: Validation Rounding Fields
 
-Pest PATCH update: Whole rule dataset for decimal precision, country/currency/mode and increment/minimum conditions.
+PATCH update: Whole rule dataset for decimal precision, country/currency/mode and increment/minimum conditions.
 
 ## Validates fields
 

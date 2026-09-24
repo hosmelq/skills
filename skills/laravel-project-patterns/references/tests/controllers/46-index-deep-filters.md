@@ -1,6 +1,6 @@
 # Index Tests: Nested Ancestor And Deletion Filters
 
-Complete two-parent GET index exclusions for a sibling parent, another ancestor in the same tenant and a soft deleted record. Preserve distinct discriminators and non-overlapping ranges so fixtures isolate the intended edge.
+Two-parent GET index exclusions for a sibling parent, another ancestor in the same tenant and a soft deleted record. Preserve distinct discriminators and non-overlapping ranges so fixtures isolate the intended edge.
 
 ## Sibling Parent
 

@@ -1,6 +1,6 @@
 # Update Tests: Validation Interval Rate Fields
 
-Pest PATCH update: Whole interval/rate dataset with the original upper/lower bound constraints and explicit negative action expectation.
+PATCH update: Whole interval/rate dataset with the original upper/lower bound constraints and explicit negative action expectation.
 
 ## Validates fields
 

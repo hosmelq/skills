@@ -1,6 +1,6 @@
 # Authentication Tests: Verification Code Sign-In
 
-Pest POST JSON email login: a valid one-time code creates a verified account or verifies an existing unverified account. Preserve consumed-code timestamps and the new-account token response.
+POST JSON email login: a valid one-time code creates a verified account or verifies an existing unverified account. Preserve consumed-code timestamps and the new-account token response.
 
 ```php
 <?php

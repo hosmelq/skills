@@ -1,6 +1,6 @@
 # Authentication Tests: Existing Google Identity
 
-Pest POST JSON Google login: authenticate a linked identity and preserve the account email when the provider email changes. Keep subject matching, user ID/token assertions and exact database fields.
+POST JSON Google login: authenticate a linked identity and preserve the account email when the provider email changes. Keep subject matching, user ID/token assertions and exact database fields.
 
 ```php
 <?php

@@ -1,8 +1,6 @@
 # Store Tests: Relations Status Selection
 
-Pest POST store: Selected initial status inactive/deleted/foreign tenant or wrong base status.
-
-## Complete block
+POST store: Selected initial status inactive/deleted/foreign tenant or wrong base status.
 
 ```php
 <?php

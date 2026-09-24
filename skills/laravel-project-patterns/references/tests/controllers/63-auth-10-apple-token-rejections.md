@@ -1,6 +1,6 @@
 # Authentication Tests: Apple Token Rejections
 
-Pest POST JSON Apple login: reject unverifiable tokens, wrong audience, expired tokens, wrong issuer and mismatched nonce using signed JWTs and a fake JWKS response.
+POST JSON Apple login: reject unverifiable tokens, wrong audience, expired tokens, wrong issuer and mismatched nonce using signed JWTs and a fake JWKS response.
 
 Use the [signed token fixture](63-auth-08-apple-token-fixture.md) if the suite lacks an equivalent builder. Configure `services.apple.client_id` for the test application.
 

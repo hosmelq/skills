@@ -1,8 +1,6 @@
 # Store Tests: Validation Interval Rate
 
-Pest POST store: Complete interval/rate dataset, with strict upper bound and negative action-call expectation on every row.
-
-## Validates fields
+POST store: Complete interval/rate dataset, with strict upper bound and negative action-call expectation on every row.
 
 ```php
 <?php

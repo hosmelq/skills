@@ -1,10 +1,6 @@
 # Store Tests: Failures Final Parent And Group
 
-Pest POST store: Final parent and subsequently unavailable selected group; separate guards and error fields with a valid original request.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+POST store: Mocked exceptions test validation mapping only. Final parent and subsequently unavailable selected group; distinct exceptions and error fields with a valid original request.
 
 ```php
 <?php

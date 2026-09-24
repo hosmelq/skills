@@ -1,8 +1,6 @@
 # Update Tests: Uniqueness State Name
 
-Pest PATCH update: State-name uniqueness retains case-insensitive duplicate and inactive reservation, current-name reuse, other tenant and soft-deleted reuse.
-
-## Complete block
+PATCH update: State-name uniqueness retains case-insensitive duplicate and inactive reservation, current-name reuse, other tenant and soft-deleted reuse.
 
 ```php
 <?php

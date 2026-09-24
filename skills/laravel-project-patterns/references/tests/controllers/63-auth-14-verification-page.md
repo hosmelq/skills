@@ -1,6 +1,6 @@
 # Authentication Tests: Verification Page
 
-Pest authenticated browser GET: an unverified account receives the email verification Inertia page and HTTP 200. This example covers the unverified-user prompt.
+Authenticated browser GET: An unverified account receives the email verification Inertia page with HTTP 200.
 
 `login($user)` authenticates the given unverified user; use the suite helper that accepts an existing user.
 

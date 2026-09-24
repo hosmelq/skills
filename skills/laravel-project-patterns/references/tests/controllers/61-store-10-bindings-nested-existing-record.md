@@ -1,8 +1,6 @@
 # Store Tests: Bindings Nested Existing Record
 
-Pest POST store: Three bindings on an existing record: parent foreign/deleted, record wrong parent/tenant/deleted, and direct record tenant contradicting parent tenant.
-
-## Complete block
+POST store: Three bindings on an existing record: parent foreign/deleted, record wrong parent/tenant/deleted, and direct record tenant contradicting parent tenant.
 
 ```php
 <?php

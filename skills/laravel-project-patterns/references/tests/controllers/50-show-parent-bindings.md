@@ -1,6 +1,6 @@
 # Show Tests: Scoped Parent Bindings
 
-Complete GET show 404 cases for foreign or soft deleted parents and ancestors, plus an intermediate parent under another same-tenant ancestor. Keep live descendants and authorize the URL tenant to exercise the tested binding failures.
+GET show 404 cases for foreign or soft deleted parents and ancestors, plus an intermediate parent under another same-tenant ancestor. Keep live descendants and authorize the URL tenant to exercise the tested binding failures.
 
 ## One Parent
 

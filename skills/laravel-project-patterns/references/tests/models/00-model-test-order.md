@@ -1,10 +1,10 @@
 # Model Tests: Ordered Contract Checklist
 
-Model and concern tests cover trait composition, in-memory casts and predicates, persisted lifecycle and database constraints, membership and Sqid route binding. Choose a focused cast example for each inspected attribute vector.
+Model tests cover trait composition, in-memory casts and predicates, persisted lifecycle and constraints, membership and Sqid route binding. Select a cast example matching the inspected attributes.
 
-Inspect the model, factory, migrations, bootstrap and configured suite. Preserve actual paths, including DDD modules and `tests-new`; `new Model()` needs no row but casts/config may still require Laravel. Database tests use the project's real engine and isolation. Keep HTTP Resources and Listeners in their own categories, even when their fixtures are models.
+Inspect the model, factory, migrations and test bootstrap. `new Model()` needs no row, but casts/config may require Laravel; database checks use the project's engine and isolation. Resource and listener tests stay in their own categories even with model fixtures.
 
-Keep standalone `it()` declarations when the suite has no `describe`. Order applicable families as below and cases as shown in each example; reuse canonical names. Separate setup, operation and assertions with a blank line; related fixture declarations may be consecutive. Preserve every field, assertion and dataset row: null, false, zero, empty strings and unloaded relations differ. App wrappers such as `HasSqid` retain their real API names.
+Use standalone `it()` cases when the suite has no `describe`. Keep canonical names; order families as listed below and cases as shown in each example. Separate setup, operation and assertions with blank lines; related fixture declarations may stay consecutive. Preserve all fields, assertions and dataset rows, including null, false, zero, empty strings and unloaded relations; keep real APIs such as `HasSqid`.
 
 ## Reference Order
 

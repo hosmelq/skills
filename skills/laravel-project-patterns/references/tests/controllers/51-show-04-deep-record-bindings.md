@@ -2,8 +2,6 @@
 
 GET show tenant / ancestor / parent / record binding: wrong sibling parent, another same-tenant ancestor, foreign record and soft deleted target return 404. Preserve distinct discriminators in same-ancestor fixture graphs.
 
-## Two Parents
-
 ```php
 <?php
 

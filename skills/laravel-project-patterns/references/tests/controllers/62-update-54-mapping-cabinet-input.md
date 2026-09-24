@@ -1,6 +1,6 @@
 # Update Tests: Mapping Cabinet Input
 
-Pest PATCH update: Successful cabinet update delegates the typed label input asserted by the test and preserves the nested redirect and toast.
+PATCH update: Cabinet update delegates typed label input and checks nested redirect and toast.
 
 ## Updates the record
 

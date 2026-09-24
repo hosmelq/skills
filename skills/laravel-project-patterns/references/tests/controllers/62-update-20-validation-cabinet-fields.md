@@ -1,6 +1,6 @@
 # Update Tests: Validation Cabinet Fields
 
-Pest PATCH update: Complete label and prohibited service_plan_id dataset for an existing nested record. Changing the service plan is forbidden by this request contract.
+PATCH update: Label validation dataset; `service_plan_id` is prohibited on the existing nested record, and the dataset rejects a non-empty value.
 
 ## Validates fields
 

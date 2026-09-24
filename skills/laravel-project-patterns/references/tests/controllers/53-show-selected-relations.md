@@ -1,6 +1,6 @@
 # Show Tests: Default And Selected Relations
 
-Complete GET show page examples expose a factory-selected default relation or an explicitly selected lateral relation. Assert the exact related public ID alongside the component and applicable route IDs and public child fields.
+GET show page examples expose a factory-selected default relation or an explicitly selected lateral relation. Assert the exact related public ID alongside the component and applicable route IDs and public child fields.
 
 ## Default Relation
 

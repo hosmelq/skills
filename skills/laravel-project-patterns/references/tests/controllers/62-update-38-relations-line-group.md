@@ -1,8 +1,6 @@
 # Update Tests: Relations Line Group
 
-Pest PATCH update: A new foreign/inactive/deleted item group is rejected, but the explicitly unchanged inactive selected group is delegated successfully with the original typed input checks.
-
-## Complete block
+PATCH update: A new foreign/inactive/deleted item group is rejected, but the explicitly unchanged inactive selected group is delegated successfully with the original typed input checks.
 
 ```php
 <?php

@@ -4,8 +4,6 @@ GET edit preserves a singular current related resource when live, soft deleted o
 
 Keep the live case first, then soft-deleted and inactive relation variants. Restrict these expectations to relationships the inspected edit endpoint deliberately loads with their historical state.
 
-## Current Relation
-
 ```php
 <?php
 

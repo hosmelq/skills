@@ -1,8 +1,8 @@
 # Store Tests: Access Unrelated Nested
 
-Pest POST store: Unrelated tenant creating under a parent or ancestor; preserve parent fixture vs child-derived parent and valid-payload variants.
+POST store: Unrelated tenant creating under a parent or ancestor; preserve parent fixture vs child-derived parent and valid-payload variants.
 
-## Prevents storing from an unrelated tenant — variant 1
+## Direct parent fixture
 
 ```php
 <?php
@@ -29,7 +29,7 @@ describe('store', function (): void {
 });
 ```
 
-## Prevents storing from an unrelated tenant — variant 2
+## Parent from a related record
 
 ```php
 <?php
@@ -56,7 +56,7 @@ describe('store', function (): void {
 });
 ```
 
-## Prevents storing from an unrelated tenant — variant 3
+## Parent with required payload
 
 ```php
 <?php
@@ -86,7 +86,7 @@ describe('store', function (): void {
 });
 ```
 
-## Prevents storing from an unrelated tenant — variant 4
+## Ancestor and parent bindings
 
 ```php
 <?php

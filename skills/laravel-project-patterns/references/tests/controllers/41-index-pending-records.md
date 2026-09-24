@@ -1,8 +1,6 @@
 # Index Tests: Pending Records In Request Order
 
-Complete GET index example returns exactly two pending records ordered by request time while excluding approved and rejected records. It asserts both positions, component and tenant ID.
-
-## Pending Records
+GET index example returns exactly two pending records ordered by request time while excluding approved and rejected records. It asserts both positions, component and tenant ID.
 
 ```php
 <?php

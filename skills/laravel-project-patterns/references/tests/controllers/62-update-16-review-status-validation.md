@@ -1,6 +1,6 @@
 # Update Tests: Review Status Validation
 
-Pest PATCH update: Complete required/enum status dataset for a decision request; do not substitute ordinary record fields or a success transition.
+PATCH update: Complete required/enum status dataset for a decision request.
 
 ## Validates fields
 

@@ -1,6 +1,6 @@
 # Index Tests: Tenant Collection Filters
 
-Complete direct and nested GET index collection exclusions for another tenant. Exact count plus included and excluded IDs prove membership; preserve the parent chain of deeper fixtures.
+Direct and nested GET index collection exclusions for another tenant. Exact count plus included and excluded IDs prove membership; preserve the parent chain of deeper fixtures.
 
 ## Direct Collection
 

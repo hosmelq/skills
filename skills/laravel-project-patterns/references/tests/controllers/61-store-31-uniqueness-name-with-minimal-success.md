@@ -1,8 +1,6 @@
 # Store Tests: Uniqueness Name With Minimal Success
 
-Pest POST store: Case-insensitive inactive-name reservation, reuse across tenant and after deletion; reuse only asserts action once and detail redirect.
-
-## Complete block
+POST store: Case-insensitive inactive-name reservation, reuse across tenant and after deletion; reuse only asserts action once and detail redirect.
 
 ```php
 <?php

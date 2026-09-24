@@ -1,8 +1,6 @@
 # Update Tests: Review Access
 
-Pest PATCH update: Request-decision PATCH access keeps the status payload, direct tenant binding and both ordinary foreign ownership and conflicting stored tenant fixtures.
-
-## Complete block
+PATCH update: Request-decision PATCH access keeps the status payload, direct tenant binding and both ordinary foreign ownership and conflicting stored tenant fixtures.
 
 ```php
 <?php

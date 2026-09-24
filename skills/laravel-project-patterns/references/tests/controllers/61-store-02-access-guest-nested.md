@@ -1,6 +1,6 @@
 # Store Tests: Access Guest Nested
 
-Pest POST store: Browser guest authentication below a parent or ancestor chain. Preserve every route binding and use the endpoint’s valid payload; both cases redirect to login.
+POST store: Browser guest authentication below a parent or ancestor chain. Preserve every route binding and use the endpoint’s valid payload; both cases redirect to login.
 
 ## Parent route binding
 

@@ -1,10 +1,6 @@
 # Update Tests: Mapping Address Geography
 
-Pest PATCH update: Address update maps its submitted values, reuses the stored country when the submitted country is empty, and clears the province when changing country without one.
-
-Use valid country/province pairs from the consuming suite. Empty country context and changing country without a province are separate cases.
-
-## Complete block
+PATCH update: Address update maps its submitted values, reuses the stored country when the submitted country is empty, and clears the province when changing country without one. Use valid seeded country/province pairs.
 
 ```php
 <?php

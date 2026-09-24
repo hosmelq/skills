@@ -1,6 +1,6 @@
 # Update Tests: Access Unrelated Root
 
-Pest PATCH update: Unrelated-tenant denials cover settings membership and direct-record routes with empty or valid supplied payloads.
+PATCH update: Unrelated-tenant denials cover settings membership and direct-record routes with empty or valid supplied payloads.
 
 ## Prevents updating from an unrelated tenant — variant 1
 

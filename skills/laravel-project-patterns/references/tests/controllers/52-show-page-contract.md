@@ -1,6 +1,6 @@
 # Show Tests: Page And Route Identifiers
 
-Complete successful browser GET show examples assert the component, record public ID and every applicable tenant, parent and ancestor public ID. A separate variant also compares the record enum options to their owning enum.
+Successful browser GET show examples assert the component, record public ID and every applicable tenant, parent and ancestor public ID. A separate variant also compares the record enum options to their owning enum.
 
 ## Direct Record
 

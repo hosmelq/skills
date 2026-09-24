@@ -1,8 +1,6 @@
 # Update Tests: Errors Inactive Plan
 
-Pest PATCH update: Mocked inactive-plan rejection for a rule and rate; preserve request payload and exception mapping instead of replacing them with real inactive 403 fixtures.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
+PATCH update: Mocked inactive-plan rejection for a rule and rate; preserve request payload and exception mapping instead of replacing them with real inactive 403 fixtures.
 
 ## Maps an inactive parent rejection to validation
 

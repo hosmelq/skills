@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the Markdown catalog's structure, local links and reachability."""
+"""Check catalog structure, local links and documentation reachability."""
 
 from collections import Counter
 from pathlib import Path
@@ -66,7 +66,8 @@ def validate(root):
                 if url.fragment and unquote(url.fragment) not in parsed[path][0]:
                     errors.append(f"Missing anchor: {source.relative_to(root)} -> {target}")
     reached = set()
-    pending = [root / "SKILL.md"]
+    # Search indexes every reference; only other docs require a navigation link.
+    pending = [root / "SKILL.md", *(source for source in parsed if source.is_relative_to(root / "references"))]
     while pending:
         source = pending.pop()
         if source not in reached:

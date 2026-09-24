@@ -4,8 +4,6 @@ GET edit retains eight selected soft-deleted relations by public ID, including a
 
 The example checks one active member, the presence of four lists and two absent props; it does not assert complete contents or exclusion rules for every list. Factory helpers preserve one consistent tenant across the historical graph.
 
-## Historical Selections
-
 ```php
 <?php
 

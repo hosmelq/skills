@@ -2,7 +2,7 @@
 
 Database-backed model pruning query: include expired unused records and records used at the month boundary; exclude active and recently used records. This checks selection, not deletion.
 
-Use the project’s database-capable suite even if a reference project placed this contract under Unit. Freeze time before factory creation; inspect the `expired()` and `used()` states.
+Use a database-capable suite. Freeze time before factory creation; inspect the `expired()` and `used()` states.
 
 ```php
 <?php

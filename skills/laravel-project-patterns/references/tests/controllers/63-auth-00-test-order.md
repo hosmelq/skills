@@ -31,4 +31,4 @@ Use the same canonical names for equivalent behavior across providers. Apple ver
 
 Preserve exact 422 fields, account versus provider email, profile origin, verification/consumption timestamps, token response and token count where asserted. Code generation is mocked in the request endpoint; notification routing and code-model identity are its contract.
 
-Examples are synthetic. Adapt models, helpers, public IDs, namespaces and suite paths to the project. Retrieve only the needed provider examples; load the signed-token helper only when no equivalent fixture exists.
+Load the signed-token helper only when no equivalent fixture exists.

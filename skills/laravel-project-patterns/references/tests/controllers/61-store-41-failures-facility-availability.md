@@ -1,10 +1,6 @@
 # Store Tests: Failures Facility Availability
 
-Pest POST store: Received/current/pickup facility become unavailable; same message does not permit merging their distinct fields.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+POST store: Mocked exceptions test validation mapping only. Received/current/pickup facility become unavailable; same message does not permit merging their distinct fields.
 
 ```php
 <?php

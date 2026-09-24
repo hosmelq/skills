@@ -1,10 +1,8 @@
 # Index Tests: Live Record Pagination
 
-Complete first-page index contract with sixteen live tenant records, foreign and soft deleted distractors, fifteen returned rows, from/to/total metadata, newest-created row first, derived finality false and an absent raw tenant foreign key.
+First-page index contract with sixteen live tenant records, foreign and soft deleted distractors, fifteen returned rows, from/to/total metadata, newest-created row first, derived finality false and an absent raw tenant foreign key.
 
 This proves page one and its first row only; it does not test page-two traversal, every row field or a complete sort sequence.
-
-## First Page
 
 ```php
 <?php

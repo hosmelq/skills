@@ -1,6 +1,6 @@
 # Update Tests: Mapping Record Partial Input
 
-Pest PATCH update: A partial record request maps the submitted note and asserts reference is Optional. This example does not check every omitted DTO property.
+PATCH update: A partial record request maps the submitted note and asserts reference is Optional. This example does not check every omitted DTO property.
 
 ## Maps submitted and omitted fields to the action
 

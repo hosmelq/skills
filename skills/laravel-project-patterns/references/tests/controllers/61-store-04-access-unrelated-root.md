@@ -1,8 +1,8 @@
 # Store Tests: Access Unrelated Root
 
-Pest POST store: Unrelated tenant; tenant-only fixture versus fixture-derived tenant and distinct valid payloads.
+POST store: Unrelated tenant; tenant-only fixture versus fixture-derived tenant and distinct valid payloads.
 
-## Prevents storing from an unrelated tenant — variant 1
+## Tenant-only request
 
 ```php
 <?php
@@ -28,7 +28,7 @@ describe('store', function (): void {
 });
 ```
 
-## Prevents storing from an unrelated tenant — variant 2
+## Tenant derived from a record
 
 ```php
 <?php
@@ -54,7 +54,7 @@ describe('store', function (): void {
 });
 ```
 
-## Prevents storing from an unrelated tenant — variant 3
+## Required name payload
 
 ```php
 <?php
@@ -82,7 +82,7 @@ describe('store', function (): void {
 });
 ```
 
-## Prevents storing from an unrelated tenant — variant 4
+## Required enum and name payload
 
 ```php
 <?php

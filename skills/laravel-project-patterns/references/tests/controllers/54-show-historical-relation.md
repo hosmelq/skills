@@ -1,6 +1,6 @@
 # Show Tests: Deleted And Inactive Selected Relations
 
-Complete GET show examples retain the current soft deleted or inactive lateral relation of a live record. Preserve related ID/name, exact deleted_at or deactivated_at JSON timestamp, public child fields and route IDs.
+GET show examples retain the current soft deleted or inactive lateral relation of a live record. Preserve related ID/name, exact deleted_at or deactivated_at JSON timestamp, public child fields and route IDs.
 
 ## Soft Deleted Relation
 

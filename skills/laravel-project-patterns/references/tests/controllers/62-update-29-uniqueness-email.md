@@ -1,8 +1,6 @@
 # Update Tests: Uniqueness Email
 
-Pest PATCH update: Email uniqueness: reject a duplicate in the same tenant; allow the current value, another tenant and a soft-deleted record. Keep positive action-input assertions and responses.
-
-## Complete block
+PATCH update: Email uniqueness: reject a duplicate in the same tenant; allow the current value, another tenant and a soft-deleted record. Keep positive action-input assertions and responses.
 
 ```php
 <?php

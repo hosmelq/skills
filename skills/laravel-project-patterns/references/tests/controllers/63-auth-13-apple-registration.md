@@ -1,6 +1,6 @@
 # Authentication Tests: New Apple Identity
 
-Pest POST JSON Apple login: reject a new subject without an email claim, then create a verified account with submitted profile names. Preserve linked identity fields and token response/count.
+POST JSON Apple login: reject a new subject without an email claim, then create a verified account with submitted profile names. Preserve linked identity fields and token response/count.
 
 Use the [signed token fixture](63-auth-08-apple-token-fixture.md) if the suite lacks an equivalent builder. Configure `services.apple.client_id` for the test application.
 

@@ -1,6 +1,6 @@
 # Update Tests: Access Inactive State
 
-Pest PATCH update: Real inactive record/parent/ancestor fixtures cause 403 before the update action; retain explicit shouldNotReceive assertions and the submitted payload.
+PATCH update: Real inactive record/parent/ancestor fixtures cause 403 before the update action; retain explicit shouldNotReceive assertions and the submitted payload.
 
 ## Prevents updating when the record is inactive — variant 1
 

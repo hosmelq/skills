@@ -1,6 +1,6 @@
 # Update Tests: Bindings Deleted Parent
 
-Pest PATCH update: A live child under a deleted parent; preserve relation factories, explicit inherited tenant IDs and the supplied-description request.
+PATCH update: A live child under a deleted parent; preserve relation factories, explicit inherited tenant IDs and the supplied-description request.
 
 ## Returns not found when the parent is soft deleted — variant 1
 

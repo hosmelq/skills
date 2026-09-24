@@ -1,8 +1,6 @@
 # Update Tests: Mapping Rule Rounding
 
-Pest PATCH update: Rule update preserves the typed input and two stored-increment behaviors: explicit null when disabling rounding and retention when changing another field.
-
-## Complete block
+PATCH update: Rule update preserves the typed input and two stored-increment behaviors: explicit null when disabling rounding and retention when changing another field.
 
 ```php
 <?php

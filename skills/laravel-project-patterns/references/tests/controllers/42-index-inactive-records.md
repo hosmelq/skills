@@ -1,6 +1,6 @@
 # Index Tests: Inactive Records And Ancestors
 
-Complete GET index examples retain inactive rows and list children of inactive parents or ancestors. Assert public row IDs and exact deactivation timestamps; inactivity is distinct from soft deletion.
+GET index examples retain inactive rows and list children of inactive parents or ancestors. Assert public row IDs and exact deactivation timestamps; inactivity is distinct from soft deletion.
 
 ## Direct Record
 

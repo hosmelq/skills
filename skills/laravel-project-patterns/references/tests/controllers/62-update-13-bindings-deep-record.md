@@ -1,8 +1,6 @@
 # Update Tests: Bindings Deep Record
 
-Pest PATCH update: A deeply nested record belongs to a sibling parent, a different ancestor in the same tenant, another tenant, or is soft deleted. Distinct countries keep the sibling-parent fixture valid.
-
-## Complete block
+PATCH update: A deeply nested record belongs to a sibling parent, a different ancestor in the same tenant, another tenant, or is soft deleted. Distinct countries keep the sibling-parent fixture valid.
 
 ```php
 <?php

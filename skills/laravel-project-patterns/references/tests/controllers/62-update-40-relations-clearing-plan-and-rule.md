@@ -1,10 +1,6 @@
 # Update Tests: Relations Clearing Plan And Rule
 
-Pest PATCH update: Clearing a plan while omitting its stored rule maps a mocked domain exception. Submitting empty strings for both fields maps two null DTO values to the action.
-
-One case forces an action exception; the other checks empty submitted strings mapped to null DTO values. Neither asserts persistence.
-
-## Complete block
+PATCH update: Clearing a plan while omitting its stored rule maps a mocked domain exception. Submitting empty strings for both fields maps two null DTO values to the action. Neither case asserts persistence.
 
 ```php
 <?php

@@ -2,8 +2,6 @@
 
 A live GET show record retains eight explicitly selected soft deleted relations. The complete fixture graph and assertions cover every related public ID; historical retention does not imply eligibility for new selections.
 
-## Historical Detail
-
 ```php
 <?php
 

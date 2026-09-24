@@ -1,22 +1,15 @@
 ---
 name: laravel-project-patterns
-description: "Apply the catalog's Laravel controller, model, HTTP Resource and media listener test patterns through selective local retrieval, including CRUD, authentication, casts, lifecycle, database constraints, relationships and resource serialization."
+description: "Use the catalog’s Pest test patterns for Laravel controllers, models, HTTP Resources and media listeners."
 ---
 
 # Laravel Project Patterns
 
-Covers Pest HTTP GET `create`/`edit`/`index`/`show`, POST `store`, PATCH `update` and DELETE `destroy`
-tests, including deactivation/reactivation, email-code and provider authentication,
-verification prompts, reordering and initial/default selection. Model references cover
-traits, casts, defaults, predicates, lifecycle, constraints, relationships and Sqid route binding.
-HTTP Resource serialization and media listener examples have separate categories.
-For other behavior, report the coverage gap and follow project conventions without searching this catalog.
-Examples are fictional: adapt to inspected contracts and keep reference-project
-identities confidential. Preserve real technical APIs such as `sqid` and `HasSqid`;
-synthetic domain names do not authorize inventing replacement APIs.
+Adapt fictional domain types and helpers to inspected contracts, keep reference-project identities confidential,
+and preserve real APIs such as `sqid` and `HasSqid`. For uncovered behavior,
+report the gap and follow the project’s conventions.
 
-Inspect affected code, nearby tests and Composer/test configuration. Preserve
-actual namespaces and suite paths, including `tests-new` and DDD modules.
+Inspect affected code, nearby tests and test configuration; use their actual namespaces and suite paths.
 
 ## Retrieve Missing Patterns
 
@@ -66,8 +59,4 @@ assignment and deliberate mismatches. Recycling reaches nested factories, matche
 model type and leaves fixed/derived foreign keys unchanged; verify option-list
 membership and avoid same-type pools when an exact parent matters.
 
-First search installs dependencies/model and builds the local index automatically;
-later searches refresh changed Markdown. Read loads no model. Resolve search
-failures rather than silently bypassing retrieval. Read the [search guide](docs/search.md)
-only for setup, recovery or maintenance; [benchmark evidence](docs/benchmark.md)
-is optional. Maintainers may inspect catalog files directly.
+First search installs dependencies, downloads the model and builds the index; later searches refresh changed Markdown. Read loads no model. Resolve failures using the [search guide](docs/search.md). [Benchmark evidence](docs/benchmark.md) is optional. Maintainers may inspect catalog files directly.

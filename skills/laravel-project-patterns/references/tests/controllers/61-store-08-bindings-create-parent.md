@@ -1,8 +1,8 @@
 # Store Tests: Bindings Create Parent
 
-Pest POST store: Creation parent belongs to another tenant or is soft deleted; empty request versus valid description/quantity request.
+POST store: Creation parent belongs to another tenant or is soft deleted; empty request versus valid description/quantity request.
 
-## Complete block — variant 1
+## Empty request payload
 
 ```php
 <?php
@@ -44,7 +44,7 @@ describe('store', function (): void {
 });
 ```
 
-## Complete block — variant 2
+## Required description and quantity payload
 
 ```php
 <?php

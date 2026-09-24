@@ -1,6 +1,6 @@
 # Authentication Tests: Google Token Validation
 
-Pest POST JSON Google login: required identity-token dataset and unverifiable token from a mocked Google client. Preserve client initialization, verification argument and 422 field error.
+POST JSON Google login: required identity-token dataset and unverifiable token from a mocked Google client. Preserve client initialization, verification argument and 422 field error.
 
 ```php
 <?php

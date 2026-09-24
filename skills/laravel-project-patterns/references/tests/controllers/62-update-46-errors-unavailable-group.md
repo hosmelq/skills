@@ -1,8 +1,6 @@
 # Update Tests: Errors Unavailable Group
 
-Pest PATCH update: The child update action reports a now-unavailable selected item group; retain the constructed group, payload and exception-to-field mapping.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
+PATCH update with mocked action: The child update action reports a now-unavailable selected item group; retain the constructed group, payload and exception-to-field mapping.
 
 ## Maps an unavailable relation rejection to validation
 

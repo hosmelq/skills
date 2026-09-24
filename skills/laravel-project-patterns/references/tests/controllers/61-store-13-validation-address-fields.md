@@ -1,8 +1,6 @@
 # Store Tests: Validation Address Fields
 
-Pest POST store: Complete postal/contact/geographic dataset: both coordinate extrema and paired fields, country/province and string/phone constraints.
-
-## Validates fields
+POST store: Complete postal/contact/geographic dataset: both coordinate extrema and paired fields, country/province and string/phone constraints.
 
 The country-restricted phone row uses a valid number from outside the allowed `CountryCode` values; preserve that exclusion when adapting the fixture.
 

@@ -1,10 +1,6 @@
 # Update Tests: Errors Reference And Date
 
-Pest PATCH update: Mocked required-date and duplicate-reference failures retain their separate exact validation keys and responses.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+PATCH update: Mocked required-date and duplicate-reference failures retain their separate exact validation keys and responses.
 
 ```php
 <?php

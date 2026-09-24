@@ -1,8 +1,6 @@
 # Update Tests: Relations Current History
 
-Pest PATCH update: Retain the current historical cabinet/facilities/plan, member and rule in three complete action-mapping fixtures. This does not establish eligibility for new selections.
-
-## Complete block
+PATCH update: Retain the current historical cabinet/facilities/plan, member and rule in three complete action-mapping fixtures. This does not establish eligibility for new selections.
 
 ```php
 <?php

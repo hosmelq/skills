@@ -1,8 +1,8 @@
 # Store Tests: Mapping Enums And Boolean
 
-Pest POST store: Enum/name and separate string-to-boolean mapping; enum/integer/name/unit mapping retained as another complete example.
+POST store: Enum/name and separate string-to-boolean mapping; enum/integer/name/unit mapping retained as another complete example.
 
-## Complete block — variant 1
+## Stores the record — variant 1
 
 ```php
 <?php

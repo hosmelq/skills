@@ -1,8 +1,6 @@
 # Show Tests: Tenant Settings
 
-Complete GET tenant settings response asserts its specific component, tenant public ID and exact settings enum options. This route has no nested record parameter.
-
-## Settings Page
+GET tenant settings response asserts its specific component, tenant public ID and exact settings enum options. This route has no nested record parameter.
 
 ```php
 <?php

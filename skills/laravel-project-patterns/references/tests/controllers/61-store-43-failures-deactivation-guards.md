@@ -1,8 +1,6 @@
 # Store Tests: Failures Deactivation Guards
 
-Pest POST store: Required active initial status and active dependent records block deactivation through separate mocked action guards.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
+POST store: Required active initial status and active dependent records block deactivation through separate mocked action guards.
 
 ## Maps a required active initial record rejection to validation — variant 1
 

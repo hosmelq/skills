@@ -1,6 +1,6 @@
 # Index Tests: Parent Collection Filters
 
-Complete GET index exclusions for another parent in the same tenant. The included and excluded rows share tenant ownership but differ at the tested parent edge; exact count and both IDs establish the result.
+GET index exclusions for another parent in the same tenant. The included and excluded rows share tenant ownership but differ at the tested parent edge; exact count and both IDs establish the result.
 
 ## Member Children
 

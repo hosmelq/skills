@@ -1,10 +1,6 @@
 # Update Tests: Errors Unavailable Selections
 
-Pest PATCH update: Each unavailable selected relation has its own mocked exception and exact field error: plan, member, received facility, pickup facility and cabinet.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+PATCH update: Each unavailable selected relation has its own mocked exception and exact field error: plan, member, received facility, pickup facility and cabinet.
 
 ```php
 <?php

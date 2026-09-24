@@ -1,10 +1,6 @@
 # Store Tests: Failures Related Prerequisites
 
-Pest POST store: Owner/assignment mismatch, rule without service, wrong rule parent and mismatched measurement unit; each field/message retained.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+POST store: Mocked exceptions test validation mapping only. Owner/assignment mismatch, rule without service, wrong rule parent and mismatched measurement unit; each field/message retained.
 
 ```php
 <?php

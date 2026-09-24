@@ -1,6 +1,6 @@
 # Update Tests: Relations Other Historical Owner
 
-Pest PATCH update: A historical relation attached to a different record is rejected for the current record; this differs from retaining its own selected historical relation.
+PATCH update: A historical relation attached to a different record is rejected for the current record; this differs from retaining its own selected historical relation.
 
 ## Rejects a historical relation selected by another record
 

@@ -1,6 +1,6 @@
 # Index Tests: Authentication And Tenant Access
 
-Complete Pest GET index authentication and unrelated-tenant 403 examples for direct, one-parent and two-parent collection routes. Keep every valid URL ancestor; adapt the route depth to the inspected endpoint.
+GET index authentication and unrelated-tenant 403 examples for direct, one-parent and two-parent collection routes. Keep every valid URL ancestor; adapt the route depth to the inspected endpoint.
 
 ## Direct Collection
 

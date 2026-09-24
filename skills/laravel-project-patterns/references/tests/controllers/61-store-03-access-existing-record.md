@@ -1,8 +1,8 @@
 # Store Tests: Access Existing Record
 
-Pest POST store: Guest and unrelated tenant on existing-record deactivation; two versus three bindings.
+POST store: Guest and unrelated tenant on existing-record deactivation; two versus three bindings.
 
-## Complete block — variant 1
+## Tenant and record bindings
 
 ```php
 <?php
@@ -40,7 +40,7 @@ describe('store', function (): void {
 });
 ```
 
-## Complete block — variant 2
+## Tenant, parent and record bindings
 
 ```php
 <?php

@@ -2,8 +2,6 @@
 
 Ordered Pest browser PATCH reorder cases: access, record bindings, complete predecessor validation, group scope and action delegation. Distinguish tenant-wide ordering from within-group ordering and active from inactive start placement.
 
-Keep top-level tests in the order below, selecting the actual scope.
-
 ## Case Order
 
 1. `requires authentication`
@@ -26,4 +24,4 @@ Keep top-level tests in the order below, selecting the actual scope.
 
 Access and field-validation examples apply to both ordering scopes. Keep self-reference, encoded missing ID, raw nonexistent token, foreign tenant, deleted predecessor and different-group fixtures distinct. A predecessor in another group returns 404; field failures redirect back with errors.
 
-Preserve the selected group, typed model-identity arguments and explicit null predecessor. Active and inactive source fixtures are distinct. A mocked action verifies delegation; redirect/toast assertions do not prove persisted ordering. Adapt synthetic route names, helpers and public IDs to the project.
+Preserve the selected group, typed model-identity arguments and explicit null predecessor. Active and inactive source fixtures are distinct. A mocked action verifies delegation; redirect/toast assertions do not prove persisted ordering.

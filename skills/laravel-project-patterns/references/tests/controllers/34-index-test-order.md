@@ -1,6 +1,6 @@
 # Controller Tests: Ordered Index Block
 
-Ordered Pest GET index cases: access, scoped ancestors, page contracts, ordered or paginated collections, historical relations, pending and inactive rows, then tenant, parent and deletion filters. Canonical names for composing only the inspected behaviors.
+Ordered GET index tests for access, bindings, page props, ordering or pagination, historical, pending and inactive rows, and collection filters.
 
 ## Case Order
 
@@ -38,4 +38,4 @@ Assert membership with exact count and identities when the contract calls for bo
 
 Inactive rows and ancestors can remain visible. Historical relations concern live principal rows with deleted relations. Keep wrong-parent binding, ordinary collection scope and both conflicting-ownership directions separate. Deep fixtures must satisfy unrelated uniqueness and range constraints.
 
-Examples use synthetic models, `login()` for an outsider, `login(team: ...)` for membership and `sqid`. Adapt these to actual namespaces, helpers, suite paths and inspected contracts.
+Examples use synthetic models, `login()` for an outsider, `login(team: ...)` for membership and `sqid`.

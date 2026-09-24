@@ -1,6 +1,6 @@
 # Authentication Tests: New Google Identity
 
-Pest POST JSON Google login: create a verified account from provider email, subject and profile claims. Assert token response, account fields, linked identity and issued token count.
+POST JSON Google login: create a verified account from provider email, subject and profile claims. Assert token response, account fields, linked identity and issued token count.
 
 ```php
 <?php

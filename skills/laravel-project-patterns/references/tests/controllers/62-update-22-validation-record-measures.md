@@ -1,6 +1,6 @@
 # Update Tests: Validation Record Measures
 
-Pest PATCH update: Whole optional record reference/text/date/dimensions/weight dataset, without turning omitted partial-update fields into required creation fields.
+PATCH update: Whole optional record reference/text/date/dimensions/weight dataset, without turning omitted partial-update fields into required creation fields.
 
 ## Validates fields
 

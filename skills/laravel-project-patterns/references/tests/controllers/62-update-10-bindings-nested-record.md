@@ -1,8 +1,8 @@
 # Update Tests: Bindings Nested Record
 
-Pest PATCH update: Foreign or deleted nested leaf records under the current route parent; keep normal foreign chains distinct from direct-owner conflicts.
+PATCH update: Foreign or deleted nested leaf records under the current route parent; keep normal foreign chains distinct from direct-owner conflicts.
 
-## Complete block — variant 1
+## Foreign or deleted child
 
 ```php
 <?php
@@ -46,7 +46,7 @@ describe('update', function (): void {
 });
 ```
 
-## Returns not found when the record belongs to another tenant — variant 2
+## Foreign record
 
 ```php
 <?php
@@ -75,7 +75,7 @@ describe('update', function (): void {
 });
 ```
 
-## Returns not found when the record is soft deleted — variant 3
+## Soft-deleted record
 
 ```php
 <?php

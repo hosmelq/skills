@@ -1,8 +1,6 @@
 # Store Tests: Uniqueness Email
 
-Pest POST store: Email uniqueness: duplicate within tenant, reuse across tenant and after deletion; preserve exact action input, detail redirect and toast.
-
-## Complete block
+POST store: Email uniqueness: duplicate within tenant, reuse across tenant and after deletion; preserve exact action input, detail redirect and toast.
 
 ```php
 <?php

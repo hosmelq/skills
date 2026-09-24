@@ -1,8 +1,6 @@
 # Update Tests: Review Decisions
 
-Pest PATCH update: Approval and rejection delegate different actions with the original mocked invocation and success responses; do not claim persisted request transitions.
-
-## Complete block
+PATCH update: Approval and rejection delegate different actions with the original mocked invocation and success responses; do not claim persisted request transitions.
 
 ```php
 <?php

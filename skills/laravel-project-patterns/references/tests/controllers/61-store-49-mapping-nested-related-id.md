@@ -1,6 +1,6 @@
 # Store Tests: Mapping Nested Related Id
 
-Pest POST store: Public related IDs decoded for nested parent actions, with distinct additional mapped fields and valid request payloads.
+POST store: Public related IDs decoded for nested parent actions, with distinct additional mapped fields and valid request payloads.
 
 ## Stores the record — variant 1
 

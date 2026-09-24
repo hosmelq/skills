@@ -1,8 +1,6 @@
 # Store Tests: Validation Reference And Measures
 
-Pest POST store: Complete optional reference/text/date and dimensions/weight dataset with all coupling directions.
-
-## Validates fields
+POST store: Complete optional reference/text/date and dimensions/weight dataset with all coupling directions.
 
 ```php
 <?php

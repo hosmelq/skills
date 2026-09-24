@@ -1,6 +1,6 @@
 # Update Tests: Mapping Contact Input
 
-Pest PATCH update: Successful member update delegates the exact submitted typed contact field and preserves redirect/toast; it does not prove database persistence.
+PATCH update: Mocked member update checks typed contact input, redirect and toast; no persistence assertion.
 
 ## Updates the record
 

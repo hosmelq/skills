@@ -1,10 +1,6 @@
 # Update Tests: Errors Interval Conflicts
 
-Pest PATCH update: Mocked second-open-ended and overlap rejections preserve the edited rate's stored bounds and exact validation errors. These tests do not create a separate conflicting interval.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+PATCH update: Mocked second-open-ended and overlap rejections preserve the edited rate's stored bounds and exact validation errors. These tests do not create a separate conflicting interval.
 
 ```php
 <?php

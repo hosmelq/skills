@@ -1,8 +1,6 @@
 # Update Tests: Mapping Plan Transit Bounds
 
-Pest PATCH update: Plan update maps submitted fields, validates each changed transit bound against its stored counterpart, and accepts a lower-bound update when the stored upper bound is open ended.
-
-## Complete block
+PATCH update: Plan update maps submitted fields, validates each changed transit bound against its stored counterpart, and accepts a lower-bound update when the stored upper bound is open ended.
 
 ```php
 <?php

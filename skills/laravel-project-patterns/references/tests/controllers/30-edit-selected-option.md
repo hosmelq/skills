@@ -4,8 +4,6 @@ GET edit retains the selected inactive option in the target payload and at optio
 
 The example asserts those positions, not an exact list count or exhaustive exclusion of every other option.
 
-## Selected Option
-
 ```php
 <?php
 

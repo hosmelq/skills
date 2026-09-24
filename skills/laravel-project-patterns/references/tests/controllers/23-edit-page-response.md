@@ -1,6 +1,6 @@
 # Edit Tests: Direct Page And Authentication
 
-Complete direct-record GET edit block: login redirect, unrelated tenant 403, foreign or trashed target 404, then HTTP 200 with component and public IDs. Separate nested authentication examples retain every valid route parameter at one and two parent levels.
+Direct-record GET edit block: login redirect, unrelated tenant 403, foreign or trashed target 404, then HTTP 200 with component and public IDs. Separate nested authentication examples retain every valid route parameter at one and two parent levels.
 
 Use the same canonical names across controllers. Nested authorization examples replace the direct ones when assembling a nested block.
 

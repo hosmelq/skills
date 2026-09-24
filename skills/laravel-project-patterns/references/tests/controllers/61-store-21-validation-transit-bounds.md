@@ -1,8 +1,6 @@
 # Store Tests: Validation Transit Bounds
 
-Pest POST store: Complete transit integer/range dataset with both ordering comparisons and required enum/name fields.
-
-## Validates fields
+POST store: Complete transit integer/range dataset with both ordering comparisons and required enum/name fields.
 
 ```php
 <?php

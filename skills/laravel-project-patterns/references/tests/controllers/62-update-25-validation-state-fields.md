@@ -1,8 +1,6 @@
 # Update Tests: Validation State Fields
 
-Pest PATCH update: Whole state-fields dataset, plus invalid initial enum producing only its enum error and rejection of changing the initial state.
-
-## Complete block
+PATCH update: Whole state-fields dataset, plus invalid initial enum producing only its enum error and rejection of changing the initial state.
 
 ```php
 <?php

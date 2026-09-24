@@ -1,10 +1,8 @@
 # Store Tests: Api Json Resource
 
-Pest POST store: JSON store: unauthenticated, unverified, invalid public tenant ID, domain error and created resource contract.
+POST store: JSON store: unauthenticated, unverified, invalid public tenant ID, domain error and created resource contract.
 
 The invalid identifier case sends a real numeric ID to a public-ID route. Returned-model fixtures do not prove persistence or ownership.
-
-## Complete block
 
 ```php
 <?php

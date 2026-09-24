@@ -2,7 +2,7 @@
 
 Unit tests for recursive model trait composition: deactivation, Sqids, soft deletion and sorting. These checks do not prove trait behavior.
 
-Use only the traits present in the inspected model, in the order shown; test their behavior separately.
+Match trait names and order to the inspected model.
 
 ```php
 <?php

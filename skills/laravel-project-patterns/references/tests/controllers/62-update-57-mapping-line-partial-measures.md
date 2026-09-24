@@ -1,8 +1,6 @@
 # Update Tests: Mapping Line Partial Measures
 
-Pest PATCH update: One partial child request checks a submitted description and Optional quantity. A separate complete three-row dataset compares transformed measurement input using stored and submitted values.
-
-## Complete block
+PATCH update: One partial child request checks a submitted description and Optional quantity. A separate complete three-row dataset compares transformed measurement input using stored and submitted values.
 
 ```php
 <?php

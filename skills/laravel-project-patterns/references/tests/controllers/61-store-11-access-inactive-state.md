@@ -1,6 +1,6 @@
 # Store Tests: Access Inactive State
 
-Pest POST store: Inactive parent or ancestor prevents creation; already inactive record prevents deactivation. Preserve negative mock assertions and supplied payload.
+POST store: Inactive parent or ancestor prevents creation; already inactive record prevents deactivation. Preserve negative mock assertions and supplied payload.
 
 ## Prevents deactivating when the record is inactive — response only
 

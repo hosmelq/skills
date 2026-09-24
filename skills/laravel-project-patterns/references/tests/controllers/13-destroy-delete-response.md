@@ -1,10 +1,8 @@
 # Destroy Tests: Direct Deletion And Controller Response
 
-Complete direct-entity DELETE destroy block: guest login redirect, unrelated tenant 403, foreign or soft-deleted target 404, then one identity-matched delete-action call, named collection redirect and success toast. The action is mocked; persistence is not asserted.
+Direct-entity DELETE destroy block: guest login redirect, unrelated tenant 403, foreign or soft-deleted target 404, then one identity-matched delete-action call, named collection redirect and success toast. The action is mocked; persistence is not asserted.
 
 Use team/member routes without additional parents. Keep the canonical names when adapting the entity.
-
-## Direct Entity
 
 ```php
 <?php

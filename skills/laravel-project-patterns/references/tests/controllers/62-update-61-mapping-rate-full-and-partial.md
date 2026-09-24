@@ -1,8 +1,6 @@
 # Update Tests: Mapping Rate Full And Partial
 
-Pest PATCH update: Complete and name-only rate updates preserve exact action identity, the asserted DTO fields, redirects and toast. The name-only example asserts name without checking omitted DTO properties.
-
-## Complete block
+PATCH update: Complete and name-only rate updates preserve exact action identity, the asserted DTO fields, redirects and toast. The name-only example asserts name without checking omitted DTO properties.
 
 ```php
 <?php

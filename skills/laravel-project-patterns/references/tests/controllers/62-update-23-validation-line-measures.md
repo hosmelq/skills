@@ -1,6 +1,6 @@
 # Update Tests: Validation Line Measures
 
-Pest PATCH update: Complete partial-update dataset for precision, quantity, currency/value, dimensions and weight. Each row supplies stored factory attributes and a separate PATCH payload; preserve both.
+PATCH update: Complete partial-update dataset for precision, quantity, currency/value, dimensions and weight. Each row supplies stored factory attributes and a separate PATCH payload; preserve both.
 
 ## Validates fields
 

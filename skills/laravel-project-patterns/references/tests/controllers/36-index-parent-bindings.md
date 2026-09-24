@@ -1,6 +1,6 @@
 # Index Tests: Scoped Parent Bindings
 
-Complete GET index 404 examples for foreign and soft deleted route parents, including two-level ancestor chains and an intermediate parent from the wrong ancestor in the same tenant.
+GET index 404 examples for foreign and soft deleted route parents, including two-level ancestor chains and an intermediate parent from the wrong ancestor in the same tenant.
 
 ## One Parent
 

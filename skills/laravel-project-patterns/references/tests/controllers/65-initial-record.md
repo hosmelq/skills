@@ -1,8 +1,8 @@
 # Initial Record Tests: Ordered Cases
 
-Pest browser POST initial selection: ordered guest/tenant access, foreign/deleted record bindings, mocked eligibility exception mapped to validation and successful action delegation with redirect/toast.
+Browser POST initial selection: ordered guest/tenant access, foreign/deleted record bindings, mocked eligibility exception mapped to validation and successful action delegation with redirect/toast.
 
-Keep the top-level case order below. The rejection uses an ordinary fixture and a mocked action exception; it does not establish actual ineligibility. The successful mock does not prove persistence. `login()` creates an outsider; `login(team: ...)` supplies membership.
+The rejection uses an ordinary fixture and a mocked action exception; it does not establish actual ineligibility. The successful mock does not prove persistence. `login()` creates an outsider; `login(team: ...)` supplies membership.
 
 ```php
 <?php

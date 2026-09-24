@@ -1,6 +1,6 @@
 # Show Tests: Inactive Records And Ancestors
 
-Complete browser GET show examples remain readable for an inactive record, parent or ancestor. Assert the public record ID and exact deactivation timestamp at the correct resource level.
+Browser GET show examples remain readable for an inactive record, parent or ancestor. Assert the public record ID and exact deactivation timestamp at the correct resource level.
 
 ## Inactive Record
 

@@ -1,6 +1,6 @@
 # Update Tests: Validation Settings Fields
 
-Pest PATCH update: Whole settings dataset: booleans, enum, timezone, optional/required constraints, email and numeric identifier bounds.
+PATCH update: Whole settings dataset: booleans, enum, timezone, optional/required constraints, email and numeric identifier bounds.
 
 The minimum-length row supplies a nonnumeric value; its error assertion does not isolate a clean numeric boundary.
 

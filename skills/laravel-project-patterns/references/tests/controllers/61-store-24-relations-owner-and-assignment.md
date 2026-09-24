@@ -1,8 +1,6 @@
 # Store Tests: Relations Owner And Assignment
 
-Pest POST store: Selected owner foreign/deleted; selected assignment foreign/inactive/deleted. Every distinct error field remains.
-
-## Complete block
+POST store: Selected owner foreign/deleted; selected assignment foreign/inactive/deleted. Every distinct error field remains.
 
 ```php
 <?php

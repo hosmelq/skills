@@ -6,8 +6,6 @@ Authorize the tenant in the URL so 403 cannot mask broken binding. Use two disti
 
 For a single bound parent, keep the first two cases and omit child parameters. Place binding tests after authentication/authorization and before lifecycle restrictions.
 
-## Complete Nested Binding Examples
-
 Here `recycle($servicePlan->team)` creates a different plan in the same team; verify the actual factory relationships.
 
 ```php

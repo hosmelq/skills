@@ -1,6 +1,6 @@
 # Update Tests: Validation Editable Label Fields
 
-Pest PATCH update: Whole editable name/description/color dataset; update omissions and explicit values are preserved.
+PATCH update: Whole editable name/description/color dataset; update omissions and explicit values are preserved.
 
 ## Validates fields
 

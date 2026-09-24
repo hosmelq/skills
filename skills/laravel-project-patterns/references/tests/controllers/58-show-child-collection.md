@@ -1,10 +1,8 @@
 # Show Tests: Ordered Live Child Collection
 
-Complete GET show detail returns exactly two live children oldest ID first, excluding foreign, deleted and unrelated children. Preserve the count prop, both IDs, populated and null group data, and two absent raw foreign keys on the first child.
+GET show detail returns exactly two live children oldest ID first, excluding foreign, deleted and unrelated children. Preserve the count prop, both IDs, populated and null group data, and two absent raw foreign keys on the first child.
 
 Live here means not soft deleted. This example does not test an inactive-child rule.
-
-## Child Collection
 
 ```php
 <?php

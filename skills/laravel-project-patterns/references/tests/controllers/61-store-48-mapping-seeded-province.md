@@ -1,6 +1,6 @@
 # Store Tests: Mapping Seeded Province
 
-Pest POST store: Province obtained from seeded lookup maps to parent action; unused action return and collection-index redirect.
+POST store: Province obtained from seeded lookup maps to parent action; unused action return and collection-index redirect.
 
 This example needs the consuming suite's seeded country/province lookup and compatible factory defaults.
 

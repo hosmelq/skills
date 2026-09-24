@@ -1,6 +1,6 @@
 # Store Tests: Access Guest Root
 
-Pest POST store: Browser guest authentication on routes with no bindings or a tenant binding. Adapt the route, model and valid payload to the endpoint; both cases redirect to login.
+POST store: Browser guest authentication on routes with no bindings or a tenant binding. Adapt the route, model and valid payload to the endpoint; both cases redirect to login.
 
 ## No route bindings
 

@@ -1,8 +1,6 @@
 # Store Tests: Uniqueness Name With Required Fields
 
-Pest POST store: Name duplicate/inactive reservation and reuse under required enum/transit payload; reuse asserts redirect without toast.
-
-## Complete block
+POST store: Name duplicate/inactive reservation and reuse under required enum/transit payload; reuse asserts redirect without toast.
 
 ```php
 <?php

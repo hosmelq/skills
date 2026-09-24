@@ -1,8 +1,6 @@
 # Store Tests: Validation Contact Fields
 
-Pest POST store: Complete contact-field dataset plus no-displayable-value summary in a named general error bag.
-
-## Complete block
+POST store: Complete contact-field dataset plus no-displayable-value summary in a named general error bag.
 
 The country-restricted phone row uses a valid number from outside the allowed `CountryCode` values; preserve that exclusion when adapting the fixture.
 

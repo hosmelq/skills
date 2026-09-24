@@ -1,6 +1,6 @@
 # Store Tests: Mapping Current Actor
 
-Pest POST store: Current actor and typed settings input passed to action; returned record selects settings redirect and toast.
+POST store: Current actor and typed settings input passed to action; returned record selects settings redirect and toast.
 
 ## Stores the record
 

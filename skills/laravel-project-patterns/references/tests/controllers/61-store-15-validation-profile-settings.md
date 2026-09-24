@@ -1,10 +1,8 @@
 # Store Tests: Validation Profile Settings
 
-Pest POST store: Complete settings dataset: required/sometimes, enum, booleans, strict/DNS/disposable email, phone, numeric length and timezone.
+POST store: Complete settings dataset: required/sometimes, enum, booleans, strict/DNS/disposable email, phone, numeric length and timezone.
 
 The minimum-length row uses a nonnumeric input; preserve its error assertion without claiming a clean numeric boundary.
-
-## Validates fields
 
 The country-restricted phone row uses a valid number from outside the allowed `CountryCode` values; preserve that exclusion when adapting the fixture.
 

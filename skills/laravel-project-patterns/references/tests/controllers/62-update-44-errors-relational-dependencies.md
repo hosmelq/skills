@@ -1,10 +1,6 @@
 # Update Tests: Errors Relational Dependencies
 
-Pest PATCH update: Mocked owner/selected-cabinet mismatch, rule without plan and rule belonging to another plan retain separate action exception factories and validation mappings.
-
-The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
-
-## Complete block
+PATCH update: Mocked owner/selected-cabinet mismatch, rule without plan and rule belonging to another plan retain separate action exception factories and validation mappings.
 
 ```php
 <?php

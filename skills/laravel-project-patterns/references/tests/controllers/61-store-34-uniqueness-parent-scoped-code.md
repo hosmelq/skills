@@ -1,8 +1,6 @@
 # Store Tests: Uniqueness Parent Scoped Code
 
-Pest POST store: Country-code uniqueness per parent, reuse under another parent in same tenant and after deletion.
-
-## Complete block
+POST store: Country-code uniqueness per parent, reuse under another parent in same tenant and after deletion.
 
 ```php
 <?php

@@ -2,8 +2,6 @@
 
 Browser GET show tenant settings authentication: a guest redirects to login and an unrelated authenticated tenant gets 403. Keep every valid route parameter for this route depth.
 
-## Authentication And Access
-
 ```php
 <?php
 

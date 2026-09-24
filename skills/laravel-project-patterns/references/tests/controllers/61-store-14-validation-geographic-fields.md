@@ -1,8 +1,6 @@
 # Store Tests: Validation Geographic Fields
 
-Pest POST store: Complete geographic-record dataset, including missing opening-hours, numeric coordinates and required type/name.
-
-## Validates fields
+POST store: Complete geographic-record dataset, including missing opening-hours, numeric coordinates and required type/name.
 
 The country-restricted phone row uses a valid number from outside the allowed `CountryCode` values; preserve that exclusion when adapting the fixture.
 
