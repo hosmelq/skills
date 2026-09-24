@@ -4,7 +4,7 @@ Pest POST store: Initially active parent/ancestor reaches action, which throws i
 
 The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
 
-## Rejects storing when the parent becomes inactive — variant 1
+## Maps an inactive parent rejection to validation — variant 1
 
 ```php
 <?php
@@ -23,7 +23,7 @@ use App\Exceptions\CannotUseDeactivatedServicePlan;
 use App\Models\ServicePlan;
 
 describe('store', function (): void {
-    it('rejects storing when the parent becomes inactive', function (): void {
+    it('maps an inactive parent rejection to validation', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
 
         signIn(team: $servicePlan->team);
@@ -54,7 +54,7 @@ describe('store', function (): void {
 });
 ```
 
-## Rejects storing when the ancestor becomes inactive — variant 2
+## Maps an inactive ancestor rejection to validation — variant 2
 
 ```php
 <?php
@@ -70,7 +70,7 @@ use App\Exceptions\CannotUseDeactivatedServicePlan;
 use App\Models\PlanRule;
 
 describe('store', function (): void {
-    it('rejects storing when the ancestor becomes inactive', function (): void {
+    it('maps an inactive ancestor rejection to validation', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
         signIn(team: $planRule->servicePlan->team);

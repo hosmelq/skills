@@ -2,7 +2,7 @@
 
 Pest PATCH update: A complete two-row dataset rejects a foreign-tenant rule whose parent belongs either to the current tenant or to another tenant. Preserve both ownership graphs and the exact field error.
 
-## Rejects a related rule from another tenant
+## Rejects a newly assigned relation from another tenant: plan_rule_id
 
 ```php
 <?php
@@ -20,7 +20,7 @@ use App\Models\WorkOrder;
 use Database\Factories\ServicePlanFactory;
 
 describe('update', function (): void {
-    it('rejects a related rule from another tenant', function (bool $sameParentTeam): void {
+    it('rejects a newly assigned relation from another tenant: plan_rule_id', function (bool $sameParentTeam): void {
         $workOrder = WorkOrder::factory()->createOne();
         $servicePlan = ServicePlan::factory()
             ->when($sameParentTeam, fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->for($workOrder->team))

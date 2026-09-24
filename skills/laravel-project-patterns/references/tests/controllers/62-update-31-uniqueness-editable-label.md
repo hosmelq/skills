@@ -17,18 +17,18 @@ use App\Actions\ItemGroups\UpdateItemGroup;
 use App\Models\ItemGroup;
 
 describe('update', function (): void {
-    it('rejects a value reserved by an inactive record', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->createOne();
+    it('rejects a case-insensitive value reserved by an inactive record', function (): void {
+        $itemGroup = ItemGroup::factory()->createOne();
         $duplicate = ItemGroup::factory()
             ->deactivated()
-            ->recycle($workOrderItemGroup->team)
+            ->recycle($itemGroup->team)
             ->createOne(['name' => 'Electronics']);
 
-        signIn(team: $workOrderItemGroup->team);
+        signIn(team: $itemGroup->team);
 
         $response = patch(route('teams.item-groups.update', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]), [
             'name' => mb_strtolower($duplicate->name),
         ]);
@@ -42,82 +42,82 @@ describe('update', function (): void {
         ItemGroup::factory()->createOne([
             'name' => 'Electronics',
         ]);
-        $workOrderItemGroup = ItemGroup::factory()->createOne();
+        $itemGroup = ItemGroup::factory()->createOne();
 
-        signIn(team: $workOrderItemGroup->team);
+        signIn(team: $itemGroup->team);
 
         mock(UpdateItemGroup::class)
             ->shouldReceive('handle')
             ->once();
 
         $response = patch(route('teams.item-groups.update', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]), [
             'name' => 'electronics',
         ]);
 
         $response->assertRedirectToRoute('teams.item-groups.show', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]);
     });
 
     it('allows a value used by a soft deleted record', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->createOne();
+        $itemGroup = ItemGroup::factory()->createOne();
 
         ItemGroup::factory()
             ->trashed()
-            ->recycle($workOrderItemGroup->team)
+            ->recycle($itemGroup->team)
             ->createOne(['name' => 'Electronics']);
 
-        signIn(team: $workOrderItemGroup->team);
+        signIn(team: $itemGroup->team);
 
         mock(UpdateItemGroup::class)
             ->shouldReceive('handle')
             ->once();
 
         $response = patch(route('teams.item-groups.update', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]), [
             'name' => 'ELECTRONICS',
         ]);
 
         $response->assertRedirectToRoute('teams.item-groups.show', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]);
     });
 
     it('maps a partial update with null and the current name', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->createOne([
+        $itemGroup = ItemGroup::factory()->createOne([
             'name' => 'Electronics',
         ]);
 
-        signIn(team: $workOrderItemGroup->team);
+        signIn(team: $itemGroup->team);
 
         mock(UpdateItemGroup::class)
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (
-                ItemGroup $workOrderItemGroupArgument,
+                ItemGroup $itemGroupArgument,
                 UpdateItemGroupInput $input
-            ): bool => $workOrderItemGroupArgument->is($workOrderItemGroup)
+            ): bool => $itemGroupArgument->is($itemGroup)
                 && $input->description === null
                 && $input->name === 'ELECTRONICS');
 
         $response = patch(route('teams.item-groups.update', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]), [
             'description' => null,
             'name' => 'ELECTRONICS',
         ]);
 
         $response->assertRedirectToRoute('teams.item-groups.show', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ])->assertToast('Item group updated');
     });
 });

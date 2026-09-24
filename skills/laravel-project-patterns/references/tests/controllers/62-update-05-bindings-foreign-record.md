@@ -76,13 +76,13 @@ use App\Models\Team;
 describe('update', function (): void {
     it('returns not found when the record belongs to another tenant', function (): void {
         $team = Team::factory()->createOne();
-        $workOrderItemGroup = ItemGroup::factory()->createOne();
+        $itemGroup = ItemGroup::factory()->createOne();
 
         signIn(team: $team);
 
         $response = patch(route('teams.item-groups.update', [
             'team' => $team,
-            'item_group' => $workOrderItemGroup,
+            'item_group' => $itemGroup,
         ]), [
             'name' => 'Computers',
         ]);

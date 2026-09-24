@@ -21,7 +21,7 @@ use App\Exceptions\WorkOrders\PlanRuleRequiresServicePlan;
 use App\Models\WorkOrder;
 
 describe('update', function (): void {
-    it('maps a member cabinet mismatch to validation', function (): void {
+    it('maps a relation ownership mismatch to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
         signIn(team: $workOrder->team);
@@ -41,7 +41,7 @@ describe('update', function (): void {
         ]);
     });
 
-    it('maps a missing service plan rejection to validation', function (): void {
+    it('maps a missing prerequisite relation rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
         signIn(team: $workOrder->team);
@@ -62,7 +62,7 @@ describe('update', function (): void {
         ]);
     });
 
-    it('maps a plan rule mismatch to validation', function (
+    it('maps a dependent relation mismatch to validation', function (
     ): void {
         $workOrder = WorkOrder::factory()->createOne();
 

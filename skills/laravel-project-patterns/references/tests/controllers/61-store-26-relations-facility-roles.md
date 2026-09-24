@@ -15,7 +15,7 @@ use App\Models\Facility;
 use App\Models\Team;
 
 describe('store', function (): void {
-    it('rejects facilities from another tenant', function (): void {
+    it('rejects a newly assigned relation from another tenant', function (): void {
         $team = Team::factory()->createOne();
         $facility = Facility::factory()->createOne();
 
@@ -34,7 +34,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects inactive facilities', function (): void {
+    it('rejects a newly assigned inactive relation', function (): void {
         $team = Team::factory()->createOne();
         $facility = Facility::factory()->deactivated()->for($team)->createOne();
 
@@ -53,7 +53,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects soft deleted facilities', function (): void {
+    it('rejects a newly assigned soft deleted relation', function (): void {
         $team = Team::factory()->createOne();
         $facility = Facility::factory()->trashed()->for($team)->createOne();
 

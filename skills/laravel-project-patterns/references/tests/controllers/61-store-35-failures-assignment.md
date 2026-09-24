@@ -22,7 +22,7 @@ use App\Models\Member;
 use App\Models\ServicePlan;
 
 describe('store', function (): void {
-    it('rejects storing with an inactive selected service plan', function (): void {
+    it('maps an inactive relation rejection to validation', function (): void {
         $member = Member::factory()->createOne();
         $servicePlan = ServicePlan::factory()
             ->deactivated()
@@ -53,7 +53,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects storing when the selected service plan is already assigned', function (): void {
+    it('maps an already assigned relation rejection to validation', function (): void {
         $member = Member::factory()->createOne();
         $servicePlan = ServicePlan::factory()->for($member->team)->createOne();
 

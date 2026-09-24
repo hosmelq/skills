@@ -19,7 +19,7 @@ use App\Exceptions\WorkOrders\WorkOrderIsFinal;
 use App\Models\WorkOrder;
 
 describe('destroy', function (): void {
-    it('rejects deleting when the record is final', function (): void {
+    it('maps a final record rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
         signIn(team: $workOrder->team);
@@ -56,7 +56,7 @@ use App\Exceptions\WorkOrders\WorkOrderIsFinal;
 use App\Models\WorkOrderLine;
 
 describe('destroy', function (): void {
-    it('rejects deleting when the parent is final', function (): void {
+    it('maps a final parent rejection to validation', function (): void {
         $line = WorkOrderLine::factory()->createOne();
 
         signIn(team: $line->workOrder->team);
@@ -95,7 +95,7 @@ use App\Exceptions\CannotUseDeactivatedServicePlan;
 use App\Models\PlanRule;
 
 describe('destroy', function (): void {
-    it('rejects deleting when the parent is inactive', function (): void {
+    it('maps an inactive parent rejection to validation', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
         signIn(team: $planRule->servicePlan->team);
@@ -134,7 +134,7 @@ use App\Exceptions\CannotUseDeactivatedServicePlan;
 use App\Models\PlanRate;
 
 describe('destroy', function (): void {
-    it('rejects deleting when the ancestor is inactive', function (): void {
+    it('maps an inactive ancestor rejection to validation', function (): void {
         $rate = PlanRate::factory()->createOne();
 
         signIn(team: $rate->planRule->servicePlan->team);
@@ -176,7 +176,7 @@ use App\Exceptions\CannotUseDeactivatedServicePlan;
 use App\Models\Cabinet;
 
 describe('destroy', function (): void {
-    it('rejects reactivating when a related record is inactive', function (): void {
+    it('maps an inactive relation rejection to validation', function (): void {
         $cabinet = Cabinet::factory()->deactivated()->createOne();
 
         signIn(team: $cabinet->member->team);

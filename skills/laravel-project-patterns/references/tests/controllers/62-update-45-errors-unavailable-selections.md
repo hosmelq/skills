@@ -23,7 +23,7 @@ use App\Exceptions\WorkOrders\ServicePlanIsUnavailable;
 use App\Models\WorkOrder;
 
 describe('update', function (): void {
-    it('maps an unavailable service plan rejection to validation', function (): void {
+    it('maps an unavailable relation rejection to validation: service_plan_id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
         signIn(team: $workOrder->team);
@@ -43,7 +43,7 @@ describe('update', function (): void {
         ]);
     });
 
-    it('maps an unavailable member rejection to validation', function (): void {
+    it('maps an unavailable relation rejection to validation: member_id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
         signIn(team: $workOrder->team);
@@ -63,7 +63,7 @@ describe('update', function (): void {
         ]);
     });
 
-    it('maps an unavailable received facility rejection to validation', function (): void {
+    it('maps an unavailable relation rejection to validation: received_facility_id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
         signIn(team: $workOrder->team);
@@ -83,7 +83,7 @@ describe('update', function (): void {
         ]);
     });
 
-    it('maps an unavailable pickup facility rejection to validation', function (): void {
+    it('maps an unavailable relation rejection to validation: pickup_facility_id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
         signIn(team: $workOrder->team);
@@ -103,7 +103,7 @@ describe('update', function (): void {
         ]);
     });
 
-    it('maps an unavailable cabinet rejection to validation', function (): void {
+    it('maps an unavailable relation rejection to validation: cabinet_id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
         signIn(team: $workOrder->team);

@@ -21,7 +21,7 @@ use App\Models\WorkOrder;
 use Spatie\LaravelData\Optional;
 
 describe('update', function (): void {
-    it('rejects clearing a service plan while leaving its rule omitted', function (): void {
+    it('maps a cleared prerequisite rejection to validation when the dependent field is omitted', function (): void {
         $workOrder = WorkOrder::factory()->withPlanRule()->createOne();
 
         signIn(team: $workOrder->team);
@@ -50,7 +50,7 @@ describe('update', function (): void {
         ]);
     });
 
-    it('clears a service plan and its rule when both are empty', function (): void {
+    it('clears a relation and its dependent relation when both are empty', function (): void {
         $workOrder = WorkOrder::factory()->withPlanRule()->createOne();
 
         signIn(team: $workOrder->team);

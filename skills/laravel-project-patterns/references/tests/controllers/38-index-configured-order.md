@@ -108,25 +108,25 @@ use Inertia\Testing\AssertableInertia;
 
 describe('index', function (): void {
     it('excludes foreign and soft deleted records', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->createOne();
+        $itemGroup = ItemGroup::factory()->createOne();
 
         ItemGroup::factory()->createOne();
         ItemGroup::factory()
             ->trashed()
-            ->recycle($workOrderItemGroup->team)
+            ->recycle($itemGroup->team)
             ->createOne();
 
-        signIn(team: $workOrderItemGroup->team);
+        signIn(team: $itemGroup->team);
 
         $response = get(route('teams.item-groups.index', [
-            'team' => $workOrderItemGroup->team,
+            'team' => $itemGroup->team,
         ]));
 
         $response->assertOk()
-            ->assertInertia(function (AssertableInertia $page) use ($workOrderItemGroup): void {
+            ->assertInertia(function (AssertableInertia $page) use ($itemGroup): void {
                 $page->component('item-groups/Index')
                     ->has('itemGroups', 1)
-                    ->where('itemGroups.0.id', $workOrderItemGroup->public_id);
+                    ->where('itemGroups.0.id', $itemGroup->public_id);
             });
     });
 });

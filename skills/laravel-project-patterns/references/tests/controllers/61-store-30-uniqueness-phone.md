@@ -18,7 +18,7 @@ use App\Models\Member;
 use App\Models\Team;
 
 describe('store', function (): void {
-    it('rejects duplicate phone numbers within the tenant', function (): void {
+    it('rejects a duplicate phone number in the same scope', function (): void {
         $member = Member::factory()->createOne([
             'phone_number' => '+50588888888',
         ]);
@@ -36,7 +36,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('allows the same phone number in another tenant', function (): void {
+    it('allows a phone number used in a different scope', function (): void {
         Member::factory()->createOne([
             'phone_number' => '+50588888888',
         ]);
@@ -68,7 +68,7 @@ describe('store', function (): void {
             ->assertToast('Member created');
     });
 
-    it('allows reusing a phone number after the existing record is soft deleted', function (): void {
+    it('allows a phone number used by a soft deleted record', function (): void {
         $deletedMember = Member::factory()
             ->trashed()
             ->createOne([

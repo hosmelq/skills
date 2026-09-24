@@ -2,7 +2,65 @@
 
 Pest POST store: Inactive parent or ancestor prevents creation; already inactive record prevents deactivation. Preserve negative mock assertions and supplied payload.
 
-## Prevents storing when the parent is inactive — variant 1
+## Prevents deactivating when the record is inactive — response only
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use function Pest\Laravel\post;
+
+use App\Models\ItemGroup;
+
+describe('store', function (): void {
+    it('prevents deactivating when the record is inactive', function (): void {
+        $itemGroup = ItemGroup::factory()->deactivated()->createOne();
+
+        signIn(team: $itemGroup->team);
+
+        $response = post(route('teams.item-groups.deactivation.store', [
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
+        ]));
+
+        $response->assertForbidden();
+    });
+});
+```
+
+## Prevents deactivating when the record is inactive — action not called
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use function Pest\Laravel\mock;
+use function Pest\Laravel\post;
+
+use App\Actions\WorkOrderStatuses\DeactivateWorkOrderStatus;
+use App\Models\WorkOrderStatus;
+
+describe('store', function (): void {
+    it('prevents deactivating when the record is inactive', function (): void {
+        $workOrderStatus = WorkOrderStatus::factory()->deactivated()->createOne();
+
+        signIn(team: $workOrderStatus->team);
+
+        mock(DeactivateWorkOrderStatus::class)
+            ->shouldNotReceive('handle');
+
+        $response = post(route('teams.work-order-statuses.deactivation.store', [
+            'team' => $workOrderStatus->team,
+            'work_order_status' => $workOrderStatus,
+        ]));
+
+        $response->assertForbidden();
+    });
+});
+```
+## Prevents storing when the parent is inactive
 
 ```php
 <?php
@@ -34,7 +92,7 @@ describe('store', function (): void {
 });
 ```
 
-## Prevents storing when the ancestor is inactive — variant 2
+## Prevents storing when the ancestor is inactive
 
 ```php
 <?php
@@ -69,65 +127,6 @@ describe('store', function (): void {
             'name' => '0 to 5',
             'rate' => '2.50',
         ]);
-
-        $response->assertForbidden();
-    });
-});
-```
-
-## Prevents storing when the record is inactive — variant 3
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use function Pest\Laravel\post;
-
-use App\Models\ItemGroup;
-
-describe('store', function (): void {
-    it('prevents storing when the record is inactive', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->deactivated()->createOne();
-
-        signIn(team: $workOrderItemGroup->team);
-
-        $response = post(route('teams.item-groups.deactivation.store', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
-        ]));
-
-        $response->assertForbidden();
-    });
-});
-```
-
-## Prevents storing when the record is inactive — variant 4
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use function Pest\Laravel\mock;
-use function Pest\Laravel\post;
-
-use App\Actions\WorkOrderStatuses\DeactivateWorkOrderStatus;
-use App\Models\WorkOrderStatus;
-
-describe('store', function (): void {
-    it('prevents storing when the record is inactive', function (): void {
-        $workOrderStatus = WorkOrderStatus::factory()->deactivated()->createOne();
-
-        signIn(team: $workOrderStatus->team);
-
-        mock(DeactivateWorkOrderStatus::class)
-            ->shouldNotReceive('handle');
-
-        $response = post(route('teams.work-order-statuses.deactivation.store', [
-            'team' => $workOrderStatus->team,
-            'work_order_status' => $workOrderStatus,
-        ]));
 
         $response->assertForbidden();
     });

@@ -82,14 +82,14 @@ describe('show', function (): void {
         $team = Team::factory()->createOne();
         $workOrder = WorkOrder::factory()->for($team)->createOne();
         $otherWorkOrder = WorkOrder::factory()->for($team)->createOne();
-        $otherItem = WorkOrderLine::factory()->for($otherWorkOrder)->createOne();
+        $otherLine = WorkOrderLine::factory()->for($otherWorkOrder)->createOne();
 
         signIn(team: $team);
 
         $response = get(route('teams.work-orders.lines.show', [
             'team' => $workOrder->team,
             'work_order' => $workOrder,
-            'line' => $otherItem,
+            'line' => $otherLine,
         ]));
 
         $response->assertNotFound();

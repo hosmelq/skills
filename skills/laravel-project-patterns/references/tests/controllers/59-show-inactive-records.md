@@ -16,23 +16,23 @@ use Inertia\Testing\AssertableInertia;
 
 describe('show', function (): void {
     it('shows the detail page for an inactive record', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->deactivated()->createOne();
+        $itemGroup = ItemGroup::factory()->deactivated()->createOne();
 
-        signIn(team: $workOrderItemGroup->team);
+        signIn(team: $itemGroup->team);
 
         $response = get(route('teams.item-groups.show', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]));
 
         $response->assertOk()
-            ->assertInertia(function (AssertableInertia $page) use ($workOrderItemGroup): void {
+            ->assertInertia(function (AssertableInertia $page) use ($itemGroup): void {
                 $page->component('item-groups/Show')
-                    ->where('team.id', $workOrderItemGroup->team->public_id)
-                    ->where('itemGroup.id', $workOrderItemGroup->public_id)
+                    ->where('team.id', $itemGroup->team->public_id)
+                    ->where('itemGroup.id', $itemGroup->public_id)
                     ->where(
                         'itemGroup.deactivated_at',
-                        $workOrderItemGroup->deactivated_at->toJSON(),
+                        $itemGroup->deactivated_at->toJSON(),
                     );
             });
     });

@@ -17,7 +17,7 @@ use App\Actions\WorkOrderStatuses\UpdateWorkOrderStatus;
 use App\Models\WorkOrderStatus;
 
 describe('update', function (): void {
-    it('rejects a duplicate value in the same scope', function (): void {
+    it('rejects a case-insensitive duplicate value in the same scope', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne([
             'name' => 'Ready',
         ]);
@@ -40,7 +40,7 @@ describe('update', function (): void {
         ]);
     });
 
-    it('rejects a value reserved by an inactive record', function (): void {
+    it('rejects a case-insensitive value reserved by an inactive record', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne([
             'name' => 'Ready',
         ]);

@@ -9,7 +9,7 @@ Keep `shows the create page` for each controller. Assert values consumed by the 
 | Page | Component | Props beyond the team public ID |
 | --- | --- | --- |
 | Member | `members/Create` | None |
-| Item category | `item-categories/Create` | None |
+| Item group | `item-groups/Create` | None |
 | Work order status | `work-order-statuses/Create` | `baseStatuses = WorkOrderBaseStatus::options()` |
 | Service plan | `service-plans/Create` | `transitTimeUnits`, `weightUnits` |
 | Plan rule | `service-plans/plan-rules/Create` | `servicePlan.id`, `countryCodes`, `currencyCodes`, `roundingModes` |

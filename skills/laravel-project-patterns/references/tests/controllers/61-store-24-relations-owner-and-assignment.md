@@ -16,7 +16,7 @@ use App\Models\Member;
 use App\Models\Team;
 
 describe('store', function (): void {
-    it('rejects a member from another tenant', function (): void {
+    it('rejects a newly assigned relation from another tenant: member_id', function (): void {
         $team = Team::factory()->createOne();
         $member = Member::factory()->createOne();
 
@@ -31,22 +31,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects a soft deleted member', function (): void {
-        $team = Team::factory()->createOne();
-        $member = Member::factory()->trashed()->for($team)->createOne();
-
-        signIn(team: $team);
-
-        $response = post(route('teams.work-orders.store', $team), [
-            'member_id' => $member->public_id,
-        ]);
-
-        $response->assertRedirectBackWithErrors([
-            'member_id' => 'The selected member id is invalid.',
-        ]);
-    });
-
-    it('rejects a cabinet from another tenant', function (): void {
+    it('rejects a newly assigned relation from another tenant: cabinet_id', function (): void {
         $team = Team::factory()->createOne();
         $cabinet = Cabinet::factory()->createOne();
 
@@ -61,7 +46,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects an inactive cabinet', function (): void {
+    it('rejects a newly assigned inactive relation: cabinet_id', function (): void {
         $team = Team::factory()->createOne();
         $cabinet = Cabinet::factory()->deactivated()->recycle($team)->createOne();
 
@@ -76,7 +61,22 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects a soft deleted cabinet', function (): void {
+    it('rejects a newly assigned soft deleted relation: member_id', function (): void {
+        $team = Team::factory()->createOne();
+        $member = Member::factory()->trashed()->for($team)->createOne();
+
+        signIn(team: $team);
+
+        $response = post(route('teams.work-orders.store', $team), [
+            'member_id' => $member->public_id,
+        ]);
+
+        $response->assertRedirectBackWithErrors([
+            'member_id' => 'The selected member id is invalid.',
+        ]);
+    });
+
+    it('rejects a newly assigned soft deleted relation: cabinet_id', function (): void {
         $team = Team::factory()->createOne();
         $cabinet = Cabinet::factory()->trashed()->recycle($team)->createOne();
 

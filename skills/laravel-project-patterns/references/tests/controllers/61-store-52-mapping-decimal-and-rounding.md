@@ -47,7 +47,7 @@ describe('store', function (): void {
             'country_code' => CountryCode::Japan->value,
             'currency_code' => CurrencyCode::CNY->value,
             'minimum_billable_weight' => 0,
-            'name' => 'China air cargo',
+            'name' => 'Japan air cargo',
         ]);
 
         $response->assertRedirectToRoute('teams.service-plans.plan-rules.show', [
@@ -84,7 +84,7 @@ describe('store', function (): void {
             'country_code' => CountryCode::Canada->value,
             'currency_code' => CurrencyCode::USD->value,
             'minimum_billable_weight' => 1,
-            'name' => 'US air cargo',
+            'name' => 'Canada air cargo',
         ]);
 
         $response->assertRedirectToRoute('teams.service-plans.plan-rules.show', [

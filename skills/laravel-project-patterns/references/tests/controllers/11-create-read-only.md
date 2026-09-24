@@ -23,14 +23,14 @@ describe('create', function (): void {
 
         signIn(team: $workOrder->team);
 
-        $response = get(route('teams.work-orders.items.create', [
+        $response = get(route('teams.work-orders.lines.create', [
             'team' => $workOrder->team,
             'work_order' => $workOrder,
         ]));
 
         $response->assertOk()
             ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
-                ->component('work-orders/items/Create')
+                ->component('work-orders/lines/Create')
                 ->where('canMutate', false));
     })->with([
         WorkOrderBaseStatus::Cancelled,

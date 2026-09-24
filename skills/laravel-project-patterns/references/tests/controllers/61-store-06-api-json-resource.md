@@ -50,7 +50,7 @@ describe('store', function (): void {
         $response->assertNotFound();
     });
 
-    it('rejects storing when self-service is disabled', function (): void {
+    it('maps a disabled self-service rejection to validation', function (): void {
         $team = Team::factory()->createOne();
         $user = User::factory()->createOne();
 

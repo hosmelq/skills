@@ -21,7 +21,7 @@ use App\Exceptions\WorkOrders\WorkOrderStatusIsUnavailable;
 use App\Models\Team;
 
 describe('store', function (): void {
-    it('rejects storing without an active initial status', function (): void {
+    it('maps an unavailable initial status rejection to validation', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);
@@ -38,7 +38,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects storing with a duplicate reference', function (): void {
+    it('maps a duplicate reference rejection to validation', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);
@@ -55,7 +55,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects storing when the selected status becomes unavailable', function (): void {
+    it('maps an unavailable relation rejection to validation: work_order_status_id', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);

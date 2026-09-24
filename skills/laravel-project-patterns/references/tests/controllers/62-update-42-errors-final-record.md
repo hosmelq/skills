@@ -41,7 +41,7 @@ describe('update', function (): void {
 });
 ```
 
-## Maps a final record rejection to validation — variant 2
+## Maps a final parent rejection to validation — variant 2
 
 ```php
 <?php
@@ -56,7 +56,7 @@ use App\Exceptions\WorkOrders\WorkOrderIsFinal;
 use App\Models\WorkOrderLine;
 
 describe('update', function (): void {
-    it('maps a final record rejection to validation', function (): void {
+    it('maps a final parent rejection to validation', function (): void {
         $line = WorkOrderLine::factory()->createOne();
 
         signIn(team: $line->workOrder->team);

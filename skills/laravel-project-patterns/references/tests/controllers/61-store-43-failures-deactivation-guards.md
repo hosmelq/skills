@@ -4,7 +4,7 @@ Pest POST store: Required active initial status and active dependent records blo
 
 The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
 
-## Rejects deactivating the required active initial status — variant 1
+## Maps a required active initial record rejection to validation — variant 1
 
 ```php
 <?php
@@ -19,7 +19,7 @@ use App\Exceptions\CannotDeactivateWorkOrderStatus;
 use App\Models\WorkOrderStatus;
 
 describe('store', function (): void {
-    it('rejects deactivating the required active initial status', function (): void {
+    it('maps a required active initial record rejection to validation', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne();
 
         signIn(team: $workOrderStatus->team);
@@ -42,7 +42,7 @@ describe('store', function (): void {
 });
 ```
 
-## Rejects deactivating a record with active dependent records — variant 2
+## Maps an active dependent record rejection to validation — variant 2
 
 ```php
 <?php
@@ -57,7 +57,7 @@ use App\Exceptions\CannotDeactivateServicePlan;
 use App\Models\ServicePlan;
 
 describe('store', function (): void {
-    it('rejects deactivating a record with active dependent records', function (): void {
+    it('maps an active dependent record rejection to validation', function (): void {
         $servicePlan = ServicePlan::factory()->createOne();
 
         signIn(team: $servicePlan->team);

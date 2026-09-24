@@ -20,7 +20,7 @@ use App\Exceptions\CannotCreatePlanRate;
 use App\Models\PlanRule;
 
 describe('store', function (): void {
-    it('rejects overlapping ranges', function (): void {
+    it('maps an overlapping range rejection to validation', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
         signIn(team: $planRule->servicePlan->team);
@@ -51,7 +51,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects a second open-ended range', function (): void {
+    it('maps a second open-ended range rejection to validation', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
         signIn(team: $planRule->servicePlan->team);

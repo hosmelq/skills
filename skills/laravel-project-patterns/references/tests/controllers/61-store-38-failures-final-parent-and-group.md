@@ -21,31 +21,7 @@ use App\Models\ItemGroup;
 use App\Models\WorkOrder;
 
 describe('store', function (): void {
-    it('rejects storing when the parent becomes final', function (): void {
-        $workOrder = WorkOrder::factory()->createOne();
-
-        signIn(team: $workOrder->team);
-
-        mock(CreateWorkOrderLine::class)
-            ->shouldReceive('handle')
-            ->once()
-            ->andThrow(WorkOrderIsFinal::becauseItCannotBeChangedOrDeleted());
-
-        $response = post(route('teams.work-orders.lines.store', [
-            'team' => $workOrder->team,
-            'work_order' => $workOrder,
-        ]), [
-            'description' => 'Laptop computer',
-            'quantity' => 2,
-        ]);
-
-        $response->assertRedirectBackWithErrors([
-            'work_order' =>
-                'Work order lines cannot be created after the work order reaches a final status.',
-        ]);
-    });
-
-    it('rejects storing when the selected item group becomes unavailable', function (): void {
+    it('maps an unavailable relation rejection to validation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
         $group = ItemGroup::factory()->for($workOrder->team)->createOne();
 
@@ -68,6 +44,30 @@ describe('store', function (): void {
         $response->assertRedirectBackWithErrors([
             'item_group_id' =>
                 'The selected item group is unavailable.',
+        ]);
+    });
+
+    it('maps a final parent rejection to validation', function (): void {
+        $workOrder = WorkOrder::factory()->createOne();
+
+        signIn(team: $workOrder->team);
+
+        mock(CreateWorkOrderLine::class)
+            ->shouldReceive('handle')
+            ->once()
+            ->andThrow(WorkOrderIsFinal::becauseItCannotBeChangedOrDeleted());
+
+        $response = post(route('teams.work-orders.lines.store', [
+            'team' => $workOrder->team,
+            'work_order' => $workOrder,
+        ]), [
+            'description' => 'Laptop computer',
+            'quantity' => 2,
+        ]);
+
+        $response->assertRedirectBackWithErrors([
+            'work_order' =>
+                'Work order lines cannot be created after the work order reaches a final status.',
         ]);
     });
 });

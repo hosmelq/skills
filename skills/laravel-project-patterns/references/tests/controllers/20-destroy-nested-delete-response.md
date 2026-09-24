@@ -131,7 +131,7 @@ describe('destroy', function (): void {
         mock(DeleteWorkOrderLine::class)
             ->shouldReceive('handle')
             ->once()
-            ->withArgs(fn (WorkOrderLine $itemArgument): bool => $itemArgument->is($line));
+            ->withArgs(fn (WorkOrderLine $lineArgument): bool => $lineArgument->is($line));
 
         $response = delete(route('teams.work-orders.lines.destroy', [
             'team' => $line->workOrder->team,

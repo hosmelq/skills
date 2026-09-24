@@ -82,7 +82,7 @@ describe('update', function (): void {
         ]);
     });
 
-    it('accepts the explicitly unchanged inactive item group', function (): void {
+    it('accepts a current inactive relation', function (): void {
         $group = ItemGroup::factory()->deactivated()->createOne();
         $workOrder = WorkOrder::factory()->for($group->team)->createOne();
         $line = WorkOrderLine::factory()

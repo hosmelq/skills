@@ -9,7 +9,6 @@ Pest PATCH update: Whole state-fields dataset, plus invalid initial enum produci
 
 declare(strict_types=1);
 
-use function Pest\Laravel\get;
 use function Pest\Laravel\mock;
 use function Pest\Laravel\patch;
 

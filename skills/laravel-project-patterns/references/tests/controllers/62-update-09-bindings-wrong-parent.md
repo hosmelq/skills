@@ -86,7 +86,7 @@ describe('update', function (): void {
         $team = Team::factory()->createOne();
         $workOrder = WorkOrder::factory()->for($team)->createOne();
         $otherWorkOrder = WorkOrder::factory()->for($team)->createOne();
-        $otherItem = WorkOrderLine::factory()->for($otherWorkOrder)->createOne();
+        $otherLine = WorkOrderLine::factory()->for($otherWorkOrder)->createOne();
 
         signIn(team: $team);
 
@@ -94,7 +94,7 @@ describe('update', function (): void {
             route('teams.work-orders.lines.update', [
                 'team' => $workOrder->team,
                 'work_order' => $workOrder,
-                'line' => $otherItem,
+                'line' => $otherLine,
             ]),
             ['description' => 'Updated'],
         );

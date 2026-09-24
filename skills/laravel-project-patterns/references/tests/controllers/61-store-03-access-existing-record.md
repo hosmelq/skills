@@ -25,7 +25,7 @@ describe('store', function (): void {
         $response->assertRedirectToRoute('login');
     });
 
-    it('prevents storing from an unrelated tenant', function (): void {
+    it('prevents deactivating from an unrelated tenant', function (): void {
         $unrelatedFacility = Facility::factory()->createOne();
 
         signIn();
@@ -64,7 +64,7 @@ describe('store', function (): void {
         $response->assertRedirectToRoute('login');
     });
 
-    it('prevents storing from an unrelated tenant', function (): void {
+    it('prevents deactivating from an unrelated tenant', function (): void {
         $cabinet = Cabinet::factory()->createOne();
 
         signIn();

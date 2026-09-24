@@ -15,7 +15,7 @@ use App\Models\ItemGroup;
 use App\Models\WorkOrder;
 
 describe('store', function (): void {
-    it('rejects an invalid item group id', function (): void {
+    it('rejects an invalid relation id', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
 
         signIn(team: $workOrder->team);
@@ -34,7 +34,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects an item group from another tenant', function (): void {
+    it('rejects a newly assigned relation from another tenant', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
         $group = ItemGroup::factory()->createOne();
 
@@ -54,7 +54,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects an inactive item group', function (): void {
+    it('rejects a newly assigned inactive relation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
         $group = ItemGroup::factory()
             ->deactivated()
@@ -77,7 +77,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects a soft deleted item group', function (): void {
+    it('rejects a newly assigned soft deleted relation', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
         $group = ItemGroup::factory()
             ->trashed()

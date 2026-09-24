@@ -22,7 +22,7 @@ use App\Exceptions\WorkOrders\WeightUnitDoesNotMatchServicePlan;
 use App\Models\Team;
 
 describe('store', function (): void {
-    it('rejects storing when the selected member does not own the selected cabinet', function (): void {
+    it('maps a relation ownership mismatch to validation', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);
@@ -39,7 +39,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects storing with a plan rule but no service plan', function (): void {
+    it('maps a missing prerequisite relation rejection to validation', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);
@@ -57,7 +57,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects storing with a plan rule for another service plan', function (
+    it('maps a dependent relation mismatch to validation', function (
     ): void {
         $team = Team::factory()->createOne();
 
@@ -76,7 +76,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects storing with a measurement unit that differs from the service plan', function (): void {
+    it('maps a mismatched weight unit rejection to validation', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);

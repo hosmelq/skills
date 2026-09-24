@@ -23,18 +23,18 @@ Route roles are tenant / ancestor / parent / record; omit absent levels. Apply o
 15. `prevents deleting when the parent is inactive`
 16. `prevents deleting when the ancestor is inactive`
 17. `prevents reactivating when the record is active`
-18. `rejects deleting when history exists`
-19. `rejects deleting the required active initial record`
-20. `rejects deleting when the record is assigned`
+18. `maps an existing history rejection to validation`
+19. `maps a required active initial record rejection to validation`
+20. `maps an assigned record rejection to validation`
 21. `rejects deleting when child records exist`
 22. `rejects deleting when soft deleted child records exist`
 23. `rejects deleting when related records exist`
 24. `rejects deleting when soft deleted related records exist`
-25. `rejects deleting when the record is final`
-26. `rejects deleting when the parent is final`
-27. `rejects deleting when the parent is inactive`
-28. `rejects deleting when the ancestor is inactive`
-29. `rejects reactivating when a related record is inactive`
+25. `maps a final record rejection to validation`
+26. `maps a final parent rejection to validation`
+27. `maps an inactive parent rejection to validation`
+28. `maps an inactive ancestor rejection to validation`
+29. `maps an inactive relation rejection to validation`
 30. `deletes the record`
 31. `deletes the default record`
 32. `reactivates the record`

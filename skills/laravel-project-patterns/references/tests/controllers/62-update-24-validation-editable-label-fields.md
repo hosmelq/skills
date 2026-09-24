@@ -16,13 +16,13 @@ use Illuminate\Support\Str;
 
 describe('update', function (): void {
     it('validates fields', function (array $data, array $errors): void {
-        $workOrderItemGroup = ItemGroup::factory()->createOne();
+        $itemGroup = ItemGroup::factory()->createOne();
 
-        signIn(team: $workOrderItemGroup->team);
+        signIn(team: $itemGroup->team);
 
         $response = patch(route('teams.item-groups.update', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]), $data);
 
         $response->assertRedirectBackWithErrors($errors);

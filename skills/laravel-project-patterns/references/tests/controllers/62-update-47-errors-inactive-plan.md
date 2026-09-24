@@ -4,7 +4,7 @@ Pest PATCH update: Mocked inactive-plan rejection for a rule and rate; preserve 
 
 The action is mocked to throw. These assertions verify controller translation, not the underlying business guard.
 
-## Maps an inactive service plan rejection to validation — variant 1
+## Maps an inactive parent rejection to validation
 
 ```php
 <?php
@@ -20,7 +20,7 @@ use App\Exceptions\CannotUseDeactivatedServicePlan;
 use App\Models\PlanRule;
 
 describe('update', function (): void {
-    it('maps an inactive service plan rejection to validation', function (): void {
+    it('maps an inactive parent rejection to validation', function (): void {
         $planRule = PlanRule::factory()->createOne();
 
         signIn(team: $planRule->servicePlan->team);
@@ -47,7 +47,7 @@ describe('update', function (): void {
 });
 ```
 
-## Maps an inactive service plan rejection to validation — variant 2
+## Maps an inactive ancestor rejection to validation
 
 ```php
 <?php
@@ -63,7 +63,7 @@ use App\Exceptions\CannotUseDeactivatedServicePlan;
 use App\Models\PlanRate;
 
 describe('update', function (): void {
-    it('maps an inactive service plan rejection to validation', function (): void {
+    it('maps an inactive ancestor rejection to validation', function (): void {
         $rate = PlanRate::factory()->createOne();
 
         signIn(team: $rate->planRule->servicePlan->team);

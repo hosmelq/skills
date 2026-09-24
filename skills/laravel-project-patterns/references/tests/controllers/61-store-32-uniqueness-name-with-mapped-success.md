@@ -1,6 +1,6 @@
 # Store Tests: Uniqueness Name With Mapped Success
 
-Pest POST store: Case-insensitive duplicate and inactive-name reservation; reuse carries typed name predicate and toast.
+Pest POST store: Case-insensitive duplicates and exact inactive-name reservation; reuse carries typed name predicate and toast.
 
 ## Complete block
 
@@ -19,7 +19,7 @@ use App\Models\Team;
 use App\Models\WorkOrderStatus;
 
 describe('store', function (): void {
-    it('rejects case-insensitive duplicate names within the tenant', function (): void {
+    it('rejects a case-insensitive duplicate value in the same scope', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne([
             'name' => 'Received',
         ]);
@@ -38,7 +38,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('keeps inactive record names reserved', function (): void {
+    it('rejects a value reserved by an inactive record', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->deactivated()->createOne([
             'name' => 'Received',
         ]);
@@ -57,7 +57,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('allows the same name in another tenant', function (): void {
+    it('allows a value used in a different scope', function (): void {
         WorkOrderStatus::factory()->createOne([
             'name' => 'Received',
         ]);
@@ -93,7 +93,7 @@ describe('store', function (): void {
             ->assertToast('Work order status created');
     });
 
-    it('allows reusing a name after the existing record is soft deleted', function (): void {
+    it('allows a value used by a soft deleted record', function (): void {
         $deletedWorkOrderStatus = WorkOrderStatus::factory()
             ->trashed()
             ->createOne([

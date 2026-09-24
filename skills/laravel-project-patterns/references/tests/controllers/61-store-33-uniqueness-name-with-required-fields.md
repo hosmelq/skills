@@ -20,7 +20,7 @@ use App\Models\ServicePlan;
 use App\Models\Team;
 
 describe('store', function (): void {
-    it('rejects duplicate names within the tenant', function (): void {
+    it('rejects a duplicate value in the same scope', function (): void {
         $servicePlan = ServicePlan::factory()->createOne([
             'name' => 'Air Freight',
         ]);
@@ -43,7 +43,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('keeps inactive record names reserved', function (): void {
+    it('rejects a value reserved by an inactive record', function (): void {
         $servicePlan = ServicePlan::factory()->deactivated()->createOne([
             'name' => 'Air Freight',
         ]);
@@ -66,7 +66,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('allows the same name in another tenant', function (): void {
+    it('allows a value used in a different scope', function (): void {
         ServicePlan::factory()->createOne([
             'name' => 'Air Freight',
         ]);
@@ -100,7 +100,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('allows reusing a name after the existing record is soft deleted', function (): void {
+    it('allows a value used by a soft deleted record', function (): void {
         $servicePlan = ServicePlan::factory()
             ->trashed()
             ->createOne([

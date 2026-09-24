@@ -48,7 +48,7 @@ describe('update', function (): void {
             ->assertToast('Settings updated');
     });
 
-    it('allows disabling the cabinet setting', function (): void {
+    it('allows disabling an enabled setting: cabinets_enabled', function (): void {
         $team = Team::factory()->createOne([
             'cabinets_enabled' => true,
         ]);
@@ -74,7 +74,7 @@ describe('update', function (): void {
             ->assertToast('Settings updated');
     });
 
-    it('allows disabling the shipment setting', function (): void {
+    it('allows disabling an enabled setting: shipments_enabled', function (): void {
         $team = Team::factory()->createOne([
             'shipments_enabled' => true,
         ]);

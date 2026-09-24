@@ -27,68 +27,65 @@ Ordered Pest PATCH update cases: access and scoped bindings, inactive policy, co
 21. `rejects a duplicate email in the same scope`
 22. `rejects a duplicate phone number in the same scope`
 23. `rejects a duplicate value in the same scope`
-24. `rejects a value reserved by an inactive record`
-25. `rejects a newly assigned relation from another tenant`
-26. `rejects a newly assigned inactive relation`
-27. `rejects a newly assigned soft deleted relation`
-28. `rejects a historical relation selected by another record`
-29. `rejects a related rule from another tenant`
-30. `validates an upper bound against the stored lower bound`
-31. `validates a lower bound against the stored upper bound`
-32. `maps a rejected request approval conflict to validation`
-33. `maps an approved request rejection conflict to validation`
-34. `rejects clearing a service plan while leaving its rule omitted`
-35. `maps an incomplete weight rejection to validation`
-36. `maps a mismatched weight unit rejection to validation`
-37. `maps incomplete dimensions to validation`
-38. `maps a final record rejection to validation`
-39. `maps a required received date rejection to validation`
-40. `maps a member cabinet mismatch to validation`
-41. `maps a missing service plan rejection to validation`
-42. `maps a plan rule mismatch to validation`
-43. `maps an unavailable service plan rejection to validation`
-44. `maps an unavailable member rejection to validation`
-45. `maps an unavailable received facility rejection to validation`
-46. `maps an unavailable pickup facility rejection to validation`
-47. `maps an unavailable cabinet rejection to validation`
-48. `maps a duplicate reference rejection to validation`
-49. `maps an unavailable relation rejection to validation`
-50. `maps a dependent rate rejection to validation`
-51. `maps an inactive service plan rejection to validation`
-52. `maps a second open-ended range rejection to validation`
-53. `maps an overlapping range rejection to validation`
-54. `allows an email used in a different scope`
-55. `allows a phone number used in a different scope`
-56. `allows a value used in a different scope`
-57. `allows the current email`
-58. `allows the current phone number`
-59. `allows the current value`
-60. `allows an email used by a soft deleted record`
-61. `allows a phone number used by a soft deleted record`
-62. `allows a value used by a soft deleted record`
-63. `updates the record`
-64. `updates the settings`
-65. `maps submitted and omitted fields to the action`
-66. `maps a partial update with null and the current name`
-67. `maps a name-only update to the action`
-68. `allows disabling the cabinet setting`
-69. `allows disabling the shipment setting`
-70. `maps a base status to the update input`
-71. `maps a false boolean to the update input`
-72. `maps the province using the current country when country is empty`
-73. `clears the province when changing country without a province`
-74. `clears the rounding increment when rounding is disabled`
-75. `retains the stored increment while updating another field`
-76. `maps a cleared upper bound with the stored lower bound`
-77. `maps partial measurements using stored values`
-78. `allows a lower bound update with an open-ended stored upper bound`
-79. `clears a service plan and its rule when both are empty`
-80. `accepts the current historical cabinet, facilities and service plan`
-81. `accepts the current historical member`
-82. `accepts the current historical rule`
-83. `accepts the explicitly unchanged inactive item group`
-84. `approves a request`
-85. `rejects a request`
+24. `rejects a case-insensitive duplicate value in the same scope`
+25. `rejects a value reserved by an inactive record`
+26. `rejects a case-insensitive value reserved by an inactive record`
+27. `rejects a newly assigned relation from another tenant`
+28. `rejects a newly assigned inactive relation`
+29. `rejects a newly assigned soft deleted relation`
+30. `rejects a historical relation selected by another record`
+31. `validates an upper bound against the stored lower bound`
+32. `validates a lower bound against the stored upper bound`
+33. `maps a rejected request approval conflict to validation`
+34. `maps an approved request rejection conflict to validation`
+35. `maps a cleared prerequisite rejection to validation when the dependent field is omitted`
+36. `maps an incomplete weight rejection to validation`
+37. `maps a mismatched weight unit rejection to validation`
+38. `maps incomplete dimensions to validation`
+39. `maps a final record rejection to validation`
+40. `maps a final parent rejection to validation`
+41. `maps a required received date rejection to validation`
+42. `maps a relation ownership mismatch to validation`
+43. `maps a missing prerequisite relation rejection to validation`
+44. `maps a dependent relation mismatch to validation`
+45. `maps an unavailable relation rejection to validation`
+46. `maps a duplicate reference rejection to validation`
+47. `maps a dependent rate rejection to validation`
+48. `maps an inactive parent rejection to validation`
+49. `maps an inactive ancestor rejection to validation`
+50. `maps a second open-ended range rejection to validation`
+51. `maps an overlapping range rejection to validation`
+52. `allows an email used in a different scope`
+53. `allows a phone number used in a different scope`
+54. `allows a value used in a different scope`
+55. `allows the current email`
+56. `allows the current phone number`
+57. `allows the current value`
+58. `allows an email used by a soft deleted record`
+59. `allows a phone number used by a soft deleted record`
+60. `allows a value used by a soft deleted record`
+61. `updates the record`
+62. `updates the settings`
+63. `maps submitted and omitted fields to the action`
+64. `maps a partial update with null and the current name`
+65. `maps a name-only update to the action`
+66. `allows disabling an enabled setting`
+67. `maps a base status to the update input`
+68. `maps a false boolean to the update input`
+69. `maps the province using the current country when country is empty`
+70. `clears the province when changing country without a province`
+71. `clears the rounding increment when rounding is disabled`
+72. `retains the stored increment while updating another field`
+73. `maps a cleared upper bound with the stored lower bound`
+74. `maps partial measurements using stored values`
+75. `allows a lower bound update with an open-ended stored upper bound`
+76. `clears a relation and its dependent relation when both are empty`
+77. `accepts current inactive and deleted relations`
+78. `accepts a current deleted relation`
+79. `accepts a current deleted dependent relation`
+80. `accepts a current inactive relation`
+81. `approves a request`
+82. `rejects a request`
 
 ## Contracts
 
@@ -96,7 +93,7 @@ These examples cover PATCH, not PUT replacement semantics. Route roles are tenan
 
 Keep complete named `validates fields` datasets, valid base payloads, stored attributes, expected messages and action non-call checks. Omitted fields, explicit null, empty strings, stored defaults and Optional are distinct. Preserve conditional field requirements, stored-bound comparisons and exact error-bag precedence.
 
-New relation eligibility differs from retaining the current historical selection; another record's historical relation is separate. Scoped uniqueness includes current-value acceptance, other scopes, deleted reuse and inactive reservation. Qualify names by field only when the same block contains otherwise colliding cases.
+New relation eligibility differs from retaining the current historical selection; another record's historical relation is separate. Scoped uniqueness includes current-value acceptance, other scopes, deleted reuse and inactive reservation. Keep case-insensitive and relation-state qualifiers. Add `: field_name` only when separate tests would otherwise collide; dataset rows already distinguish their fields.
 
 Preserve typed action argument identity, decoded public IDs, enums, decimals, false booleans, geographic normalization and complete transformed measurement datasets. A mocked finality, dependency or decision exception verifies controller translation; do not replace its ordinary fixture with a real failing-state fixture.
 

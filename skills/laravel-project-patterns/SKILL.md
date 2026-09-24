@@ -44,8 +44,9 @@ descriptions, or `read --repeat` if the needed ID remains known. Receipts are no
 model memory. Changed sources require searching again.
 
 Keep canonical test names, documented case order, fixtures, assertions and datasets.
-Qualify names only to distinguish cases within one block; do not introduce behavior
-to match an example.
+Keep behavior qualifiers (parent/ancestor, case-insensitive, relation state). Add
+`: field_name` only to distinguish separate tests within one block; named dataset
+rows already distinguish fields. Do not introduce behavior to match an example.
 
 First search installs dependencies/model and builds the local index automatically;
 later searches refresh changed Markdown. Read loads no model. Resolve search

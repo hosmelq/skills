@@ -18,7 +18,7 @@ use App\Models\Member;
 use App\Models\Team;
 
 describe('store', function (): void {
-    it('rejects duplicate emails within the tenant', function (): void {
+    it('rejects a duplicate email in the same scope', function (): void {
         $member = Member::factory()->createOne([
             'email' => 'john@gmail.com',
         ]);
@@ -36,7 +36,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('allows the same email in another tenant', function (): void {
+    it('allows an email used in a different scope', function (): void {
         Member::factory()->createOne([
             'email' => 'john@gmail.com',
         ]);
@@ -68,7 +68,7 @@ describe('store', function (): void {
             ->assertToast('Member created');
     });
 
-    it('allows reusing an email after the existing record is soft deleted', function (): void {
+    it('allows an email used by a soft deleted record', function (): void {
         $deletedMember = Member::factory()
             ->trashed()
             ->createOne([

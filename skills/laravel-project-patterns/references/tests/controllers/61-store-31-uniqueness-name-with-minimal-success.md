@@ -17,15 +17,15 @@ use App\Models\ItemGroup;
 use App\Models\Team;
 
 describe('store', function (): void {
-    it('rejects case-insensitive duplicate names including inactive records', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->deactivated()->createOne([
+    it('rejects a case-insensitive value reserved by an inactive record', function (): void {
+        $itemGroup = ItemGroup::factory()->deactivated()->createOne([
             'name' => 'Electronics',
         ]);
 
-        signIn(team: $workOrderItemGroup->team);
+        signIn(team: $itemGroup->team);
 
         $response = post(route('teams.item-groups.store', [
-            'team' => $workOrderItemGroup->team,
+            'team' => $itemGroup->team,
         ]), [
             'name' => 'ELECTRONICS',
         ]);
@@ -35,7 +35,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('allows the same name in another tenant', function (): void {
+    it('allows a value used in a different scope', function (): void {
         ItemGroup::factory()->createOne([
             'name' => 'Electronics',
         ]);
@@ -63,7 +63,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('allows reusing a name after the existing record is soft deleted', function (): void {
+    it('allows a value used by a soft deleted record', function (): void {
         $deleted = ItemGroup::factory()->trashed()->createOne([
             'name' => 'Electronics',
         ]);

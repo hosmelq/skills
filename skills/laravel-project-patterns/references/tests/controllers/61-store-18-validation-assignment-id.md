@@ -53,7 +53,7 @@ describe('store', function (): void {
         ],
     ]);
 
-    it('rejects a service plan from another tenant', function (): void {
+    it('rejects a newly assigned relation from another tenant', function (): void {
         $member = Member::factory()->createOne();
         $servicePlan = ServicePlan::factory()->createOne();
 
@@ -71,7 +71,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects a soft deleted service plan', function (): void {
+    it('rejects a newly assigned soft deleted relation', function (): void {
         $member = Member::factory()->createOne();
         $servicePlan = ServicePlan::factory()
             ->trashed()

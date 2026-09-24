@@ -97,13 +97,13 @@ use App\Models\ItemGroup;
 
 describe('update', function (): void {
     it('prevents updating from an unrelated tenant', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->createOne();
+        $itemGroup = ItemGroup::factory()->createOne();
 
         signIn();
 
         $response = patch(route('teams.item-groups.update', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]), [
             'name' => 'Computers',
         ]);

@@ -17,20 +17,20 @@ use App\Models\ItemGroup;
 
 describe('store', function (): void {
     it('deactivates the record', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->createOne();
+        $itemGroup = ItemGroup::factory()->createOne();
 
-        signIn(team: $workOrderItemGroup->team);
+        signIn(team: $itemGroup->team);
 
         mock(DeactivateItemGroup::class)
             ->shouldReceive('handle')
             ->once()
             ->withArgs(fn (
-                ItemGroup $workOrderItemGroupArgument
-            ): bool => $workOrderItemGroupArgument->is($workOrderItemGroup));
+                ItemGroup $itemGroupArgument
+            ): bool => $itemGroupArgument->is($itemGroup));
 
         $response = post(route('teams.item-groups.deactivation.store', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]));
 
         $response->assertRedirect()

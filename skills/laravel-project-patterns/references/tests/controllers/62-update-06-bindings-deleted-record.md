@@ -69,13 +69,13 @@ use App\Models\ItemGroup;
 
 describe('update', function (): void {
     it('returns not found when the record is soft deleted', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->trashed()->createOne();
+        $itemGroup = ItemGroup::factory()->trashed()->createOne();
 
-        signIn(team: $workOrderItemGroup->team);
+        signIn(team: $itemGroup->team);
 
         $response = patch(route('teams.item-groups.update', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]), [
             'name' => 'Computers',
         ]);

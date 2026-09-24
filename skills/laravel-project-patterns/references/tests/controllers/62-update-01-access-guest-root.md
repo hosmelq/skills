@@ -89,11 +89,11 @@ use App\Models\ItemGroup;
 
 describe('update', function (): void {
     it('requires authentication', function (): void {
-        $workOrderItemGroup = ItemGroup::factory()->createOne();
+        $itemGroup = ItemGroup::factory()->createOne();
 
         $response = patch(route('teams.item-groups.update', [
-            'team' => $workOrderItemGroup->team,
-            'item_group' => $workOrderItemGroup,
+            'team' => $itemGroup->team,
+            'item_group' => $itemGroup,
         ]), [
             'name' => 'Computers',
         ]);

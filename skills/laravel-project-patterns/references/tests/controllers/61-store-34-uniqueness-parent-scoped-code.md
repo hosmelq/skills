@@ -21,7 +21,7 @@ use App\Models\PlanRule;
 use App\Models\ServicePlan;
 
 describe('store', function (): void {
-    it('rejects duplicate country codes within the parent', function (): void {
+    it('rejects a duplicate value in the same scope', function (): void {
         $planRule = PlanRule::factory()->createOne([
             'country_code' => CountryCode::Canada,
         ]);
@@ -36,7 +36,7 @@ describe('store', function (): void {
             'country_code' => CountryCode::Canada->value,
             'currency_code' => CurrencyCode::USD->value,
             'minimum_billable_weight' => 1,
-            'name' => 'US air cargo',
+            'name' => 'Canada air cargo',
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -44,7 +44,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('allows the same country code in another parent within the same tenant', function (): void {
+    it('allows a value used in a different scope', function (): void {
         $planRule = PlanRule::factory()->createOne([
             'country_code' => CountryCode::Canada,
         ]);
@@ -74,7 +74,7 @@ describe('store', function (): void {
             'country_code' => CountryCode::Canada->value,
             'currency_code' => CurrencyCode::USD->value,
             'minimum_billable_weight' => 1,
-            'name' => 'US air cargo',
+            'name' => 'Canada air cargo',
         ]);
 
         $response->assertRedirectToRoute('teams.service-plans.plan-rules.show', [
@@ -85,7 +85,7 @@ describe('store', function (): void {
             ->assertToast('Plan rule created');
     });
 
-    it('allows reusing a country code after the existing record is soft deleted', function (): void {
+    it('allows a value used by a soft deleted record', function (): void {
         $planRule = PlanRule::factory()
             ->trashed()
             ->createOne([
@@ -113,7 +113,7 @@ describe('store', function (): void {
             'country_code' => CountryCode::Canada->value,
             'currency_code' => CurrencyCode::USD->value,
             'minimum_billable_weight' => 1,
-            'name' => 'US air cargo',
+            'name' => 'Canada air cargo',
         ]);
 
         $response->assertRedirectToRoute('teams.service-plans.plan-rules.show', [

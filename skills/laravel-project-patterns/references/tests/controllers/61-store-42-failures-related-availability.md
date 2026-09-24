@@ -21,7 +21,7 @@ use App\Exceptions\WorkOrders\ServicePlanIsUnavailable;
 use App\Models\Team;
 
 describe('store', function (): void {
-    it('rejects storing when the selected member becomes unavailable', function (): void {
+    it('maps an unavailable relation rejection to validation: member_id', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);
@@ -38,7 +38,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects storing when the selected cabinet becomes unavailable', function (): void {
+    it('maps an unavailable relation rejection to validation: cabinet_id', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);
@@ -55,7 +55,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects storing when the selected service plan becomes unavailable', function (): void {
+    it('maps an unavailable relation rejection to validation: service_plan_id', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);

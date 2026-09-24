@@ -23,7 +23,7 @@ use App\Models\Team;
 use App\Models\WorkOrder;
 
 describe('update', function (): void {
-    it('accepts the current historical cabinet, facilities and service plan', function (): void {
+    it('accepts current inactive and deleted relations', function (): void {
         $team = Team::factory()->createOne();
         $workOrder = WorkOrder::factory()
             ->withPickupFacility(Facility::factory()->deactivated())
@@ -63,7 +63,7 @@ describe('update', function (): void {
         ])->assertToast('Work order updated');
     });
 
-    it('accepts the current historical member', function (): void {
+    it('accepts a current deleted relation', function (): void {
         $team = Team::factory()->createOne();
         $workOrder = WorkOrder::factory()
             ->withMember(Member::factory()->trashed())
@@ -92,7 +92,7 @@ describe('update', function (): void {
         ])->assertToast('Work order updated');
     });
 
-    it('accepts the current historical rule', function (): void {
+    it('accepts a current deleted dependent relation', function (): void {
         $team = Team::factory()->createOne();
         $workOrder = WorkOrder::factory()
             ->withServicePlan(ServicePlan::factory()->trashed())

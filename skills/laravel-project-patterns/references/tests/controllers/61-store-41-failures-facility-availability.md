@@ -21,7 +21,7 @@ use App\Exceptions\WorkOrders\ReceivedFacilityIsUnavailable;
 use App\Models\Team;
 
 describe('store', function (): void {
-    it('rejects storing when the received facility becomes unavailable', function (): void {
+    it('maps an unavailable relation rejection to validation: received_facility_id', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);
@@ -38,7 +38,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects storing when the current facility becomes unavailable', function (): void {
+    it('maps an unavailable relation rejection to validation: current_facility_id', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);
@@ -55,7 +55,7 @@ describe('store', function (): void {
         ]);
     });
 
-    it('rejects storing when the pickup facility becomes unavailable', function (): void {
+    it('maps an unavailable relation rejection to validation: pickup_facility_id', function (): void {
         $team = Team::factory()->createOne();
 
         signIn(team: $team);
