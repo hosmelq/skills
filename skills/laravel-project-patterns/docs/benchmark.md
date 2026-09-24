@@ -28,6 +28,11 @@ the prose cleanup, with complete bounded reads across the 260-reference catalog.
 | Entrypoint, once per context | 995 | 841 |
 | HTTP Resource search/read response | 590–1,142 | 599–1,153 |
 
+Enum additions passed 11 fixed probes at rank one. Actions passed 66 probes
+including category controls: all targets in the shortlist, 65 at rank one.
+Action search/read responses used 533–1,585 tokens (median 1,040); the expanded
+entrypoint uses 884 tokens, counted separately.
+
 ## Limits
 
 Counts use `o200k_base` on emitted text, not billing. They exclude provider wrappers,
