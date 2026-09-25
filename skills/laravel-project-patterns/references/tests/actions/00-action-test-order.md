@@ -70,3 +70,4 @@ Use `recycle()` for existing default parents; retain explicit `for()` for option
 58. [Reject a Request](59-reject-request.md)
 59. [Provisioning Guards and Failures](60-provision-guards.md)
 60. [Provision Eligible Missing Records](61-provision-eligible.md)
+61. [Parent and Child Lifecycle](62-record-test-order.md)
