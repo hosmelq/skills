@@ -1,6 +1,6 @@
 ---
 name: laravel-project-patterns
-description: "Use the catalog’s Pest test patterns for Laravel controllers, models, HTTP Resources, enums, actions, jobs, middleware, support helpers and media listeners."
+description: "Use the catalog’s Pest test patterns for Laravel controllers, models, HTTP Resources, enums, actions, jobs, middleware, support helpers, console commands and media listeners."
 ---
 
 # Laravel Project Patterns
@@ -37,7 +37,8 @@ selection include their ordered cases. For model work use the
 [action checklist](references/tests/actions/00-action-test-order.md); for jobs use the
 [job checklist](references/tests/jobs/00-job-test-order.md); for middleware use the
 [middleware checklist](references/tests/middleware/00-middleware-test-order.md); for support helpers use the
-[support checklist](references/tests/support/00-support-test-order.md).
+[support checklist](references/tests/support/00-support-test-order.md); for console commands use the
+[console checklist](references/tests/console/00-console-test-order.md).
 [Media dimensions](references/tests/listeners/01-media-dimensions.md) belong to Listener tests.
 Keep standalone tests at file scope when the suite uses no `describe`.
 A specialized example covers its stated assertions; retrieve another only for
