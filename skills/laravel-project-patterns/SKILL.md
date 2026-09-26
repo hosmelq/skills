@@ -1,6 +1,6 @@
 ---
 name: laravel-project-patterns
-description: "Use Laravel model, enum, action, FormRequest, controller, HTTP Resource, policy and job implementation examples and Pest test patterns for controllers, models, HTTP Resources, enums, actions, jobs, middleware, helpers, console commands, architecture and listeners."
+description: "Use Laravel model, enum, action, FormRequest, controller, HTTP Resource, policy, job and listener implementation examples and Pest test patterns for controllers, models, HTTP Resources, enums, actions, jobs, middleware, helpers, console commands, architecture and listeners."
 ---
 
 # Laravel Project Patterns
@@ -30,8 +30,9 @@ cost, known IDs only `id` and `read`. Select the smallest applicable set. For im
 [request guide](references/requests/00-request-implementation-order.md),
 [controller guide](references/controllers/00-controller-implementation-order.md),
 [resource guide](references/http-resources/00-resource-implementation-order.md),
-[policy guide](references/policies/00-policy-implementation-order.md) or
-[job example](references/jobs/01-tenant-delegation.md). For a
+[policy guide](references/policies/00-policy-implementation-order.md),
+[job example](references/jobs/01-tenant-delegation.md) or
+[listener example](references/listeners/01-media-dimensions.md). For a
 complete test block select its ordered checklist: [create](references/tests/controllers/00-create-test-order.md),
 [destroy](references/tests/controllers/12-destroy-test-order.md), [edit](references/tests/controllers/22-edit-test-order.md),
 [index](references/tests/controllers/34-index-test-order.md), [show](references/tests/controllers/47-show-test-order.md),
