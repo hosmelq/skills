@@ -11,13 +11,13 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\WorkOrder;
 use App\Models\WorkOrderStatus;
 use Inertia\Testing\AssertableInertia;
 
 describe('create', function (): void {
-    it('marks the page read only for final parent states', function (WorkOrderBaseStatus $baseStatus): void {
+    it('marks the page read only for final parent states', function (BaseStatus $baseStatus): void {
         $status = WorkOrderStatus::factory()->withBaseStatus($baseStatus)->createOne();
         $workOrder = WorkOrder::factory()
             ->recycle($status->team)
@@ -36,9 +36,9 @@ describe('create', function (): void {
                 ->component('work-orders/lines/Create')
                 ->where('canMutate', false));
     })->with([
-        WorkOrderBaseStatus::Cancelled,
-        WorkOrderBaseStatus::Completed,
-        WorkOrderBaseStatus::Collected,
+        BaseStatus::Cancelled,
+        BaseStatus::Completed,
+        BaseStatus::Archived,
     ]);
 });
 ```

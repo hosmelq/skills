@@ -56,7 +56,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\Team;
 use App\Models\WorkOrderStatus;
 use Inertia\Testing\AssertableInertia;
@@ -82,7 +82,7 @@ describe('index', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($first, $team, $second): void {
                 $page->component('work-order-statuses/Index')
-                    ->where('baseStatuses', WorkOrderBaseStatus::options())
+                    ->where('baseStatuses', BaseStatus::options())
                     ->where('team.id', $team->sqid)
                     ->where('workOrderStatuses.0.id', $first->sqid)
                     ->where('workOrderStatuses.1.id', $second->sqid);

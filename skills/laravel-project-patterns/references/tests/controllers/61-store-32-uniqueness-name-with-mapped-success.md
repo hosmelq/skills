@@ -12,14 +12,14 @@ use function Pest\Laravel\post;
 
 use App\Actions\WorkOrderStatuses\CreateWorkOrderStatus;
 use App\Actions\WorkOrderStatuses\Inputs\CreateWorkOrderStatusInput;
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\Team;
 use App\Models\WorkOrderStatus;
 
 describe('store', function (): void {
     it('rejects a case-insensitive duplicate value in the same scope', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->createOne([
-            'name' => 'Received',
+            'name' => 'Open',
         ]);
 
         login(team: $workOrderStatus->team);
@@ -27,8 +27,8 @@ describe('store', function (): void {
         $response = post(route('teams.work-order-statuses.store', [
             'team' => $workOrderStatus->team,
         ]), [
-            'base_status' => WorkOrderBaseStatus::Received(),
-            'name' => 'received',
+            'base_status' => BaseStatus::Open(),
+            'name' => 'open',
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -38,7 +38,7 @@ describe('store', function (): void {
 
     it('rejects a value reserved by an inactive record', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()->deactivated()->createOne([
-            'name' => 'Received',
+            'name' => 'Open',
         ]);
 
         login(team: $workOrderStatus->team);
@@ -46,8 +46,8 @@ describe('store', function (): void {
         $response = post(route('teams.work-order-statuses.store', [
             'team' => $workOrderStatus->team,
         ]), [
-            'base_status' => WorkOrderBaseStatus::Received(),
-            'name' => 'Received',
+            'base_status' => BaseStatus::Open(),
+            'name' => 'Open',
         ]);
 
         $response->assertRedirectBackWithErrors([
@@ -57,7 +57,7 @@ describe('store', function (): void {
 
     it('allows a value used in a different scope', function (): void {
         WorkOrderStatus::factory()->createOne([
-            'name' => 'Received',
+            'name' => 'Open',
         ]);
 
         $team = Team::factory()->createOne();
@@ -72,14 +72,14 @@ describe('store', function (): void {
                 Team $teamArgument,
                 CreateWorkOrderStatusInput $input
             ): bool => $teamArgument->is($team)
-                && $input->name === 'Received')
+                && $input->name === 'Open')
             ->andReturn($workOrderStatus);
 
         $response = post(route('teams.work-order-statuses.store', [
             'team' => $team,
         ]), [
-            'base_status' => WorkOrderBaseStatus::Received(),
-            'name' => 'Received',
+            'base_status' => BaseStatus::Open(),
+            'name' => 'Open',
         ]);
 
         $response->assertRedirectToRoute('teams.work-order-statuses.show', [
@@ -93,7 +93,7 @@ describe('store', function (): void {
         $deletedWorkOrderStatus = WorkOrderStatus::factory()
             ->trashed()
             ->createOne([
-                'name' => 'Received',
+                'name' => 'Open',
             ]);
         $workOrderStatus = WorkOrderStatus::factory()->recycle($deletedWorkOrderStatus->team)->createOne();
 
@@ -106,14 +106,14 @@ describe('store', function (): void {
                 Team $teamArgument,
                 CreateWorkOrderStatusInput $input
             ): bool => $teamArgument->is($deletedWorkOrderStatus->team)
-                && $input->name === 'Received')
+                && $input->name === 'Open')
             ->andReturn($workOrderStatus);
 
         $response = post(route('teams.work-order-statuses.store', [
             'team' => $deletedWorkOrderStatus->team,
         ]), [
-            'base_status' => WorkOrderBaseStatus::Received(),
-            'name' => 'Received',
+            'base_status' => BaseStatus::Open(),
+            'name' => 'Open',
         ]);
 
         $response->assertRedirectToRoute('teams.work-order-statuses.show', [

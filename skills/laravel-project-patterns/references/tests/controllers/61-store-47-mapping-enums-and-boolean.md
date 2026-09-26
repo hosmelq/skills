@@ -14,7 +14,7 @@ use function Pest\Laravel\post;
 
 use App\Actions\WorkOrderStatuses\CreateWorkOrderStatus;
 use App\Actions\WorkOrderStatuses\Inputs\CreateWorkOrderStatusInput;
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\Team;
 use App\Models\WorkOrderStatus;
 
@@ -32,14 +32,14 @@ describe('store', function (): void {
                 Team $teamArgument,
                 CreateWorkOrderStatusInput $input
             ): bool => $teamArgument->is($team)
-                && $input->baseStatus === WorkOrderBaseStatus::ReadyForPickup
+                && $input->baseStatus === BaseStatus::Ready
                 && $input->name === 'Ready')
             ->andReturn($workOrderStatus);
 
         $response = post(route('teams.work-order-statuses.store', [
             'team' => $team,
         ]), [
-            'base_status' => WorkOrderBaseStatus::ReadyForPickup(),
+            'base_status' => BaseStatus::Ready(),
             'name' => 'Ready',
         ]);
 
@@ -69,9 +69,9 @@ describe('store', function (): void {
         $response = post(route('teams.work-order-statuses.store', [
             'team' => $team,
         ]), [
-            'base_status' => WorkOrderBaseStatus::Received(),
+            'base_status' => BaseStatus::Open(),
             'is_member_visible' => '1',
-            'name' => 'Member received',
+            'name' => 'Member open',
         ]);
 
         $response->assertRedirectToRoute('teams.work-order-statuses.show', [

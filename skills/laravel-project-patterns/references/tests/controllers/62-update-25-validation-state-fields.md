@@ -11,7 +11,7 @@ use function Pest\Laravel\mock;
 use function Pest\Laravel\patch;
 
 use App\Actions\WorkOrderStatuses\UpdateWorkOrderStatus;
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\WorkOrderStatus;
 use Illuminate\Support\Str;
 
@@ -115,11 +115,11 @@ describe('update', function (): void {
             'team' => $workOrderStatus->team,
             'work_order_status' => $workOrderStatus,
         ]), [
-            'base_status' => WorkOrderBaseStatus::Exception(),
+            'base_status' => BaseStatus::Blocked(),
         ]);
 
         $response->assertRedirectBackWithErrors([
-            'base_status' => 'The initial work order status must use the received base status.',
+            'base_status' => 'The initial work order status must use the open base status.',
         ]);
     });
 });

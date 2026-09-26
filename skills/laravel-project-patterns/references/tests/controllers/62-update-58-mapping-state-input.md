@@ -12,7 +12,7 @@ use function Pest\Laravel\patch;
 
 use App\Actions\WorkOrderStatuses\Inputs\UpdateWorkOrderStatusInput;
 use App\Actions\WorkOrderStatuses\UpdateWorkOrderStatus;
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\WorkOrderStatus;
 
 describe('update', function (): void {
@@ -28,13 +28,13 @@ describe('update', function (): void {
                 WorkOrderStatus $workOrderStatusArgument,
                 UpdateWorkOrderStatusInput $input
             ): bool => $workOrderStatusArgument->is($workOrderStatus)
-                && $input->name === 'Exception');
+                && $input->name === 'Blocked');
 
         $response = patch(route('teams.work-order-statuses.update', [
             'team' => $workOrderStatus->team,
             'work_order_status' => $workOrderStatus,
         ]), [
-            'name' => 'Exception',
+            'name' => 'Blocked',
         ]);
 
         $response->assertRedirectToRoute('teams.work-order-statuses.show', [
@@ -56,13 +56,13 @@ describe('update', function (): void {
                 WorkOrderStatus $workOrderStatusArgument,
                 UpdateWorkOrderStatusInput $input
             ): bool => $workOrderStatusArgument->is($workOrderStatus)
-                && $input->baseStatus === WorkOrderBaseStatus::Exception);
+                && $input->baseStatus === BaseStatus::Blocked);
 
         $response = patch(route('teams.work-order-statuses.update', [
             'team' => $workOrderStatus->team,
             'work_order_status' => $workOrderStatus,
         ]), [
-            'base_status' => WorkOrderBaseStatus::Exception(),
+            'base_status' => BaseStatus::Blocked(),
         ]);
 
         $response->assertRedirectToRoute('teams.work-order-statuses.show', [

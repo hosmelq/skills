@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\post;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\Team;
 use App\Models\WorkOrderStatus;
 
@@ -61,7 +61,7 @@ describe('store', function (): void {
 
     it('rejects a noninitial status', function (): void {
         $status = WorkOrderStatus::factory()
-            ->withBaseStatus(WorkOrderBaseStatus::InTransit)
+            ->withBaseStatus(BaseStatus::InProgress)
             ->createOne();
         $team = $status->team;
 

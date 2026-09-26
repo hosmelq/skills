@@ -53,7 +53,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\WorkOrder;
 use App\Models\WorkOrderLine;
 use App\Models\WorkOrderStatus;
@@ -61,7 +61,7 @@ use Inertia\Testing\AssertableInertia;
 
 describe('show', function (): void {
     it('marks the page read only for final parent states', function (
-        WorkOrderBaseStatus $baseStatus,
+        BaseStatus $baseStatus,
     ): void {
         $status = WorkOrderStatus::factory()->withBaseStatus($baseStatus)->createOne();
         $workOrder = WorkOrder::factory()->recycle($status->team)->for($status, 'workOrderStatus')->createOne();
@@ -81,9 +81,9 @@ describe('show', function (): void {
                 ->where('canMutate', false)
                 ->missing('canDelete'));
     })->with([
-        WorkOrderBaseStatus::Cancelled,
-        WorkOrderBaseStatus::Completed,
-        WorkOrderBaseStatus::Collected,
+        BaseStatus::Cancelled,
+        BaseStatus::Completed,
+        BaseStatus::Archived,
     ]);
 });
 ```
@@ -97,7 +97,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\Team;
 use App\Models\WorkOrder;
 use App\Models\WorkOrderLine;
@@ -110,7 +110,7 @@ describe('show', function (): void {
         $workOrderStatus = WorkOrderStatus::factory()
             ->trashed()
             ->recycle($team)
-            ->withBaseStatus(WorkOrderBaseStatus::Collected)
+            ->withBaseStatus(BaseStatus::Archived)
             ->createOne();
         $workOrder = WorkOrder::factory()
             ->recycle($team)

@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\Enrollment;
 use App\Models\Facility;
 use App\Models\Member;
@@ -34,7 +34,7 @@ describe('create', function (): void {
         $deactivatedStatus = WorkOrderStatus::factory()->deactivated()->recycle($team)->createOne();
         $deletedStatus = WorkOrderStatus::factory()->trashed()->recycle($team)->createOne();
         $nonInitialStatus = WorkOrderStatus::factory()
-            ->withBaseStatus(WorkOrderBaseStatus::InProgress)
+            ->withBaseStatus(BaseStatus::InProgress)
             ->recycle($team)
             ->createOne();
 

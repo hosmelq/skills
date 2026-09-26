@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\WorkOrder;
 use App\Models\WorkOrderStatus;
 use Inertia\Testing\AssertableInertia;
@@ -21,7 +21,7 @@ use Inertia\Testing\AssertableInertia;
 describe('edit', function (): void {
     it('exposes the record final state', function (): void {
         $status = WorkOrderStatus::factory()
-            ->withBaseStatus(WorkOrderBaseStatus::Completed)
+            ->withBaseStatus(BaseStatus::Completed)
             ->createOne();
         $workOrder = WorkOrder::factory()
             ->recycle($status->team)
@@ -52,14 +52,14 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\WorkOrder;
 use App\Models\WorkOrderLine;
 use App\Models\WorkOrderStatus;
 use Inertia\Testing\AssertableInertia;
 
 describe('edit', function (): void {
-    it('marks the page read only for final parent states', function (WorkOrderBaseStatus $baseStatus): void {
+    it('marks the page read only for final parent states', function (BaseStatus $baseStatus): void {
         $status = WorkOrderStatus::factory()->withBaseStatus($baseStatus)->createOne();
         $workOrder = WorkOrder::factory()
             ->recycle($status->team)
@@ -80,9 +80,9 @@ describe('edit', function (): void {
                 ->component('work-orders/lines/Edit')
                 ->where('canMutate', false));
     })->with([
-        WorkOrderBaseStatus::Cancelled,
-        WorkOrderBaseStatus::Completed,
-        WorkOrderBaseStatus::Collected,
+        BaseStatus::Cancelled,
+        BaseStatus::Completed,
+        BaseStatus::Archived,
     ]);
 });
 ```

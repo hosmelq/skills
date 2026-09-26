@@ -91,7 +91,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\post;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\Team;
 
 describe('store', function (): void {
@@ -103,8 +103,8 @@ describe('store', function (): void {
         $response = post(route('teams.work-order-statuses.store', [
             'team' => $team,
         ]), [
-            'base_status' => WorkOrderBaseStatus::Received(),
-            'name' => 'Received',
+            'base_status' => BaseStatus::Open(),
+            'name' => 'Open',
         ]);
 
         $response->assertForbidden();

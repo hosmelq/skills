@@ -116,7 +116,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\WorkOrderStatus;
 use Inertia\Testing\AssertableInertia;
 
@@ -134,7 +134,7 @@ describe('show', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($workOrderStatus): void {
                 $page->component('work-order-statuses/Show')
-                    ->where('baseStatuses', WorkOrderBaseStatus::options())
+                    ->where('baseStatuses', BaseStatus::options())
                     ->where('team.id', $workOrderStatus->team->sqid)
                     ->where('workOrderStatus.id', $workOrderStatus->sqid);
             });

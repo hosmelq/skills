@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\WorkOrder;
 use Inertia\Testing\AssertableInertia;
 
@@ -34,7 +34,7 @@ describe('show', function (): void {
                     ->where('workOrder.reference', 'REF-100')
                     ->where(
                         'workOrder.status.base_status',
-                        WorkOrderBaseStatus::Received->value,
+                        BaseStatus::Open->value,
                     )
                     ->where('workOrder.status.is_final', false)
                     ->missing('workOrder.team_id')

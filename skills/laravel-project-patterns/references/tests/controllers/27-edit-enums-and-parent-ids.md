@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\WorkOrderStatus;
 use Inertia\Testing\AssertableInertia;
 
@@ -31,7 +31,7 @@ describe('edit', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use ($workOrderStatus): void {
                 $page->component('work-order-statuses/Edit')
-                    ->where('baseStatuses', WorkOrderBaseStatus::options())
+                    ->where('baseStatuses', BaseStatus::options())
                     ->where('team.id', $workOrderStatus->team->sqid)
                     ->where('workOrderStatus.id', $workOrderStatus->sqid);
             });

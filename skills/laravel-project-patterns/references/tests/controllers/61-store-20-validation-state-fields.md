@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\post;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\Team;
 use Illuminate\Support\Str;
 
@@ -27,9 +27,9 @@ describe('store', function (): void {
     })->with([
         'boolean' => [
             'data' => [
-                'base_status' => WorkOrderBaseStatus::Received(),
+                'base_status' => BaseStatus::Open(),
                 'is_member_visible' => 'invalid',
-                'name' => 'Received',
+                'name' => 'Open',
             ],
             'expected' => [
                 'is_member_visible' => 'The is member visible field must be true or false.',
@@ -38,7 +38,7 @@ describe('store', function (): void {
         'enum' => [
             'data' => [
                 'base_status' => 'invalid',
-                'name' => 'Received',
+                'name' => 'Open',
             ],
             'expected' => [
                 'base_status' => 'The selected base status is invalid.',
@@ -46,9 +46,9 @@ describe('store', function (): void {
         ],
         'hex color' => [
             'data' => [
-                'base_status' => WorkOrderBaseStatus::Received(),
+                'base_status' => BaseStatus::Open(),
                 'color' => 'blue',
-                'name' => 'Received',
+                'name' => 'Open',
             ],
             'expected' => [
                 'color' => 'The color field must be a valid hexadecimal color.',
@@ -56,7 +56,7 @@ describe('store', function (): void {
         ],
         'max:255 (string)' => [
             'data' => [
-                'base_status' => WorkOrderBaseStatus::Received(),
+                'base_status' => BaseStatus::Open(),
                 'name' => Str::repeat('a', 256),
             ],
             'expected' => [
@@ -65,9 +65,9 @@ describe('store', function (): void {
         ],
         'max:2000 (string)' => [
             'data' => [
-                'base_status' => WorkOrderBaseStatus::Received(),
+                'base_status' => BaseStatus::Open(),
                 'description' => Str::repeat('a', 2001),
-                'name' => 'Received',
+                'name' => 'Open',
             ],
             'expected' => [
                 'description' => 'The description field must not be greater than 2000 characters.',

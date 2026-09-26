@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Enums\WorkOrderBaseStatus;
+use App\Enums\BaseStatus;
 use App\Models\Member;
 use App\Models\Team;
 use App\Models\WorkOrder;
@@ -21,7 +21,7 @@ describe('index', function (): void {
         $team = Team::factory()->createOne();
         $status = WorkOrderStatus::factory()
             ->trashed()
-            ->withBaseStatus(WorkOrderBaseStatus::Completed)
+            ->withBaseStatus(BaseStatus::Completed)
             ->recycle($team)
             ->createOne();
         $workOrder = WorkOrder::factory()
