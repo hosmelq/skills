@@ -1,6 +1,6 @@
 ---
 name: laravel-project-patterns
-description: "Use Laravel model and enum implementation examples and Pest test patterns for Laravel controllers, models, HTTP Resources, enums, actions, jobs, middleware, support helpers, console commands, architecture and media listeners."
+description: "Use Laravel model, enum and action implementation examples and Pest test patterns for controllers, models, HTTP Resources, enums, actions, jobs, middleware, helpers, console commands, architecture and listeners."
 ---
 
 # Laravel Project Patterns
@@ -24,8 +24,9 @@ uv run <skill-directory>/scripts/search.py read --session=<session.json> --ids <
 
 Search returns five ranked candidates; new IDs include applicability and token
 cost, known IDs only `id` and `read`. Select the smallest applicable set. For implementation use the
-[model guide](references/models/00-model-implementation-order.md) or
-[enum guide](references/enums/00-enum-implementation-order.md). For a
+[model guide](references/models/00-model-implementation-order.md),
+[enum guide](references/enums/00-enum-implementation-order.md) or
+[action guide](references/actions/00-action-implementation-order.md). For a
 complete test block select its ordered checklist: [create](references/tests/controllers/00-create-test-order.md),
 [destroy](references/tests/controllers/12-destroy-test-order.md), [edit](references/tests/controllers/22-edit-test-order.md),
 [index](references/tests/controllers/34-index-test-order.md), [show](references/tests/controllers/47-show-test-order.md),
@@ -35,7 +36,7 @@ complete test block select its ordered checklist: [create](references/tests/cont
 selection include their ordered cases. For model tests use the
 [model checklist](references/tests/models/00-model-test-order.md); for HTTP Resources use the
 [resource checklist](references/tests/http-resources/00-resource-test-order.md); for enum tests use the
-[enum checklist](references/tests/enums/00-enum-test-order.md); for actions use the
+[enum checklist](references/tests/enums/00-enum-test-order.md); for action tests use the
 [action checklist](references/tests/actions/00-action-test-order.md); for jobs use the
 [job checklist](references/tests/jobs/00-job-test-order.md); for middleware use the
 [middleware checklist](references/tests/middleware/00-middleware-test-order.md); for support helpers use the
