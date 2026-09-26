@@ -45,13 +45,13 @@ final class CreateWorkOrderLineInput extends Data
 {
     public function __construct(
         public readonly null|CurrencyCode|Optional $currencyCode,
-        public readonly null|Optional|string $declaredUnitValue,
         public readonly string $description,
         public readonly null|LengthUnit|Optional $dimensionUnit,
         public readonly null|Optional|string $height,
         public readonly null|int|Optional $itemGroupId,
         public readonly null|Optional|string $length,
         public readonly int $quantity,
+        public readonly null|Optional|string $unitValue,
         public readonly null|Optional|string $weight,
         public readonly null|Optional|WeightUnit $weightUnit,
         public readonly null|Optional|string $width,
@@ -80,13 +80,13 @@ final class UpdateWorkOrderLineInput extends Data
 {
     public function __construct(
         public readonly null|CurrencyCode|Optional $currencyCode,
-        public readonly null|Optional|string $declaredUnitValue,
         public readonly Optional|string $description,
         public readonly null|LengthUnit|Optional $dimensionUnit,
         public readonly null|Optional|string $height,
         public readonly null|int|Optional $itemGroupId,
         public readonly null|Optional|string $length,
         public readonly int|Optional $quantity,
+        public readonly null|Optional|string $unitValue,
         public readonly null|Optional|string $weight,
         public readonly null|Optional|WeightUnit $weightUnit,
         public readonly null|Optional|string $width,

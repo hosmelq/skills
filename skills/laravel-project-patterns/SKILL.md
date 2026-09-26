@@ -1,6 +1,6 @@
 ---
 name: laravel-project-patterns
-description: "Use Laravel model, enum and action implementation examples and Pest test patterns for controllers, models, HTTP Resources, enums, actions, jobs, middleware, helpers, console commands, architecture and listeners."
+description: "Use Laravel model, enum, action and FormRequest implementation examples and Pest test patterns for controllers, models, HTTP Resources, enums, actions, jobs, middleware, helpers, console commands, architecture and listeners."
 ---
 
 # Laravel Project Patterns
@@ -25,8 +25,9 @@ uv run <skill-directory>/scripts/search.py read --session=<session.json> --ids <
 Search returns five ranked candidates; new IDs include applicability and token
 cost, known IDs only `id` and `read`. Select the smallest applicable set. For implementation use the
 [model guide](references/models/00-model-implementation-order.md),
-[enum guide](references/enums/00-enum-implementation-order.md) or
-[action guide](references/actions/00-action-implementation-order.md). For a
+[enum guide](references/enums/00-enum-implementation-order.md),
+[action guide](references/actions/00-action-implementation-order.md) or
+[request guide](references/requests/00-request-implementation-order.md). For a
 complete test block select its ordered checklist: [create](references/tests/controllers/00-create-test-order.md),
 [destroy](references/tests/controllers/12-destroy-test-order.md), [edit](references/tests/controllers/22-edit-test-order.md),
 [index](references/tests/controllers/34-index-test-order.md), [show](references/tests/controllers/47-show-test-order.md),
