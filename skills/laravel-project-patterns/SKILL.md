@@ -1,6 +1,6 @@
 ---
 name: laravel-project-patterns
-description: "Use the catalog’s Pest test patterns for Laravel controllers, models, HTTP Resources, enums, actions, jobs, middleware, support helpers, console commands, architecture and media listeners."
+description: "Use Eloquent model implementation examples and Pest test patterns for Laravel controllers, models, HTTP Resources, enums, actions, jobs, middleware, support helpers, console commands, architecture and media listeners."
 ---
 
 # Laravel Project Patterns
@@ -9,7 +9,7 @@ Adapt fictional domain types and helpers to inspected contracts, keep reference-
 and preserve real APIs such as `sqid` and `HasSqid`. For uncovered behavior,
 report the gap and follow the project’s conventions.
 
-Inspect affected code, nearby tests and test configuration; use their actual namespaces and suite paths.
+Inspect affected code, nearby examples and applicable configuration; use their actual namespaces and, for tests, suite paths.
 
 ## Retrieve Missing Patterns
 
@@ -23,14 +23,15 @@ uv run <skill-directory>/scripts/search.py read --session=<session.json> --ids <
 ```
 
 Search returns five ranked candidates; new IDs include applicability and token
-cost, known IDs only `id` and `read`. Select the smallest applicable set. For a
-complete block select its ordered checklist: [create](references/tests/controllers/00-create-test-order.md),
+cost, known IDs only `id` and `read`. Select the smallest applicable set. For model implementation use the
+[implementation guide](references/models/00-model-implementation-order.md). For a
+complete test block select its ordered checklist: [create](references/tests/controllers/00-create-test-order.md),
 [destroy](references/tests/controllers/12-destroy-test-order.md), [edit](references/tests/controllers/22-edit-test-order.md),
 [index](references/tests/controllers/34-index-test-order.md), [show](references/tests/controllers/47-show-test-order.md),
 [store](references/tests/controllers/61-store-00-test-order.md), [update](references/tests/controllers/62-update-00-test-order.md),
 [authentication](references/tests/controllers/63-auth-00-test-order.md) or [move](references/tests/controllers/64-move-00-test-order.md).
 [Initial](references/tests/controllers/65-initial-record.md) and [default](references/tests/controllers/66-default-record.md)
-selection include their ordered cases. For model work use the
+selection include their ordered cases. For model tests use the
 [model checklist](references/tests/models/00-model-test-order.md); for HTTP Resources use the
 [resource checklist](references/tests/http-resources/00-resource-test-order.md); for enums use the
 [enum checklist](references/tests/enums/00-enum-test-order.md); for actions use the
@@ -54,7 +55,7 @@ skill per task/agent context. After compaction use a new session to restore
 descriptions, or `read --repeat` if the needed ID remains known. Receipts are not
 model memory. Changed sources require searching again.
 
-Keep canonical test names, documented case order, fixtures, assertions and datasets.
+For tests, keep canonical names, documented case order, fixtures, assertions and datasets.
 Keep behavior qualifiers (parent/ancestor, case-insensitive, relation state). Add
 `: field_name` only to distinguish separate tests within one block; named dataset
 rows already distinguish fields. Do not introduce behavior to match an example.

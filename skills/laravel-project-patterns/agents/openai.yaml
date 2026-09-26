@@ -1,6 +1,6 @@
 interface:
   display_name: 'Laravel Project Patterns'
-  short_description: 'Test patterns for Laravel projects'
-  default_prompt: "Use $laravel-project-patterns to retrieve test examples matching this project's inspected code and test configuration."
+  short_description: 'Model code and test patterns for Laravel'
+  default_prompt: "Use $laravel-project-patterns to retrieve model implementation or test examples matching this project's inspected contracts."
 policy:
   allow_implicit_invocation: true
