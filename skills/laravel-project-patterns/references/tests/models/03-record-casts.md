@@ -19,7 +19,7 @@ it('correctly casts attributes', function (): void {
         'dimension_unit' => 'inches',
         'height' => 3,
         'length' => 1,
-        'opened_at' => '2026-01-15 08:00:00',
+        'received_at' => '2026-01-15 08:00:00',
         'updated_at' => '2026-01-15 08:00:00',
         'weight' => 4,
         'weight_unit' => 'pounds',
@@ -32,7 +32,7 @@ it('correctly casts attributes', function (): void {
         ->dimension_unit->toBe(LengthUnit::Inches)
         ->height->toBe('3.0000')
         ->length->toBe('1.0000')
-        ->opened_at->toBeInstanceOf(CarbonImmutable::class)
+        ->received_at->toBeInstanceOf(CarbonImmutable::class)
         ->updated_at->toBeInstanceOf(CarbonImmutable::class)
         ->weight->toBe('4.0000')
         ->weight_unit->toBe(WeightUnit::Pounds)
