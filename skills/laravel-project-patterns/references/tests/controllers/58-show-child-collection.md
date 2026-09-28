@@ -17,10 +17,9 @@ use App\Models\WorkOrderLine;
 use Inertia\Testing\AssertableInertia;
 
 describe('show', function (): void {
-    it('lists live child records oldest first', function (
-    ): void {
+    it('lists live child records oldest first', function (): void {
         $workOrder = WorkOrder::factory()->createOne();
-        $firstLine = WorkOrderLine::factory()->withGroup()->recycle($workOrder)->createOne();
+        $firstLine = WorkOrderLine::factory()->withItemGroup()->recycle($workOrder)->createOne();
         $secondLine = WorkOrderLine::factory()->recycle($workOrder)->createOne();
         WorkOrderLine::factory()->for($workOrder)->for(Team::factory())->createOne();
         WorkOrderLine::factory()->trashed()->recycle($workOrder)->createOne();

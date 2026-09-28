@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 use function Pest\Laravel\get;
 
-use App\Models\Enrollment;
+use App\Models\Cabinet;
 use App\Models\Member;
 use App\Models\ServicePlan;
 use App\Models\Team;
@@ -20,18 +20,29 @@ use Database\Factories\ServicePlanFactory;
 use Inertia\Testing\AssertableInertia;
 
 describe('create', function (): void {
-    it('shows the create page without options with unavailable relations', function (string $state): void {
+    it('shows the create page without options with unavailable relations', function (
+        string $state,
+    ): void {
         $team = Team::factory()->createOne();
         $member = Member::factory()
-            ->when($state === 'deleted member', fn (MemberFactory $factory): MemberFactory => $factory->trashed())
+            ->when(
+                $state === 'deleted member',
+                fn (MemberFactory $factory): MemberFactory => $factory->trashed(),
+            )
             ->recycle($team)
             ->createOne();
         $servicePlan = ServicePlan::factory()
-            ->when($state === 'deactivated service plan', fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->deactivated())
-            ->when($state === 'deleted service plan', fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->trashed())
+            ->when(
+                $state === 'deactivated service plan',
+                fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->deactivated(),
+            )
+            ->when(
+                $state === 'deleted service plan',
+                fn (ServicePlanFactory $factory): ServicePlanFactory => $factory->trashed(),
+            )
             ->recycle($team)
             ->createOne();
-        Enrollment::factory()
+        Cabinet::factory()
             ->recycle([$member, $team])
             ->for($servicePlan)
             ->createOne();
@@ -43,7 +54,7 @@ describe('create', function (): void {
         $response->assertOk()
             ->assertInertia(fn (AssertableInertia $page): AssertableInertia => $page
                 ->component('work-orders/Create')
-                ->has('enrollments', 0));
+                ->has('cabinets', 0));
     })->with([
         'deactivated service plan',
         'deleted member',

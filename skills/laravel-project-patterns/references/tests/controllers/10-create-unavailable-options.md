@@ -12,7 +12,7 @@ declare(strict_types=1);
 use function Pest\Laravel\get;
 
 use App\Enums\BaseStatus;
-use App\Models\Enrollment;
+use App\Models\Cabinet;
 use App\Models\Facility;
 use App\Models\Member;
 use App\Models\ServicePlan;
@@ -27,9 +27,12 @@ describe('create', function (): void {
         $deletedMember = Member::factory()->trashed()->recycle($team)->createOne();
         $deactivatedFacility = Facility::factory()->deactivated()->recycle($team)->createOne();
         $deletedFacility = Facility::factory()->trashed()->recycle($team)->createOne();
-        $deactivatedEnrollment = Enrollment::factory()->deactivated()->recycle($team)->createOne();
-        $deletedEnrollment = Enrollment::factory()->trashed()->recycle($team)->createOne();
-        $deactivatedServicePlan = ServicePlan::factory()->deactivated()->recycle($team)->createOne();
+        $deactivatedCabinet = Cabinet::factory()->deactivated()->recycle($team)->createOne();
+        $deletedCabinet = Cabinet::factory()->trashed()->recycle($team)->createOne();
+        $deactivatedServicePlan = ServicePlan::factory()
+            ->deactivated()
+            ->recycle($team)
+            ->createOne();
         $deletedServicePlan = ServicePlan::factory()->trashed()->recycle($team)->createOne();
         $deactivatedStatus = WorkOrderStatus::factory()->deactivated()->recycle($team)->createOne();
         $deletedStatus = WorkOrderStatus::factory()->trashed()->recycle($team)->createOne();
@@ -45,12 +48,12 @@ describe('create', function (): void {
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use (
                 $deactivatedFacility,
-                $deactivatedEnrollment,
+                $deactivatedCabinet,
                 $deactivatedServicePlan,
                 $deactivatedStatus,
                 $deletedMember,
                 $deletedFacility,
-                $deletedEnrollment,
+                $deletedCabinet,
                 $deletedServicePlan,
                 $deletedStatus,
                 $nonInitialStatus,
@@ -67,10 +70,10 @@ describe('create', function (): void {
                         $deletedFacility->sqid,
                     ])->isNotEmpty(),
                 )->where(
-                    'enrollments',
+                    'cabinets',
                     fn (Collection $options): bool => ! $options->pluck('id')->intersect([
-                        $deactivatedEnrollment->sqid,
-                        $deletedEnrollment->sqid,
+                        $deactivatedCabinet->sqid,
+                        $deletedCabinet->sqid,
                     ])->isNotEmpty(),
                 )->where(
                     'servicePlans',

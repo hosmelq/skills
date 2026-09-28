@@ -11,7 +11,7 @@ use function Pest\Laravel\get;
 
 use App\Enums\LengthUnit;
 use App\Enums\WeightUnit;
-use App\Models\Enrollment;
+use App\Models\Cabinet;
 use App\Models\Facility;
 use App\Models\Member;
 use App\Models\PlanRule;
@@ -29,7 +29,7 @@ describe('create', function (): void {
             'weight_unit' => WeightUnit::Kilograms,
         ]);
         $planRule = PlanRule::factory()->recycle($servicePlan)->createOne();
-        $enrollment = Enrollment::factory()
+        $cabinet = Cabinet::factory()
             ->recycle([$member, $team])
             ->for($servicePlan)
             ->createOne(['label' => 'Workshop plan']);
@@ -41,13 +41,13 @@ describe('create', function (): void {
 
         $response->assertOk()
             ->assertInertia(function (AssertableInertia $page) use (
-                $member,
+                $cabinet,
                 $facility,
-                $enrollment,
-                $team,
+                $member,
                 $planRule,
                 $servicePlan,
                 $status,
+                $team,
             ): void {
                 $page->component('work-orders/Create')
                     ->where('team.id', $team->sqid)
@@ -55,9 +55,9 @@ describe('create', function (): void {
                     ->where('members.0.display_name', $member->display_name)
                     ->where('facilities.0.id', $facility->sqid)
                     ->where('facilities.0.name', $facility->name)
-                    ->where('enrollments.0.id', $enrollment->sqid)
-                    ->where('enrollments.0.member.id', $member->sqid)
-                    ->where('enrollments.0.service_plan.id', $servicePlan->sqid)
+                    ->where('cabinets.0.id', $cabinet->sqid)
+                    ->where('cabinets.0.member.id', $member->sqid)
+                    ->where('cabinets.0.service_plan.id', $servicePlan->sqid)
                     ->where('servicePlans.0.id', $servicePlan->sqid)
                     ->where('servicePlans.0.weight_unit', WeightUnit::Kilograms->value)
                     ->where('planRules.0.id', $planRule->sqid)

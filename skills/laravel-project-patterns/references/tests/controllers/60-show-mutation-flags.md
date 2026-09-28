@@ -18,7 +18,7 @@ use Inertia\Testing\AssertableInertia;
 
 describe('show', function (): void {
     it('exposes mutation availability for a nonfinal parent', function (): void {
-        $line = WorkOrderLine::factory()->withGroup()->createOne();
+        $line = WorkOrderLine::factory()->withItemGroup()->createOne();
 
         login(team: $line->workOrder->team);
 
@@ -64,7 +64,10 @@ describe('show', function (): void {
         BaseStatus $baseStatus,
     ): void {
         $status = WorkOrderStatus::factory()->withBaseStatus($baseStatus)->createOne();
-        $workOrder = WorkOrder::factory()->recycle($status->team)->for($status, 'workOrderStatus')->createOne();
+        $workOrder = WorkOrder::factory()
+            ->recycle($status->team)
+            ->for($status, 'workOrderStatus')
+            ->createOne();
         $line = WorkOrderLine::factory()->recycle($workOrder)->createOne();
 
         login(team: $workOrder->team);
