@@ -36,7 +36,8 @@ cost, known IDs only `id` and `read`. Select the smallest applicable set. For im
 [middleware guide](references/middleware/00-middleware-implementation-order.md),
 [exception guide](references/exceptions/00-exception-implementation-order.md),
 [support guide](references/support/00-support-implementation-order.md),
-[console-notifications guide](references/console-notifications/00-console-notification-implementation-order.md). For a
+[console-notifications guide](references/console-notifications/00-console-notification-implementation-order.md),
+[bootstrap guide](references/bootstrap/00-bootstrap-implementation-order.md). For a
 complete test block select its ordered checklist: [create](references/tests/controllers/00-create-test-order.md),
 [destroy](references/tests/controllers/12-destroy-test-order.md), [edit](references/tests/controllers/22-edit-test-order.md),
 [index](references/tests/controllers/34-index-test-order.md), [show](references/tests/controllers/47-show-test-order.md),
