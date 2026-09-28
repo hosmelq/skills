@@ -1,6 +1,6 @@
 # Controllers: Delegate Validated Create and Update Input
 
-Pass only validated fields through the typed input. Use the created record for the show redirect; update uses the bound record. Toast messages use the registered project macro. These selected methods retain the inspected controller and route middleware when adapted.
+Pass only validated fields through the typed input. Use the created record for the show redirect; update uses the bound record. Toast messages use the [registered toast macro](../support/06-redirect-toast.md). These selected methods retain the inspected controller and route middleware when adapted.
 
 ```php
 <?php

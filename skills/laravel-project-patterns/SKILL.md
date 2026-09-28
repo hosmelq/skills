@@ -34,7 +34,8 @@ cost, known IDs only `id` and `read`. Select the smallest applicable set. For im
 [job example](references/jobs/01-tenant-delegation.md),
 [listener example](references/listeners/01-media-dimensions.md),
 [middleware guide](references/middleware/00-middleware-implementation-order.md),
-[exception guide](references/exceptions/00-exception-implementation-order.md). For a
+[exception guide](references/exceptions/00-exception-implementation-order.md),
+[support guide](references/support/00-support-implementation-order.md). For a
 complete test block select its ordered checklist: [create](references/tests/controllers/00-create-test-order.md),
 [destroy](references/tests/controllers/12-destroy-test-order.md), [edit](references/tests/controllers/22-edit-test-order.md),
 [index](references/tests/controllers/34-index-test-order.md), [show](references/tests/controllers/47-show-test-order.md),
