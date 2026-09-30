@@ -1,6 +1,6 @@
 ---
 name: laravel-project-patterns
-description: "Use Laravel implementation examples and Pest test patterns for application code, HTTP endpoints, data models and framework integrations. Retrieve compact examples for inspected project contracts."
+description: "Use Laravel implementation examples and Pest test patterns for application code, HTTP endpoints, data models, framework integrations and project tooling. Retrieve compact examples for inspected project contracts."
 ---
 
 # Laravel Project Patterns
@@ -39,7 +39,8 @@ cost, known IDs only `id` and `read`. Select the smallest applicable set. For im
 [console-notifications guide](references/console-notifications/00-console-notification-implementation-order.md),
 [bootstrap guide](references/bootstrap/00-bootstrap-implementation-order.md),
 [database guide](references/database/00-database-implementation-order.md),
-[forms guide](references/forms/00-form-implementation-order.md). For a
+[forms guide](references/forms/00-form-implementation-order.md),
+[tooling guide](references/tooling/00-tooling-implementation-order.md). For a
 complete test block select its ordered checklist: [create](references/tests/controllers/00-create-test-order.md),
 [destroy](references/tests/controllers/12-destroy-test-order.md), [edit](references/tests/controllers/22-edit-test-order.md),
 [index](references/tests/controllers/34-index-test-order.md), [show](references/tests/controllers/47-show-test-order.md),
