@@ -7,7 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from validate import markdown, validate
+from validate import markdown, php_examples, tooling, validate
 
 
 class CatalogValidationTests(unittest.TestCase):
@@ -75,6 +75,33 @@ class CatalogValidationTests(unittest.TestCase):
         self.assertEqual(links, [])
         self.assertTrue(any("Unbalanced code fence:" in error for error in errors))
         self.assertTrue(any("Missing top-level heading:" in error for error in errors))
+
+    def test_php_examples_must_be_complete_files(self):
+        self.write("SKILL.md", "# Skill\n")
+        self.write("references/guide.md", "# Guide\n```php\n$pet->clinic;\n```\n")
+        _, errors = validate(self.root)
+        self.assertEqual(
+            errors,
+            ["PHP example must be a complete file starting with <?php: references/guide.md block 1"],
+        )
+
+    @unittest.skipUnless(tooling(__file__), "PHP tooling is not installed")
+    def test_php_examples_report_ecs_and_rector_changes(self):
+        clean = "<?php\n\ndeclare(strict_types=1);\n\nit('works', function (): void {\n    expect(true)->toBeTrue();\n});\n"
+        unordered = (
+            "<?php\n\ndeclare(strict_types=1);\n\nnamespace App\\Models;\n\n"
+            "use Illuminate\\Database\\Eloquent\\Model;\n\nclass Pet extends Model\n{\n"
+            "    protected function casts(): array\n    {\n        return [];\n    }\n\n"
+            "    public function name(): string\n    {\n        return 'Pet';\n    }\n}\n"
+        )
+        errors = php_examples({"clean": clean, "unordered": unordered}, tooling(__file__))
+        self.assertEqual(
+            errors,
+            [
+                "ECS changes PHP example: unordered (ClassAttributesSeparationFixer, OrderedClassElementsFixer)",
+                "Rector changes PHP example: unordered (AddOverrideAttributeToOverriddenMethodsRector)",
+            ],
+        )
 
 
 if __name__ == "__main__":

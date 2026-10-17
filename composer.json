@@ -1,0 +1,26 @@
+{
+  "name": "hosmelq/skills",
+  "description": "Tooling that checks the PHP examples in the skills.",
+  "license": "proprietary",
+  "type": "project",
+  "require": {
+    "php": "^8.5"
+  },
+  "require-dev": {
+    "hosmelq/php-coding-standard": "dev-main",
+    "laravel/framework": "^13.33"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/hosmelq/php-coding-standard"
+    }
+  ],
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    },
+    "sort-packages": true
+  }
+}

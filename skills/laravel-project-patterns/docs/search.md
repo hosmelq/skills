@@ -90,6 +90,10 @@ Every search atomically refreshes added, changed or deleted Markdown. Unchanged 
 
 ## Maintain The Skill
 
+Run `composer install` in the repository root once. The validator checks every
+`php` block in the references with the repository's ECS and Rector
+configuration, so each block must be a complete file starting with `<?php`.
+
 ```shell
 python3 <skill-directory>/scripts/validate.py
 uv run --no-project --with numpy==2.5.3 --with tiktoken==0.14.0 \
