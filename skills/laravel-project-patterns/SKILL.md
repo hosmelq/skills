@@ -10,6 +10,7 @@ and preserve real APIs such as `sqid` and `HasSqid`. For uncovered behavior,
 report the gap and follow the project’s conventions.
 
 Inspect affected code, nearby examples and applicable configuration; use their actual namespaces and, for tests, suite paths.
+Call helper functions instead of facades whenever a helper exists, such as `config()->integer()`, `now()`, `resolve()`, `str()` and `trans()->string()`.
 
 ## Retrieve Missing Patterns
 

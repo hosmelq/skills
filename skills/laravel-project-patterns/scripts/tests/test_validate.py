@@ -7,7 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from validate import markdown, php_examples, tooling, validate
+from validate import fix_php_examples, markdown, php_examples, tooling, validate
 
 
 class CatalogValidationTests(unittest.TestCase):
@@ -90,18 +90,22 @@ class CatalogValidationTests(unittest.TestCase):
         clean = "<?php\n\ndeclare(strict_types=1);\n\nit('works', function (): void {\n    expect(true)->toBeTrue();\n});\n"
         unordered = (
             "<?php\n\ndeclare(strict_types=1);\n\nnamespace App\\Models;\n\n"
-            "use Illuminate\\Database\\Eloquent\\Model;\n\nclass Pet extends Model\n{\n"
+            "use Illuminate\\Database\\Eloquent\\Model;\n\nfinal class Pet extends Model\n{\n"
             "    protected function casts(): array\n    {\n        return [];\n    }\n\n"
-            "    public function name(): string\n    {\n        return 'Pet';\n    }\n}\n"
+            "    public function name(): string\n    {\n        return (string) 'Pet';\n    }\n}\n"
         )
         errors = php_examples({"clean": clean, "unordered": unordered}, tooling(__file__))
         self.assertEqual(
             errors,
             [
                 "ECS changes PHP example: unordered (ClassAttributesSeparationFixer, OrderedClassElementsFixer)",
-                "Rector changes PHP example: unordered (AddOverrideAttributeToOverriddenMethodsRector)",
+                "Rector changes PHP example: unordered (RecastingRemovalRector)",
             ],
         )
+        fixed = fix_php_examples({"clean": clean, "unordered": unordered}, tooling(__file__))
+        self.assertEqual(list(fixed), ["unordered"])
+        self.assertIn("        return 'Pet';", fixed["unordered"])
+        self.assertEqual(php_examples({"clean": clean, "fixed": fixed["unordered"]}, tooling(__file__)), [])
 
 
 if __name__ == "__main__":
