@@ -59,12 +59,41 @@ def tooling(root):
     return None
 
 
+def rector_autoload(tools):
+    """Autoload the harness application so Rector can reflect the examples' domain classes."""
+    autoload = tools / "harness" / "laravel" / "vendor" / "autoload.php"
+    return [f"--autoload-file={autoload}"] if autoload.is_file() else []
+
+
 def run_json(command, cwd):
     result = subprocess.run(command, cwd=cwd, capture_output=True, text=True)
     try:
         return json.loads(result.stdout)
     except ValueError:
         raise ValueError(f"{Path(command[0]).name} failed: {(result.stderr or result.stdout).strip()[:500]}") from None
+
+
+def write_examples(directory, examples):
+    labels = {}
+    for index, (label, code) in enumerate(examples.items()):
+        path = directory / f"example{index}.php"
+        path.write_text(code, encoding="utf-8")
+        labels[str(path)] = label
+    return labels
+
+
+def fix_php_examples(examples, tools):
+    """Return the examples Rector and ECS rewrite, mapped from label to fixed PHP source."""
+    complete = {label: code for label, code in examples.items() if code.startswith("<?php\n")}
+    if not complete or tools is None:
+        return {}
+    with tempfile.TemporaryDirectory() as temporary:
+        directory = Path(temporary).resolve()
+        labels = write_examples(directory, complete)
+        run_json(["vendor/bin/rector", "process", "--config=rector.php", "--output-format=json", *rector_autoload(tools), str(directory)], tools)
+        run_json(["vendor/bin/ecs", "check", "--fix", "--config=ecs.php", "--no-progress-bar", "--output-format=json", str(directory)], tools)
+        fixed = {label: Path(path).read_text(encoding="utf-8") for path, label in labels.items()}
+    return {label: code for label, code in fixed.items() if code != complete[label]}
 
 
 def php_examples(examples, tools):
@@ -82,11 +111,7 @@ def php_examples(examples, tools):
         return [*errors, "PHP tooling missing: run `composer install` in the repository root"]
     with tempfile.TemporaryDirectory() as temporary:
         directory = Path(temporary).resolve()
-        labels = {}
-        for index, (label, code) in enumerate(checked.items()):
-            path = directory / f"example{index}.php"
-            path.write_text(code, encoding="utf-8")
-            labels[str(path)] = label
+        labels = write_examples(directory, checked)
         found = {}
 
         def record(tool, file, detail):
@@ -94,13 +119,14 @@ def php_examples(examples, tools):
             found.setdefault((tool, label), set()).add(detail.rsplit("\\", 1)[-1])
 
         ecs = run_json(["vendor/bin/ecs", "check", "--config=ecs.php", "--no-progress-bar", "--output-format=json", str(directory)], tools)
-        for file, result in ecs.get("files", {}).items():
+        # ECS prints an empty list instead of an object when no file changes.
+        for file, result in (ecs.get("files") or {}).items():
             for diff in result.get("diffs", []):
                 for checker in diff.get("applied_checkers", []):
                     record("ECS", file, checker)
             for error in result.get("errors", []):
                 record("ECS", file, error.get("message", "error"))
-        rector = run_json(["vendor/bin/rector", "process", "--dry-run", "--config=rector.php", "--output-format=json", str(directory)], tools)
+        rector = run_json(["vendor/bin/rector", "process", "--dry-run", "--config=rector.php", "--output-format=json", *rector_autoload(tools), str(directory)], tools)
         for diff in rector.get("file_diffs", []):
             for rule in diff.get("applied_rectors", []):
                 record("Rector", diff["file"], rule)
@@ -110,7 +136,8 @@ def php_examples(examples, tools):
     return errors
 
 
-def validate(root):
+def validate(root, fix=False):
+    """Validate the catalog; with `fix`, first rewrite PHP examples as Rector and ECS format them."""
     root = Path(root).resolve()
     files = [root / "SKILL.md", *sorted((root / "references").rglob("*.md")), *sorted((root / "docs").rglob("*.md"))]
     errors = []
@@ -121,9 +148,18 @@ def validate(root):
             errors.append(f"Markdown escapes the skill directory: {source.relative_to(root)}")
             continue
         blocks = []
-        parsed[source.resolve()] = markdown(source.read_text(), source.relative_to(root), errors, blocks)
-        if source.is_relative_to(root / "references"):
-            examples.update((f"{source.relative_to(root)} block {number}", code) for number, code in enumerate(blocks, 1))
+        text = source.read_text()
+        parsed[source.resolve()] = markdown(text, source.relative_to(root), errors, blocks)
+        if not source.is_relative_to(root / "references"):
+            continue
+        labels = {f"{source.relative_to(root)} block {number}": code for number, code in enumerate(blocks, 1)}
+        fixed = fix_php_examples(labels, tooling(root)) if fix else {}
+        for label, code in fixed.items():
+            text = text.replace(labels[label], code, 1)
+            labels[label] = code
+        if fixed:
+            source.write_text(text)
+        examples.update(labels)
     graph = {source: set() for source in parsed}
     for source, (_, links) in parsed.items():
         for link in links:
@@ -156,7 +192,7 @@ def validate(root):
 
 if __name__ == "__main__":
     try:
-        count, errors = validate(Path(__file__).resolve().parent.parent)
+        count, errors = validate(Path(__file__).resolve().parent.parent, fix="--fix" in sys.argv[1:])
         print(f"markdown={count} errors={len(errors)}")
         for error in errors:
             print(error)

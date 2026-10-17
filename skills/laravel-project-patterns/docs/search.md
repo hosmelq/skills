@@ -93,6 +93,16 @@ Every search atomically refreshes added, changed or deleted Markdown. Unchanged 
 Run `composer install` in the repository root once. The validator checks every
 `php` block in the references with the repository's ECS and Rector
 configuration, so each block must be a complete file starting with `<?php`.
+`validate.py --fix` rewrites the blocks as those tools format them.
+
+`harness/run.py` then checks the examples against the fixture application in
+`harness/laravel`: every class member and migration statement must match it,
+and every test example must pass on PostgreSQL. The reference tests must cover
+at least 90% of the lines of the methods the examples show; each uncovered line
+is reported as a warning. It needs Docker and `composer install` in
+`harness/laravel`; the fixture holds the complete fictional domain, so update it
+with the references. `harness/sync.py` copies examples that fully define a
+fixture file; models and migrations are merged by hand.
 
 ```shell
 python3 <skill-directory>/scripts/validate.py

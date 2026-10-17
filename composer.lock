@@ -1928,12 +1928,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hosmelq/php-coding-standard.git",
-                "reference": "068ed1621544ddd0f1dfe0a1b9bf6e584c7abbcc"
+                "reference": "9aaf812a2028223f068026892b24d5b220a245af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hosmelq/php-coding-standard/zipball/068ed1621544ddd0f1dfe0a1b9bf6e584c7abbcc",
-                "reference": "068ed1621544ddd0f1dfe0a1b9bf6e584c7abbcc",
+                "url": "https://api.github.com/repos/hosmelq/php-coding-standard/zipball/9aaf812a2028223f068026892b24d5b220a245af",
+                "reference": "9aaf812a2028223f068026892b24d5b220a245af",
                 "shasum": ""
             },
             "require": {
@@ -1953,6 +1953,7 @@
                 "symplify/easy-coding-standard": "^13.3.2",
                 "thecodingmachine/phpstan-safe-rule": "^1.4.7",
                 "thecodingmachine/safe": "^3.4",
+                "ticketswap/phpstan-error-formatter": "^1.3.0",
                 "tomasvotruba/type-coverage": "^2.5.1"
             },
             "conflict": {
@@ -2023,7 +2024,7 @@
                 "source": "https://github.com/hosmelq/php-coding-standard/tree/main",
                 "issues": "https://github.com/hosmelq/php-coding-standard/issues"
             },
-            "time": "2026-10-17T13:53:22+00:00"
+            "time": "2026-10-17T20:57:54+00:00"
         },
         {
             "name": "iamcal/sql-parser",
@@ -11156,6 +11157,55 @@
                 }
             ],
             "time": "2025-12-08T11:19:18+00:00"
+        },
+        {
+            "name": "ticketswap/phpstan-error-formatter",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TicketSwap/phpstan-error-formatter.git",
+                "reference": "7aeaada52ccfcb74633e455a77472ebaea7618f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TicketSwap/phpstan-error-formatter/zipball/7aeaada52ccfcb74633e455a77472ebaea7618f3",
+                "reference": "7aeaada52ccfcb74633e455a77472ebaea7618f3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0",
+                "phpstan/phpstan": "^1.12.4|^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TicketSwap\\PHPStanErrorFormatter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A minimalistic error formatter for PHPStan",
+            "keywords": [
+                "PHPStan",
+                "dev"
+            ],
+            "support": {
+                "issues": "https://github.com/TicketSwap/phpstan-error-formatter/issues",
+                "source": "https://github.com/TicketSwap/phpstan-error-formatter/tree/1.3.0"
+            },
+            "time": "2026-04-03T06:17:28+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

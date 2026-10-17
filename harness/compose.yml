@@ -1,0 +1,16 @@
+name: hosmelq-skills-harness
+
+services:
+  postgres:
+    environment:
+      POSTGRES_DB: harness
+      POSTGRES_HOST_AUTH_METHOD: trust
+    healthcheck:
+      interval: 2s
+      retries: 30
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+    image: postgres:18
+    ports:
+      - "127.0.0.1:55432:5432"
+    tmpfs:
+      - /var/lib/postgresql
