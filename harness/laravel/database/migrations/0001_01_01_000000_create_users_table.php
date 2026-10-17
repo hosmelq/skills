@@ -20,11 +20,11 @@ return new class () extends Migration {
             $table->string('apple_id')->nullable()->unique();
             $table->caseInsensitiveText('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('first_name');
+            $table->string('first_name')->nullable();
             $table->caseInsensitiveText('google_email')->nullable()->unique();
             $table->string('google_id')->nullable()->unique();
-            $table->string('last_name');
-            $table->string('password');
+            $table->string('last_name')->nullable();
+            $table->string('password')->nullable();
             $table->rememberToken();
 
             $table->timestamps();

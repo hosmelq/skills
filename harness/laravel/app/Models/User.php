@@ -35,15 +35,15 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read null|string $apple_id
  * @property-read string $email
  * @property-read null|CarbonImmutable $email_verified_at
- * @property-read string $first_name
+ * @property-read null|string $first_name
  * @property-read null|string $google_email
  * @property-read null|string $google_id
- * @property-read string $last_name
- * @property-read string $password
+ * @property-read null|string $last_name
+ * @property-read null|string $password
  * @property-read null|string $remember_token
  * @property-read CarbonImmutable $created_at
  * @property-read CarbonImmutable $updated_at
- * @property-read PersonName $name
+ * @property-read null|PersonName $name
  * @property-read Collection<int, Clinic> $clinics
  * @property-read null|Clinic $currentClinic
  * @property-read Collection<int, Clinic> $ownedClinics
