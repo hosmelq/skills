@@ -1,4 +1,0 @@
-interface:
-  display_name: "Codex Thread Orchestrator"
-  short_description: "Coordinate requested visible Codex threads"
-  default_prompt: "Use $codex-thread-orchestrator to coordinate the requested visible Codex threads using compatible runtime APIs and durable state."
