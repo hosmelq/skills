@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Actions\EnsureClinicRoles;
+use App\Actions\Clinics\EnsureClinicRoles;
 use App\Enums\CurrencyCode;
 use App\Models\Clinic;
 use App\Models\User;

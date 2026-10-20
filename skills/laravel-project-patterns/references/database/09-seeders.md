@@ -35,8 +35,8 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Actions\EnsureClinicRoles;
-use App\Actions\EnsureInitialVisitStatus;
+use App\Actions\Clinics\EnsureClinicRoles;
+use App\Actions\VisitStatuses\EnsureInitialVisitStatus;
 use App\Enums\MembershipRole;
 use App\Models\Client;
 use App\Models\Clinic;
