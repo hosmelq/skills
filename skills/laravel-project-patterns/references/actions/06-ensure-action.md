@@ -86,26 +86,23 @@ it('is idempotent when an initial status already exists', function (): void {
         ->and($visitStatus->clinic->visitStatuses()->count())->toBe(1);
 });
 
-it(
-    'promotes an existing active checked-in status instead of creating a duplicate',
-    function (): void {
-        $visitStatus = VisitStatus::factory()->createOne();
-        $laterVisitStatus = VisitStatus::factory()->recycle($visitStatus->clinic)->createOne();
-        $resolvedVisitStatus = resolve(EnsureInitialVisitStatus::class)->handle(
-            $visitStatus->clinic,
-        );
+it('promotes an existing active checked-in status instead of creating a duplicate', function (): void {
+    $visitStatus = VisitStatus::factory()->createOne();
+    $laterVisitStatus = VisitStatus::factory()->recycle($visitStatus->clinic)->createOne();
+    $resolvedVisitStatus = resolve(EnsureInitialVisitStatus::class)->handle(
+        $visitStatus->clinic,
+    );
 
-        assertDatabaseHas(VisitStatus::class, [
-            'id' => $visitStatus->id,
-            'is_initial' => true,
-        ]);
-        assertDatabaseHas(VisitStatus::class, [
-            'id' => $laterVisitStatus->id,
-            'is_initial' => false,
-        ]);
+    assertDatabaseHas(VisitStatus::class, [
+        'id' => $visitStatus->id,
+        'is_initial' => true,
+    ]);
+    assertDatabaseHas(VisitStatus::class, [
+        'id' => $laterVisitStatus->id,
+        'is_initial' => false,
+    ]);
 
-        expect($resolvedVisitStatus->is($visitStatus))->toBeTrue()
-            ->and($visitStatus->clinic->visitStatuses()->count())->toBe(2);
-    },
-);
+    expect($resolvedVisitStatus->is($visitStatus))->toBeTrue()
+        ->and($visitStatus->clinic->visitStatuses()->count())->toBe(2);
+});
 ```
