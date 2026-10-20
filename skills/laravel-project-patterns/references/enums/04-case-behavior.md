@@ -57,12 +57,12 @@ declare(strict_types=1);
 use App\Enums\MembershipPermission;
 use App\Enums\MembershipRole;
 
-it(
-    'returns the default permissions of each role',
-    function (MembershipRole $role, array $permissions): void {
-        expect($role->defaultPermissions())->toBe($permissions);
-    },
-)->with([
+it('returns the default permissions of each role', function (
+    MembershipRole $role,
+    array $permissions,
+): void {
+    expect($role->defaultPermissions())->toBe($permissions);
+})->with([
     'owner' => [MembershipRole::Owner, MembershipPermission::cases()],
     'staff' => [MembershipRole::Staff, [MembershipPermission::VisitsView]],
 ]);

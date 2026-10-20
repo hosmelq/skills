@@ -112,14 +112,14 @@ declare(strict_types=1);
 use App\Models\Invitation;
 use Carbon\CarbonImmutable;
 
-it(
-    'determines whether an invitation is expired',
-    function (CarbonImmutable $expiresAt, bool $expired): void {
-        $invitation = new Invitation(['expires_at' => $expiresAt]);
+it('determines whether an invitation is expired', function (
+    CarbonImmutable $expiresAt,
+    bool $expired,
+): void {
+    $invitation = new Invitation(['expires_at' => $expiresAt]);
 
-        expect($invitation->isExpired())->toBe($expired);
-    },
-)->with([
+    expect($invitation->isExpired())->toBe($expired);
+})->with([
     'expired' => [fn (): CarbonImmutable => now()->subSecond(), true],
     'expires now' => [fn (): CarbonImmutable => now(), false],
     'not expired' => [fn (): CarbonImmutable => now()->addSecond(), false],

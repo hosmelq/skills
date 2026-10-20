@@ -7,15 +7,13 @@
     "php": "^8.5"
   },
   "require-dev": {
-    "hosmelq/php-coding-standard": "dev-main",
-    "laravel/framework": "^13.33"
+    "hosmelq/php-coding-standard": "^1.0",
+    "laravel/framework": "^13.33",
+    "pestphp/pest-plugin-rector": "^5.0"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/hosmelq/php-coding-standard"
-    }
-  ],
+  "conflict": {
+    "phpstan/phpstan": "2.3.4"
+  },
   "prefer-stable": true,
   "config": {
     "allow-plugins": {
