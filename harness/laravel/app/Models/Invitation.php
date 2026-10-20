@@ -7,9 +7,12 @@ namespace App\Models;
 use App\Enums\MembershipRole;
 use Carbon\CarbonImmutable;
 use Database\Factories\InvitationFactory;
+use HosmelQ\AuditLog\Contracts\HasAuditLogIdentity;
+use HosmelQ\AuditLog\Support\AuditLogIdentity;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Override;
 
 /**
@@ -23,8 +26,10 @@ use Override;
  * @property-read string $token
  * @property-read CarbonImmutable $created_at
  * @property-read CarbonImmutable $updated_at
+ * @property-read Clinic $clinic
+ * @property-read User $invitedByUser
  */
-final class Invitation extends Model
+final class Invitation extends Model implements HasAuditLogIdentity
 {
     /** @use HasFactory<InvitationFactory> */
     use HasFactory;
@@ -37,6 +42,31 @@ final class Invitation extends Model
             ->first();
     }
 
+
+    public function auditLogIdentity(): AuditLogIdentity
+    {
+        return new AuditLogIdentity(
+            id: $this->id,
+            type: $this->getMorphClass(),
+            name: $this->email,
+        );
+    }
+
+    /**
+     * @return BelongsTo<Clinic, $this>
+     */
+    public function clinic(): BelongsTo
+    {
+        return $this->belongsTo(Clinic::class);
+    }
+
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function invitedByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'invited_by_user_id');
+    }
 
     public function isExpired(): bool
     {

@@ -6,11 +6,13 @@ namespace App\Models;
 
 use App\Models\Concerns\HasDeactivation;
 use App\Models\Concerns\HasSqid;
-use Database\Factories\RoomFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Carbon\CarbonImmutable;
+use Database\Factories\RoomFactory;
+use HosmelQ\AuditLog\Contracts\HasAuditLogIdentity;
+use HosmelQ\AuditLog\Support\AuditLogIdentity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Override;
 
 /**
@@ -26,7 +28,7 @@ use Override;
  * @property-read CarbonImmutable $updated_at
  * @property-read Clinic $clinic
  */
-final class Room extends Model
+final class Room extends Model implements HasAuditLogIdentity
 {
     use HasDeactivation;
 
@@ -41,6 +43,15 @@ final class Room extends Model
             ->upper()
             ->replaceMatches('/[^A-Z0-9]/', '')
             ->toString();
+    }
+
+    public function auditLogIdentity(): AuditLogIdentity
+    {
+        return new AuditLogIdentity(
+            id: $this->id,
+            type: $this->getMorphClass(),
+            name: $this->name,
+        );
     }
 
     /**

@@ -34,11 +34,11 @@ final class AppServiceProvider extends ServiceProvider
 
         Relation::enforceMorphMap([
             'boarding_stay' => BoardingStay::class,
+            'client' => Client::class,
+            'client_address' => ClientAddress::class,
             'clinic' => Clinic::class,
             'invitation' => Invitation::class,
             'one_time_password' => OneTimePassword::class,
-            'client' => Client::class,
-            'owner_address' => ClientAddress::class,
             'pet' => Pet::class,
             'room' => Room::class,
             'test_model' => TestModel::class,

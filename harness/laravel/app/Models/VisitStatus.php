@@ -7,11 +7,13 @@ namespace App\Models;
 use App\Enums\VisitStage;
 use Carbon\CarbonImmutable;
 use Database\Factories\VisitStatusFactory;
+use HosmelQ\AuditLog\Contracts\HasAuditLogIdentity;
+use HosmelQ\AuditLog\Support\AuditLogIdentity;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Override;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
@@ -29,13 +31,22 @@ use Spatie\EloquentSortable\SortableTrait;
  * @property-read null|CarbonImmutable $deleted_at
  * @property-read Clinic $clinic
  */
-final class VisitStatus extends Model implements Sortable
+final class VisitStatus extends Model implements HasAuditLogIdentity, Sortable
 {
     /** @use HasFactory<VisitStatusFactory> */
     use HasFactory;
 
     use SoftDeletes;
     use SortableTrait;
+
+    public function auditLogIdentity(): AuditLogIdentity
+    {
+        return new AuditLogIdentity(
+            id: $this->id,
+            type: $this->getMorphClass(),
+            name: $this->name,
+        );
+    }
 
     /**
      * @return Builder<static>

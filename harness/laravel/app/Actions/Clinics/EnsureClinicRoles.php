@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions;
+namespace App\Actions\Clinics;
 
 use App\Enums\MembershipPermission;
 use App\Enums\MembershipRole;
@@ -12,9 +12,9 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
-final class EnsureClinicRoles
+final readonly class EnsureClinicRoles
 {
-    public function __construct(private readonly PermissionRegistrar $permissionRegistrar) {}
+    public function __construct(private PermissionRegistrar $permissionRegistrar) {}
 
     public function handle(Clinic $clinic): void
     {

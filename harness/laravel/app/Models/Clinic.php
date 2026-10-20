@@ -9,12 +9,15 @@ use App\Enums\CurrencyCode;
 use App\Models\Concerns\HasSqid;
 use Carbon\CarbonImmutable;
 use Database\Factories\ClinicFactory;
+use HosmelQ\AuditLog\Contracts\HasAuditLogIdentity;
+use HosmelQ\AuditLog\Support\AuditLogIdentity;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Override;
 use Propaganistas\LaravelPhone\Casts\E164PhoneNumberCast;
 use Propaganistas\LaravelPhone\PhoneNumber;
@@ -36,12 +39,15 @@ use Spatie\Sluggable\Attributes\Sluggable;
  * @property-read int $visit_duration_minutes
  * @property-read CarbonImmutable $created_at
  * @property-read CarbonImmutable $updated_at
- * @property-read User $client
+ * @property-read Collection<int, Client> $clients
+ * @property-read User $owner
+ * @property-read Collection<int, Room> $rooms
  * @property-read Collection<int, User> $users
+ * @property-read Collection<int, VisitStatus> $visitStatuses
  */
 #[RouteKey('slug')]
 #[Sluggable(from: 'name', to: 'slug', onUpdate: false)]
-final class Clinic extends Model
+final class Clinic extends Model implements HasAuditLogIdentity
 {
     /** @use HasFactory<ClinicFactory> */
     use HasFactory;
@@ -55,12 +61,37 @@ final class Clinic extends Model
         'visit_duration_minutes' => 30,
     ];
 
+    public function auditLogIdentity(): AuditLogIdentity
+    {
+        return new AuditLogIdentity(
+            id: $this->id,
+            type: $this->getMorphClass(),
+            name: $this->name,
+        );
+    }
+
+    /**
+     * @return HasMany<Client, $this>
+     */
+    public function clients(): HasMany
+    {
+        return $this->hasMany(Client::class);
+    }
+
     /**
      * @return BelongsTo<User, $this>
      */
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    /**
+     * @return HasMany<Room, $this>
+     */
+    public function rooms(): HasMany
+    {
+        return $this->hasMany(Room::class);
     }
 
     /**
@@ -72,6 +103,14 @@ final class Clinic extends Model
             ->as('membership')
             ->using(Membership::class)
             ->withTimestamps();
+    }
+
+    /**
+     * @return HasMany<VisitStatus, $this>
+     */
+    public function visitStatuses(): HasMany
+    {
+        return $this->hasMany(VisitStatus::class);
     }
 
     #[Override]
