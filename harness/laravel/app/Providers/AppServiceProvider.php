@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\BoardingStay;
+use App\Models\Client;
+use App\Models\ClientAddress;
 use App\Models\Clinic;
 use App\Models\Invitation;
 use App\Models\OneTimePassword;
-use App\Models\Client;
-use App\Models\ClientAddress;
 use App\Models\Pet;
 use App\Models\Room;
 use App\Models\User;
@@ -18,6 +18,7 @@ use App\Models\VisitStatus;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\ServiceProvider;
 use Tests\Support\Models\TestModel;
@@ -27,6 +28,8 @@ final class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Date::use(CarbonImmutable::class);
+
+        JsonResource::withoutWrapping();
 
         Model::automaticallyEagerLoadRelationships();
         Model::shouldBeStrict();

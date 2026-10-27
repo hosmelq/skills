@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Middleware\DecodeSqids;
+use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\SetClinicPermissionContext;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,9 +15,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias([
-            'sqids' => DecodeSqids::class,
-        ]);
+        $middleware
+            ->alias([
+                'sqids' => DecodeSqids::class,
+            ])
+            ->web(append: [
+                SetClinicPermissionContext::class,
+                HandleInertiaRequests::class,
+            ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
