@@ -6,8 +6,10 @@ namespace App\Models;
 
 use Carbon\CarbonImmutable;
 use Database\Factories\OneTimePasswordFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use HosmelQ\AuditLog\Contracts\HasAuditLogIdentity;
+use HosmelQ\AuditLog\Support\AuditLogIdentity;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 use Override;
@@ -21,12 +23,21 @@ use Override;
  * @property-read CarbonImmutable $created_at
  * @property-read CarbonImmutable $updated_at
  */
-final class OneTimePassword extends Model
+final class OneTimePassword extends Model implements HasAuditLogIdentity
 {
     /** @use HasFactory<OneTimePasswordFactory> */
     use HasFactory;
 
     use Prunable;
+
+    public function auditLogIdentity(): AuditLogIdentity
+    {
+        return new AuditLogIdentity(
+            id: $this->id,
+            type: $this->getMorphClass(),
+            name: $this->email,
+        );
+    }
 
     /**
      * @return Builder<static>

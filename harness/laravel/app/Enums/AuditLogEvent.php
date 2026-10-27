@@ -10,6 +10,8 @@ enum AuditLogEvent: string
 {
     use Values;
 
+    case AuthOtpRequested = 'auth.otp_requested';
+    case AuthOtpUsed = 'auth.otp_used';
     case ClientCreated = 'client.created';
     case ClientDeleted = 'client.deleted';
     case ClientUpdated = 'client.updated';
@@ -17,6 +19,8 @@ enum AuditLogEvent: string
     case InvitationAccepted = 'invitation.accepted';
     case RoomDeactivated = 'room.deactivated';
     case RoomReactivated = 'room.reactivated';
+    case UserCreated = 'user.created';
+    case UserUpdated = 'user.updated';
     case VisitStatusInitialSet = 'visit_status.initial_set';
     case VisitStatusMoved = 'visit_status.moved';
 }

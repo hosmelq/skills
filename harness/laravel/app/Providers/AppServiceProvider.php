@@ -16,10 +16,13 @@ use App\Models\User;
 use App\Models\Visit;
 use App\Models\VisitStatus;
 use Carbon\CarbonImmutable;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Tests\Support\Models\TestModel;
 
@@ -49,5 +52,25 @@ final class AppServiceProvider extends ServiceProvider
             'visit' => Visit::class,
             'visit_status' => VisitStatus::class,
         ]);
+
+        RateLimiter::for('apple.login', function (Request $request): Limit {
+            return Limit::perMinute(10)->by($request->ip());
+        });
+
+        RateLimiter::for('email.login', function (Request $request): Limit {
+            return Limit::perMinute(10)->by(
+                str(sprintf('%s|%s', $request->string('email'), $request->ip()))->transliterate()->toString(),
+            );
+        });
+
+        RateLimiter::for('email.request', function (Request $request): Limit {
+            return Limit::perMinute(5)->by(
+                str(sprintf('%s|%s', $request->string('email'), $request->ip()))->transliterate()->toString(),
+            );
+        });
+
+        RateLimiter::for('google.login', function (Request $request): Limit {
+            return Limit::perMinute(10)->by($request->ip());
+        });
     }
 }

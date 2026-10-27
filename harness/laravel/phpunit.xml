@@ -20,6 +20,7 @@
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <env name="APPLE_CLIENT_ID" value="com.example.vetdesk"/>
         <env name="APP_KEY" value="base64:9cHH3eAr029EQYgIF6uWSoEx4rgIS5BdDLbHAA+mST8="/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
@@ -27,6 +28,7 @@
         <env name="CACHE_STORE" value="array"/>
         <env name="DB_CONNECTION" value="pgsql"/>
         <env name="DB_DATABASE" value="harness"/>
+        <env name="GOOGLE_CLIENT_ID" value="vetdesk.apps.googleusercontent.com"/>
         <env name="DB_URL" value="postgres://postgres@127.0.0.1:55432/harness"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>

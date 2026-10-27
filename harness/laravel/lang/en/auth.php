@@ -11,4 +11,15 @@ return [
         'subject' => 'Your sign-in code',
     ],
 
+    'providers' => [
+        'apple' => [
+            'account_conflict' => "You can't sign in with Apple on this account. Use your email to continue.",
+            'invalid_credentials' => 'Unable to verify the supplied Apple credentials.',
+        ],
+        'google' => [
+            'account_conflict' => "You can't sign in with Google on this account. Use your email to continue.",
+            'invalid_credentials' => 'Unable to verify the supplied Google credentials.',
+        ],
+    ],
+
 ];
