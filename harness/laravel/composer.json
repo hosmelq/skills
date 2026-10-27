@@ -25,6 +25,7 @@
         "spatie/laravel-medialibrary": "^11.23",
         "spatie/laravel-permission": "^8.3",
         "spatie/laravel-sluggable": "^4.0",
+        "spatie/laravel-typescript-transformer": "^3.3",
         "sqids/sqids": "^0.5",
         "thecodingmachine/safe": "^3.4",
         "tpetry/laravel-postgresql-enhanced": "^3.7"
@@ -82,7 +83,8 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
-        ]
+        ],
+        "typescript": "@php artisan typescript:transform --no-interaction"
     },
     "extra": {
         "laravel": {
@@ -99,5 +101,8 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts-descriptions": {
+        "typescript": "Generates TypeScript definitions from PHP types."
+    }
 }
