@@ -17,4 +17,8 @@ return [
         VisitStage::InExam->value => 'In exam',
     ],
 
+    'validation' => [
+        'initial_must_be_checked_in' => 'The initial visit status must use the Checked in stage.',
+    ],
+
 ];

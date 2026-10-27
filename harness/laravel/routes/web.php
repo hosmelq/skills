@@ -1,7 +1,21 @@
 <?php
 
+use App\Http\Controllers\ClientAddressController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\MoveVisitStatusController;
+use App\Http\Controllers\VisitStatusController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::middleware('auth')->scopeBindings()->group(function (): void {
+    Route::resource('clinics.clients', ClientController::class)->only(['store', 'update']);
+    Route::resource('clinics.clients.addresses', ClientAddressController::class)->only(['store']);
+
+    Route::patch('/clinics/{clinic}/visit-statuses/{visit_status}/move', MoveVisitStatusController::class)
+        ->name('clinics.visit-statuses.move');
+
+    Route::resource('clinics.visit-statuses', VisitStatusController::class)->only(['update']);
 });

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\VisitStage;
+use App\Models\Concerns\HasSqid;
 use Carbon\CarbonImmutable;
 use Database\Factories\VisitStatusFactory;
 use HosmelQ\AuditLog\Contracts\HasAuditLogIdentity;
@@ -36,6 +37,7 @@ final class VisitStatus extends Model implements HasAuditLogIdentity, Sortable
     /** @use HasFactory<VisitStatusFactory> */
     use HasFactory;
 
+    use HasSqid;
     use SoftDeletes;
     use SortableTrait;
 
