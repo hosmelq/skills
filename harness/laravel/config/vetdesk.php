@@ -40,4 +40,19 @@ return [
         'min_length' => 10,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | World Database
+    |--------------------------------------------------------------------------
+    |
+    | This option specifies the URL from which the world database SQLite file
+    | will be downloaded. This database contains comprehensive geographical
+    | data including regions, subregions, countries, states, and cities.
+    |
+    */
+
+    'world_database' => [
+        'download_url' => 'https://github.com/dr5hn/countries-states-cities-database/raw/9d8c3e1c37c15366285a279d1e43cec6c53d6a5b/sqlite/world.sqlite3.gz',
+    ],
+
 ];
