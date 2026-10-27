@@ -11,12 +11,14 @@ use App\Models\VisitStatus;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Inertia\Inertia;
 
 final class MoveVisitStatusController implements HasMiddleware
 {
     public static function middleware(): array
     {
         return [
+            new Middleware('can:update,visit_status'),
             new Middleware('sqids:move_after_id'),
         ];
     }
@@ -29,7 +31,6 @@ final class MoveVisitStatusController implements HasMiddleware
     ): RedirectResponse {
         /** @var array{move_after_id?: null|int} $validated */
         $validated = $request->validated();
-
         $moveAfterVisitStatus = null;
 
         if (($validated['move_after_id'] ?? null) !== null) {
@@ -41,6 +42,8 @@ final class MoveVisitStatusController implements HasMiddleware
 
         $moveVisitStatus->handle($visitStatus, $moveAfterVisitStatus);
 
-        return back();
+        return Inertia::flash('toast', [
+            'title' => trans()->string('visit_status.moved.title'),
+        ])->back();
     }
 }

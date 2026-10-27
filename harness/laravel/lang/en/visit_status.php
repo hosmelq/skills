@@ -10,6 +10,10 @@ return [
         'initial_name' => 'Checked in',
     ],
 
+    'moved' => [
+        'title' => 'Visit status moved',
+    ],
+
     'stages' => [
         VisitStage::Cancelled->value => 'Cancelled',
         VisitStage::CheckedIn->value => 'Checked in',

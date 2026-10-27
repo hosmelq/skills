@@ -11,6 +11,7 @@ use App\Models\Room;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Inertia\Inertia;
 
 final class RoomDeactivationController implements HasMiddleware
 {
@@ -22,17 +23,27 @@ final class RoomDeactivationController implements HasMiddleware
         ];
     }
 
-    public function destroy(Clinic $clinic, Room $room, ReactivateRoom $reactivateRoom): RedirectResponse
-    {
+    public function destroy(
+        Clinic $clinic,
+        Room $room,
+        ReactivateRoom $reactivateRoom,
+    ): RedirectResponse {
         $reactivateRoom->handle($room);
 
-        return back();
+        return Inertia::flash('toast', [
+            'title' => trans()->string('room.reactivated.title'),
+        ])->back();
     }
 
-    public function store(Clinic $clinic, Room $room, DeactivateRoom $deactivateRoom): RedirectResponse
-    {
+    public function store(
+        Clinic $clinic,
+        Room $room,
+        DeactivateRoom $deactivateRoom,
+    ): RedirectResponse {
         $deactivateRoom->handle($room);
 
-        return back();
+        return Inertia::flash('toast', [
+            'title' => trans()->string('room.deactivated.title'),
+        ])->back();
     }
 }
