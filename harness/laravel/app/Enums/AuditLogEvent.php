@@ -10,6 +10,8 @@ enum AuditLogEvent: string
 {
     use Values;
 
+    case AuthEmailVerified = 'auth.email_verified';
+    case AuthLogin = 'auth.login';
     case AuthOtpRequested = 'auth.otp_requested';
     case AuthOtpUsed = 'auth.otp_used';
     case ClientCreated = 'client.created';
