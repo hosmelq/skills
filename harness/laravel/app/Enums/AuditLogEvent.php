@@ -16,6 +16,7 @@ enum AuditLogEvent: string
     case ClinicCreated = 'clinic.created';
     case InvitationAccepted = 'invitation.accepted';
     case RoomDeactivated = 'room.deactivated';
+    case RoomReactivated = 'room.reactivated';
     case VisitStatusInitialSet = 'visit_status.initial_set';
     case VisitStatusMoved = 'visit_status.moved';
 }
